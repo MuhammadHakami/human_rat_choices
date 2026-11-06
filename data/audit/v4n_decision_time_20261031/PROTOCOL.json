@@ -1,0 +1,25 @@
+{
+ "written_utc": "2026-10-31T16:13:16Z",
+ "outcomes_seen": false,
+ "script_sha256": "8709d1dab0356523bf01ad40fa4191b8df1094372f2c6afd8f39d4083b200815",
+ "design": "Decision time and a learning control (camera-ready; author-approved 2026-10-31). Post hoc on saved weights + one control.\nMotivation: Schmidbauer & Nieder (Science 2026): crow NCL activity ramps to a bound; choices fast at primate-level accuracy.\nZhou et al. (arXiv 2605.13315): permuted-decoding / no-culture ablations show learning depends on the feedback contingency.\n\nS1 accumulate-to-bound (frozen source checkpoints, familiar goal, fresh rooms pairs 0-1 A, 30 seeds, priors M.PRIORS):\n   the signed-IF network of v4n_kpi runs step by step; after step t the actor reads the time-averaged spikes\n   (p_t = softmax(pi(acc/t))). A decision stops at the first t with max p_t >= theta (theta in THETAS) or at TMAX;\n   the action is sampled from p_t (registered sampled evaluation). Recorded: success, mean steps to decision, hidden\n   synaptic ops per decision, and agreement of the step-1 argmax and of the stop-time argmax with the dense network's.\n   P1  mean steps to decision (averaged over THETAS), human_bc vs human_legal_uniform, paired over 30 seeds.\n   P2  success human_bc - human_legal_uniform averaged over THETAS (paired); per-theta values descriptive.\nS2 shuffled-reward control (TD-readout, registered rate, 30 seeds x 3 priors, test rooms as test2): at every step the\n   16 parallel environments' rewards are permuted among environments, so reward statistics are kept but the\n   action-reward contingency is broken. P3 final success (32,768 frames) registered TD-readout minus shuffled, paired.\n   python scripts/v4n_decision_time_claude_20261031.py check | prereg | bound W N | shuffled W N | analyse\n",
+ "thetas": [
+  0.5,
+  0.6,
+  0.7,
+  0.8,
+  0.9
+ ],
+ "tmax": 32,
+ "pairs": [
+  0,
+  1
+ ],
+ "predictions": {
+  "P1": "human_bc reaches the bound in fewer steps than human_legal_uniform (its choices are less ambiguous)",
+  "P2": "human_bc success exceeds human_legal_uniform under bounded decisions",
+  "P3": "registered TD-readout beats shuffled reward"
+ },
+ "family": "P1-P3 Holm",
+ "reading": "each prediction reported as supported or not; per-theta results descriptive"
+}

@@ -1,0 +1,32 @@
+{
+  "utc": "2026-10-11T13:09:50.174986+00:00",
+  "status": "Fixed resource/deployment reconstruction on completed audited L6; no L7partial interpretation or learner changes",
+  "models": "All13H1sets, all3real-source seeds at originalsupport-selected checkpoint; both rawfullhistory10 andrawsupportLOO controls. Same existingfirst3supporttrials/queryrows; no queryselection.",
+  "source_dry_first": "data/wacv/xspecies_l7_budget/dry/results.json budget3; predictions k3_ prefix; all20models. Compiles original common-future query after5, not an assumed split.",
+  "operations": "Reconstruct original affine ridge heads from originalsupportlabels/ridge; fold normalization into coefficients; exportportableNumPybundles; compare factorizedandcollapsed history representations; no encoderupdates/newconditions.",
+  "required_prediction_max_abs_error": 1e-08,
+  "timing_bins": 1024,
+  "timing_repeats": 3,
+  "warmup_bins": 100,
+  "timing_order": "Seed20261011 interleavesrepresentations withinpairedmodel/repeat; eachsamerecordedcountsequence.",
+  "timing_scope": "OneBLASthread NumPyCPU onloadedresearchhost, finite-inputvalidation/trialreset/historyupdate/forward included. No sourcepretraining/targetadaptation/acquisition/deviceI/O.",
+  "precision": "float64; noquantization performance claim",
+  "memory_scope": "Only persistentdecoder coefficients and25bin history; nottotalprocess/peaktraining memory. Head-featurecompression notassumed5xfullmemory/speed.",
+  "mathematics": "ForfiltersG[k,l], foldedheadA[k,n,d], C[l,n,d]=sum_kG[k,l]A[k,n,d]; predictedy[t,d]=sum_l,nspikes[t-l,n]C[l,n,d]+bias[d]. Rank acrosslag versus(neuron,output) isatmost5, notnewinformationornonlineardynamics.",
+  "input_hashes": {
+    "data/wacv/xspecies_l6_target_adapt/results.json": "39f5c13b4208fb14a5e43a153599824154a6775595bdfa90f54c4a2f6beac550",
+    "data/wacv/xspecies_l6_target_adapt/prediction_audit.json": "0b4fed585721278b14489d0845c6d0ab14a31ce0ccd739b8dac2e7b45f0c2b10",
+    "scripts/audit_xspecies_l6.py": "c4453d96b6841d2a235fe9a387eb6a22660573cc83583ed06ce00220d855a1dc",
+    "scripts/xspecies_l6_target_adapt.py": "485b32fe9429ce65c41717fd011aa49689db06e178e709f6f3478c7156821eff",
+    "scripts/xspecies_streaming_decoder.py": "d61590e594fd57c7cc4105181930e5f3188292c857e7c64baf83d8ec38237f22",
+    "scripts/profile_xspecies_l6_deployment.py": "7fae78ffbd648bc7e7fc42dff18946a1659559f578097854c44cb0cde4e05453",
+    "scripts/audit_xspecies_l7.py": "b7b4e72fc11be79c8acd297c5992e3d45b3550de858ab58fc5dac5bf1310f95e",
+    "data/wacv/xspecies_l7_budget/dry/results.json": "a9a152e83da272abb5d2800004aff12250afa5f874d6c96b24ca71dd878c65b8",
+    "data/wacv/xspecies_l7_budget/dry/prediction_audit.json": "e465e881597b2a6b7c09940040df288f8d2db02a46a474cf60ded13f4f24dfa2"
+  },
+  "amendment_before_any_deployment_run": {
+    "utc": "2026-10-11T13:14:08.141412+00:00",
+    "reason": "Original transient L6dry3 files no longer exist after reboot. Use the retained independently audited four-M1 L7dry budget3 records; same150step bank/head method, original source-only saved predictions. All four relocated stand-ins exactly match their recorded SHA256. No new fits or human outcome inspection.",
+    "source_dry_first": "data/wacv/xspecies_l7_budget/dry/results.json budget3; predictions k3_ prefix; all20models. Compiles original common-future query after5, not an assumed split."
+  }
+}

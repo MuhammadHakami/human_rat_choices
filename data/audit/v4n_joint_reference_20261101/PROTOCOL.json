@@ -1,0 +1,59 @@
+{
+ "written_utc": "2026-11-01T07:02:41Z",
+ "outcomes_seen": false,
+ "script_sha256": "afe20932064865398e61f05ea6178f11717c083dd34bc6c52ba5e425ecaf3c80",
+ "design": "Joint-training reference for forgetting (camera-ready; reviewer 6g1M; author 2026-11-01 \"absolute evidence\"). GPU 1.\n6g1M: the policy is feed-forward and gets no task signal, so two goals in one room give IDENTICAL inputs that need\ndifferent actions. Is the loss of the familiar goal after learning a moved goal (Fig. kpi a) sequential interference,\nor a limit on doing both at once with these inputs? Reference: the same checkpoints, learners, rates, room and budget\n(32,768 interactions) as v4n_moved_goal_learning test2, but episodes ALTERNATE between the moved goal and the familiar\ngoal (3,3) in that room (same geometry, same renders; the goal is invisible). Probed frozen after learning on both goals.\n  A  aliasing, from geometry only: share of (cell) states in the 8 trained rooms whose shortest-path moves to the two\n     goals have no move in common (a goal-blind memoryless policy cannot be optimal for both there).\n  J1 retention: familiar goal, trained room, joint minus sequential (paired by seed; per learner, pooled over priors).\n  J2 total: familiar + moved success, joint minus sequential. J2 <= 0 (not above sequential) means the sequential loss\n     is mostly the constraint of simultaneous performance; J2 > 0 means interference beyond it.\n  Learners ppo and td_head (registered rate from PICK2), priors M.PRIORS, seeds M.FR.S30.\n  python scripts/v4n_joint_reference_claude_20261101.py check | prereg | aliasing | run W N | analyse\n",
+ "learners": [
+  "ppo",
+  "td_head"
+ ],
+ "priors": [
+  "human_bc",
+  "human_legal_uniform",
+  "cold_ppo"
+ ],
+ "seeds": [
+  1000,
+  1001,
+  1002,
+  1003,
+  1004,
+  1005,
+  1006,
+  1007,
+  1008,
+  1009,
+  1010,
+  1011,
+  1012,
+  1013,
+  1014,
+  1015,
+  1016,
+  1017,
+  1018,
+  1019,
+  1020,
+  1021,
+  1022,
+  1023,
+  1024,
+  1025,
+  1026,
+  1027,
+  1028,
+  1029
+ ],
+ "budget": 32768,
+ "rates": {
+  "td_head": 0.003,
+  "td_fa": 0.001
+ },
+ "predictions": {
+  "A": "a substantial share of states conflict (descriptive)",
+  "J1": "joint training retains more of the familiar goal than sequential",
+  "J2": "familiar + moved success under joint training is not above sequential (constraint, not interference)"
+ },
+ "family": "J1, J2 x 2 learners, Holm",
+ "reading": "J1 and J2 reported as supported or not; per-prior values descriptive"
+}

@@ -1,0 +1,110 @@
+{
+  "registered_utc": "2026-10-12T07:32:23.137725+00:00",
+  "version": "native-behavior-prior-source-feasibility-v1",
+  "purpose": "Does real rat/human decision knowledge improve a causally sensed acting agent beyond equal-observation expert/sham priors and a fresh matched cold learner? Conventional BC/PPO feasibility, not a new algorithm or identified biological plasticity mechanism.",
+  "native_data": "data/unified/tartarus_trajectories.json",
+  "native_data_sha256": "ec35d0b3f507b783578a5fd4ad868cbaafe6502e16c24b88963bbbfec5d22212",
+  "native_subjects": {
+    "rat": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "human": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ]
+  },
+  "native_configurations": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "source_parent": "docs/WACV_EMBODIED_LONG_CONTROL_PROTOCOL_20261012.json",
+  "source_parent_sha256": "4cb5604f7b7047e5862313a28630d8fcdc34812dc7626e46865e26ce079dadf1",
+  "data": {
+    "unique_moves_each_species": 6000,
+    "sampling": "Seed641293, sorted original (subject,configuration,trial,move) inventory; uniform without replacement of moving transitions, no outcome filtering; retain identities, source population and sampling counts.",
+    "rotations": [
+      0,
+      1,
+      2
+    ],
+    "sensor_reconstruction": "Synthetic source-cache views at observed current cell. Initial camera faces room centre; later camera heading is PREVIOUS observed moving direction, never the current target direction. Native retinal/gaze/contact/time data are unavailable. Raw contact and previous reward reconstructed as zero because examples are within moving traces; disclose assumptions. Own last action from previous recorded moving transition.",
+    "belief": "Same frozen400-view open-arena atlas, uniform100-cell start and causal past-motion/current-cue replay. No true coordinates, future cell, goal bearing, current action or native success flag enters policy input. Known layout used only by renderer and expert labeler.",
+    "expert": "Optimal one-step moving labels at EXACT same sampled observations as each species; shortest-path goal and geometry are privileged offline expert supervision, never runtime policy inputs.",
+    "sham": "Permute action labels among the selected moves within subject/configuration; identical observations/marginal actions/BC budget.",
+    "budget": "6000 unique real moving choices/species, three synthetic texture reconstructions/choice,20 epochs =360000 labeled presentations/BC arm; report alongside charged RL frames. Native measured sensory frames are not available."
+  },
+  "arms": [
+    "rat_bc",
+    "human_bc",
+    "rat_sham",
+    "human_sham",
+    "rat_expert",
+    "human_expert",
+    "cold_ppo"
+  ],
+  "network": "Same FF64x64 tanh252-to4 actor/shared value head,20677 parameters; new GPU wrapper retains parent CPU output/collection/update interface and reviewed PPO loss.",
+  "bc": {
+    "epochs": 20,
+    "batch_size": 256,
+    "learning_rate": 0.001,
+    "optimizer": "Adam epsilon1e-5",
+    "objective": "Cross-entropy on actor logits, no terminal reward/critic target",
+    "gradient_clip": 0.5,
+    "reset_ppo_optimizer_after_bc": true,
+    "critic_weights": "Never updated by BC; shared features may change.",
+    "cold": "No offline pretraining; separate cost category and matched RL interactions."
+  },
+  "rl": {
+    "rate": 0.001,
+    "frames_each": 524288,
+    "slots": 8,
+    "source_train": "Openarena0 +source1\u20135, unchanged registered curriculum32768/65536 boundaries and final native starts; no native choices from6\u20137.",
+    "settings": "Unchanged reviewed long-control PPO:128 decisions,4 epochs,2 minibatches,GAE/gamma/clip/entropy/value from source parent."
+  },
+  "seeds": [
+    60,
+    61,
+    62
+  ],
+  "planned_fits": 21,
+  "selection": {
+    "layouts": [
+      6,
+      7
+    ],
+    "repeats": 3,
+    "trials_per_repeat": 20,
+    "arms": [
+      "frozen",
+      "adaptive"
+    ],
+    "rule": "Fixed BC/PPO hyperparameters; no learning-rate selection. Report all7arms/all3paired fresh seeds,180 trials per arm. Development feasibility only:6\u20137 have been examined in earlier work. No untouchedtest claim.",
+    "primary": "Per-seed differences in adaptive success for rat_bc vs rat_sham/rat_expert/cold and human_bc vs human_sham/human_expert/cold; frozen-arm results and observed decision costs secondary.",
+    "go_for_confirmatory_test": "Only after source cohort complete and independent audit; biologically derived prior must improve useful action generalization beyond matched sham/cold without claiming biological specificity if expert matches or wins. Lock separate8\u201325/retention protocol afterward, not part of this pilot."
+  },
+  "resources": {
+    "device": "GPU0, RTX4090, desktop headroom >=3GiB; no GUI/Unity",
+    "processes_max": 2,
+    "cpu_threads_each": 1
+  },
+  "failure_policy": "Preserve complete/partial/numerical failures and exact counts; implementation/IO invalidates cohort, no retry/seed replacement. All21 terminal plus independent data/physics/checkpoint/choice/replay audit before interpretation.",
+  "boundary": "No native/digital8\u201325, no real neural mechanism, no single-cell equivalence, no no-forgetting/energy claim. Behavioral resemblance alone is not knowledge-transfer utility."
+}

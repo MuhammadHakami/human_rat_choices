@@ -1,0 +1,7 @@
+{
+ "written_utc": "2026-10-31T11:56:02Z",
+ "amends": "PROTOCOL.json",
+ "reason": "4 calibration workers crashed: a local learner's weights became non-finite at a dev rate (traceback only; no calibration scores read)",
+ "change": "a run whose weights become non-finite stops learning and scores 0 at every later probe (calibration and test); diverged_at recorded",
+ "script_sha256": "e57063817d0a5c52196db2df7196397acec382938f23afb87a9dd8241ab99ccd"
+}

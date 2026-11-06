@@ -1,0 +1,118 @@
+{
+  "registered_utc": "2026-10-11T16:43:01.539253+00:00",
+  "stage": "Before any N1 target fit. Full source study complete/audited. Existing H1 and X target outcomes already examined; exploratory method study.",
+  "question": "Does norm/basis-constrained source transfer and source-preserving adaptation improve on generic controls and strong causal history readouts, across calibration budgets?",
+  "source_animals": [
+    "L",
+    "X"
+  ],
+  "variants": [
+    "unit_adam",
+    "subspace_sgd"
+  ],
+  "target_cohorts": {
+    "X": {
+      "data/xspecies/falcon/001209/sub-MonkeyX-held-in-calib_ses-20121212_behavior+ecephys.npz": "3ea4c06db31a3ee0b1f5243e35fd06f9f2c36d59827b483d510e4e935f18a975",
+      "data/xspecies/falcon/001209/sub-MonkeyX-held-out-calib_ses-20121213_behavior+ecephys.npz": "9a7a100b2eaa1c32a2decce59ba5c327daeb7e54c91784670bc4fbcbd3a7d187",
+      "data/xspecies/falcon/001209/sub-MonkeyX-held-out-calib_ses-20121214_behavior+ecephys.npz": "540a31f74baadbeedf156fe49a2e71935bf0d5f565a4d0de5d516904f5a172c7",
+      "data/xspecies/falcon/001209/sub-MonkeyX-held-out-calib_ses-20121218_behavior+ecephys.npz": "9e9c41ec109bf78a3497a0a42577ce0ef1bb623d0e0b0094176f91488d9a707f",
+      "data/xspecies/falcon/001209/sub-MonkeyX-held-out-calib_ses-20121219_behavior+ecephys.npz": "9eb988c7dbec603056a2bea6711f809411848c6999b73955df0c2072be019943"
+    },
+    "H1": {
+      "data/xspecies/falcon/000954/sub-HumanPitt-held-in-calib_ses-19250101T111740.npz": "c9d4ca829c2e9cfe1b4551eb41302473c90160e8eac3ca7b6c81965286a55db1",
+      "data/xspecies/falcon/000954/sub-HumanPitt-held-in-calib_ses-19250101T112404.npz": "a40e3f55215ecf5a176f3d9a38052d303d7d1511ba65d1a4cf310afeff65045e",
+      "data/xspecies/falcon/000954/sub-HumanPitt-held-in-calib_ses-19250108T110520.npz": "bc39c122389de210fc4503121c7ce3a0f8dcf0a8161e4701f668e1cf02c61c10",
+      "data/xspecies/falcon/000954/sub-HumanPitt-held-in-calib_ses-19250108T111022.npz": "2ab3a50fd4f7ae7fe96ef56eb1766edd19607272de855ef721a2918f90c6a13c",
+      "data/xspecies/falcon/000954/sub-HumanPitt-held-in-calib_ses-19250108T111455.npz": "f56d7afbba642ff30c9d6acb22c6909456643623b484cd530a8f5e139d1b47d4",
+      "data/xspecies/falcon/000954/sub-HumanPitt-held-in-calib_ses-19250113T120811.npz": "d150f35dea7582ecb632798d4771134add2414e695b90f43a2d038e43ccca8cd",
+      "data/xspecies/falcon/000954/sub-HumanPitt-held-in-calib_ses-19250113T121303.npz": "f8df1bd3771b97bcb325eede74c91277c5d526aafc53f24c76b80c5922a7be37",
+      "data/xspecies/falcon/000954/sub-HumanPitt-held-in-calib_ses-19250115T110633.npz": "6847a9db42b2561edb4b2a24df41106dc6810c3e0c234c881290b2e7e2a3d4f7",
+      "data/xspecies/falcon/000954/sub-HumanPitt-held-in-calib_ses-19250115T111328.npz": "23f8f644d6f7b4e46af6a532e64227042c9ceb6b5894ebe1e53f95f2e513ed04",
+      "data/xspecies/falcon/000954/sub-HumanPitt-held-in-calib_ses-19250119T113543.npz": "351de40b3fe7277c7184c32440ec3bd4e62643450a777bfa022047f9f903ec39",
+      "data/xspecies/falcon/000954/sub-HumanPitt-held-in-calib_ses-19250119T114045.npz": "1802d66ce0933466da8c4a65e947917e03c9951a8ce948975bc91b4b2725f33f",
+      "data/xspecies/falcon/000954/sub-HumanPitt-held-in-calib_ses-19250120T115044.npz": "b6277deb0bfbb2dfe9a1f63784c5685991c9a1f08afc9282b3228a24888e07e6",
+      "data/xspecies/falcon/000954/sub-HumanPitt-held-in-calib_ses-19250120T115537.npz": "d77cbd3bed862f8c645cac45a9eac13dcda87e81b064f7df0e1f0482c420d20c"
+    }
+  },
+  "source_selection_sha256": {
+    "data/wacv/xspecies_n1_source/L_subspace_sgd_selection.json": "afb1340e129b5cdbd98beb49ade881e9dee554ea0ec6896baa36657e9a03b262",
+    "data/wacv/xspecies_n1_source/L_unit_adam_selection.json": "4a87c1e5b43910c490028aa67e1f0c964f32485f700844a0cbbddb2e7adffc42",
+    "data/wacv/xspecies_n1_source/X_subspace_sgd_selection.json": "894bcecbe0914e41b8d9c9984b8d8e4cf2544786f5d5758a51b99294d360285f",
+    "data/wacv/xspecies_n1_source/X_unit_adam_selection.json": "905002e9496e9b2aa121eb3c0df33deb1cd8f73b80e21fd2b680c94230fa172f"
+  },
+  "source_audit_sha256": "f8b8c7652db112383914dba1f2f5d78a3307dbada5e385ab490881344cd1a0d2",
+  "budgets": [
+    2,
+    3,
+    5
+  ],
+  "query_after_trial_index": 5,
+  "split": "Original L7 author-loader eligible rows; first k whole support trials, common later query after 5 whole trials. Per-fold normalization uses only fitting trials. No future label/activity in fitting, PCA or selection.",
+  "initializations": {
+    "source": "Real, synthetic, time_shift, 3 source-trained seeds each, selected solely on real source day3.",
+    "generic": "V1, multiscale, random0/1/2, each projected to variant constraint; same architecture/head.",
+    "matched": "For each real-source seed, time reversal and random lag direction with identical initial row Gram via Cholesky(GG.T) times a seeded 25x5 positive-diagonal QR basis. Controls retain source information for unit variant; orthogonal variant Gram is identity.",
+    "pca": "One support-spike-only temporal PCA bank per target set/budget, projected to variant constraint. Never query spikes/labels.",
+    "count": 21
+  },
+  "adaptation": {
+    "modes": [
+      "free",
+      "anchor1"
+    ],
+    "frozen": "Checkpoint0 is mandatory, with same initial support-selected lambda as each adapted branch. Frozen comparisons reported for all budgets, never select mode by query.",
+    "optimizer": "150 updates, LR0.001, clip1, checkpoints0/15/30/60/90/150. Unit rows: Adam then unit projection. Subspace: horizontal Grassmann global-clipped SGD then polar projection. No coordinatewise Adam for subspace.",
+    "objective": "Whole-support-trial LOO, heldout-trial SSE normalized by fitting-trial target variance, cycling holdout=t mod k; smoothness1e-4; free beta0 or anchor beta1.",
+    "anchor": "Unit variant ||G-G0||_F^2/(2*5). Subspace 1-||Q Q0.T||_F^2/5, normalized projector distance (basis invariant). Weight1 fixed, not tuned on target queries; L2-SP is established prior art.",
+    "ridge_grid": [
+      0.01,
+      0.1,
+      1,
+      10,
+      100,
+      1000
+    ],
+    "ridge_selection": "Minimum mean whole-trial LOO at checkpoint0; smallest-lambda ties. Fixed over all target updates, shared frozen/free/anchor.",
+    "checkpoint_selection": "Minimum mean pure support LOO among all six checkpoints, earliest ties. Support LOO repeatedly optimized, not independent validation. Also report frozen and final150. Retain all raw checkpoint predictions.",
+    "failure": "Any nonfinite loss/gradient/update/score or missing checkpoint terminates explicitly; no implicit retry, silent fallback or outcome-dependent exclusion."
+  },
+  "references": "Raw/sqrt full25lag history, fixed lambda1/10 plus support-only selected lambda. Run once per target file/budget, shared by source/variant. All6 retained.",
+  "planned_target_fits": {
+    "X": 2520,
+    "H1": 6552,
+    "total": 9072,
+    "updates_if_complete": 1360800
+  },
+  "execution": "Source-only small-step complete pipeline and independent NumPy gradient/head/schedule/selection audit first. X complete phase then its audit, H1 complete phase then its audit. No favorable outcome gate. Both sources/variants/all arms retained.",
+  "analysis": "Paired per-file variance-weighted R2, average 3 seeds within arm. 10000 date-cluster bootstrap draws seed20261011, unadjusted/descriptive. All real-minus-every comparator, real anchor-minus-free and adapted-minus-frozen; all2/3/5 budgets, each source/variant separately. SourceX-to-X is within-animal cross-day, sourceL-to-X is cross-animal, macaque-to-H1 cross-species. No animal/participant population inference. Retain every lower-budget real2vscontrols3/5 and real3vscontrols5, each adaptation mode; no same-budget gain labeled as label savings.",
+  "claim_limits": "No untouched target cohort; no official FALCON challenge score, fresh-human replication, biological-plausibility claim for global backprop, universal transfer claim, test-time unlabeled adaptation, clinical readiness or state-of-the-art until proper external baseline executed.",
+  "prior_sources": [
+    {
+      "url": "https://proceedings.mlr.press/v80/li18a.html",
+      "overlap": "Source-preserving L2-SP regularization is not novel."
+    },
+    {
+      "url": "https://arxiv.org/abs/2506.05320",
+      "overlap": "POSSM already shows fast causal monkey-to-human transfer and compares learning efficiency."
+    }
+  ],
+  "pre_fit_amendments": [
+    {
+      "utc": "2026-10-11T16:49:49.803879+00:00",
+      "reason": "Add implementation/dependency bindings, explicit cross-budget analysis and source-only dry access guard before any N1targetfit. Same scientific settings."
+    }
+  ],
+  "dependency_sha256": {
+    "scripts/xspecies_n1_target.py": "0ddad9b025810a53ce3b9c268e5edb99f7c478ca01e184ef7441ce7da3722717",
+    "scripts/xspecies_l7_budget.py": "03794c24fbfca0224796201a5ccc76eede07eb8d320fb581427f029a9a7480d3",
+    "scripts/xspecies_l7b_generic.py": "0912512594a354769ae4d32ec3b8d1af75a2fe07cba991971ebcdd6e6143f074",
+    "scripts/xspecies_l6_target_adapt.py": "485b32fe9429ce65c41717fd011aa49689db06e178e709f6f3478c7156821eff",
+    "scripts/xspecies_l5_human.py": "fdcd0269c0db9b37c78a3468e69957c7e27beec8d1acf1676d367b41aa7ba4be",
+    "scripts/xspecies_l5_validate.py": "3e8f2b475eb434ec832605df05acab42cdb9e6eb9429fb23b1f0f60bd30a93f8",
+    "scripts/xspecies_l4_validate.py": "62974ae973884267718ae3ed23463f86c8bd63935585fba77da93e83a59d77c9",
+    "scripts/xspecies_n1_source.py": "a7a480819a3358e8d61cce6dc71eaccf0b56240cbf112443ab95f15ad56a47ae",
+    "scripts/xspecies_l5_encoder.py": "f714ca3aa2d33ed58e7e0ec0f558323b3636ca1bee50e2d6ad2087d8c8b0a498",
+    "scripts/temporal_subspace_head.py": "67e0f0381f0287a549e16477901eefdf7091366dfe69a7f0b4c16d9e4183de81",
+    "data/wacv/xspecies_n1_source/prediction_audit.json": "f8b8c7652db112383914dba1f2f5d78a3307dbada5e385ab490881344cd1a0d2"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "registered_utc": "2026-10-12T16:36:20.900731+00:00",
+  "amends_protocol_sha256": "01a2c02b441b63bc9d9665fbeb9ad3fbd63b6f07007021ac5c05f0633b4348f8",
+  "previous_addendum_sha256": "77953d4fe6eecd5ef84aa2de53ab950d9343667237ad35f3c8c7bf63dcea70ae",
+  "trigger": "Independent review identifies random-feedback misalignment to a BP-pretrained body as a confound. No scientific cohort launched or score inspected.",
+  "changes": [
+    "Add readout-only local control with hidden weights frozen and exact output-score/critic eligibility",
+    "Extend 18 to 27 source competence fits, same rates/seeds/budgets",
+    "Allocate eligibility and protection state only for plastic parameters; report active plastic count",
+    "Use dry_v4; preserve every previous technical code/artifact"
+  ],
+  "rules": [
+    "local",
+    "bp",
+    "readout"
+  ],
+  "fits": 27,
+  "code": {
+    "learner": "090493c6917e1ed0c9ac2edb03dd3d570cad3e320c8bb72a6b4d5dccb091100e",
+    "runner": "83ad242d9214b35e0c4fc938b8eec70fb7f7cfe80645b42ca7ff68b558953cce"
+  },
+  "preserved_code": [
+    {
+      "path": "data/audit/wacv_local_ac_source_pilot_20261012/technical_learner_v1.py",
+      "sha256": "b35e93cb7e22052ca1639b2ba03766c10b08aa9c0cc59487b25d7cea94c971bf"
+    },
+    {
+      "path": "data/audit/wacv_local_ac_source_pilot_20261012/technical_runner_v3.py",
+      "sha256": "82502fd1e9688bef3d605dbb1a699024a40eb573460e11aa1c4d673823aaea20"
+    }
+  ],
+  "selection": "Same per-rule competence selection; no across-rule winner based on fewer plastic weights is attributed solely to credit locality"
+}

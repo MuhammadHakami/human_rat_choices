@@ -1,0 +1,27 @@
+{
+  "registered_utc": "2026-10-12T01:13:08.978816+00:00",
+  "parent_protocol": "docs/WACV_EMBODIED_SOURCE_PROTOCOL_20261012.json",
+  "parent_sha256": "2ae1b1c6db84298ecc583e13c73559ad18c3ec054caeb2dbcd91eaef0eccedda",
+  "purpose": "Diagnose sparse-reward learnability using matched random and privileged position+local-neighbor tabular Q references, not a fair visual-policy competitor or species-transfer claim.",
+  "source_only": true,
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "training_frames": 32768,
+  "source_sampling": "Exactly parent SourceBatch curriculum and source geometry; all3seeds.",
+  "tabular_Q": {
+    "state": "100positions x16neighbor-open masks; explicitly privileged simulator pose and noise-free local geometry",
+    "actions": 4,
+    "alpha": 0.1,
+    "gamma": 0.95,
+    "epsilon": 0.2,
+    "init": 0.0,
+    "no_goal_or_geodesic_in_policy": true,
+    "training": "One-step Q learning after each actual transition; terminal bootstrap0."
+  },
+  "selection": "Parent3repeats of20native source starts on6then7; freshtrainedtable perrepeat/arm; epsilon unchanged, frozen/adaptive declared.",
+  "random": "Uniform4actions, source train/selection sameprotocol, no learning.",
+  "limits": "Information access differs from visual neural methods; use to test reward/dynamics/curriculum, not superiority. Native biological data not fitted."
+}

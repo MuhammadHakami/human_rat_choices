@@ -1,0 +1,1 @@
+{"learner": "td_head", "prior": "cold_ppo", "seed": 1009, "source": "data/audit/v4n_moved_goal_learning_20261031/test2/td_head/rate0.003/cold_ppo/seed1009.json", "familiar_trained_room": 12, "moved_heldout_room": 3, "familiar_heldout_room": 11}

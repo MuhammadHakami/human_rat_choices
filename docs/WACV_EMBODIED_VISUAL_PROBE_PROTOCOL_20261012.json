@@ -1,0 +1,97 @@
+{
+  "registered_utc": "2026-10-12T01:24:32.917605+00:00",
+  "source_only": true,
+  "purpose": "Diagnostic decodability of the registered camera across source textures/layouts; no navigation, target or biological outcome fit.",
+  "parent": "docs/WACV_EMBODIED_SOURCE_PROTOCOL_20261012.json",
+  "parent_sha256": "2ae1b1c6db84298ecc583e13c73559ad18c3ec054caeb2dbcd91eaef0eccedda",
+  "cache": "data/audit/wacv_embodied_source_20261012/cache/source_visual_cache.json",
+  "cache_sha256": "da705d96b206a75d37ad43ea61932e5a7cb9a6b3639c3aa7a2ec0c5a001e0411",
+  "training": {
+    "configurations": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "rotation_indices": [
+      0,
+      1,
+      2
+    ],
+    "poses": "All walkable cells, including invisible goal, x all4camera headings. Simulator pose/walls privileged labels, not native data."
+  },
+  "same_layout_check": {
+    "configurations": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "rotation_indices": [
+      3
+    ]
+  },
+  "new_source_layout_check": {
+    "configurations": [
+      6,
+      7
+    ],
+    "rotation_indices": [
+      3
+    ]
+  },
+  "inputs": [
+    "pooled_pixels_only",
+    "pooled_pixels_plus_camera_heading_onehot"
+  ],
+  "heading": "Second arm is a privileged heading-conditioned diagnostic. Camera equals attempted allocentric move in the control world after first action; no initial true heading supplied to deployed agents.",
+  "labels": [
+    "row/column scaled to[-1,1]",
+    "4noise-free neighbor-open bits scaled to[-1,1]"
+  ],
+  "methods": {
+    "ridge": {
+      "alpha": 0.1,
+      "bias": true,
+      "normalization": "Training-only mean/std with minimum1e-5; bias unpenalized"
+    },
+    "mlp": {
+      "hidden": 128,
+      "nonlinearity": "tanh",
+      "steps": 2000,
+      "batch": 128,
+      "optimizer": "Adam",
+      "rate": 0.001,
+      "loss": "mean squared error across6normalized targets",
+      "seeds": [
+        0,
+        1,
+        2
+      ],
+      "dtype": "float32",
+      "fixed_final_checkpoint": true
+    }
+  },
+  "selection": "None; all predefined diagnostic arms/final checkpoints reported. No changing RL recipe based on partial probe results.",
+  "metrics": [
+    "row/column MAE in cells",
+    "position RMSE in cells",
+    "rounded position exact accuracy",
+    "neighbor-open bit accuracy",
+    "exact-image collision ceiling for single-view pose labels"
+  ],
+  "audit": "Independent NumPy MLP prediction replay and normal-equation residual check; split and input isolation; hash protocol/code/models.",
+  "limits": [
+    "Pose/wall training labels are privileged simulator supervision, not reward-only or biological training.",
+    "Diagnostic supervised decodability does not establish a navigation policy, temporal memory or retention.",
+    "Failure does not rule out nonlinear recurrent/action-conditioned state estimation.",
+    "Existing63source results known before registration; no target result accessed."
+  ],
+  "resource": {
+    "device": "CPU",
+    "threads": 1,
+    "workers": 1
+  }
+}

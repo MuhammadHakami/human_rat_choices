@@ -1,0 +1,151 @@
+{
+  "arm": "rat_legal_uniform",
+  "seed": 1007,
+  "dry": false,
+  "hashes": {
+    "source": {
+      "protocol": "686d4d2e49e93c3502c37832991ee3b272081806b9845084c439a79cc826daa6",
+      "addendum": "b711f8f13e6bfdbee9181c718d09075ff9b08cdc350b2357492896207c505341",
+      "native_data": "ec35d0b3f507b783578a5fd4ad868cbaafe6502e16c24b88963bbbfec5d22212",
+      "parent": {
+        "protocol": "4cb5604f7b7047e5862313a28630d8fcdc34812dc7626e46865e26ce079dadf1",
+        "cache_manifest": "da705d96b206a75d37ad43ea61932e5a7cb9a6b3639c3aa7a2ec0c5a001e0411",
+        "cache_array": "da48dbd82d745c6e787f9c181d6725e4fe34d3e95f920c64908f217b1c11b6cc",
+        "code": {
+          "scripts/audit_wacv_embodied_source.py": "63c1ccc1b4c1426109244f06d71c0a63a56ba8044ccc5eb0975abd905e1b6c74",
+          "scripts/eprop_actor_critic.py": "89b61335f96b13996b2ae1d51cb0923191ba74ac0d70515eb0e4ce1b5833dee2",
+          "scripts/ppo_feedforward_reference.py": "e52aa2ea0b787b5a9a4845dbbddfbcc3bd399f5fd3ff3a2663a8cd52246b3b2c",
+          "scripts/rate_rnn_actor_critic.py": "50f749b584be400071440e671f7b68144336a91a8abf378faec52975a5e39bab",
+          "scripts/recurrent_ppo.py": "fc66ac16f739bf1dae03794a9b6390e1e80eae74459e211694183124ef43fd88",
+          "scripts/spiking_bptt_actor_critic.py": "eac7e7a439af2bbbf0f22b3867c7fd52e455c01573b407a2d3769880069d8b72",
+          "scripts/tartarus_visual_env.py": "3f2a1f6a30471d11ebf9f297855273b2c8c153996c73cfac117321da7e15345e",
+          "scripts/wacv_embodied_belief_source.py": "47b8371dcc5847baafc5d63eda351b6cafa7a097f790b2996e658dc7de285ef8",
+          "scripts/wacv_embodied_long_control.py": "f4a763b68e1cf3da7c5138eeb37d169c167396d5f83010028c5b45e986cf9e15",
+          "scripts/wacv_embodied_source_cache.py": "ade8dd7ad3b9f0be9e1c811f0517bea8655c162c0fe2366863025fc53a7f2970",
+          "scripts/wacv_embodied_source_env.py": "c6d16d23f529bbbe4b1bb1dba12a9305c414817cecf83e975720f9609ea7067e",
+          "scripts/wacv_embodied_source_runner.py": "66593d29d02d29db7cad22654d50cf6392ab63cdfb3d8ffddac929aa3d56e219",
+          "scripts/wacv_embodied_spatial_source.py": "ed7c7f13b63d42cc88d40ec35810b7d794698a1ccffe755eff3daf1877bd92a3"
+        }
+      },
+      "script": "97cacb9542913e9f8fb4db7ad58b7647b524bcb8afd5cf1ab11c0796483639b2",
+      "parent_ppo": "fc66ac16f739bf1dae03794a9b6390e1e80eae74459e211694183124ef43fd88",
+      "data_manifest": "b7ac76769a0e026b9af9c4dcc0a2d0a9cf1f3eb71ea227a3fb8eeae4187b17c9"
+    },
+    "controls_runner": "260850244390a2944bfdb04cd1fd5de1583e0a60ecbeb6505f66d6ae320daf24",
+    "analysis": "80a4e61bda603f69fc6e4c2566541ce5d32f09c809900a50e147965302e8cb5f",
+    "runner": "5bbc6608e2e0f52dacb2ff5e038e09084953d90aedc413d864e8caa456323061"
+  },
+  "preregistration_sha256": "c17edcd597ff4f05459fb47f4a6824464ce0816ba81b4e5a6f0da920679f4a85",
+  "status": "complete",
+  "bc": {
+    "unique_native_moves": 6000,
+    "labeled_presentations": 360000,
+    "updates": 1420,
+    "cross_entropy_per_epoch": [
+      1.367306261062622,
+      1.32446755472819,
+      1.280840878592597,
+      1.2396202641593086,
+      1.21977760887146,
+      1.2074991835488214,
+      1.2012573019663493,
+      1.1991311359405517,
+      1.1926807294421726,
+      1.1913650616539848,
+      1.1830940939585368,
+      1.1854226899676852,
+      1.1817208466000027,
+      1.1804318215052287,
+      1.1758236730363634,
+      1.173743781407674,
+      1.1713052554660373,
+      1.1712786201900907,
+      1.167990895483229,
+      1.1678559127383763
+    ],
+    "critic_weights_unchanged": true,
+    "sensory_frames_measured": false,
+    "label_arm": "rat_legal_uniform"
+  },
+  "checkpoint_sha256": "de2e07a1268131d1fc4d770b0aa2aa5783739c537cc44948efeaf1aacbeeb49e",
+  "train": {
+    "frames": 524288,
+    "successes": 22297,
+    "episodes": 28330
+  },
+  "selection": {
+    "frozen_0": {
+      "successes": 18,
+      "trials": 20,
+      "decisions": 452,
+      "counters_delta": {
+        "weight_updates": 0,
+        "updates": 0,
+        "frames": 452
+      },
+      "frozen_weights_verified": true
+    },
+    "frozen_1": {
+      "successes": 19,
+      "trials": 20,
+      "decisions": 425,
+      "counters_delta": {
+        "weight_updates": 0,
+        "updates": 0,
+        "frames": 425
+      },
+      "frozen_weights_verified": true
+    },
+    "frozen_2": {
+      "successes": 18,
+      "trials": 20,
+      "decisions": 422,
+      "counters_delta": {
+        "weight_updates": 0,
+        "updates": 0,
+        "frames": 422
+      },
+      "frozen_weights_verified": true
+    },
+    "adaptive_0": {
+      "successes": 14,
+      "trials": 20,
+      "decisions": 520,
+      "counters_delta": {
+        "weight_updates": 413540,
+        "updates": 5,
+        "frames": 520
+      },
+      "frozen_weights_verified": false
+    },
+    "adaptive_1": {
+      "successes": 17,
+      "trials": 20,
+      "decisions": 439,
+      "counters_delta": {
+        "weight_updates": 330832,
+        "updates": 4,
+        "frames": 439
+      },
+      "frozen_weights_verified": false
+    },
+    "adaptive_2": {
+      "successes": 18,
+      "trials": 20,
+      "decisions": 467,
+      "counters_delta": {
+        "weight_updates": 330832,
+        "updates": 4,
+        "frames": 467
+      },
+      "frozen_weights_verified": false
+    }
+  },
+  "episodes_sha256": "41f251048f8fd50c131994b1e5767e159cc219eb2467463fac102c6ac8bcf644",
+  "frozen_successes": 55,
+  "adaptive_successes": 49,
+  "wall_s": 58.4570028159942,
+  "maxrss_kib": 7072184,
+  "device": "cuda:0",
+  "gpu_name": "NVIDIA GeForce RTX 3090"
+}

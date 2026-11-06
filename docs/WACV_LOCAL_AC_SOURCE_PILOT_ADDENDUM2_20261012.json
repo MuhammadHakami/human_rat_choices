@@ -1,0 +1,19 @@
+{
+  "registered_utc": "2026-10-12T16:35:03.538217+00:00",
+  "amends_protocol_sha256": "01a2c02b441b63bc9d9665fbeb9ad3fbd63b6f07007021ac5c05f0633b4348f8",
+  "previous_addendum_sha256": "d55a7964661c40528e3516ec19d07b33db41fbc78a0bf9a1292f963b00d6249d",
+  "trigger": "Second technical dry failed during source pickle restoration: blanket GPU remapping also moved the serialized CPU Generator state. No learning/outcome computed.",
+  "changes": [
+    "Load trusted source checkpoint on CPU, then copy network weights to GPU1 learner",
+    "Preserve dry_v2; use dry_v3"
+  ],
+  "preserved_initial_runner": {
+    "path": "data/audit/wacv_local_ac_source_pilot_20261012/technical_runner_v2.py",
+    "sha256": "cd8ad9ddb2d8ba09366ceff728d8b6168a042803ac8ce8684a60f6b0d4f50add"
+  },
+  "code": {
+    "learner": "b35e93cb7e22052ca1639b2ba03766c10b08aa9c0cc59487b25d7cea94c971bf",
+    "runner": "82502fd1e9688bef3d605dbb1a699024a40eb573460e11aa1c4d673823aaea20"
+  },
+  "algorithm_changes": false
+}

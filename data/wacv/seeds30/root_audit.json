@@ -1,0 +1,1305 @@
+{
+  "ok": true,
+  "cases": 180,
+  "selection_episodes": 21600,
+  "selection_decisions": 703733,
+  "hashes": {
+    "source": {
+      "protocol": "686d4d2e49e93c3502c37832991ee3b272081806b9845084c439a79cc826daa6",
+      "addendum": "b711f8f13e6bfdbee9181c718d09075ff9b08cdc350b2357492896207c505341",
+      "native_data": "ec35d0b3f507b783578a5fd4ad868cbaafe6502e16c24b88963bbbfec5d22212",
+      "parent": {
+        "protocol": "4cb5604f7b7047e5862313a28630d8fcdc34812dc7626e46865e26ce079dadf1",
+        "cache_manifest": "da705d96b206a75d37ad43ea61932e5a7cb9a6b3639c3aa7a2ec0c5a001e0411",
+        "cache_array": "da48dbd82d745c6e787f9c181d6725e4fe34d3e95f920c64908f217b1c11b6cc",
+        "code": {
+          "scripts/audit_wacv_embodied_source.py": "63c1ccc1b4c1426109244f06d71c0a63a56ba8044ccc5eb0975abd905e1b6c74",
+          "scripts/eprop_actor_critic.py": "89b61335f96b13996b2ae1d51cb0923191ba74ac0d70515eb0e4ce1b5833dee2",
+          "scripts/ppo_feedforward_reference.py": "e52aa2ea0b787b5a9a4845dbbddfbcc3bd399f5fd3ff3a2663a8cd52246b3b2c",
+          "scripts/rate_rnn_actor_critic.py": "50f749b584be400071440e671f7b68144336a91a8abf378faec52975a5e39bab",
+          "scripts/recurrent_ppo.py": "fc66ac16f739bf1dae03794a9b6390e1e80eae74459e211694183124ef43fd88",
+          "scripts/spiking_bptt_actor_critic.py": "eac7e7a439af2bbbf0f22b3867c7fd52e455c01573b407a2d3769880069d8b72",
+          "scripts/tartarus_visual_env.py": "3f2a1f6a30471d11ebf9f297855273b2c8c153996c73cfac117321da7e15345e",
+          "scripts/wacv_embodied_belief_source.py": "47b8371dcc5847baafc5d63eda351b6cafa7a097f790b2996e658dc7de285ef8",
+          "scripts/wacv_embodied_long_control.py": "f4a763b68e1cf3da7c5138eeb37d169c167396d5f83010028c5b45e986cf9e15",
+          "scripts/wacv_embodied_source_cache.py": "ade8dd7ad3b9f0be9e1c811f0517bea8655c162c0fe2366863025fc53a7f2970",
+          "scripts/wacv_embodied_source_env.py": "c6d16d23f529bbbe4b1bb1dba12a9305c414817cecf83e975720f9609ea7067e",
+          "scripts/wacv_embodied_source_runner.py": "66593d29d02d29db7cad22654d50cf6392ab63cdfb3d8ffddac929aa3d56e219",
+          "scripts/wacv_embodied_spatial_source.py": "ed7c7f13b63d42cc88d40ec35810b7d794698a1ccffe755eff3daf1877bd92a3"
+        }
+      },
+      "script": "97cacb9542913e9f8fb4db7ad58b7647b524bcb8afd5cf1ab11c0796483639b2",
+      "parent_ppo": "fc66ac16f739bf1dae03794a9b6390e1e80eae74459e211694183124ef43fd88",
+      "data_manifest": "b7ac76769a0e026b9af9c4dcc0a2d0a9cf1f3eb71ea227a3fb8eeae4187b17c9"
+    },
+    "controls_runner": "260850244390a2944bfdb04cd1fd5de1583e0a60ecbeb6505f66d6ae320daf24",
+    "analysis": "80a4e61bda603f69fc6e4c2566541ce5d32f09c809900a50e147965302e8cb5f",
+    "runner": "5bbc6608e2e0f52dacb2ff5e038e09084953d90aedc413d864e8caa456323061"
+  },
+  "preregistration_sha256": "c17edcd597ff4f05459fb47f4a6824464ce0816ba81b4e5a6f0da920679f4a85",
+  "auditor_sha256": "518f932ae2bad11b79b8b630c164a73198f3c406977b23512f51a950cdea92ed",
+  "primary_statistics_recomputed": true,
+  "scope": "All selection physics/draws and frozen predictions checked; source training counters/hashes checked. No full source-training or adaptive-update re-execution, since source training paths were not stored.",
+  "rows": [
+    {
+      "arm": "rat_bc",
+      "seed": 1000,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.050738799359465e-07,
+      "selection_decisions": 4286
+    },
+    {
+      "arm": "rat_bc",
+      "seed": 1001,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.931870172779739e-07,
+      "selection_decisions": 3171
+    },
+    {
+      "arm": "rat_bc",
+      "seed": 1002,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.2954938933006375e-07,
+      "selection_decisions": 3488
+    },
+    {
+      "arm": "rat_bc",
+      "seed": 1003,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.7087171878003033e-07,
+      "selection_decisions": 4058
+    },
+    {
+      "arm": "rat_bc",
+      "seed": 1004,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.5134277293069616e-07,
+      "selection_decisions": 3831
+    },
+    {
+      "arm": "rat_bc",
+      "seed": 1005,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.631531388936793e-07,
+      "selection_decisions": 3603
+    },
+    {
+      "arm": "rat_bc",
+      "seed": 1006,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.356119833153315e-07,
+      "selection_decisions": 4241
+    },
+    {
+      "arm": "rat_bc",
+      "seed": 1007,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.402214436258987e-07,
+      "selection_decisions": 3890
+    },
+    {
+      "arm": "rat_bc",
+      "seed": 1008,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 4.59459319368527e-07,
+      "selection_decisions": 4188
+    },
+    {
+      "arm": "rat_bc",
+      "seed": 1009,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.160633589294193e-07,
+      "selection_decisions": 4089
+    },
+    {
+      "arm": "rat_bc",
+      "seed": 1010,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.335629255556526e-07,
+      "selection_decisions": 4137
+    },
+    {
+      "arm": "rat_bc",
+      "seed": 1011,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.5265926756622434e-07,
+      "selection_decisions": 4163
+    },
+    {
+      "arm": "rat_bc",
+      "seed": 1012,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 4.764267518830856e-07,
+      "selection_decisions": 3355
+    },
+    {
+      "arm": "rat_bc",
+      "seed": 1013,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.4752526961435706e-07,
+      "selection_decisions": 3942
+    },
+    {
+      "arm": "rat_bc",
+      "seed": 1014,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.836021273961876e-07,
+      "selection_decisions": 4113
+    },
+    {
+      "arm": "rat_bc",
+      "seed": 1015,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.0191773581211834e-07,
+      "selection_decisions": 3290
+    },
+    {
+      "arm": "rat_bc",
+      "seed": 1016,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.4325116848865633e-07,
+      "selection_decisions": 3809
+    },
+    {
+      "arm": "rat_bc",
+      "seed": 1017,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.943263133214913e-07,
+      "selection_decisions": 3852
+    },
+    {
+      "arm": "rat_bc",
+      "seed": 1018,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.8529627621741724e-07,
+      "selection_decisions": 4079
+    },
+    {
+      "arm": "rat_bc",
+      "seed": 1019,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.752445123517134e-07,
+      "selection_decisions": 3851
+    },
+    {
+      "arm": "rat_bc",
+      "seed": 1020,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.9771754056783237e-07,
+      "selection_decisions": 4199
+    },
+    {
+      "arm": "rat_bc",
+      "seed": 1021,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.37355617829882e-07,
+      "selection_decisions": 3346
+    },
+    {
+      "arm": "rat_bc",
+      "seed": 1022,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 4.0149088453844683e-07,
+      "selection_decisions": 3800
+    },
+    {
+      "arm": "rat_bc",
+      "seed": 1023,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.8970954979445906e-07,
+      "selection_decisions": 2753
+    },
+    {
+      "arm": "rat_bc",
+      "seed": 1024,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.05256007526733e-07,
+      "selection_decisions": 4321
+    },
+    {
+      "arm": "rat_bc",
+      "seed": 1025,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 4.159557457361629e-07,
+      "selection_decisions": 3979
+    },
+    {
+      "arm": "rat_bc",
+      "seed": 1026,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.853790156438386e-07,
+      "selection_decisions": 3600
+    },
+    {
+      "arm": "rat_bc",
+      "seed": 1027,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 5.21273149867163e-07,
+      "selection_decisions": 3146
+    },
+    {
+      "arm": "rat_bc",
+      "seed": 1028,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.8245670114234187e-07,
+      "selection_decisions": 3807
+    },
+    {
+      "arm": "rat_bc",
+      "seed": 1029,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.2424658913399185e-07,
+      "selection_decisions": 4133
+    },
+    {
+      "arm": "rat_legal_uniform",
+      "seed": 1000,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.919501049802875e-07,
+      "selection_decisions": 3600
+    },
+    {
+      "arm": "rat_legal_uniform",
+      "seed": 1001,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.47484830964806e-07,
+      "selection_decisions": 4268
+    },
+    {
+      "arm": "rat_legal_uniform",
+      "seed": 1002,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.192069639723627e-07,
+      "selection_decisions": 3625
+    },
+    {
+      "arm": "rat_legal_uniform",
+      "seed": 1003,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.9421387981454217e-07,
+      "selection_decisions": 3661
+    },
+    {
+      "arm": "rat_legal_uniform",
+      "seed": 1004,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.2058643345257423e-07,
+      "selection_decisions": 2899
+    },
+    {
+      "arm": "rat_legal_uniform",
+      "seed": 1005,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.601399390928961e-07,
+      "selection_decisions": 3379
+    },
+    {
+      "arm": "rat_legal_uniform",
+      "seed": 1006,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.717587725964421e-07,
+      "selection_decisions": 3697
+    },
+    {
+      "arm": "rat_legal_uniform",
+      "seed": 1007,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.035882604196516e-07,
+      "selection_decisions": 2725
+    },
+    {
+      "arm": "rat_legal_uniform",
+      "seed": 1008,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.0889148974755365e-07,
+      "selection_decisions": 4813
+    },
+    {
+      "arm": "rat_legal_uniform",
+      "seed": 1009,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 4.178596383908051e-07,
+      "selection_decisions": 2781
+    },
+    {
+      "arm": "rat_legal_uniform",
+      "seed": 1010,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.846768172304337e-07,
+      "selection_decisions": 4760
+    },
+    {
+      "arm": "rat_legal_uniform",
+      "seed": 1011,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.6148485482435646e-07,
+      "selection_decisions": 3937
+    },
+    {
+      "arm": "rat_legal_uniform",
+      "seed": 1012,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.800725575902163e-07,
+      "selection_decisions": 3374
+    },
+    {
+      "arm": "rat_legal_uniform",
+      "seed": 1013,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.767170096951155e-07,
+      "selection_decisions": 3864
+    },
+    {
+      "arm": "rat_legal_uniform",
+      "seed": 1014,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.6882754900213754e-07,
+      "selection_decisions": 4084
+    },
+    {
+      "arm": "rat_legal_uniform",
+      "seed": 1015,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.6288220955628105e-07,
+      "selection_decisions": 4604
+    },
+    {
+      "arm": "rat_legal_uniform",
+      "seed": 1016,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.3600690674262523e-07,
+      "selection_decisions": 3918
+    },
+    {
+      "arm": "rat_legal_uniform",
+      "seed": 1017,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.9340650231635124e-07,
+      "selection_decisions": 4079
+    },
+    {
+      "arm": "rat_legal_uniform",
+      "seed": 1018,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.817748403494136e-07,
+      "selection_decisions": 3810
+    },
+    {
+      "arm": "rat_legal_uniform",
+      "seed": 1019,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.966921162639302e-07,
+      "selection_decisions": 4673
+    },
+    {
+      "arm": "rat_legal_uniform",
+      "seed": 1020,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.819424494981959e-07,
+      "selection_decisions": 3910
+    },
+    {
+      "arm": "rat_legal_uniform",
+      "seed": 1021,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.3409568350452048e-07,
+      "selection_decisions": 4106
+    },
+    {
+      "arm": "rat_legal_uniform",
+      "seed": 1022,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 4.053576584395202e-07,
+      "selection_decisions": 3494
+    },
+    {
+      "arm": "rat_legal_uniform",
+      "seed": 1023,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.1438555037066607e-07,
+      "selection_decisions": 2302
+    },
+    {
+      "arm": "rat_legal_uniform",
+      "seed": 1024,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.5720147378560654e-07,
+      "selection_decisions": 3479
+    },
+    {
+      "arm": "rat_legal_uniform",
+      "seed": 1025,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.6252115475911e-07,
+      "selection_decisions": 4178
+    },
+    {
+      "arm": "rat_legal_uniform",
+      "seed": 1026,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.688090255942299e-07,
+      "selection_decisions": 4752
+    },
+    {
+      "arm": "rat_legal_uniform",
+      "seed": 1027,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.244065210905589e-07,
+      "selection_decisions": 4727
+    },
+    {
+      "arm": "rat_legal_uniform",
+      "seed": 1028,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.726916963347037e-07,
+      "selection_decisions": 4267
+    },
+    {
+      "arm": "rat_legal_uniform",
+      "seed": 1029,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.033129692409098e-07,
+      "selection_decisions": 4623
+    },
+    {
+      "arm": "cold_ppo",
+      "seed": 1000,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.0450892407607455e-07,
+      "selection_decisions": 3196
+    },
+    {
+      "arm": "cold_ppo",
+      "seed": 1001,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 4.3577062602828676e-07,
+      "selection_decisions": 4558
+    },
+    {
+      "arm": "cold_ppo",
+      "seed": 1002,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.560850195787445e-07,
+      "selection_decisions": 3673
+    },
+    {
+      "arm": "cold_ppo",
+      "seed": 1003,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.076560598502809e-07,
+      "selection_decisions": 5400
+    },
+    {
+      "arm": "cold_ppo",
+      "seed": 1004,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.60030703636005e-07,
+      "selection_decisions": 3958
+    },
+    {
+      "arm": "cold_ppo",
+      "seed": 1005,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.1380455356444514e-07,
+      "selection_decisions": 3997
+    },
+    {
+      "arm": "cold_ppo",
+      "seed": 1006,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.7659672852120565e-07,
+      "selection_decisions": 5255
+    },
+    {
+      "arm": "cold_ppo",
+      "seed": 1007,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.8696437865137767e-07,
+      "selection_decisions": 3904
+    },
+    {
+      "arm": "cold_ppo",
+      "seed": 1008,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.0665587213984935e-07,
+      "selection_decisions": 5400
+    },
+    {
+      "arm": "cold_ppo",
+      "seed": 1009,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.099929309358096e-07,
+      "selection_decisions": 3781
+    },
+    {
+      "arm": "cold_ppo",
+      "seed": 1010,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.0033939035778445e-07,
+      "selection_decisions": 4128
+    },
+    {
+      "arm": "cold_ppo",
+      "seed": 1011,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.1394509758531086e-07,
+      "selection_decisions": 4774
+    },
+    {
+      "arm": "cold_ppo",
+      "seed": 1012,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.0266014255930784e-07,
+      "selection_decisions": 4094
+    },
+    {
+      "arm": "cold_ppo",
+      "seed": 1013,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.6035150213488123e-07,
+      "selection_decisions": 4345
+    },
+    {
+      "arm": "cold_ppo",
+      "seed": 1014,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.76192274553766e-07,
+      "selection_decisions": 5400
+    },
+    {
+      "arm": "cold_ppo",
+      "seed": 1015,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.992702748672027e-07,
+      "selection_decisions": 4637
+    },
+    {
+      "arm": "cold_ppo",
+      "seed": 1016,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.8294126597216973e-07,
+      "selection_decisions": 3020
+    },
+    {
+      "arm": "cold_ppo",
+      "seed": 1017,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.7904004601685415e-07,
+      "selection_decisions": 3720
+    },
+    {
+      "arm": "cold_ppo",
+      "seed": 1018,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.0067520939702774e-07,
+      "selection_decisions": 4477
+    },
+    {
+      "arm": "cold_ppo",
+      "seed": 1019,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.015472500005444e-07,
+      "selection_decisions": 5400
+    },
+    {
+      "arm": "cold_ppo",
+      "seed": 1020,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.8631399826294377e-07,
+      "selection_decisions": 4201
+    },
+    {
+      "arm": "cold_ppo",
+      "seed": 1021,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.48936733948657e-07,
+      "selection_decisions": 3788
+    },
+    {
+      "arm": "cold_ppo",
+      "seed": 1022,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.3178750821473137e-07,
+      "selection_decisions": 4165
+    },
+    {
+      "arm": "cold_ppo",
+      "seed": 1023,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.2982082059641584e-07,
+      "selection_decisions": 3384
+    },
+    {
+      "arm": "cold_ppo",
+      "seed": 1024,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.09364635464604e-07,
+      "selection_decisions": 5400
+    },
+    {
+      "arm": "cold_ppo",
+      "seed": 1025,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.686543374430528e-07,
+      "selection_decisions": 4097
+    },
+    {
+      "arm": "cold_ppo",
+      "seed": 1026,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.3535683807706107e-07,
+      "selection_decisions": 3924
+    },
+    {
+      "arm": "cold_ppo",
+      "seed": 1027,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.09560767353112e-07,
+      "selection_decisions": 4057
+    },
+    {
+      "arm": "cold_ppo",
+      "seed": 1028,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.58903263661292e-07,
+      "selection_decisions": 3973
+    },
+    {
+      "arm": "cold_ppo",
+      "seed": 1029,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.8248418226795025e-07,
+      "selection_decisions": 3905
+    },
+    {
+      "arm": "rat_sham",
+      "seed": 1000,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.6099373570676043e-07,
+      "selection_decisions": 4552
+    },
+    {
+      "arm": "rat_sham",
+      "seed": 1001,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.2999838389669023e-07,
+      "selection_decisions": 4096
+    },
+    {
+      "arm": "rat_sham",
+      "seed": 1002,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.5762812982943473e-07,
+      "selection_decisions": 3444
+    },
+    {
+      "arm": "rat_sham",
+      "seed": 1003,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.780641401578521e-07,
+      "selection_decisions": 4092
+    },
+    {
+      "arm": "rat_sham",
+      "seed": 1004,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.30426523809102e-07,
+      "selection_decisions": 3383
+    },
+    {
+      "arm": "rat_sham",
+      "seed": 1005,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.2189881005173504e-07,
+      "selection_decisions": 3989
+    },
+    {
+      "arm": "rat_sham",
+      "seed": 1006,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.6986002288342803e-07,
+      "selection_decisions": 3923
+    },
+    {
+      "arm": "rat_sham",
+      "seed": 1007,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.620349363047225e-07,
+      "selection_decisions": 3947
+    },
+    {
+      "arm": "rat_sham",
+      "seed": 1008,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.6422779086932024e-07,
+      "selection_decisions": 4023
+    },
+    {
+      "arm": "rat_sham",
+      "seed": 1009,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.3608032085075124e-07,
+      "selection_decisions": 3339
+    },
+    {
+      "arm": "rat_sham",
+      "seed": 1010,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.58845289979881e-07,
+      "selection_decisions": 3093
+    },
+    {
+      "arm": "rat_sham",
+      "seed": 1011,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.444224055959566e-07,
+      "selection_decisions": 3882
+    },
+    {
+      "arm": "rat_sham",
+      "seed": 1012,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.1146477286192464e-07,
+      "selection_decisions": 4398
+    },
+    {
+      "arm": "rat_sham",
+      "seed": 1013,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.8878481905803e-07,
+      "selection_decisions": 4219
+    },
+    {
+      "arm": "rat_sham",
+      "seed": 1014,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.503573969248052e-07,
+      "selection_decisions": 4617
+    },
+    {
+      "arm": "rat_sham",
+      "seed": 1015,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.2162893193188324e-07,
+      "selection_decisions": 4122
+    },
+    {
+      "arm": "rat_sham",
+      "seed": 1016,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 4.013011781767162e-07,
+      "selection_decisions": 3702
+    },
+    {
+      "arm": "rat_sham",
+      "seed": 1017,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.5583461682465725e-07,
+      "selection_decisions": 3871
+    },
+    {
+      "arm": "rat_sham",
+      "seed": 1018,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.8698086596001815e-07,
+      "selection_decisions": 3892
+    },
+    {
+      "arm": "rat_sham",
+      "seed": 1019,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.483304381601826e-07,
+      "selection_decisions": 4586
+    },
+    {
+      "arm": "rat_sham",
+      "seed": 1020,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.90991741872071e-07,
+      "selection_decisions": 3471
+    },
+    {
+      "arm": "rat_sham",
+      "seed": 1021,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.9337778678639737e-07,
+      "selection_decisions": 5400
+    },
+    {
+      "arm": "rat_sham",
+      "seed": 1022,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.012142635872017e-07,
+      "selection_decisions": 3765
+    },
+    {
+      "arm": "rat_sham",
+      "seed": 1023,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.608465093367762e-07,
+      "selection_decisions": 3350
+    },
+    {
+      "arm": "rat_sham",
+      "seed": 1024,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.8832446807847134e-07,
+      "selection_decisions": 3610
+    },
+    {
+      "arm": "rat_sham",
+      "seed": 1025,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.3020755030310767e-07,
+      "selection_decisions": 3763
+    },
+    {
+      "arm": "rat_sham",
+      "seed": 1026,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.449329334908157e-07,
+      "selection_decisions": 3581
+    },
+    {
+      "arm": "rat_sham",
+      "seed": 1027,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.9584964600370967e-07,
+      "selection_decisions": 3889
+    },
+    {
+      "arm": "rat_sham",
+      "seed": 1028,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.8421209330442565e-07,
+      "selection_decisions": 3766
+    },
+    {
+      "arm": "rat_sham",
+      "seed": 1029,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 4.1915758092203603e-07,
+      "selection_decisions": 3836
+    },
+    {
+      "arm": "human_bc",
+      "seed": 1000,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 4.2240100128765334e-07,
+      "selection_decisions": 3775
+    },
+    {
+      "arm": "human_bc",
+      "seed": 1001,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 4.084813711724422e-07,
+      "selection_decisions": 3460
+    },
+    {
+      "arm": "human_bc",
+      "seed": 1002,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.00038172307282e-07,
+      "selection_decisions": 3945
+    },
+    {
+      "arm": "human_bc",
+      "seed": 1003,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 4.4574578483835836e-07,
+      "selection_decisions": 3883
+    },
+    {
+      "arm": "human_bc",
+      "seed": 1004,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.7262364965817696e-07,
+      "selection_decisions": 4615
+    },
+    {
+      "arm": "human_bc",
+      "seed": 1005,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 5.130366612648984e-07,
+      "selection_decisions": 3912
+    },
+    {
+      "arm": "human_bc",
+      "seed": 1006,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.8767336563161336e-07,
+      "selection_decisions": 5177
+    },
+    {
+      "arm": "human_bc",
+      "seed": 1007,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.6857354335229076e-07,
+      "selection_decisions": 3443
+    },
+    {
+      "arm": "human_bc",
+      "seed": 1008,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 5.208705924353296e-07,
+      "selection_decisions": 4148
+    },
+    {
+      "arm": "human_bc",
+      "seed": 1009,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.3295677859257466e-07,
+      "selection_decisions": 4160
+    },
+    {
+      "arm": "human_bc",
+      "seed": 1010,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 4.405634708715134e-07,
+      "selection_decisions": 4521
+    },
+    {
+      "arm": "human_bc",
+      "seed": 1011,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.6861827101830613e-07,
+      "selection_decisions": 3012
+    },
+    {
+      "arm": "human_bc",
+      "seed": 1012,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.489892466124189e-07,
+      "selection_decisions": 3599
+    },
+    {
+      "arm": "human_bc",
+      "seed": 1013,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.8100457561141e-07,
+      "selection_decisions": 2860
+    },
+    {
+      "arm": "human_bc",
+      "seed": 1014,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.8526809731088676e-07,
+      "selection_decisions": 3872
+    },
+    {
+      "arm": "human_bc",
+      "seed": 1015,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.6184365881375413e-07,
+      "selection_decisions": 3786
+    },
+    {
+      "arm": "human_bc",
+      "seed": 1016,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.593421480374559e-07,
+      "selection_decisions": 2662
+    },
+    {
+      "arm": "human_bc",
+      "seed": 1017,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.961186456624688e-07,
+      "selection_decisions": 3176
+    },
+    {
+      "arm": "human_bc",
+      "seed": 1018,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 4.153564140407795e-07,
+      "selection_decisions": 3064
+    },
+    {
+      "arm": "human_bc",
+      "seed": 1019,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.657603958595601e-07,
+      "selection_decisions": 3877
+    },
+    {
+      "arm": "human_bc",
+      "seed": 1020,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.8428040438344127e-07,
+      "selection_decisions": 3579
+    },
+    {
+      "arm": "human_bc",
+      "seed": 1021,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.2383760129039985e-07,
+      "selection_decisions": 2956
+    },
+    {
+      "arm": "human_bc",
+      "seed": 1022,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.9804210144313004e-07,
+      "selection_decisions": 3926
+    },
+    {
+      "arm": "human_bc",
+      "seed": 1023,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.4124900061272e-07,
+      "selection_decisions": 2754
+    },
+    {
+      "arm": "human_bc",
+      "seed": 1024,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.483121411296253e-07,
+      "selection_decisions": 3682
+    },
+    {
+      "arm": "human_bc",
+      "seed": 1025,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.2382194076197024e-07,
+      "selection_decisions": 3312
+    },
+    {
+      "arm": "human_bc",
+      "seed": 1026,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.779149010396665e-07,
+      "selection_decisions": 3952
+    },
+    {
+      "arm": "human_bc",
+      "seed": 1027,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 4.411994777298034e-07,
+      "selection_decisions": 3218
+    },
+    {
+      "arm": "human_bc",
+      "seed": 1028,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.7334929941780217e-07,
+      "selection_decisions": 3926
+    },
+    {
+      "arm": "human_bc",
+      "seed": 1029,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 4.907047057578495e-07,
+      "selection_decisions": 2902
+    },
+    {
+      "arm": "human_legal_uniform",
+      "seed": 1000,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.721104083169834e-07,
+      "selection_decisions": 4781
+    },
+    {
+      "arm": "human_legal_uniform",
+      "seed": 1001,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.6926946295201546e-07,
+      "selection_decisions": 3829
+    },
+    {
+      "arm": "human_legal_uniform",
+      "seed": 1002,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 4.568040113950289e-07,
+      "selection_decisions": 3413
+    },
+    {
+      "arm": "human_legal_uniform",
+      "seed": 1003,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 4.856359703819813e-07,
+      "selection_decisions": 3596
+    },
+    {
+      "arm": "human_legal_uniform",
+      "seed": 1004,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.9217656278012214e-07,
+      "selection_decisions": 3429
+    },
+    {
+      "arm": "human_legal_uniform",
+      "seed": 1005,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.854375890093408e-07,
+      "selection_decisions": 3884
+    },
+    {
+      "arm": "human_legal_uniform",
+      "seed": 1006,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.916842209987891e-07,
+      "selection_decisions": 3728
+    },
+    {
+      "arm": "human_legal_uniform",
+      "seed": 1007,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.665504534344777e-07,
+      "selection_decisions": 3867
+    },
+    {
+      "arm": "human_legal_uniform",
+      "seed": 1008,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.5440115752894954e-07,
+      "selection_decisions": 5062
+    },
+    {
+      "arm": "human_legal_uniform",
+      "seed": 1009,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.574757557161078e-07,
+      "selection_decisions": 3343
+    },
+    {
+      "arm": "human_legal_uniform",
+      "seed": 1010,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.6989982870873064e-07,
+      "selection_decisions": 3520
+    },
+    {
+      "arm": "human_legal_uniform",
+      "seed": 1011,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.021758012700104e-07,
+      "selection_decisions": 3078
+    },
+    {
+      "arm": "human_legal_uniform",
+      "seed": 1012,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.390662062230376e-07,
+      "selection_decisions": 2728
+    },
+    {
+      "arm": "human_legal_uniform",
+      "seed": 1013,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.731344396795677e-07,
+      "selection_decisions": 3991
+    },
+    {
+      "arm": "human_legal_uniform",
+      "seed": 1014,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.41868454101224e-07,
+      "selection_decisions": 3654
+    },
+    {
+      "arm": "human_legal_uniform",
+      "seed": 1015,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.276241824501369e-07,
+      "selection_decisions": 3892
+    },
+    {
+      "arm": "human_legal_uniform",
+      "seed": 1016,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.302726905296538e-07,
+      "selection_decisions": 4523
+    },
+    {
+      "arm": "human_legal_uniform",
+      "seed": 1017,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 4.4947396415917495e-07,
+      "selection_decisions": 4192
+    },
+    {
+      "arm": "human_legal_uniform",
+      "seed": 1018,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.6397152713973924e-07,
+      "selection_decisions": 4331
+    },
+    {
+      "arm": "human_legal_uniform",
+      "seed": 1019,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.3618285999459374e-07,
+      "selection_decisions": 4039
+    },
+    {
+      "arm": "human_legal_uniform",
+      "seed": 1020,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.372782412247588e-07,
+      "selection_decisions": 4837
+    },
+    {
+      "arm": "human_legal_uniform",
+      "seed": 1021,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.300193908151172e-07,
+      "selection_decisions": 4685
+    },
+    {
+      "arm": "human_legal_uniform",
+      "seed": 1022,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 4.1493605906772757e-07,
+      "selection_decisions": 3882
+    },
+    {
+      "arm": "human_legal_uniform",
+      "seed": 1023,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.8757456294048467e-07,
+      "selection_decisions": 3178
+    },
+    {
+      "arm": "human_legal_uniform",
+      "seed": 1024,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.812526319617703e-07,
+      "selection_decisions": 4732
+    },
+    {
+      "arm": "human_legal_uniform",
+      "seed": 1025,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 4.7108457301714424e-07,
+      "selection_decisions": 3283
+    },
+    {
+      "arm": "human_legal_uniform",
+      "seed": 1026,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.689167322156294e-07,
+      "selection_decisions": 4576
+    },
+    {
+      "arm": "human_legal_uniform",
+      "seed": 1027,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 3.28457806730853e-07,
+      "selection_decisions": 3243
+    },
+    {
+      "arm": "human_legal_uniform",
+      "seed": 1028,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.9000618462227123e-07,
+      "selection_decisions": 4756
+    },
+    {
+      "arm": "human_legal_uniform",
+      "seed": 1029,
+      "all_selection_physics_sampling_exact": true,
+      "frozen_forward_max_abs": 2.953939512995163e-07,
+      "selection_decisions": 4006
+    }
+  ]
+}

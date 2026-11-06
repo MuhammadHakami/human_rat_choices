@@ -1,0 +1,33 @@
+{
+  "ok": true,
+  "exact": true,
+  "rows": {
+    "C1": {
+      "n": 30,
+      "extreme_assignments": 956,
+      "total_assignments": 1073741824,
+      "p": 8.903443813323975e-07
+    },
+    "C2": {
+      "n": 30,
+      "extreme_assignments": 236,
+      "total_assignments": 1073741824,
+      "p": 2.1979212760925293e-07
+    },
+    "C3": {
+      "n": 30,
+      "extreme_assignments": 678133300,
+      "total_assignments": 1073741824,
+      "p": 0.6315608508884907
+    },
+    "C4_interaction": {
+      "n": 30,
+      "extreme_assignments": 496672,
+      "total_assignments": 1073741824,
+      "p": 0.00046256184577941895
+    }
+  },
+  "root_audit_sha256": "c0b00c9d55269d1f0196efd0378c8bf89728fbcc78bcb3f530d090927c53a21f",
+  "script_sha256": "80633bdf1c68a108de55e01bb945b24c661569a5772bb7833f5d729fda4bb179",
+  "scope": "Exactly counts all2^30signs for four already registered 30-seed contrasts using integer per-seed total success differences across sixteen rooms. Tested against brute force; no outcome-dependent hypothesis, filtering, primary criterion or t/Holm change. Supersedes interpretation of zero random exceedances as a probability bound; original Monte Carlo files preserved."
+}

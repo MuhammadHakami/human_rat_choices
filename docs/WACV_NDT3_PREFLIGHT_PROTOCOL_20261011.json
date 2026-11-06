@@ -1,0 +1,40 @@
+{
+  "registered_utc": "2026-10-11T17:10:27.804498+00:00",
+  "stage": "Actualcheckpoint CPUload verified; before anyGPUforward. Source-only computational preflight, no targetfit or score.",
+  "checkpoint": {
+    "complete": true,
+    "url": "https://huggingface.co/joel99/ndt3/resolve/19c5771816b30249fc1d8301d5771c4374ed7e96/753jmg4u/checkpoints/val-epoch=397-val_loss=0.4987.ckpt",
+    "path": "data/audit/wacv_external_baselines_20261011/ndt3_45m_200h.ckpt",
+    "size": 539283244,
+    "sha256": "74e39356e4a5099fe64aee637b4b7298ae4923d8f69daf48a7b77b02cdca8745",
+    "revision": "19c5771816b30249fc1d8301d5771c4374ed7e96",
+    "code_head": "877f9f5edbcd47f20af6e6c0ba11926da7a22354",
+    "loaded": false,
+    "target_fits": 0
+  },
+  "code_revision": "877f9f5edbcd47f20af6e6c0ba11926da7a22354",
+  "source_file": "data/xspecies/falcon/000941/sub-MonkeyL-held-in-calib_ses-20120924_behavior+ecephys.npz",
+  "source_sha256": "8c1986fdb2e277bb85cd4f732fea8989870e5a3256a7cc687d5abb8fc2de9001",
+  "input": "First40trainingday1countbins,64channels. Repeat/slice those64to176onlyasdimensiontest; not human data. Outputdims7/16. Artificial/real-source counts are computational tests, not heldout outcomes.",
+  "checks": [
+    "Actualnative prediction finite and correctly shaped inevalmode.",
+    "Everybehaviorinputtimesteps masked; altering zero covariates to nonzero cannotchange prediction.",
+    "Changing bins20onward cannotchange anyearlier predictions (causal).",
+    "Tokenization reconstructed and matches countbins/zero padding, 20ms index."
+  ],
+  "native_pipeline": "Officialbatchify_inference and predict_simple_batch; allzero constraint/reward/return, maskallkin timesteps, noKVcache; no token/event jitter.",
+  "resources": "GPU1only; N1studyremainsCPU. Eval-onlymodel,noexperimentupload;mainnotebookenvironmentunchanged.",
+  "claim_limits": "No baseline performance, targetread, finetuning, exact published replication, clinical readiness or state-of-the-art. Need separatetargetprotocol andsource-only learning/selectionchecks before actual targetbaseline.",
+  "preflight_amendments": [
+    {
+      "utc": "2026-10-11T17:13:29.110908+00:00",
+      "old_adapter_sha256": "5b08faf820f7c0bb73988249acc70cd86436bf6f085ee786fcc145cc3ef260e1",
+      "reason": "Source-only native forward failed before backbone: sparse-constraint configuration requires timestamp/space, while dense helper input produced None. Supply one allzero sparse event at time0, with explicit timestamp, preserving noconstraint-information rule. No targetdata or nativeprediction preceded fix. Failure archived."
+    },
+    {
+      "utc": "2026-10-11T17:15:32.964186+00:00",
+      "old_adapter_sha256": "6b77149a162674eac5f6757aee4a52a2ef42ab366ce2815c23fbf613cdca6baf",
+      "reason": "Native backbone ran, but checkpoint requests no output tensors, so predict_simple_batch omitted behavior_pred. Request native behavior_pred output; no weights or decoding parameters changed, no targetdata read. Source computational failure archived."
+    }
+  ]
+}

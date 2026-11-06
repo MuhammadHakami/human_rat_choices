@@ -1,0 +1,10 @@
+{
+ "written_utc": "2026-11-02T19:31:31Z",
+ "outcomes_seen": "search2 test and KPI outcomes (winners forget the old goal); no outcome of this study",
+ "script_sha256": "c99c5cf15edb5c9e338acbda3753cef3e8d95880fc093715bf4484ec7e718820",
+ "design": "Stability-plasticity search for biologically plausible learners (camera-ready, author 2026-11-02: optimise the\nbio-plausible learners). GPU 1. v4n_local_search2 optimised the new goal only and its winners forget the old goal\n(familiar goal, trained room: 2-4% vs 19-32% PPO). Two local mechanisms are added to the search2 space:\n  consolidation  each synapse is pulled toward its value before learning, q += -rate * anchor * (q - q0)\n                 (a two-component synapse: fast weight + slow consolidated weight; Benna & Fusi 2016; local)\n  old replay     before the switch the frozen prior acts in the familiar goal for F0 frames (counted inside the same\n                 32,768-interaction budget); during learning each new chunk is followed by a replayed old chunk with\n                 weight beta (complementary learning systems; McClelland, McNaughton & O'Reilly 1995)\nMulti-objective NSGA-II over (moved-goal final, familiar-goal final) on the dev rooms (3 dev seeds x 3 priors).\nSelection (fixed here): per family (dfa, ed, head) the trial with the largest dev sum moved + familiar; each tested once on\n30 seeds x 3 priors in the fresh rooms + the three KPI probes. Primary contrasts as search2 (prior AUC, Holm over 6).\n  check | prereg | search W TRIALS | best | test W N | kpi W N | analyse\n",
+ "trials": "144 NSGA-II trials (2 workers, population 24), dev only",
+ "primary": "per selected learner: human_bc - human_legal_uniform and human_bc - cold_ppo AUC; Holm over the 6",
+ "secondary": "moved + familiar (trained room) vs PPO, vs the search2 learner of the same family, and vs the joint-training reference; KPI probes",
+ "caveat": "old replay uses the agent's own frozen-prior experience of the familiar goal, inside the same interaction budget; no task cue"
+}

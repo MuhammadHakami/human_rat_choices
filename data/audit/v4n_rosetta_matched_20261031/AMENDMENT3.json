@@ -1,0 +1,6 @@
+{
+ "written_utc": "2026-10-31T16:10:34Z",
+ "change": "lexical control (author request 2026-10-31): primary captions use egocentric 'to the left/right', which share words with the allocentric action names (down/up/right/left). Stages A-D are rerun with V4N_CAPTION=lexfree: identical content worded 'in front / on the anticlockwise side / on the clockwise side'; check() asserts no caption over all cells x headings x both floor states contains any of ACTION_WORDS. Outputs in lexfree/. Stages A-D (original captions) were read before this amendment; stage E (original captions) still running and untouched.",
+ "reading": "if lexfree B/C/D match the original within seed noise, word overlap did not drive the text-action link; any difference is reported",
+ "script_sha256": "60539414c0f7a8c1ec5d8acbe1d74d42141f2d628c416d330ebdb47dbfeb9526"
+}

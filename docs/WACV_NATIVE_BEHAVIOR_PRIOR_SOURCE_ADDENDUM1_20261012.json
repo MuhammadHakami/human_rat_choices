@@ -1,0 +1,21 @@
+{
+  "registered_utc": "2026-10-12T07:37:41.894146+00:00",
+  "amends_sha256": "686d4d2e49e93c3502c37832991ee3b272081806b9845084c439a79cc826daa6",
+  "trigger": "Technical preparation found native human trajectories leaving goal before recorded trial end; expert argmin has no moving label at the terminal digital goal. No scientific fit has run.",
+  "correction": "Use each native recorded prefix through first observed goal entry, inclusive; omit subsequent choices because our digital task terminates on entry. Do not append a missing goal or alter native success flags; terminal feedback is never a BC feature/target. No success-based trial filtering. Initial original trial IDs/move indices retained.",
+  "inventory": {
+    "rat": {
+      "raw_moves": 6988,
+      "eligible_prefix_moves": 6988,
+      "post_goal_trials": 0
+    },
+    "human": {
+      "raw_moves": 13625,
+      "eligible_prefix_moves": 13093,
+      "post_goal_trials": 58,
+      "native_failed_trials_with_goal_visit": 13
+    }
+  },
+  "sampling": "6000 unique eligible prefix moves/species, otherwise original sampling/controls; raw species trajectory clocks and5s native goal dwell are not equivalent to digital first-entry reward.",
+  "artifact_preservation": "Initial rat array already complete; validate exact arrays/hash and reuse unchanged. Human preparation failed before array creation. Initial builder archived; incomplete technical dry reservation preserved, new dry_v2 paths."
+}

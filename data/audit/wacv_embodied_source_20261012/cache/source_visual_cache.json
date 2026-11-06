@@ -1,0 +1,548 @@
+{
+  "protocol_sha256": "2ae1b1c6db84298ecc583e13c73559ad18c3ec054caeb2dbcd91eaef0eccedda",
+  "renderer_sha256": "3f2a1f6a30471d11ebf9f297855273b2c8c153996c73cfac117321da7e15345e",
+  "builder_sha256": "ade8dd7ad3b9f0be9e1c811f0517bea8655c162c0fe2366863025fc53a7f2970",
+  "array_sha256": "da48dbd82d745c6e787f9c181d6725e4fe34d3e95f920c64908f217b1c11b6cc",
+  "frames": 11168,
+  "shape": [
+    8,
+    10,
+    10,
+    4,
+    4,
+    144
+  ],
+  "image_dtype": "uint8",
+  "feature_dtype": "float32",
+  "view": {
+    "width": 64,
+    "height": 36,
+    "hfov": 110.0,
+    "eye_h": 0.25,
+    "pitch": 0.0,
+    "fog_top": 0.35,
+    "fog_clear": 1.0,
+    "fog_density": 2.0,
+    "curtain_margin": 1.0,
+    "curtain_h": 4.0,
+    "cue_edge": "row0",
+    "pit_depth": 2.0,
+    "tex_amp": 0.08,
+    "tex_period": 0.25,
+    "lum": {
+      "floor": 0.55,
+      "pit": 0.05,
+      "white": 0.85,
+      "black": 0.05,
+      "sky": 0.6,
+      "fog": 0.7,
+      "side": 0.2
+    }
+  },
+  "feature_contract": {
+    "camera_quantization": "round(255*clip(luminance,0,1)), uint8",
+    "pooled_height": 9,
+    "pooled_width": 16,
+    "pooled_transform": "4x4mean;float32;2*(mean/255)-1",
+    "extra_inputs": [
+      "previous_contact",
+      "previous_reward",
+      "previous_action_onehot4"
+    ],
+    "obs_dim": 150,
+    "texture_rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "texture_sampling": "Uniform per episode, environment RNG independent of layout/goal/policy RNG/phase; not deterministic layout ID.",
+    "policy_information": "Pixels, contact, last reward and own last action only; no pose/goal/map/geodesic/layout/phase inputs.",
+    "clock": "One neural update per digital decision; tau values are decision-step constants, not physiological milliseconds.",
+    "physical_equivalence": false,
+    "raw_animal_sensation": false
+  },
+  "configurations": [
+    {
+      "configuration": 0,
+      "goal": [
+        3,
+        3
+      ],
+      "native_starts": [
+        [
+          0,
+          9
+        ],
+        [
+          9,
+          5
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          9,
+          0
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          3,
+          9
+        ],
+        [
+          9,
+          7
+        ],
+        [
+          6,
+          5
+        ],
+        [
+          7,
+          9
+        ]
+      ],
+      "original_task_ids": []
+    },
+    {
+      "configuration": 1,
+      "goal": [
+        3,
+        3
+      ],
+      "native_starts": [
+        [
+          0,
+          9
+        ],
+        [
+          9,
+          5
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          9,
+          0
+        ],
+        [
+          0,
+          3
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          3,
+          9
+        ],
+        [
+          9,
+          7
+        ],
+        [
+          6,
+          5
+        ],
+        [
+          7,
+          9
+        ]
+      ],
+      "original_task_ids": [
+        "tartarus/1/1",
+        "tartarus/1/2",
+        "tartarus/1/3",
+        "tartarus/1/4",
+        "tartarus/1/5",
+        "tartarus/1/6",
+        "tartarus/1/7",
+        "tartarus/1/8",
+        "tartarus/1/9",
+        "tartarus/1/10"
+      ]
+    },
+    {
+      "configuration": 2,
+      "goal": [
+        3,
+        3
+      ],
+      "native_starts": [
+        [
+          4,
+          0
+        ],
+        [
+          9,
+          1
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          0,
+          9
+        ],
+        [
+          8,
+          0
+        ],
+        [
+          2,
+          9
+        ],
+        [
+          7,
+          3
+        ],
+        [
+          9,
+          5
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          7,
+          6
+        ]
+      ],
+      "original_task_ids": [
+        "tartarus/2/1",
+        "tartarus/2/2",
+        "tartarus/2/3",
+        "tartarus/2/4",
+        "tartarus/2/5",
+        "tartarus/2/6",
+        "tartarus/2/7",
+        "tartarus/2/8",
+        "tartarus/2/9",
+        "tartarus/2/10"
+      ]
+    },
+    {
+      "configuration": 3,
+      "goal": [
+        3,
+        3
+      ],
+      "native_starts": [
+        [
+          0,
+          9
+        ],
+        [
+          0,
+          5
+        ],
+        [
+          0,
+          0
+        ],
+        [
+          7,
+          9
+        ],
+        [
+          5,
+          5
+        ],
+        [
+          3,
+          7
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          4,
+          9
+        ],
+        [
+          3,
+          5
+        ],
+        [
+          1,
+          3
+        ]
+      ],
+      "original_task_ids": [
+        "tartarus/3/1",
+        "tartarus/3/2",
+        "tartarus/3/3",
+        "tartarus/3/4",
+        "tartarus/3/5",
+        "tartarus/3/6",
+        "tartarus/3/7",
+        "tartarus/3/8",
+        "tartarus/3/9",
+        "tartarus/3/10"
+      ]
+    },
+    {
+      "configuration": 4,
+      "goal": [
+        3,
+        3
+      ],
+      "native_starts": [
+        [
+          5,
+          0
+        ],
+        [
+          3,
+          9
+        ],
+        [
+          6,
+          2
+        ],
+        [
+          5,
+          7
+        ],
+        [
+          8,
+          0
+        ],
+        [
+          6,
+          9
+        ],
+        [
+          9,
+          2
+        ],
+        [
+          8,
+          9
+        ],
+        [
+          9,
+          5
+        ],
+        [
+          5,
+          4
+        ]
+      ],
+      "original_task_ids": [
+        "tartarus/4/1",
+        "tartarus/4/2",
+        "tartarus/4/3",
+        "tartarus/4/4",
+        "tartarus/4/5",
+        "tartarus/4/6",
+        "tartarus/4/7",
+        "tartarus/4/8",
+        "tartarus/4/9",
+        "tartarus/4/10"
+      ]
+    },
+    {
+      "configuration": 5,
+      "goal": [
+        3,
+        3
+      ],
+      "native_starts": [
+        [
+          4,
+          9
+        ],
+        [
+          6,
+          4
+        ],
+        [
+          9,
+          2
+        ],
+        [
+          4,
+          6
+        ],
+        [
+          9,
+          4
+        ],
+        [
+          6,
+          6
+        ],
+        [
+          9,
+          6
+        ],
+        [
+          6,
+          7
+        ],
+        [
+          9,
+          8
+        ],
+        [
+          7,
+          9
+        ]
+      ],
+      "original_task_ids": [
+        "tartarus/5/1",
+        "tartarus/5/2",
+        "tartarus/5/3",
+        "tartarus/5/4",
+        "tartarus/5/5",
+        "tartarus/5/6",
+        "tartarus/5/7",
+        "tartarus/5/8",
+        "tartarus/5/9",
+        "tartarus/5/10"
+      ]
+    },
+    {
+      "configuration": 6,
+      "goal": [
+        3,
+        3
+      ],
+      "native_starts": [
+        [
+          9,
+          5
+        ],
+        [
+          0,
+          5
+        ],
+        [
+          7,
+          6
+        ],
+        [
+          2,
+          6
+        ],
+        [
+          9,
+          7
+        ],
+        [
+          0,
+          8
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          3,
+          9
+        ],
+        [
+          6,
+          9
+        ],
+        [
+          4,
+          6
+        ]
+      ],
+      "original_task_ids": [
+        "tartarus/6/1",
+        "tartarus/6/2",
+        "tartarus/6/3",
+        "tartarus/6/4",
+        "tartarus/6/5",
+        "tartarus/6/6",
+        "tartarus/6/7",
+        "tartarus/6/8",
+        "tartarus/6/9",
+        "tartarus/6/10"
+      ]
+    },
+    {
+      "configuration": 7,
+      "goal": [
+        3,
+        3
+      ],
+      "native_starts": [
+        [
+          6,
+          4
+        ],
+        [
+          0,
+          4
+        ],
+        [
+          9,
+          4
+        ],
+        [
+          2,
+          5
+        ],
+        [
+          9,
+          6
+        ],
+        [
+          3,
+          6
+        ],
+        [
+          5,
+          9
+        ],
+        [
+          0,
+          9
+        ],
+        [
+          9,
+          9
+        ],
+        [
+          5,
+          6
+        ]
+      ],
+      "original_task_ids": [
+        "tartarus/7/1",
+        "tartarus/7/2",
+        "tartarus/7/3",
+        "tartarus/7/4",
+        "tartarus/7/5",
+        "tartarus/7/6",
+        "tartarus/7/7",
+        "tartarus/7/8",
+        "tartarus/7/9",
+        "tartarus/7/10"
+      ]
+    }
+  ],
+  "elapsed_s": 123.35528780900131,
+  "target_data_rendered": false,
+  "raw_sensation": false,
+  "manifest_sha256": "2fd52c772458ee30445e9fcf0b92c37d43c86394ca870f91da83769e43a190a0"
+}

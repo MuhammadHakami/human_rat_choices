@@ -1,0 +1,78 @@
+{
+ "name": "E2 fresh-room confirmation: frozen 30-seed policies in 16 never-used rooms with the source goal",
+ "written_utc": "2026-10-14T02:48:23Z",
+ "written_before": "the fresh geometry is generated and before any fresh-room policy outcome exists",
+ "authority": "Author 2026-10-14: will not submit unless evidence is strong enough; reviewer weakness = all E2 follow-ups reuse the 16 exposed rooms",
+ "motivation": "Every E2 result and follow-up used the same 16 rooms (data/audit/wacv_native_prior_confirmation_20261012/geometry_manifest.json). This is a confirmation on rooms no policy, analysis or design choice has touched.",
+ "checkpoints": {
+  "source": "data/wacv/seeds30/cohort (unchanged, frozen)",
+  "seeds30_root_audit_sha256": "8a398fd5cb1e6370884185f88ebb97ffd9b8adcce1481f5496af7f5a9f5f1850"
+ },
+ "seeds": [
+  1000,
+  1001,
+  1002,
+  1003,
+  1004,
+  1005,
+  1006,
+  1007,
+  1008,
+  1009,
+  1010,
+  1011,
+  1012,
+  1013,
+  1014,
+  1015,
+  1016,
+  1017,
+  1018,
+  1019,
+  1020,
+  1021,
+  1022,
+  1023,
+  1024,
+  1025,
+  1026,
+  1027,
+  1028,
+  1029
+ ],
+ "arms": [
+  "rat_bc",
+  "rat_legal_uniform",
+  "rat_sham",
+  "human_bc",
+  "human_legal_uniform",
+  "cold_ppo"
+ ],
+ "geometry": {
+  "generator_rules": "identical to wacv_native_prior_confirm_env.generate: 18 blocked cells per room drawn uniformly from cells that are not native starts or the goal; every walkable cell connected to the goal; every native start within 30 steps of the goal",
+  "seed": 20261014,
+  "rooms": 16,
+  "goal": [
+   3,
+   3
+  ],
+  "configuration_ids": "100-115 (8 pairs x A/B, ids only; no pairing used)",
+  "exclusion": "reject any room whose blocked-cell set equals any of the 16 exposed rooms or an earlier fresh room",
+  "exposed_manifest_sha256": "f3199ea4098da983f8da90a60ba70df0d5397d1e25c59ced76e00138449ce9f4"
+ },
+ "probe": "identical to the E2 zero-shot probe: wacv_continual_factorial_claude.probe unchanged, clean tier, 30 trials per room (10 native starts x 3 textures), weights frozen; only the room cache is replaced",
+ "outcome": "per seed: mean frozen successes /30 over the 16 fresh rooms",
+ "primary": {
+  "family": "Holm over 2, paired two-sided t over 30 seeds (exact/1e5 sign-flip reported)",
+  "C1": "human_bc - human_legal_uniform",
+  "C2": "human_bc - cold_ppo",
+  "confirmation_criterion": "E2 is confirmed on fresh rooms iff C1 and C2 both have positive mean and Holm-adjusted t p < .05"
+ },
+ "secondary": {
+  "C3": "rat_bc - rat_legal_uniform, TOST +-3/30 (equivalence) and t",
+  "C4": "species x choice interaction (human_bc - human_legal_uniform) - (rat_bc - rat_legal_uniform), t (exploratory in E2, registered here)",
+  "descriptive": "all arm means; comparison with exposed-room E2 effect sizes is descriptive only"
+ },
+ "reporting": "all outcomes reported whatever their direction; no design change after any fresh-room outcome; a failed confirmation will be reported in the paper",
+ "hardware": "CPU only (CUDA_VISIBLE_DEVICES empty), as the original E2 probes"
+}

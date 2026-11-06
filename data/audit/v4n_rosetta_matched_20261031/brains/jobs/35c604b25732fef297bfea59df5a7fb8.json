@@ -1,0 +1,1 @@
+{"job": ["B", "cortex", "human_bc/1000", 1], "rosetta_seed": 576165995, "composed": {"foscttm": 0.5008429214607303, "mean_rank": 1002.185}, "direct": {"foscttm": 0.6398037768884441, "mean_rank": 1279.96775}}

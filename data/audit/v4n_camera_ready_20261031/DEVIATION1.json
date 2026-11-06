@@ -1,0 +1,5 @@
+{
+ "written_utc": "2026-10-31T12:34:07Z",
+ "deviation": "greedy_moved condition not run (no primary contrast uses it; author asked to de-emphasise greedy evaluation; CPU reassigned to the learning studies). greedy_source (primary G1) complete.",
+ "outcomes_seen": "none of greedy_moved"
+}

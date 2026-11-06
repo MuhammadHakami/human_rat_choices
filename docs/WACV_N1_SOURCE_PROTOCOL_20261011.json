@@ -1,0 +1,99 @@
+{
+  "registered_utc": "2026-10-11T16:16:30.631713+00:00",
+  "stage": "Prospective source-only fit protocol; all existing H1 and MonkeyX target outcomes already examined. No N1neural fits yet.",
+  "scientific_question": "Does a source-learned temporal direction/subspace improve calibration when filter amplitudes and conditioning cannot explain the effect? Then assess source-preserving adaptation without selecting behavior by query scores.",
+  "known_information": "L7/L7B/L8 and sourceL-to-X targets have been scored; new method design is exploratory relative to these targetsets. SourceL/X first3days and existing source fits known. The synthetic controls retain real source rate and target statistics, not brain-free data.",
+  "source_arrays": {
+    "L": {
+      "data/xspecies/falcon/000941/sub-MonkeyL-held-in-calib_ses-20120924_behavior+ecephys.npz": "8c1986fdb2e277bb85cd4f732fea8989870e5a3256a7cc687d5abb8fc2de9001",
+      "data/xspecies/falcon/000941/sub-MonkeyL-held-in-calib_ses-20120926_behavior+ecephys.npz": "b56fc39bd7e8abc882bf99dcc96d507dfb36cbed9e71f9a169ab74fe9dda9bd9",
+      "data/xspecies/falcon/000941/sub-MonkeyL-held-in-calib_ses-20120927_behavior+ecephys.npz": "7127ca499d75a7dbe016755b38ddbf93a90c9f186e3d13319f0094a639380eef"
+    },
+    "X": {
+      "data/xspecies/falcon/001209/sub-MonkeyX-held-in-calib_ses-20121206_behavior+ecephys.npz": "5d7b6cb8c16d91ce416688483a081ba07b3e9d9f5a5bb72ce59fc52ffe6f78ae",
+      "data/xspecies/falcon/001209/sub-MonkeyX-held-in-calib_ses-20121207_behavior+ecephys.npz": "62891047c7acc9f270fe048ece5265f84e905eb92db296f41e09dd7359811643",
+      "data/xspecies/falcon/001209/sub-MonkeyX-held-in-calib_ses-20121210_behavior+ecephys.npz": "bab146bfb08e7e09e113111363481dd08d7ffa66e9701abf563f202b52101344"
+    }
+  },
+  "source_roles": "Within each macaque, first2days train weights; third real source day selects checkpoint/ridge. Original3day synthetic-profile convention retained/disclosed. No target/heldoutsource arrays in sourcephase.",
+  "source_variants": {
+    "unit_adam": {
+      "initialization": "Original5x25V1bank with each row renormalized to unitL2.",
+      "constraint": "Eachrow projected to unitL2 after every Adam update; zero/nonfinite row is explicit failure.",
+      "head": "Original per-feature support normalization withSDfloor0.1 and mean-gram ridge.",
+      "optimizer": "Adam lr0.003, global Frobeniusgradclip1. This variant is not basis-rotation invariant."
+    },
+    "subspace_sgd": {
+      "initialization": "Polar factor of original5x25V1bank, orthonormal rows.",
+      "constraint": "Horizontal Grassmann gradient U-(UQ.T)Q, global Frobeniusclip1, step lr0.003, polar retraction. No elementwise adaptiveoptimizer.",
+      "head": "Orthonormal-row temporalbank; pooled centered RMS acrossall5modes/time separatelyperneuron; common per-neuronSDfloor0.1. Mean-gram ridge.",
+      "invariance": "Frozen predictions, smoothness and projectedSGDtrajectory should be equivariant under any fixedleftorthogonalre-basis. Verify numericalsourcegradient/update/replay before fits."
+    }
+  },
+  "source_arms": [
+    "real",
+    "synthetic",
+    "time_shift"
+  ],
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "source_episodes": 600,
+  "source_rng": "Original[77,seed], samewindows acrossvariants/arms.",
+  "source_train_ridge": 1,
+  "source_prefix_eligible_bins": 320,
+  "source_query_trials_per_episode": 4,
+  "smoothness": "1e-4 meanadjacenttap-square difference, samecoefficient bothvariants; orthogonal-basis invariant Frobeniusquantity forsubspacevariant.",
+  "checkpoints": [
+    0,
+    100,
+    200,
+    300,
+    400,
+    500,
+    600
+  ],
+  "source_fits_main": 36,
+  "additional_rotation_fits": "subspace_sgd,real,seed0, fixedorthogonalrotationR from RNG[20261011,910], bothanimals. Two extra600episodefits; do not count these as independent seeds/animals.",
+  "source_fits_total": 38,
+  "source_updates_if_complete": 22800,
+  "source_fixed_controls": "Projected originalV1, projectedmultiscale and3projectedrandom banks, under eachvariant/head. Same source day3 ridge-selection grid. Target-support PCA specified in later targetprotocol, no source-query-derived genericbank.",
+  "source_selection": {
+    "budgets": [
+      40,
+      80,
+      160,
+      320
+    ],
+    "ridge_grid": [
+      0.01,
+      0.1,
+      1,
+      10,
+      100,
+      1000
+    ],
+    "windows": "Original320eligibleprefix then8wholelatertrials, sequentialnonoverlappingday3windows.",
+    "checkpoint": "At320, highestmean source-day3R2 overcheckpoint/ridge; earliestcheckpoint/smallestridgeties. Thenridgeperbudget forselectedcheckpoint. All raw selectedpredictions retained.",
+    "target_dependence": false
+  },
+  "technical_gate": "Independent NumPyhead/directionalgradient/orthogonaltrajectory numericalchecks and source-only4step completepipeline/audit pass before38fullfits. Allsavedupdates/schedules/choices/scores+representativeheads independentlyaudited before interpreting. No favorableperformancethreshold for targetadvance.",
+  "target_work_next": "Separateprospective targetprotocol BEFOREanyN1targetfit. Report all2/3/5budgets, both sourceanimals, allreal/null/generic banks, frozen/unregularized/source-preservingadaptation, strongraw/sqrthistory comparators. Do not select frozenatlowbudget/adaptat5 as a headline basedon these examinedquery outcomes.",
+  "claim_limits": "Shared temporalpriors, global supervised source learning. Not firstGrassmannmethod, crossspeciesmodel, local learning, populationgeneralization, humanindependentreplication, privacy orclinicalreadiness. SeparatecurrentWACVvisualcandidate unchanged.",
+  "immutable_dependencies": {
+    "scripts/xspecies_l5_encoder.py": "f714ca3aa2d33ed58e7e0ec0f558323b3636ca1bee50e2d6ad2087d8c8b0a498",
+    "scripts/xspecies_continuous_meta.py": "fda04bd3f27734d1ccc6afe854418bcc424d184d40845b066b66856d5b4fb216",
+    "scripts/wacv_falcon_floor_v2.py": "6dcd7d6a5a4a9277e6db9b3a897497cbfa199e15af461a19a975a57c0a54a666",
+    "scripts/temporal_subspace_head.py": "67e0f0381f0287a549e16477901eefdf7091366dfe69a7f0b4c16d9e4183de81"
+  },
+  "pre_fit_numerical_amendments": [
+    {
+      "utc": "2026-10-11T16:17:27.758679+00:00",
+      "old_head_sha256": "b3c107c79a959f041be76b87d9ad439e0bc25c7b4e9c177187d69ac0c649b3d4",
+      "new_head_sha256": "67e0f0381f0287a549e16477901eefdf7091366dfe69a7f0b4c16d9e4183de81",
+      "reason": "Toy predictions finite but gradients nonfinite when one support-neuron is silent. Clamp variance at.01 before sqrt instead of sqrtthenclamp. Same mathematicalmax(RMS,.1); prevents0/0backward. No N1sourcefit or neuraloutcome preceded this fix."
+    }
+  ]
+}

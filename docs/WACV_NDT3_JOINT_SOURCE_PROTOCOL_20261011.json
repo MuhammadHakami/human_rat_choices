@@ -1,0 +1,87 @@
+{
+  "registered_utc": "2026-10-11T19:24:24.142591+00:00",
+  "stage": "Before any joint-objective native gradient/update. Old behavior-only NDT3 M2 and compact N2 outcomes known; old X/H1 studies active, no partial outcomes read. This is exploratory repair, not untouched-target confirmation.",
+  "question": "Source-only selection of joint neural/behavior native NDT3 fine-tuning before separate exploratory target replication.",
+  "source_arrays": {
+    "L": "data/xspecies/falcon/000941/sub-MonkeyL-held-in-calib_ses-20120927_behavior+ecephys.npz",
+    "X": "data/xspecies/falcon/001209/sub-MonkeyX-held-in-calib_ses-20121210_behavior+ecephys.npz"
+  },
+  "checkpoint": "data/audit/wacv_external_baselines_20261011/ndt3_45m_200h.ckpt",
+  "source_status": "Third development day per original source animal, already source-selection data; not independent source generalization.",
+  "training": {
+    "rates": [
+      3e-05,
+      0.0001,
+      0.0004
+    ],
+    "rate_origin": "Pinned official hp_sweep_space.py full_ft/simple_ft rate grids.",
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "steps": 150,
+    "checkpoints": [
+      0,
+      15,
+      30,
+      60,
+      90,
+      150
+    ],
+    "optimizer": "Full native AdamW, constantLR, checkpoint.cfg.weight_decay,globalclip1,native train-mode dropout. Retain released architecture. Custom scarce-whole-trial/window/schedule recipe; not official author benchmark reproduction.",
+    "objective": "Native causal autoregressive spike objective via predict_simple_batch(compute_loss=True), native differentiable behavior MSE captured before reporting detach. Checkpoint weights1+1; other tasks0. Correct per-token true-channel counts exclude16H1shape padded channels. Counts in full same-trial support prefix; behavior MSE restricted actual valid bins; all behavior inputs masked.",
+    "windows": "First3eligiblewhole support trials; rng[20261011,902,seed] uniform eligibleendpointsharedacrossrates. Up to200 preceding same-trial count bins inclusive, loss on eligible last50bins only. No query/spikes in gradient or normalization.",
+    "causal_context": "Author M1 default200bins,reset at trial start, noKVcache, native spike tokenization. Predictions at each query row use only its \u2264200same-trial past/currentcountvectors; no observed or predictedbehavior input.",
+    "task_weights": {
+      "spike_infill": 1.0,
+      "kinematic_linear": 1.0,
+      "constraints": 0.0,
+      "return_context": 0.0
+    },
+    "behavior_loss": "Released kinematic_linear pipeline uses MSE; corrected older classification wording.",
+    "inference": "Native B8 exact-length causal windows,200bins,zero behavior feedback. Scalar BF16 equivalence is approximate; no singleton-readout argmax/quantization claim."
+  },
+  "query": "Commonfirst4whole eligible future trials atindices5..8, all eligible rows. Intervening supportindices3..4 unused. Source-only dry queriesfirst8eligible rows andone Lseed0/3e-5 fit4steps.",
+  "planned_fits": 18,
+  "planned_updates": 2700,
+  "selection": "After full independent audit, one global LR/checkpoint maximizing mean varianceweighted R2 overbothsourceanimals/3seeds(6values perchoice). Earlieststep/smallestLRties. No query-selected futuretarget choices. Checkpoint0 allowed, allchoices retained.",
+  "gate": "Joint12update/source-shape preflight, source-only4step full artifact dry and independent audit, technicalGO for18sourcefits. No outcome/accuracy gate.",
+  "auditor": "No fitter imported. Independent all raw metrics/splits/supportscale/RNG/update/window/state hashes, joint decomposition from recorded components; complete B8 causal replay at checkpoint15 for all6 seed0source/rate fits. Native attention/backward shared; full loss independently reconstructed on source preflight.",
+  "failure": "Preserve exception/nonfinite/missing artifact; no implicit fitretry or favourable outcome exclusion. No target query inspected to repair source implementation.",
+  "artifacts": "Keep rawcheckpointpredictions andmodelweights for everynonzero checkpoint; approximately16GBfullsourceweights, excludedfromGit.",
+  "claim_limits": "Exploratory source calibration after old M2 outcomes; no novel algorithm, official FALCONscore, clinicalutility, zero calibration, biological locallearning, exhaustive failure or pretraining-versus-scratch causality. Linear probe/full-FT lowdata instability are already NDT3 prior.",
+  "primary_sources": [
+    "https://github.com/joel99/ndt3",
+    "https://raw.githubusercontent.com/joel99/ndt3/877f9f5edbcd47f20af6e6c0ba11926da7a22354/context_general_bci/config/hp_sweep_space.py",
+    "https://papers.nips.cc/paper_files/paper/2025/file/a00000e6a2208172700510bcd69d48e9-Paper-Conference.pdf"
+  ],
+  "physical_gpu": "0",
+  "old_recipe_preservation": "Keep all old behavior-only fits/protocols/code/queued cohorts immutable as ablation. No attribution of a joint-versus-old difference solely to neural loss unless other recipe details also match.",
+  "sha256": {
+    "data/audit/wacv_external_baselines_20261011/ndt3_45m_200h.ckpt": "74e39356e4a5099fe64aee637b4b7298ae4923d8f69daf48a7b77b02cdca8745",
+    "scripts/ndt3_native_adapter.py": "f84840ca6b8fc98843b50f3be5196e29b6e836a2eb46d9b7dbbb59147fb7fd51",
+    "scripts/ndt3_joint_adapter.py": "7d8411b6ee5dbe703806d62f65b6b85958b34396fc6267ac606019efa6942bf0",
+    "data/audit/wacv_external_baselines_20261011/runtime_freeze.txt": "ca49d2d60135cb246ba01ffeb69a1e690c95e5de1e219923682a15a091807df1",
+    "data/audit/wacv_external_baselines_20261011/ndt3/context_general_bci/model.py": "a15d470418ea7fc3e73a7863d1a35a0de9e73385678b784e1ceb2f8598a6099b",
+    "data/audit/wacv_external_baselines_20261011/ndt3/context_general_bci/task_io.py": "ea6c1ea59e5dabd29878357e694371e38862c06489224b52ee385ec6b4593ceb",
+    "data/audit/wacv_external_baselines_20261011/ndt3/context_general_bci/data_utils.py": "02bd327776df0f754103aa4aa7a7bf7673519f100eb08768bf983bab8d0a5ffa",
+    "data/xspecies/falcon/000941/sub-MonkeyL-held-in-calib_ses-20120927_behavior+ecephys.npz": "7127ca499d75a7dbe016755b38ddbf93a90c9f186e3d13319f0094a639380eef",
+    "data/xspecies/falcon/001209/sub-MonkeyX-held-in-calib_ses-20121210_behavior+ecephys.npz": "bab146bfb08e7e09e113111363481dd08d7ffa66e9701abf563f202b52101344",
+    "scripts/ndt3_joint_source.py": "ce4be442954a4665c3c251adda35174cd536416a2fb57eae860e6d2ec21bed48",
+    "scripts/audit_ndt3_joint_source.py": "16ad25d58aff351dc84552282b4b2a95bc8b0645b5689f38bb40f4d9ac5e4904",
+    "scripts/run_ndt3_joint_source.py": "84a62dfe0329c6aac775092399bb9aad4a3ba9612726d85001760b841311a9af",
+    "scripts/ndt3_batched_query.py": "0a6fc821cc37898ce437e376496ba23e0f89ac1f56bdadd60561c75cfeb329e7",
+    "docs/WACV_NDT3_JOINT_PREFLIGHT_PROTOCOL_20261011.json": "7358396c4e8f3490e3efd7fba5f5aebe08b91cad7423bc747fd61ccf15b4761e",
+    "scripts/audit_ndt3_joint_gradients.py": "8d824f209c612a0cb4c88d61059fa06ec25a83a58e70c109b44655bf8c39adf3",
+    "data/audit/wacv_external_baselines_20261011/ndt3/context_general_bci/config/hp_sweep_space.py": "84546f8872fe3510a486ad55ed2f073cda6abfa9273b18bae9a095f5d3e29790"
+  },
+  "source_only_amendments": [
+    {
+      "utc": "2026-10-11T19:31:15.618274+00:00",
+      "old_auditor_sha256": "7fbe3bb3fadaec32e143bf58cc7aa6faaaaf46821fe9efad8499099a06c3850a",
+      "reason": "Independent NumPy audit initially used float64 log-softmax, while native soft-target CrossEntropyLoss uses BF16 log-softmax followed by float32 soft-target multiplication. Reconstruct explicit BF16 nearest-even rounding; original2e-6scalar tolerance unchanged. Native model, objective, counts, optimizer and all source/target scientific settings unchanged. Failed first preflight completed source64shape4updates then stopped at176shape loss check; no calibration or target fits. Preserve all diagnostics; invalid empty diagnostic summary is explicitly excluded from audits/GO.",
+      "archive": "data/audit/wacv_external_baselines_20261011/joint_preflight_loss_disagreement"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "registered_utc": "2026-10-12T07:16:51.909794+00:00",
+  "version": "paired-windowed-spiking-gpu32-v2-addendum1",
+  "amends": "docs/WACV_EMBODIED_PAIRED_SPIKING_GPU32_PROTOCOL_20261012.json",
+  "amends_sha256": "4f2e7d6c5b58b98fadc2d76602b3b101e877cc753bfd1b65896b8fa22799a80d",
+  "correction": "failure_policy inherited text 'No full-fit score until all12 end' is superseded: no full-fit score until ALL 24 registered fits end and the independent audit completes. Implementation/IO errors invalidate the cohort and are never scored as learner failure.",
+  "clarification": "Batch 32 x 2,097,152 frames keeps the 655-window update count of 8 slots x 524,288 frames: this is 4x experience per update and a different gradient scale, not 4x updates. The loss-scale probe supports the algebraic task/regulariser scaling and eps damping; it does not establish the cause of slow learning or convergence.",
+  "inference": "Paired per-seed counts are reported as estimates; no equivalence, significance or 'resolved' claim is promised from 24 fits.",
+  "trigger": "Fits start only after Codex's explicit GO (not elapsed time)."
+}

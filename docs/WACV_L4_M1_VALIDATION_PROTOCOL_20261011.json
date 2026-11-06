@@ -1,0 +1,52 @@
+{
+  "name": "L4 prospective public M1 source validation",
+  "owner": "Codex protocol and independent audit; Claude learner and source-development execution",
+  "fixed_before_minival_target_or_neural_values": true,
+  "scope": "Four public held-IN minival files from the same Monkey L and recording dates. New unexamined outcomes, not new animals, private benchmark evaluation or human transfer.",
+  "prerequisite": "Complete and independently audit L4 source-development selection and predictions, then record the decision to advance. No human data are evaluated by this protocol.",
+  "prior_information": "Original L3 source gate, D1 diagnostics, nonlinear hidden-state diagnostic and previous H1 baselines were already examined. Minival masks, timestamps, trial starts, unit IDs and target shapes were inspected without reading target/neural spike values. Feature configuration originated in human development data, shared across methods.",
+  "data": {
+    "manifest": "data/raw_transfer/falcon/m1_validation_download_manifest.json",
+    "structure": "data/raw_transfer/falcon/m1_validation_structure.json",
+    "files": "All four listed files; no exclusions based on outcomes",
+    "eligible_query_rows": [252, 256, 255, 262],
+    "trials_per_file": 2,
+    "population": "One macaque, 64 recorded units and 16 measured muscle EMG outputs",
+    "loader": "Unchanged official FALCON load_nwb/bin_units at commit67f85481e49dd280257b15141fd965cba0e02dba; record hashes"
+  },
+  "support_and_query": {
+    "support": "Last 320 eligible rows of the matching same-day calibration file, fixed now before viewing minival values. Source coefficients were selected on the first three calibration days; day-four calibration was previously examined development data.",
+    "query": "Every eligible row of the separate matching minival file, identical for all methods; no in-minival calibration or query feedback",
+    "chronology": "Both files' timestamps start at zero. Their local clocks do not establish original recording order or overlap. Use the official calibration/minival split; verify loader integrity and inspect long neural-pattern duplicates before interpreting independent outcomes. Do not call this online adaptation immediately before the query.",
+    "features": "Causal finite exponential 240ms kernel plus current and four past bins; reset per trial/file as in L3/L4. Earlier calibration activity may supply feature history, but only the selected support rows fit moments or weights.",
+    "normalization": "All methods use support-only input means/std with count-unit floor0.1; per-output target means and one pooled target std floor1e-6; raw-unit predictions before scoring",
+    "cost": "320 unique labelled20ms rows, recording span/trials reported. Primary readout uses two passes =640 teaching events. Whitening sees the same320 activity rows for20 passes; report6400 unlabelled row exposures and quadratic lateral memory. Earlier feature history is additional unlabelled activity, shared by all methods."
+  },
+  "methods": {
+    "ridge": "Lambda selected on real source fit-day windows in L4 development, at budget320",
+    "raw_nlms_p2": "Mu source-selected at budget320/two passes, same averaging as local method",
+    "raw_nlms_p8": "Source-selected at budget320/eight passes, explicit fourfold primary feedback cost",
+    "exact_whitening_p2": "Exact covariance square-root reference; s/mu source-selected on real source fit-day windows",
+    "local_real": "Two source-selected scalars s/mu from real source. Fresh whitening and readout weights; no source neuronal weights transported",
+    "local_synthetic": "Three sets of scalars selected using train-profile-matched synthetic source, otherwise identical target adaptation; source profiles contain additional real-source statistics",
+    "local_time_shift": "Three sets selected using shifted source, otherwise identical target adaptation; raw autocorrelation preservation is approximate after trial-reset features",
+    "local_default": "s=0.1,mu=0.1, fixed after L3 outcomes/design checks and before L4 scoring",
+    "calibration_mean_and_zero": "Transparent additional diagnostics"
+  },
+  "draws": "Three fixed whitening noise seeds per file: numpy SeedSequence inputs [20261011,file_index,draw_index], file_index from date-sorted manifest. Same standard-normal draws across every source-conditioning arm; shrinkage changes their scale. Average R2 over draws within each file, then average source-control realizations within that file. Deterministic comparators have one prediction per file.",
+  "selection": "Every hyperparameter is read from the locked L4 source-development selection table. No choice of budget, passes, checkpoint, noise seed or method from minival scores. This is source hyperparameter selection, not gradient meta-training.",
+  "metric": "Official variance-weighted R2 over all eligible rows of each complete minival file, including rows irrespective of target magnitude. Primary aggregate is unweighted mean over four files. Save per-muscle and pooled errors as descriptive diagnostics.",
+  "intervals": "10000 paired bootstrap resamples of the four dates, numpy default_rng(20261011); average draws and source-control realizations within date BEFORE bootstrap. Conditional on this animal, recordings and source fits; not population/species inference. Four dates make these intervals unstable and they are descriptive implementation-quality screens, not formal population non-inferiority tests. Report all four file scores, not just the interval.",
+  "source_quality_gate": {
+    "G0_functional_finite": "All primary real-rule and ridge predictions finite, no fallback; mean real-rule R2>=0.10",
+    "G1_against_ridge": "95% paired date-bootstrap lower bound for real-rule minus ridge > -0.02",
+    "G2_against_matched_local_readout": "95% lower bound for real-rule minus raw_nlms_p2 >0",
+    "G3_local_approximation": "95% lower bound for real-rule minus exact_whitening_p2 >-0.01",
+    "pass": "All four conditions. A pass shows source decoding quality of this implementation and permits a separately recorded human protocol; it does not establish source-specific transfer or novelty.",
+    "whitening_residual": "Report calibration matrix approximation and covariance residuals for every file/draw/shrinkage selected; no claim of fully converged whitening or a new residual threshold chosen from validation outcomes."
+  },
+  "source_conditioning": "Report real minus synthetic/time_shift/default on every file with paired conditional intervals. Identical selected scalars yield identical target predictions with paired noise; record that algebraic equivalence. Functional parity alone does not prove real-source knowledge is useful.",
+  "failures": "Save failed runs and reasons; do not drop files/draws, select a replacement seed or use an unregistered prediction fallback. A primary failure fails the quality gate. Preserve all original outputs before any later amendment.",
+  "outputs": "Separate data/wacv/xspecies_l4_m1_validation directory: locked protocol/source-selection hashes, exported data hashes, support/query absolute IDs, raw predictions per method/file/draw, per-file scores and counts, gate/contrast summary, independent audit.",
+  "limits": "Equilibria use a global linear solve as reference simulation; activity settling is checked but not implemented or timed in this benchmark. Full lateral weights have quadratic memory. No closed-loop/robot/observed-human-movement or biological-conservation claim. Known whitening/NLMS methods require citations and a demonstrated useful distinction."
+}

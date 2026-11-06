@@ -1,0 +1,50 @@
+{
+  "registered_utc": "2026-10-12T08:25:50.881507+00:00",
+  "amends_sha256": "fcd1c7f51fed553710673cf0b4514a54bfda4e5c75f5bde961976c3a9563785d",
+  "trigger": "Peer review before geometry generation or evaluation: fixed goal plus effectively exact source position can test new-wall transfer but does not test acquisition of a new goal or retention after a conflicting objective.",
+  "goal_override": {
+    "A_goal": [
+      3,
+      3
+    ],
+    "B_goals_by_pair": [
+      [
+        6,
+        6
+      ],
+      [
+        2,
+        7
+      ],
+      [
+        7,
+        2
+      ],
+      [
+        6,
+        3
+      ],
+      [
+        3,
+        6
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        2,
+        6
+      ],
+      [
+        6,
+        2
+      ]
+    ],
+    "rule": "Exclude both A and B goal cells plus10starts from sampled blocked cells. Require all free cells connected to both goals and every start shortest distance<=30 to each. B reward is on entry to pair-specific Bgoal; A return restores(3,3).",
+    "observation": "Goal coordinate, species, phase and taskID are never policy inputs. Goal change must be discovered through own action/reward experience; no invented biological goal-relocation data. Early task ambiguity is a limitation, not a source-prior failure diagnosis.",
+    "interpretation": "A_before isolates novel-topology transfer at source goal; B phases test reward-driven goal/topology adaptation; A_after tests the return to prior goal and topology. No no-forgetting conclusion follows from a nonsignificant delta."
+  },
+  "extra_control_design": "Source-only fitted goal-bias/persistence synthetic labels on exactly the native sampled observations are a proposed additional control. They require a separate registered source protocol and audited source fits; no extra arm may enter this locked confirmation without a pre-evaluation addendum.",
+  "conventional_reference": "The earlier fixed-goal planner is a fixed-goal competence reference only. Any relocating-goal/multiple-goal memory planner must be separately specified, code-reviewed and hash-bound before its scientific evaluation; never supply Bgoal to policy."
+}

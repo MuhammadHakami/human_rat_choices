@@ -1,0 +1,37 @@
+{
+ "per_room": {
+  "100": {
+   "cells": 80,
+   "conflict": 11
+  },
+  "102": {
+   "cells": 80,
+   "conflict": 13
+  },
+  "104": {
+   "cells": 80,
+   "conflict": 10
+  },
+  "106": {
+   "cells": 80,
+   "conflict": 11
+  },
+  "108": {
+   "cells": 80,
+   "conflict": 11
+  },
+  "110": {
+   "cells": 80,
+   "conflict": 16
+  },
+  "112": {
+   "cells": 80,
+   "conflict": 13
+  },
+  "114": {
+   "cells": 80,
+   "conflict": 12
+  }
+ },
+ "conflict_share": 0.1515625
+}

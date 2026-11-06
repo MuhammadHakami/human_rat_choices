@@ -1,0 +1,64 @@
+{
+  "name": "L5 prospective validation on three unexamined M1 held-out calibration sessions",
+  "created_utc": "2026-10-11T08:35:03.437455+00:00",
+  "scope": "Three new public held-OUT calibration sessions 20121004/17/24. Same macaque, new dates. Forward whole-trial split within each acquired session; not private benchmark evaluation or human transfer.",
+  "prior_information": "Earlier M1 source days and L5 development outcomes viewed. Held-in minival overlap discovered before any model score and validation cancelled; files reuse training prefixes. New held-out session masks/timestamps/trial starts and shapes only inspected, no neural/target values. Linear primary selected on source interpretability grounds; softplus secondary. V1 initialization configuration originated in H1 development.",
+  "prerequisite": "Root record allow_heldout_m1 true, exact source encoder/evaluate/audit/protocol/capacity hashes. Earlier held-IN minival protocol execution is revoked.",
+  "data": {
+    "manifest": "data/raw_transfer/falcon/m1_heldout_download_manifest.json",
+    "structure": "data/raw_transfer/falcon/m1_heldout_structure.json",
+    "loader_commit": "67f85481e49dd280257b15141fd965cba0e02dba",
+    "files": "All three dates without outcome exclusions",
+    "eligible_query_rows": [
+      914,
+      905,
+      895
+    ],
+    "trials_per_file": 10,
+    "units": 64,
+    "outputs": "All16measured EMG muscles"
+  },
+  "support_and_query": {
+    "support": "FIRST320 eligible rows of each held-out calibration file. Fits a fresh head for every frozen bank. Support spans first3 trials; remaining eligible rows in third trial are unused.",
+    "query": "Every eligible row of all subsequent WHOLE trials with ID strictly after the last support row trial. Exactly7 later trials per file, 914/905/895 query bins. No query labels/activity in support fits or bank adaptation.",
+    "chronology": "Forward split within same file, verified by absolute bin and trial indices. Query feature history resets at each trial, so no support/query context overlap. New dates remain one animal. Audit exact25-bin neural blocks against all four earlier source recordings.",
+    "features": "Frozen selected source bank; causal25taps, trial/file reset. For capacity reference25features per neuron; otherwise5. Earlier support-trial spikes supply unlabelled history only.",
+    "normalization": "Supportmean/stdwithfixed0.1count-unit floor, per-output targetintercept andonepooledscale; fresh ridgehead eachfile andbank. Mean-normalizedGram exactlysame asL5source.",
+    "labels": "First320 support selected solely eligibility mask before neural/target values; later whole query trials selected by trial IDs."
+  },
+  "primary": "Mean weighted R2 across three real-trained LINEAR banks within file, then unweighted mean over THREE dates. Average scores, not predictions.",
+  "secondary": "Softplusreal-trainedsameprotocol; reportwithoutreplacingprimary.",
+  "methods": {
+    "trained": "Everyreal/synthetic/time_shift \u00d7linear/softplus \u00d73sourcefits, exactday3selectedcheckpoint and320binridge fromL5 evaluate.json. No sourceweightsfine-tuned.",
+    "fixed": "V1, sqrt-countV1, multiscale,3randombanks, initialsoftplusV1; eachlambda frozen L5day3 selection.",
+    "capacity": "Full25lag raw/sqrtcount ridge, lambda10 fromindependentlyregistered sourcecapacitydiagnostic.1600Dvs320D explicitunequalcapacity.",
+    "references": "Calibrationmean andzero"
+  },
+  "selection": "All banks/checkpoints/lambda values remain frozen from third source day. No changes from any new held-out outcome, no exclusions or replacement seeds.",
+  "metric": "Float64 variance-weighted R2 across all16 muscles and every selected future eligible row. Per-muscle R2 and SSE/SST; all three file scores shown.",
+  "contrasts": [
+    "primary real-linear minusV1",
+    "minusmultiscale",
+    "minusrandom-bankmean",
+    "minussynthetic-linear",
+    "minustime_shift-linear",
+    "minusrawfull-history",
+    "minussqrtfull-history",
+    "secondaryreal-softplusminusfixedcontrols/pairedtrainedcontrols"
+  ],
+  "intervals": {
+    "draws": 10000,
+    "seed": 20261011,
+    "unit": "Three dates; average the three source-fit scores within date before bootstrap",
+    "interpretation": "Conditional descriptive intervals with only3 dates, not population or formal non-inferiority evidence. Exact two-sided signflip minimum .25 for three pairs."
+  },
+  "quality_reporting": {
+    "functional": "All3primary realbank predictionsfinitewithnofallback; reportmeanR2andcountfailedfiles/fitseeds. MeanR2>=.10 isdescriptivequalityscreen.",
+    "specificity": "Reportreal-minus-synthetic/time/matchedgeneric separatelybyfileandmean/interval. No causalmechanismdecompositionfromcontrols.",
+    "advance": "After independentaudit, recordseparatehumanprotocol/decision. Sourcefunctionalquality/consistency informsjudgment; descriptivebootstrap screensneitherprove norveto crossspeciestransfer. Nohumanscoringunderthisprotocol."
+  },
+  "failures": "Recordall failures/numericalerrors,savepartialoutputs,noexcludedfile/replacementseed/fallback. Primaryfailurespreventautomaticadvance.",
+  "artifacts": "data/wacv/xspecies_l5_m1_heldout: protocol/advance/export/source hashes, duplicate audit, exact support/query absolute bins and trial IDs, recording spans, per-bank raw predictions, all file scores, summary and independent audit. Separate data/xspecies/falcon_m1_heldout/000941 cache, never added to old source file glob.",
+  "limitations": "Offline one-monkey EMG decoding on genuinely unexamined session values; global outer gradients and global ridge head. No private benchmark result, new animal, species conservation or embodied closed-loop claim.",
+  "fixed_before_heldout_neural_target_values": true
+}

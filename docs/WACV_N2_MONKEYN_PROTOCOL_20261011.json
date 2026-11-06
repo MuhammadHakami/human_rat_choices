@@ -1,0 +1,88 @@
+{
+  "registered_utc": "2026-10-11T17:20:59.815285+00:00",
+  "stage": "Before any MonkeyN NWBdownload/open, preprocessing orscore. Registered before interpreting complete new N1MonkeyX outcomes. Existing H1/X targets alreadyexamined; these6MonkeyNfiles are an untouched new task/animal validation.",
+  "question": "Can the fixed constrained temporalpriors and fixed source-preservingstrategy transfer to a new macaque and measured2Dfinger velocities? No method/source/head/budget chosen by newtarget outcomes.",
+  "dataset": "FALCON M2,DANDI000953,publicheld-outcalibration files; one MonkeyN,6files4dates, not6animals or officialFALCONscore. Multiunit spikes, not verifiedisolatedsinglecells.",
+  "acquisition": {
+    "listing": "data/audit/wacv_falcon_replication_metadata_20261011/000953_assets.json",
+    "listing_sha256": "5b231eda314ffbcfe3b79f84c35919c8bbc67864be5000537fb97b30dbc3cc4e",
+    "assets": [
+      {
+        "asset_id": "62d4ac13-b645-4997-ab79-08d6432ff731",
+        "blob": "455b506b-332e-4dd7-a2ea-cb6e33fd1782",
+        "zarr": null,
+        "path": "sub-MonkeyN-held-out-calib/sub-MonkeyN-held-out-calib_ses-2020-10-30-Run1_behavior+ecephys.nwb",
+        "size": 329103743,
+        "created": "2024-10-29T16:13:46.349482Z",
+        "modified": "2024-10-29T16:13:46.349496Z"
+      },
+      {
+        "asset_id": "737b51aa-a009-4ceb-b6a8-2d68a34b9909",
+        "blob": "6ea13ba0-fc15-4b19-85c5-b6a128a0d72f",
+        "zarr": null,
+        "path": "sub-MonkeyN-held-out-calib/sub-MonkeyN-held-out-calib_ses-2020-10-30-Run2_behavior+ecephys.nwb",
+        "size": 307734686,
+        "created": "2024-10-29T16:13:58.051301Z",
+        "modified": "2024-10-29T16:13:58.051326Z"
+      },
+      {
+        "asset_id": "f5d42e29-efe9-48ff-b0ae-ff1d0c2dc696",
+        "blob": "f64b30b3-cdf5-4bf4-9b40-1b5591f483e2",
+        "zarr": null,
+        "path": "sub-MonkeyN-held-out-calib/sub-MonkeyN-held-out-calib_ses-2020-11-18-Run1_behavior+ecephys.nwb",
+        "size": 303915197,
+        "created": "2024-10-29T16:13:53.615777Z",
+        "modified": "2024-10-29T16:13:53.615795Z"
+      },
+      {
+        "asset_id": "0395a19a-467f-4c7c-8fdb-c21893da3923",
+        "blob": "ed51187b-27ee-48d3-9cff-8e33846526b8",
+        "zarr": null,
+        "path": "sub-MonkeyN-held-out-calib/sub-MonkeyN-held-out-calib_ses-2020-11-19-Run1_behavior+ecephys.nwb",
+        "size": 367545853,
+        "created": "2024-10-29T16:13:54.495721Z",
+        "modified": "2024-10-29T16:13:54.495738Z"
+      },
+      {
+        "asset_id": "ca032164-b5ba-4dda-ab18-8bbc93a595b3",
+        "blob": "44396262-64ab-4a0c-bb39-1f88c5b03915",
+        "zarr": null,
+        "path": "sub-MonkeyN-held-out-calib/sub-MonkeyN-held-out-calib_ses-2020-11-24-Run1_behavior+ecephys.nwb",
+        "size": 267286366,
+        "created": "2024-10-29T16:13:58.988526Z",
+        "modified": "2024-10-29T16:13:58.988545Z"
+      },
+      {
+        "asset_id": "b173e285-c992-490d-a539-08c2843326a3",
+        "blob": "effef999-ec75-46ec-85b3-4ae27b8c4da8",
+        "zarr": null,
+        "path": "sub-MonkeyN-held-out-calib/sub-MonkeyN-held-out-calib_ses-2020-11-24-Run2_behavior+ecephys.nwb",
+        "size": 283710806,
+        "created": "2024-10-29T16:14:01.667833Z",
+        "modified": "2024-10-29T16:14:01.667852Z"
+      }
+    ],
+    "expected_files": 6,
+    "expected_bytes": 1859296651,
+    "order": "All6sortedpaths,two downloadsatonce; no decoder-scoregate. Preserve download failures and all receivedfiles.",
+    "raw_root": "data/raw_transfer/falcon/000953",
+    "raw_files_read": false
+  },
+  "model_protocol": "All N1sourceanimalsL/X andheadvariantsunit_adam/subspace_sgd, 21initializations each, frozen/free/anchor1, all2/3/5 budgets,150steps,LR.001,all6checkpoints and6raw/sqrthistory controls; same support-onlyridge/checkpoint rule. Inherit full scientificsettings from bound N1protocol, without changing it.",
+  "n1_protocol_sha256": "59b35b0dffb58b3c30eaa5fe11436e9b9ff156df1bf676160a20900d2ed9b67f",
+  "source_selection_sha256": {
+    "data/wacv/xspecies_n1_source/L_subspace_sgd_selection.json": "afb1340e129b5cdbd98beb49ade881e9dee554ea0ec6896baa36657e9a03b262",
+    "data/wacv/xspecies_n1_source/L_unit_adam_selection.json": "4a87c1e5b43910c490028aa67e1f0c964f32485f700844a0cbbddb2e7adffc42",
+    "data/wacv/xspecies_n1_source/X_subspace_sgd_selection.json": "894bcecbe0914e41b8d9c9984b8d8e4cf2544786f5d5758a51b99294d360285f",
+    "data/wacv/xspecies_n1_source/X_unit_adam_selection.json": "905002e9496e9b2aa121eb3c0df33deb1cd8f73b80e21fd2b680c94230fa172f"
+  },
+  "official_loader_sha256": "7638d839ec2085c7dde71ec9ca9676cbf1256c79fdcb327c4ac6487bfe5c9b05",
+  "causal_alignment": "Importantauthor-loaderdifference: M2 bins spikes on [label_time,label_time+.02) via is_timestamp_bin_start=True. For strict label-time inference, shift officialneuralcounts backonebin: currentrow gets previousrow counts onlywhen same trial, firstrow/trial zero. Targets/trialflags/masks retained. Every learned/generic/history/NDT3method must receive same shiftedcounts. Do not claim original timestamp alignmentcausal or officialchallenge score. Independentlyverify unitspiketime histograms vs rawtimestamps onrepresentativebins before anytargetmodel.",
+  "eligible_split": "Atleast6eligiblewholetrials, firstk2/3/5supporttrials, commonqueryafter5. Allfiles checked structurally; any<=5excluded with reason before scores. No outcome exclusion, replacements or silently choosing onlyeasierfiles. No source-training/newmethoddesign on these MonkeyN data.",
+  "analysis": "Retain allsame/crossbudget contrasts, bothmodes+frozen+final. Average3source-trainedseeds perarm, clusterbootstrap10000drawsseed20261011 byYYYY-MM-DD, pooling runswithindate. Four dates if alleligible,unadjusted/descriptive; no animalpopulation inference.",
+  "planned_fits_if_all_eligible": 3024,
+  "planned_updates_if_all_eligible": 453600,
+  "gate": "Download/export and independent timestamp/trial/count validation first. No model until source-only96channel/2output shape-adaptation dry/audit and separate immutable artifactGO. No favorable outcome threshold. Bind exportedarrays plus exactnewdriver/auditor before fits.",
+  "ndt3": "A separate pretrained baseline protocol is still required; runtime/source-only adapter nowverified64/176channels. No NDT3targetfit yet. Its source training provenance should also be checked for MonkeyNalias overlap.",
+  "claim_limits": "Freshnewmacaque/task, not freshhuman, humanpopulation replication, local-learning, taskperformance inliveBCI/robot, singlecell isolation or globallyuniquealgorithm."
+}

@@ -1,0 +1,76 @@
+{
+  "registered_utc": "2026-10-12T06:52:31.097765+00:00",
+  "version": "paired-windowed-spiking-gpu32-v2",
+  "registered_by": "Claude under author directive 2026-10-12 (Claude runs WACV experiments on GPU 1; Codex reviews/audits)",
+  "purpose": "Resolve local-cut vs full-BPTT at the released 32-parallel-episode batch scale and a 4x longer budget, where v1 (8 slots, 524,288 frames) was still improving at the stopping point and pairs flipped sign.",
+  "parent": "docs/WACV_EMBODIED_PAIRED_SPIKING_SOURCE_PROTOCOL_20261012.json",
+  "parent_sha256": "cc467dedb1cddf1629633c67b0272ebad42c8a3233416e43fc6c53182b50f296",
+  "prototype": "scripts/eprop_windowed_reference.py",
+  "prototype_sha256": "c9c82e382e0ed0d686983a5cec1242dce2e4d7410c82a5958519731df2069446",
+  "device_wrapper": "scripts/eprop_windowed_device.py",
+  "device_wrapper_sha256": "8e3165116e1e195b5e20e1c97030f57a2f595c23919a0f48937285711778b246",
+  "motivation": [
+    "loss_scale_diagnostic_claude.json: 32-slot tiling multiplies task/regulariser gradient share x4 and reduces eps=1 damping",
+    "v1 rate .01 training success still rising at 524,288 frames in all 6 fits; v1 rate .001 near chance"
+  ],
+  "changes_from_parent": {
+    "parallel_slots": 32,
+    "training_frames_each": 2097152,
+    "rates": [
+      0.01,
+      0.03
+    ],
+    "seeds": [
+      30,
+      31,
+      32,
+      33,
+      34,
+      35
+    ],
+    "device": "cuda:1 (RTX 3090), TF32 disabled; float32",
+    "everything_else": "unchanged: network, neuron, clock, A2C loss, regularisers, Adam eps=1, 100-decision windows, curriculum frame boundaries 32768/65536, observation scaffold, selection schedule/arms/repeats, common random numbers across methods"
+  },
+  "methods": [
+    "windowed_local_cut",
+    "windowed_full_bptt"
+  ],
+  "planned_fits": 24,
+  "selection": {
+    "rule": "For each method choose one global rate maximising adaptive success count across 6 seeds/repeats/starts (360 trials); ties frozen success then lower registered rate index.",
+    "denominator_per_rate": 360,
+    "minimum_competence_fraction": 0.5,
+    "threshold_is_development_gate": true,
+    "no_threshold_redefinition": true,
+    "primary_contrast": "Paired per-seed adaptive success difference local_cut - full_bptt at each rate (6 pairs, sign and exact counts); no p-value claimed with 6 pairs",
+    "full_cohort_before_score_interpretation": true
+  },
+  "deviations": [
+    "64 recurrent units instead of 400",
+    "252 frozen source inputs replace spiking CNN; omit CNN skip features",
+    "No Atari action repeats",
+    "Adam updates per 100-decision window replace released default episode-synchronous gradient accumulation",
+    "Task and reward differ; this is not an Atari score reproduction",
+    "32 parallel training slots (released value) instead of 8",
+    "GPU execution (CPU bit-identity and CUDA 3e-7 gradient agreement verified for the device wrapper)"
+  ],
+  "claims": {
+    "local_cut": "Explicit-trace-equivalent windowed gradient reference; software uses stop-gradient autodiff, not online backprop-free hardware.",
+    "full_bptt": "Same forward pass; temporal recurrent/reset credit paths retained.",
+    "cost": "Report actual frames/substeps/spikes, weights/optimizer/state/buffer/scaffold memory and estimated ops; no joules/whole-agent energy or universal forgetting claim.",
+    "biology": "No measured brain mechanism and no actual biological native-data fit in this source comparator."
+  },
+  "boundary": "Source only. No native or digital target layouts8\u201325, no shared biological/agent transfer, no manuscript success/submission claim.",
+  "checks": [
+    "Runner dry on cuda:1: both methods, frame-exact, all-arm re-execution replay identical on the same device",
+    "CPU-vs-CUDA wrapper agreement (eprop_windowed_device.py check)",
+    "Full physical budget arithmetic with 32 slots incl. forced curriculum boundaries",
+    "Codex review of protocol/runner before full fits; independent audit before scores"
+  ],
+  "resources": {
+    "device": "cuda:1",
+    "processes_max": 2,
+    "cpu_threads_per_process": 1
+  },
+  "failure_policy": "Preserve nonfinite/failed/partial cases; no silent retry or seed replacement. No full-fit score until all12 end and independent audit completes. Implementation/IO errors invalidate the cohort; never scored as learner failure."
+}

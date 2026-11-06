@@ -1,0 +1,1 @@
+{"job": ["B", "image", "cold_ppo/1001", 0], "rosetta_seed": 734796314, "composed": {"foscttm": 0.5083960730365182, "mean_rank": 1017.28375}, "direct": {"foscttm": 0.4537304902451226, "mean_rank": 908.00725}}

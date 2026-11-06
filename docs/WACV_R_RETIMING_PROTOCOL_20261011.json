@@ -1,0 +1,156 @@
+{
+  "registered_utc": "2026-10-11T09:43:40.422334+00:00",
+  "author_scope": "WACV constructive real-data follow-through; existing manuscript remains fallback. No external submission.",
+  "authorization": "User already requested continued experiments and direct Claude debate. Both GPUs explicitly allowed in the active Claude tmux session; leave desktop memory headroom.",
+  "design_origin": "docs/CLAUDE_CODEX_REPLY_20261011_TRANSFER.md, R/S amended 09:40 UTC",
+  "prospective_limit": "Registered after existing MICrONS/control outcomes; future R outcomes and S real-label scores not examined at registration. Existing E1 tasks are already-examined, so this is exploratory generality, not fresh benchmark validation.",
+  "go_rule": "Implementation and input/protocol hashes recorded after structural smoke. No R AllTest/far run or S real-label probe until that technical check. This is reproducibility review within existing user authorization, not a request for additional user permission.",
+  "id": "WACV-R-retiming-interface-20261011",
+  "question": "Does the released neural-prediction interface become useful to the fixed servo when model time or state reset per game frame changes?",
+  "inputs": {
+    "data/mva/servo/collect.npz": "da122a4e0e75f1bdd050c9b94f25a5b6705d3e8e492d7159004816f95dbaaad3",
+    "data/mva/servo/heads.json": "ffc33a93ce5db45af559fce74e66f426f736c0c6eee09f5cb4f6f2efeaf59fab"
+  },
+  "data": "Existing RandomTrain V1-PPO trajectories, 6493 stored frames, two game instances, scan8-5 of one MICrONS mouse. Maze predictions are model outputs grounded in neural-training recordings, not measured neural responses to our game.",
+  "arms": [
+    "rep3_cont",
+    "rep15_cont",
+    "gray3",
+    "gray15",
+    "pixels"
+  ],
+  "reference_arms": [
+    "existing V1",
+    "existing twin_cont",
+    "existing twin_trial_reset"
+  ],
+  "interface": {
+    "repeat_steps_per_game_frame": [
+      3,
+      15
+    ],
+    "gray_template_steps": 10,
+    "continuous": "carry state between game frames and trial boundaries",
+    "frame_reset": "restore identical gray-adapted state before each game frame",
+    "game_clock": "Server waits synchronously for an action; extra neural steps change model time per frame. Record wall-clock cost; do not call this additional game-action latency.",
+    "response": "last twin output after repeated view",
+    "all_arms_receive": "identical rendered frame stream during training collection; future closed-loop trajectories may diverge"
+  },
+  "replay_check": {
+    "exclude": "first kept trial of each instance, identically for new arms",
+    "references": [
+      "rep3_cont vs stored twin_cont",
+      "rep3_trialreset vs stored twin_reset"
+    ],
+    "fixed_pass_rules": {
+      "median_row_correlation_min": 0.99,
+      "median_nrmse_max": 0.1,
+      "stored_head_strafe_mae_max": 0.05,
+      "stored_head_strafe_correlation_min": 0.99
+    },
+    "report_also": [
+      "gain distribution",
+      "offset",
+      "NRMSE upper tail",
+      "strafe sign agreement",
+      "dropped-frame/time-gap counts"
+    ],
+    "failure_action": "Complete online re-collection of a continuous stream per instance with every candidate arm calculated on every actual game frame; no replay approximation is used for new heads if either required check fails."
+  },
+  "heads": {
+    "target": "current lateral target offset on forward>0.5 rows within60degrees bearing",
+    "placement_group": "target/start positions, rounded exactly as existing mva_servo.placements",
+    "split_rng": 0,
+    "validation_fraction": 0.2,
+    "preprocessing": "training-only z-score, PCA64",
+    "ridge_alpha": [
+      0.01,
+      1.0,
+      10.0,
+      100.0,
+      1000.0,
+      10000.0,
+      100000.0,
+      1000000.0
+    ],
+    "selection": "validation-placement MSE; all alpha scores retained; no AllTest tuning",
+    "burn_in": "same excluded first-trial rows for all new candidate heads",
+    "reference_reuse_limit": "Existing reference heads/runs use their original training rows and interface; disclose that they are historical context. Primary retiming contrasts use equally fitted new heads.",
+    "encoder_only_secondary": "Apply frozen rep3_cont head to each alternate encoder on training-build validation placements; report lateral prediction correlation and strafe agreement. This is offline and not a closed-loop dynamics causal test."
+  },
+  "servo": {
+    "plant": "data/mva/servo/heads.json, no further tuning",
+    "dlat_per_strafe": -0.1465,
+    "horizon": 4.0,
+    "forward": 1.0,
+    "yaw": 0.0,
+    "strafe": "clip(-estimated_lateral/(dlat_per_strafe*horizon),-1,1)",
+    "AllTest": {
+      "instances": 2,
+      "completed_trials_per_instance": 200,
+      "conditions_reported": "all available; prespecified tracking primary Normal and Fog"
+    },
+    "RandomTrainFar": {
+      "instances": 2,
+      "trials_per_instance": 100,
+      "far_distance": 4.5,
+      "warmup": "existing V1 PPO policy, excluded from scored trials"
+    }
+  },
+  "statistics": {
+    "primary_paired_slope_contrasts": [
+      [
+        "gray15",
+        "rep3_cont"
+      ],
+      [
+        "rep15_cont",
+        "rep3_cont"
+      ],
+      [
+        "gray3",
+        "rep3_cont"
+      ],
+      [
+        "gray15",
+        "gray3"
+      ]
+    ],
+    "primary_conditions": [
+      "Normal",
+      "Fog"
+    ],
+    "cluster": "actual target placements after checking per-instance trial identity and placement coverage across arms",
+    "bootstrap_draws": 2000,
+    "seed": 0,
+    "slope": "same one-unit-before-target lateral tracking definition as mva_failures.tracking_slope",
+    "pairing_check": "Persist actual trial/placement keys; use same sampled placement multiplicities for both arms. If trajectories do not reach the slope evaluation point, record arm-specific inclusion and sensitivity; do not silently present those complete cases as an identical trial sample.",
+    "secondary": [
+      "own-arm conditional slope intervals",
+      "hit rate over every completed trial",
+      "far-control slope",
+      "wall-clock time per game frame"
+    ],
+    "multiplicity": "All prespecified contrasts/conditions reported, no winner selection or population significance claim."
+  },
+  "interpretation": {
+    "positive": "A direct positive contrast supports improved performance of the complete chosen interface under this controller and data collection. Separate heads make this an interface effect.",
+    "negative": "No benefit under tested interfaces; decoder capacity, fixed servo and train/test visual shift remain plausible explanations.",
+    "forbidden": [
+      "significant arm vs nonsignificant arm treated as a difference",
+      "failure proved intrinsic to predicted neurons",
+      "pure dynamical mechanism from different heads",
+      "general failure of brain-derived agents",
+      "first data-derived closed-loop controller"
+    ]
+  },
+  "outputs_required": [
+    "raw game logs with trial and placement identifiers",
+    "replay validity metrics",
+    "full head-selection traces and train/validation row IDs",
+    "raw features/head files and hashes",
+    "every completed and incomplete trial outcome",
+    "paired contrast calculation inputs",
+    "code and source model hashes"
+  ]
+}

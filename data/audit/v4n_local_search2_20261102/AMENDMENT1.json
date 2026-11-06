@@ -1,0 +1,6 @@
+{"written_utc": "2026-11-02T19:11:42Z",
+ "outcomes_seen": "registered search, test and primary contrasts of s2_dfa, s2_ed, s2_head (s2_head below v1_head on test)",
+ "reason": "TPE spent 149/160 trials on DFA; the readout-only family (strictest locality: no hidden plasticity) got 4 trials. Author 2026-11-02: optimise the biologically plausible learners, not PPO.",
+ "change": "family-stratified study v4n_local2_head (S2_PLASTIC=head): same space, objective, dev rooms and seeds, 60 trials; best trial tested once on 30 seeds x 3 priors as s2_head_strat; KPI probes as the others. The registered s2_head result stays reported.",
+ "script_sha256": "14237b27101c66e4ec094fd692b6d6c580f5cb4eed6ee7d06b0772a68434fc04",
+ "also": "the matched PPO search (v4n_ppo_search_20261102) finished 160 dev trials (best dev 30.85 vs local 30.84); its test was stopped after 4 runs at the author's direction (focus on bio-plausible learners); reported as a dev-only reference."}

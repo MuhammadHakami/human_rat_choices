@@ -1,0 +1,1 @@
+{"arm": "cold_ppo", "seed": 1004, "cfg": 114, "goals": 6, "trials": 30, "lengths": [7, 25, 37, 24, 41, 9]}

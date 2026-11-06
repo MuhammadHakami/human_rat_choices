@@ -1,0 +1,4 @@
+{"written_utc": "2026-11-02T22:25:41Z", "outcomes_seen": "no cortex outcome of this study read",
+ "reviewer": "UYhB: '9K neurons reduced by PCA to 144 PCs? I mean -- why, and for what reason?'",
+ "change": "add the full 9,941-unit predicted response (no PCA) as modality 'cortexfull' for image/text/PCA144 and every network's action and hidden layer (3 Rosetta seeds); report the variance PCA-144 keeps on fit and test frames. PCA-144 results are kept as the matched-dimension secondary.",
+ "script_sha256": "f4d8173d8178891986d350b1555fecfb32e3a176e31b9754ea3a7e2e58e7c8d4"}

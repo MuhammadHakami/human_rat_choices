@@ -1,0 +1,241 @@
+{
+  "registered_utc": "2026-10-11T20:05:23.311384+00:00",
+  "stage": "Before any frozen-feature extraction/probe fit. Old raw/behavior-only M2 outcomes known; jointM2 and sqrtM2 running/complete-in-progress, no partial or complete newjoint/sqrt outcomes interpreted. All targets exploratory.",
+  "question": "Can supervised readout adaptation of a frozen neural representation improve scarce calibration relative to full-model tuning and architecture-matched untrained features?",
+  "encoders": [
+    {
+      "name": "pretrained",
+      "seeds": [
+        0
+      ]
+    },
+    {
+      "name": "random",
+      "seeds": [
+        0,
+        1,
+        2
+      ]
+    }
+  ],
+  "random_control": "Native BrainBertInterface constructor with deepcopied released cfg/data_attrs; torch CPU/CUDA seeds202610110+s. All trainableparameters untrained; same names/shapes/preprocessing/context metadata. This is a fixed-architecture random-feature comparison, not fully tuned scratch or source-free architecture.",
+  "checkpoint": "data/audit/wacv_external_baselines_20261011/ndt3_45m_200h.ckpt",
+  "checkpoint_sha256": "74e39356e4a5099fe64aee637b4b7298ae4923d8f69daf48a7b77b02cdca8745",
+  "features": "Native covariate query features BEFORE originalsharedlinearreadout;1024dimensionsperoutput token. Nativeeval/inference_mode,no parameter updates,allbehaviorinputs masked andzeroactualbehavior/unknownauxinputs. Causal exactsame-trial windows, noKVcache/padding/testtimelearning or querynormalization. Allencoderssame causal batch4layout. NativefeaturesBF16 storedasexactuint16bits.",
+  "parameter_fidelity": "Record complete namedparameter digest before/after feature extraction; assert frozenrequires_gradFalse,nativecheckpointshape/parametercount match. Independent predeterminedfeature/predictionreplays and sourcecausal/label/memberisolation checks. No independent attentionimplementation.",
+  "head_modes": {
+    "pretrained": [
+      "shared_fresh",
+      "shared_residual",
+      "per_output_fresh",
+      "per_output_residual"
+    ],
+    "random": [
+      "shared_fresh",
+      "per_output_fresh"
+    ]
+  },
+  "primary": "Both fresh shared/peroutput pretrainedprobes versus correspondingthree-seed-mean randomencoderprobes, plusstrongraw/sqrtfullhistory andnativejoint/frozen controls. Keepbothheadtypes/no favorablemode selection. Peroutputhead increasesreadoutcapacity; cannot attributeitsdifferencefromnativejoint solelyto featurepreservation.",
+  "residual": "Secondary pretrainedhead predictions=originalnativeprediction+supervisedridgecorrection; shrinks correction towardzero. Source-preserving linear adaptation is established, not novel.",
+  "head_math": "Feature-wise fitting-support mean/std(maxstd,.1),secondcenter,mseintercept; mean-normalizedGramridge. Native-styleperoutputabs.999quantiletargetscale fromfitting-supportonly,np.isclosezero->1,clipfitlabels[-1,1]. Forresidualheadsubtract cachednativeunscaledprediction. Sharedhead poolsalloutputtokens withone1024vector+onebias;peroutputonevector/biasperoutput. Restoretargetscale forreportedrawunits.",
+  "ridge_grid": [
+    0.01,
+    0.1,
+    1.0,
+    10.0,
+    100.0,
+    1000.0
+  ],
+  "selection": "Whole-support-trial leave-one-out CV separately foreachfile/budget/encoderseed/headmode; recomputeallfeature/labelnormalization on fittingfold only. CriterionmeanrawheldoutMSE/max(pooledfittingrawtargetvariance,1e-12),averagedfolds. Smallestlambda ties. Finalheadfitallk supporttrials; no query/targetscore/modelchoice.",
+  "target_cohorts": {
+    "M2": {
+      "data/xspecies/falcon/000953/sub-MonkeyN-held-out-calib_ses-2020-10-30-Run1_behavior+ecephys.npz": "fa4186d35a0ad3d25b8323c4aadc3d37c0d2c2cff7c70e72a670b56da027aa11",
+      "data/xspecies/falcon/000953/sub-MonkeyN-held-out-calib_ses-2020-10-30-Run2_behavior+ecephys.npz": "08500201152252972ad9eba22a1c2351947b97d960a0a8e80f9ac84579f20696",
+      "data/xspecies/falcon/000953/sub-MonkeyN-held-out-calib_ses-2020-11-18-Run1_behavior+ecephys.npz": "a55b5324292baa661ae948c468d5e7a6f33fc74fb014dbfc3bdae4606cf885ed",
+      "data/xspecies/falcon/000953/sub-MonkeyN-held-out-calib_ses-2020-11-19-Run1_behavior+ecephys.npz": "d8f50a38eee4039d3e25807d04e066eb8bf6f483c6a3aae554ba926dc7018e4a",
+      "data/xspecies/falcon/000953/sub-MonkeyN-held-out-calib_ses-2020-11-24-Run1_behavior+ecephys.npz": "7a62ce3bb8a0e63253c6bc3ef6951fe980242a526ee217523ffcfd600ba3c2f6",
+      "data/xspecies/falcon/000953/sub-MonkeyN-held-out-calib_ses-2020-11-24-Run2_behavior+ecephys.npz": "4f6bbb81452b9aaabedc60985a0ba05556b7a1529d5e17a78e0ae13822d015c3"
+    },
+    "X": {
+      "data/xspecies/falcon/001209/sub-MonkeyX-held-in-calib_ses-20121212_behavior+ecephys.npz": "3ea4c06db31a3ee0b1f5243e35fd06f9f2c36d59827b483d510e4e935f18a975",
+      "data/xspecies/falcon/001209/sub-MonkeyX-held-out-calib_ses-20121213_behavior+ecephys.npz": "9a7a100b2eaa1c32a2decce59ba5c327daeb7e54c91784670bc4fbcbd3a7d187",
+      "data/xspecies/falcon/001209/sub-MonkeyX-held-out-calib_ses-20121214_behavior+ecephys.npz": "540a31f74baadbeedf156fe49a2e71935bf0d5f565a4d0de5d516904f5a172c7",
+      "data/xspecies/falcon/001209/sub-MonkeyX-held-out-calib_ses-20121218_behavior+ecephys.npz": "9e9c41ec109bf78a3497a0a42577ce0ef1bb623d0e0b0094176f91488d9a707f",
+      "data/xspecies/falcon/001209/sub-MonkeyX-held-out-calib_ses-20121219_behavior+ecephys.npz": "9eb988c7dbec603056a2bea6711f809411848c6999b73955df0c2072be019943"
+    },
+    "H1": {
+      "data/xspecies/falcon/000954/sub-HumanPitt-held-in-calib_ses-19250101T111740.npz": "c9d4ca829c2e9cfe1b4551eb41302473c90160e8eac3ca7b6c81965286a55db1",
+      "data/xspecies/falcon/000954/sub-HumanPitt-held-in-calib_ses-19250101T112404.npz": "a40e3f55215ecf5a176f3d9a38052d303d7d1511ba65d1a4cf310afeff65045e",
+      "data/xspecies/falcon/000954/sub-HumanPitt-held-in-calib_ses-19250108T110520.npz": "bc39c122389de210fc4503121c7ce3a0f8dcf0a8161e4701f668e1cf02c61c10",
+      "data/xspecies/falcon/000954/sub-HumanPitt-held-in-calib_ses-19250108T111022.npz": "2ab3a50fd4f7ae7fe96ef56eb1766edd19607272de855ef721a2918f90c6a13c",
+      "data/xspecies/falcon/000954/sub-HumanPitt-held-in-calib_ses-19250108T111455.npz": "f56d7afbba642ff30c9d6acb22c6909456643623b484cd530a8f5e139d1b47d4",
+      "data/xspecies/falcon/000954/sub-HumanPitt-held-in-calib_ses-19250113T120811.npz": "d150f35dea7582ecb632798d4771134add2414e695b90f43a2d038e43ccca8cd",
+      "data/xspecies/falcon/000954/sub-HumanPitt-held-in-calib_ses-19250113T121303.npz": "f8df1bd3771b97bcb325eede74c91277c5d526aafc53f24c76b80c5922a7be37",
+      "data/xspecies/falcon/000954/sub-HumanPitt-held-in-calib_ses-19250115T110633.npz": "6847a9db42b2561edb4b2a24df41106dc6810c3e0c234c881290b2e7e2a3d4f7",
+      "data/xspecies/falcon/000954/sub-HumanPitt-held-in-calib_ses-19250115T111328.npz": "23f8f644d6f7b4e46af6a532e64227042c9ceb6b5894ebe1e53f95f2e513ed04",
+      "data/xspecies/falcon/000954/sub-HumanPitt-held-in-calib_ses-19250119T113543.npz": "351de40b3fe7277c7184c32440ec3bd4e62643450a777bfa022047f9f903ec39",
+      "data/xspecies/falcon/000954/sub-HumanPitt-held-in-calib_ses-19250119T114045.npz": "1802d66ce0933466da8c4a65e947917e03c9951a8ce948975bc91b4b2725f33f",
+      "data/xspecies/falcon/000954/sub-HumanPitt-held-in-calib_ses-19250120T115044.npz": "b6277deb0bfbb2dfe9a1f63784c5685991c9a1f08afc9282b3228a24888e07e6",
+      "data/xspecies/falcon/000954/sub-HumanPitt-held-in-calib_ses-19250120T115537.npz": "d77cbd3bed862f8c645cac45a9eac13dcda87e81b064f7df0e1f0482c420d20c"
+    }
+  },
+  "contexts": {
+    "M2": 200,
+    "X": 200,
+    "H1": 300
+  },
+  "output_dims": {
+    "M2": 2,
+    "X": 16,
+    "H1": 7
+  },
+  "budgets": [
+    2,
+    3,
+    5
+  ],
+  "query_after_eligible_trial_index": 5,
+  "planned_heads": 1872,
+  "source_dry_proxies": {
+    "M2_shape": {
+      "path": "data/audit/wacv_ndt3_target_source_proxies_20261011/M2_shape.npz",
+      "sha256": "f1171b32b307d0b980011dede509a0234d6dc3c192972332b7bb7421f1aace39",
+      "context": 200,
+      "source_path": "data/xspecies/falcon/000941/sub-MonkeyL-held-in-calib_ses-20120924_behavior+ecephys.npz",
+      "source_sha256": "8c1986fdb2e277bb85cd4f732fea8989870e5a3256a7cc687d5abb8fc2de9001",
+      "rows": 5524,
+      "eligible_trials": 10,
+      "transform": "Repeat source neural channels to96; first2source EMGs, first10eligibletrials. Code-shape stand-in only, no new animal/person."
+    },
+    "H1_shape": {
+      "path": "data/audit/wacv_ndt3_target_source_proxies_20261011/H1_shape.npz",
+      "sha256": "f93a35e8a07224e532e5eba3c0a90e2e68c5747cdfbf3886356615d15f672dfb",
+      "context": 300,
+      "source_path": "data/xspecies/falcon/000941/sub-MonkeyL-held-in-calib_ses-20120924_behavior+ecephys.npz",
+      "source_sha256": "8c1986fdb2e277bb85cd4f732fea8989870e5a3256a7cc687d5abb8fc2de9001",
+      "rows": 5524,
+      "eligible_trials": 10,
+      "transform": "Repeat source neural channels to176; first7source EMGs, first10eligibletrials. Code-shape stand-in only, no new animal/person."
+    }
+  },
+  "source_dry": "BothM2/H1source-shapeproxies; allfirst5wholeeligiblesupportrows andfirst8commonlaterqueryrows. Fourencoders timesneural/clock inputs,3budgets,20nativeheadarms plus6genericlongcountheads =156finalheads. Full independent nativefeature/head/rawmetric/CV/split/scale/hash audits beforeGO.",
+  "audit": "No fitter imported: allfixedschemas/splits/hashes/rawscores/CVcriteria/selectedlambda. Independently reconstructeveryfoldfeature/labelnormalization; verifyall6ridge normal-equationresiduals fromsavedfoldweights, recomputeeveryheldoutprediction/CVscore. IndependentlyCholeskysolveeveryfinalheadandrawfutureprediction. Nativefeature/prediction replay usespublishedmodel andseparatehook capture, not fitter. Preserve allfailures,no implicitretry.",
+  "analysis": "All20nativeprobe arms (randomseeds averaged),6long-count alternatives, nativefrozen/joint/behavior-only, allraw/sqrtcompactsource/variant/mode/checkpoints and all6legacyhistory alternatives; everylowerbudget2v3/2v5/3v5 retained onidenticalfuturequeries. Datecluster10000bootstrapseed20261011,4M2/5X/6H1dates, oneperson/animalpercohort. Conditional/unadjusted,no equivalence/globalfailure/clinical/singlecell/locallearning claim.",
+  "resource": "Eightencoder/input caches upper64.23GB fromNPZheaders alone; exactuint16BF16bits. Neuralclockcachecomputedsequentialpermodel; zero features deduplicated bylength/actualbatchsize, no labels. FourCPUheadworkers, BLAS1. Source-onlydryGPU1after completednativepreflight iforiginalhumanphase hasnotstarted; fulltargetsGPU0afterjointstudy release. SeparateGPUprocess ends beforeCPUheadfit. No interruption/restart ofexisting studies. Native queryprediction/audit chunks1024rows, never materializefullXneuralqueryfeatures. Allraw/sqrtcounts features <=1GB perworker; source test records chunk-vs-full agreement.",
+  "gate": "Bind fullimplementation before source-onlynativecache/head dry; source CPUalgebra andnative12shape preflight alreadyPASS, preserve exact earlierregistration/codehashes. Independently replay featurecache and independently solve allfinal heads/auditallfolds beforeGO. Thenqueue fullM2/X/H1 afterjointtargetservice complete; waitraw/sqrtcomparatorfullaudits/date correction before analysis. No favorableaccuracy gate.",
+  "claim_limits": "Linear probing, source-preserving heads and feature-distortion/LP-FT questions are established. NDT3 A.2.3 alreadyreportsdirectlinearprobelimits onCST. Not LP-FT(no subsequentbackboneupdate), novelmethod, officialauthorFALCONreproduction, pretrainingvsfullytunedscratch or biologicallylocallearning. Actualhumanlabels instructedopen-loopcommands; M2strictcausalshift preserved.",
+  "primary_sources": [
+    "https://papers.nips.cc/paper_files/paper/2025/file/a00000e6a2208172700510bcd69d48e9-Paper-Conference.pdf",
+    "https://arxiv.org/abs/2202.10054"
+  ],
+  "initial_code_sha256": {
+    "scripts/ndt3_frozen_features.py": "287e57aacd2bf52774f2ec17ffcdc59d4542db7969c3201b2ce1b2cf860b3f18",
+    "scripts/ndt3_probe_head.py": "df63b1425536162addb18c4f1343335aeaaa03482e51f876da5732f20d78fc14"
+  },
+  "source_preflight_sha256": {
+    "scripts/ndt3_frozen_features.py": "287e57aacd2bf52774f2ec17ffcdc59d4542db7969c3201b2ce1b2cf860b3f18",
+    "scripts/ndt3_probe_head.py": "df63b1425536162addb18c4f1343335aeaaa03482e51f876da5732f20d78fc14",
+    "scripts/audit_ndt3_frozen_native.py": "2dcd8c797948c6f38818ca4ef6728062526a764e6e7ada113d8235942c70371e",
+    "scripts/audit_ndt3_probe_math.py": "9536a6e969690fec34b317d70f753dfacdb1bd13b978a9892993b98b77f8ba24",
+    "scripts/ndt3_native_adapter.py": "f84840ca6b8fc98843b50f3be5196e29b6e836a2eb46d9b7dbbb59147fb7fd51",
+    "scripts/ndt3_batched_query.py": "0a6fc821cc37898ce437e376496ba23e0f89ac1f56bdadd60561c75cfeb329e7",
+    "data/audit/wacv_external_baselines_20261011/ndt3_45m_200h.ckpt": "74e39356e4a5099fe64aee637b4b7298ae4923d8f69daf48a7b77b02cdca8745",
+    "data/xspecies/falcon/000941/sub-MonkeyL-held-in-calib_ses-20120924_behavior+ecephys.npz": "8c1986fdb2e277bb85cd4f732fea8989870e5a3256a7cc687d5abb8fc2de9001"
+  },
+  "source_preflight_binding_utc": "2026-10-11T20:13:44.910580+00:00",
+  "source_preflight_device": "GPU1 verified idle: oldnativeXcompleted/audited, queuedhumanphase stillwaitsoriginalcompactH1. Nativepref is source-only/readonly; fulltargetfeaturepipeline remains queuedGPU0afterjointstudy.",
+  "source_dtype_inspection": "Readonly10sourcebin inspection beforetraining verifiednativecovariatefeaturesBF16/predfloat32, dimensions1024. No gradient/probe/target fit; uint16cache remains exact.",
+  "prospective_context_clock_amendment": {
+    "utc": "2026-10-11T20:26:48.306087+00:00",
+    "stage": "Native source preflight complete; before any native feature cache/probe fit or jointM2/sqrtM2/oldX target outcome interpretation. All additional controls exploratory; original primary pretrained-versus-random fresh heads unchanged.",
+    "initial_registration_sha256": "9751b172eba38107a81d90c913d6c2c12a1ddefe0464f7a8887b8a96f276e36a",
+    "reason": "Native foundation has 4/6second context and trial/window position information; old full-lag ridge spans only240ms. Add clock/count ablations and long-context ordinary counts to prevent attributing timing/context advantage to learned neural transfer."
+  },
+  "input_kinds": [
+    "neural",
+    "clock"
+  ],
+  "clock_control": "Same nativeencoder/windows/outputtokens/batch4 with allneuralcounts zero. Cache keyed by exact(windowlength,actualbatchsize), preserving withinbatch member layout; originalnativebaseline remains. This controls clock/trial/windowmetadata plus architecture/pretrainedprior, not source-free, not no-information baseline.",
+  "long_counts_control": {
+    "lags": [
+      1,
+      2,
+      4,
+      8,
+      16,
+      32,
+      64,
+      128,
+      "context"
+    ],
+    "transforms": [
+      "raw",
+      "sqrt"
+    ],
+    "construction": "Concatenate channelwise causal trailing box means; reset at everytrialstart; divisor fixedlag so pretrialcounts zero-padded. sqrt before filtering. Same maximum200/300bins asnative. This is a long-context fixedbasis, not a full200/300lag ridge.",
+    "normalization": "Fitting-only perfeaturemean/std floor.1,secondcenter/intercept,raw unclipped labels. Mean-normalized Gramridge, sharedfeatures/multivariateoutputweights.",
+    "selection": "Same whole-support-trial leave-one-out rawMSE/pooledfittingvariance sixlambda grid; keep CVselected plusfixedlambda1 and10, no querychoice."
+  },
+  "comparator_roots": {
+    "joint": "data/wacv/ndt3_joint_target",
+    "behavior_only": "data/wacv/ndt3_target_calibration",
+    "raw_compact": {
+      "M2": "data/wacv/xspecies_n2_target/M2",
+      "X": "data/wacv/xspecies_n1_target/X",
+      "H1": "data/wacv/xspecies_n1_target/H1"
+    },
+    "sqrt_compact": "data/wacv/xspecies_n3_target"
+  },
+  "implementation_sha256": {
+    "scripts/ndt3_frozen_features.py": "287e57aacd2bf52774f2ec17ffcdc59d4542db7969c3201b2ce1b2cf860b3f18",
+    "scripts/ndt3_probe_head.py": "df63b1425536162addb18c4f1343335aeaaa03482e51f876da5732f20d78fc14",
+    "scripts/ndt3_long_counts.py": "381d7e2f7b1cc54c4a464ca403f2a9f5cac558d9b8c1a71bd9897f1c7b5b63a2",
+    "scripts/ndt3_probe_io.py": "983acec4d3cac608bd8222735fddc754119e473a3ec2df3243a4471ac29e8d5b",
+    "scripts/audit_ndt3_probe_math.py": "9536a6e969690fec34b317d70f753dfacdb1bd13b978a9892993b98b77f8ba24",
+    "scripts/audit_ndt3_long_math.py": "307092fd44babfc3621f72aa62f4721c9b637c2c568c013b1a630f400f96e21c",
+    "scripts/check_ndt3_probe_controls_source.py": "8d356749200f27921b07414e97548516b1d378cb7f64748b88d0b43cdf490efa",
+    "scripts/cache_ndt3_frozen_features.py": "d3c62d2be9ab027bbaaba605e7614894c13d322498992e1a9496509593cf462b",
+    "scripts/audit_ndt3_frozen_cache.py": "9351c60f926c04a943c699c016938ff2e15a9bbbd4e696ac5b9320c626b6db3f",
+    "scripts/fit_ndt3_frozen_probe.py": "164090ea64fe7dc8f67d770d69752a4d2048d9855cfedaf3f219427077f3b3ae",
+    "scripts/audit_ndt3_frozen_probe.py": "a1ac53dcfe04115286d465f198c797d3050917bdbe79953ebd14a13f05383b18",
+    "scripts/analyze_ndt3_frozen_probe.py": "a00f725f1f4a7a80304eea46d3c5d6b4fa7ce15bc5f3410ca936640be910b1af",
+    "scripts/run_ndt3_frozen_probe.py": "942d9d69b9e470f9f470db6ec92e24c6d02dd75a357d38930f783d449a362eac",
+    "scripts/run_ndt3_frozen_after_joint.py": "68eda08fb9932b4e77b0378a850472a19c016fef9b876e6dae1c1e64f59d7b96",
+    "scripts/ndt3_native_adapter.py": "f84840ca6b8fc98843b50f3be5196e29b6e836a2eb46d9b7dbbb59147fb7fd51",
+    "scripts/ndt3_batched_query.py": "0a6fc821cc37898ce437e376496ba23e0f89ac1f56bdadd60561c75cfeb329e7",
+    "scripts/analyze_xspecies_n1_target.py": "11892d07cd1b6d6458218177899c243ab3c51b7887d9cffc5bf488a97d81dc46",
+    "scripts/analyze_xspecies_n1_dates.py": "917266810aa91df5e7bb8275b0ae7d490340073d32cefc906e74ed9f4f3aff68",
+    "data/audit/wacv_ndt3_probe_head_source_20261011.json": "f2fe79cf1aef85026c8af626290b69ebb5b94639582e8a6897a81c70969df459",
+    "data/audit/wacv_ndt3_frozen_native_source_20261011.json": "b1878495f6470a23da5f024998f922946cad58111283085fdf56880b772136c6",
+    "data/audit/wacv_ndt3_probe_controls_source_20261011.json": "180de092c05d785cc7bb12887f29ded958b3abe1a97a85797d0230a83158cc5b",
+    "scripts/check_ndt3_probe_query_chunking.py": "b9029043771a5b873aef4ade6f03b34fba2cfbe714b9c6ab6fe76aec74f592e3",
+    "data/audit/wacv_ndt3_probe_query_chunking_source_20261011.json": "1156e53588eb56d3312489c3d80bdb1beb48353c26dc9f0da9de64962b22d53c",
+    "scripts/check_ndt3_probe_metric_source.py": "89f4c6e11e3afe185434a63b6eef992dd5745028b902ba794ff9cad653172ec0",
+    "data/audit/wacv_ndt3_probe_metric_source_20261011.json": "7369041088e84ab3e37895b74599ddb3b7b6c842512d9fe99272125d7a8e64b2"
+  },
+  "implementation_binding_utc": "2026-10-11T20:33:32.711280+00:00",
+  "implementation_changes": "Original nativeadapter and probehead numericalkernel unchanged from initialsource checks. Prospective addition of timing/long-count controls, drivers, artifactauditors, analyses and continuation before any featurecache/probe fit. Earlier protocol hashes preserved indata/audit/wacv_probe_registration_20261011/. All source/target scientific primary choices retained.",
+  "controls_artifact_binding_utc": "2026-10-11T20:34:14.139199+00:00",
+  "controls_launch_environment": "Isolated alreadyvalidated Python3.11 NDT3 env. First systempython launch failedat scipy import before checks/fits; full unchanged sourcecontrols thenpassed. Source-only failure record preserved.",
+  "prospective_query_chunking_amendment": {
+    "utc": "2026-10-11T20:41:39.632045+00:00",
+    "query_chunk_rows": 1024,
+    "reason": "Bound CPU queryfeature allocation forlargestX beforetargetfeature/probe work. Eachprediction/head/CV/split mathematically unchanged; sourceonlyfull156head cache/fit/audit rerun and source-only >2048queryrow chunk-vs-unbroken check before newGO.",
+    "archive": "data/audit/wacv_probe_registration_20261011/before_query_chunking",
+    "target_started": false,
+    "older_completed_new_target_results_known": true
+  },
+  "query_chunk_rows": 1024,
+  "source_dry_service": "codex-ndt3-frozen-source-dry-weighted-20261011.service",
+  "query_chunk_implementation_binding_utc": "2026-10-11T20:41:39.764160+00:00",
+  "chunk_report_binding_utc": "2026-10-11T20:42:14.079682+00:00",
+  "prospective_weighted_metric_correction": {
+    "utc": "2026-10-11T20:48:48.938921+00:00",
+    "reason": "Match everyexisting native/compact benchmark metric; previoussource-only reportuniformoutputR2 cannotbecomparedto existingweightedR2. No targetproberesults; weights/predictions/CV/sciencechoices unchanged.",
+    "archive": "data/audit/wacv_probe_registration_20261011/before_weighted_metric",
+    "target_started": false
+  },
+  "reported_metric": "Variance-weighted raw-unit R2:1-sumalloutputs/rows(prediction-y)^2/sumalloutputs/rows(y-outputmean)^2, float64. Matches existingnativeNDT3 andcompact benchmark for nonconstantqueryoutputs. Report denominators andperoutput variances; no silently uniformoutput averaging.",
+  "metric_implementation_binding_utc": "2026-10-11T20:48:49.069197+00:00",
+  "metric_report_binding_utc": "2026-10-11T20:49:42.625071+00:00"
+}

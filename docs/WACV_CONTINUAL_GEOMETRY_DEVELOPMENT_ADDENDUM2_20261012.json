@@ -1,0 +1,61 @@
+{
+  "registered_utc": "2026-10-12T19:05:38.954306+00:00",
+  "amends_sha256": "e5151bdfda9ea5d8a925fd9092de9539eb710c251d5af404ff96f061e8d87204",
+  "reason": "Independent review notes A=source goal would primarily consolidate inherited goal knowledge, and root exact sensory replay reuses its observer implementation.",
+  "goal_override": {
+    "rule": "Choose first candidate among [(2,7),(7,2),(1,8),(8,1),(2,2),(7,7),(4,4),(5,5)] walkable in both paired rooms, not a native start, not the B goal, and not source goal(3,3). Geometry only, no policy-performance selection.",
+    "candidates": [
+      [
+        2,
+        7
+      ],
+      [
+        7,
+        2
+      ],
+      [
+        1,
+        8
+      ],
+      [
+        8,
+        1
+      ],
+      [
+        2,
+        2
+      ],
+      [
+        7,
+        7
+      ],
+      [
+        4,
+        4
+      ],
+      [
+        5,
+        5
+      ]
+    ],
+    "old_goal": [
+      3,
+      3
+    ],
+    "applies_to_all_pairs": true
+  },
+  "sensory_audit": "Store each actual252-dimensional float32 policy observation in training.npz in addition to SHA256; independent CPU renderer/pooling/noise/log-Bayes reconstruction compares every observation with predeclared max_abs tolerance2e-6, and independently checks frozen probes. A separate16-case dry audit artifact is required before GO48.",
+  "independent_dry_artifact": "data/audit/wacv_continual_geometry_development_20261012/independent_sensory_dry_claude.json",
+  "required_peer_keys": [
+    "ok",
+    "dry",
+    "cases",
+    "runner_sha256",
+    "manifest_sha256",
+    "code_sha256"
+  ],
+  "preserved_queue": "queue_registration.json is the earlier stopped, waiting-only queue. Revised queue registration will be queue_registration_v2.json. No visual dry/full fit or GO exists.",
+  "target_outcomes_seen": false,
+  "target_fits_started": 0,
+  "device": "GPU1 only for training; independent sensory reconstruction CPU only"
+}

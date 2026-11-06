@@ -1,0 +1,109 @@
+{
+  "version": 1,
+  "created_utc": "2026-10-11T08:08:20.915050+00:00",
+  "status": "PROSPECTIVE SOURCE-ONLY PILOT; implementation preflight required before fitting",
+  "authorization": "Author authorized continued constructive WACV cross-species research. No further author confirmation required for this source pilot.",
+  "question": "Can a causal temporal representation shared across neurons learn useful source decoding features beyond matched generic filterbanks, before considering cross-species transfer?",
+  "scope": "FALCON M1 calibration only; one macaque. No H1, M1 minival, private evaluator or GPU. Source days and fourth-day development have already been examined in earlier experiments; this is exploratory development, not a fresh confirmatory test.",
+  "data_root": "data/xspecies/falcon/000941",
+  "split": {
+    "order": "Four calibration files sorted by date/name",
+    "outer_train": "First two days",
+    "checkpoint_and_ridge_selection": "Third day REAL neural/EMG windows, identical for all encoders/controls; this real-source supervised selection is disclosed for synthetic/time-trained controls too.",
+    "development_report": "Fourth day, already seen",
+    "window": "Reuse L3/L4 exact eligible-row 320-bin prefix and next eight whole query trials, with exact absolute raw-bin IDs saved",
+    "training_query": "First four whole query trials of each sampled training window",
+    "pairing": "Same source window schedule and encoder initialization within seed across real/synthetic/time_shift arms"
+  },
+  "encoder": {
+    "shared_unit": "Same temporal weights and, for nonlinear variant, biases applied independently to every neuron. No source neuron identities, readout weights or output correspondence transfer.",
+    "filters": 5,
+    "taps": 25,
+    "bin_seconds": 0.02,
+    "variants": [
+      "linear",
+      "softplus"
+    ],
+    "input": "Raw binned spike counts, causal tap zero at current bin",
+    "reset": "Zero history before each trial and file; no future spikes",
+    "initialization": "Exact V1 240ms finite exponential plus four causal lags, padded to 25 taps. Same bank initialization for real/synthetic/time_shift. Episode zero is eligible for selection. Nonlinear biases initialize to zero.",
+    "numerical_safeguards": "L2 norm of each filter clipped above 2 only (does not alter V1 initialization); fixed smoothness penalty 1e-4 times mean squared adjacent-tap difference; gradient global norm clipped at 1. Same for all arms. Record non-finite losses/updates and skipped updates.",
+    "dimension": "5 times neuron count: 320 on M1; matches V1. No dimension or parameter-count advantage against generic filterbanks."
+  },
+  "readout": {
+    "model": "Fresh differentiable closed-form ridge per episode; unpenalized intercept",
+    "normalization": "Support-only feature mean/std with fixed 0.1 count-unit std floor. Target mean per output and one pooled support scale. Query activity/labels cannot define support normalization or fitted readout.",
+    "training_ridge": 1.0,
+    "selection_ridge_grid": [
+      0.01,
+      0.1,
+      1.0,
+      10.0,
+      100.0,
+      1000.0
+    ],
+    "selection": "For each encoder/checkpoint/budget, select ridge on third-day mean window score only; select checkpoint on third-day primary budget320. Each generic baseline receives the same ridge grid. Preserve all selection tables and deterministic tie order.",
+    "objective": "Query squared error pooled over channels and rows divided by query-label centered sum of squares (variance-weighted R2 loss); global outer gradients explicitly disclosed.",
+    "locality": "This quality assay uses global supervised outer learning and a closed-form head. It is not a biologically local learner. A local readout would require a later separate experiment."
+  },
+  "optimization": {
+    "optimizer": "Adam",
+    "learning_rate": 0.003,
+    "scheduled_outer_episodes": 600,
+    "checkpoint_every": 100,
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "arms": [
+      "real",
+      "synthetic",
+      "time_shift"
+    ],
+    "synthetic": "L3 profile-matched Poisson generator; source EMG labels retained, first-three-day real source profile used. This control carries real source statistics and label-driven temporal autocorrelation; it is not a data-free source.",
+    "time_shift": "L3 fixed raw-neural circular time shift per fit day/seed; retain targets, reset encoded features at trial boundaries",
+    "total_scheduled": 10800
+  },
+  "comparators": {
+    "V1": "Preserve exact V1 240ms finite exponential and five-lag features; same calibration selection grid. Human V1 lambda1 is not changed or weakened for any later human study.",
+    "sqrt_count_V1": "Apply square-root variance stabilization to counts before exact V1 filtering; nonlinearity control",
+    "multiscale": "Five hand-designed finite causal exponentials with tau20/60/120/240/480ms, normalized to unit sum and padded to25taps",
+    "random": "Three seed-matched banks: Gaussian25tap vectors smoothed by causal three-tap [1,2,1]/4 kernel, truncated25, each rescaled to the V1 initial filter L2 norm; record exact taps. Same dimension and selection grid.",
+    "reference": "Calibration-mean prediction and zero prediction"
+  },
+  "report": {
+    "primary_budget": 320,
+    "secondary_budgets": [
+      40,
+      80,
+      160
+    ],
+    "score": "Float64 variance-weighted R2, all 16 measured EMG outputs, all eligible query rows",
+    "replicates": "Average seeds within window before conditional paired-window bootstrap; display each seed separately. Windows/one animal are not independent animals.",
+    "bootstrap": {
+      "draws": 10000,
+      "seed": 20261011
+    },
+    "contrasts": [
+      "real minus V1",
+      "real minus multiscale",
+      "real minus random-bank mean",
+      "real minus synthetic-trained",
+      "real minus time_shift-trained",
+      "real minus episode-zero same-variant"
+    ],
+    "artifacts": "All checkpoints, source input hashes, window/support/query IDs, selection tables, per-window raw-unit predictions, filter taps/biases/norms, losses and attempted/successful/skipped updates. No failed file/config/seed omitted.",
+    "interpretation": "A source benefit must be distinguished from a cross-species benefit. A failure here does not establish that fixed V1 captures all transferable neural information or that cross-species transfer is impossible."
+  },
+  "preflight": [
+    "Exact linear V1 initialization reproduces V1 raw features and ridge predictions",
+    "Finite-difference gradient through shared filter, support normalization and ridge solve in float64",
+    "Causality, trial/file reset, no support-query temporal overlap and calibration-only statistics",
+    "Neuron permutation equivariance of features and predictions with a correspondingly permuted head",
+    "Deterministic paired initialization/window schedule; all arms' source windows and labels match",
+    "Changing query labels cannot change fitted support readout; changes outer loss only",
+    "No H1 or minival paths accessed; toy and already-seen training calibration smoke only"
+  ],
+  "advance": "Complete source pilot and independent audit, then explicitly record research decision. Source quality is an exploratory screen, not a prerequisite proving transfer. No fresh-source or human scores until a separate prospective protocol/decision is recorded. Do not reuse L4 thresholds silently."
+}

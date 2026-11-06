@@ -1,0 +1,34 @@
+{
+  "name": "F1b causal human continuous-decoding floors",
+  "fixed_utc": "2026-10-11T02:37:36.136511+00:00",
+  "status": "F1 uniform-R2 scores already viewed; new F1b human fits not run; explicitly exploratory internal benchmark diagnostic",
+  "data": "H1 DANDI000954 13held-in-calibration development files;14held-out-calibration evaluation files. Exact author loader exports. NO minival/private-test data. One human.",
+  "features": "Raw count causal finite exponential kernel of0/100/240ms, extent1 as pinned author code; history1/5 bins; current/past counts ONLY; smoothing/history reset at whole-trial boundaries. Feature normalization fitted on calibration moving rows only. This differs from full author reference preparation; no exact published-baseline replication claim.",
+  "selection": "Per held-in file first75%whole-trials fit,last25%validate; fixed evenly spaced up-to1500moving eligible fit bins per file; select history/tau/ridge .001/.01/.1/1/10 by mean per-file variance-weighted R2. Human prior adaptation strength0/.1/1/10 selected on same held-in split. Priors refit all held-in eligible moving data with same1500/file cap. No held-out selection.",
+  "evaluation": "Same whole-trial F1 split: each held-out-calibration file3trials, lasttrial test, first2 calibration pool. k1or2 actual completecal trials,10saved draws RNG604; duplicates explicitly not independent replicate trials. Eval all eligible bins includingrest; fit still times excluded perH1 author reference.",
+  "comparators": [
+    "calibration_only ridge",
+    "human held-in pooled prior frozen",
+    "human held-in pooled prior+calibration residual ridge update",
+    "zero output",
+    "calibration mean"
+  ],
+  "metric": "FALCON-compatible variance-weighted per-output R2 PRIMARY; uniform R2 and7axis R2 secondary. Report mean per-file internal scores, not official minival/test or leaderboard.",
+  "budget": "Log exact moving labelled20msbins andseconds. Priors carry additional HUMAN training recordings and are cost-asymmetric to calibration-only floor; track them explicitly. Not cross-species weights or metadata.",
+  "purpose": "Establish credible continuous targets/floors before model transfer or genuine local-adaptation arm. Negative F1 is not biological-transfer evidence.",
+  "checks": "Causal smoothing, reset before test wholetrial, weighted R2 algebra, known linear recovery",
+  "script_sha256": "9fbc909e74d0395a8f4476717d52ae01d427a88887e96badfb7405628e6a890c",
+  "references": [
+    "https://github.com/snel-repo/falcon-challenge/blob/67f85481e49dd280257b15141fd965cba0e02dba/decoder_demos/filtering.py",
+    "https://github.com/snel-repo/falcon-challenge/blob/67f85481e49dd280257b15141fd965cba0e02dba/falcon_challenge/evaluator.py"
+  ],
+  "amendments": [
+    {
+      "utc": "2026-10-11T02:39:07.512585+00:00",
+      "after_first_F1b_scores": true,
+      "reason": "Near-constant smoothed channels during1trialcalibration have tiny floating variance, not exactly0; exactzero check created enormous1e28R2s in validation/adaptation and some human runs. These are numerically invalid floors, not transfer evidence. ALLfirstF1b outputs archived invalid_nearconstant_v1; rerun all source selection and human conditions consistently.",
+      "change": "Feature sd=max(calibration standard deviation,0.1countunits); no target query/test used; same trials/labels/grids. Regression prior/grid reselected on held-in development only. Added nearconstant robustness and test-feature exclusion checks."
+    }
+  ],
+  "numerical_rescore_after_all_scores": "Saved-prediction audit found float32 R2 reduction differencesofafewmillionths. Rescorefloat64 ONLY, no refit/retune/predictionchange; originalrecordsretained. Fits/selectionremainoriginalrecordedscript version."
+}

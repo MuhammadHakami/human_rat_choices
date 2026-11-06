@@ -1,0 +1,42 @@
+{
+  "registered_utc": "2026-10-11T18:17:45.106284+00:00",
+  "stage": "Before native batch-of-eight source-only preflight, no NDT3 target inference or fit.",
+  "source_file": "data/xspecies/falcon/000941/sub-MonkeyL-held-in-calib_ses-20120924_behavior+ecephys.npz",
+  "checkpoint": "data/audit/wacv_external_baselines_20261011/ndt3_45m_200h.ckpt",
+  "shapes": [
+    [
+      8,
+      200,
+      64,
+      16
+    ],
+    [
+      8,
+      300,
+      176,
+      7
+    ],
+    [
+      8,
+      200,
+      96,
+      2
+    ]
+  ],
+  "source_transform": "Actual first300training-sourceLcountbins,repeatunits for176/96shape,shiftcountswithintoysequence/addinteger1 for8members. Numerical test, not physical-trial accuracy. No behaviorlabelread.",
+  "policy": "Equal-length windows only, no padding/KVcache/observedbehavior/predictedbehaviorfeedback;zeroconstraints/reward/returns. NativeB,T,doutputmapping tested against batch1 and native scalar adapter.",
+  "checks": "Masked mocklabels0vs.7 exact; later-half count changes cannot change earlier predictions/logits; changingone member cannot change any other member. Eachof8members compared to batch1.",
+  "numerical_tolerance": "Before results: absolute logitdiff <=.02+.01*abs(reference) for bf16 reduction-order variation. Changed argmax must be a near-tie with reference winner-vs-batchwinner margin <=2*max per-rowlogiterror+1e-6. Every changeddecision counted, no assertion of bitwise batch8/scalar equivalence. Native batch1/scalar exact.",
+  "gpu": "GPU0,source-calibration study already ownsGPU1; no duplicate target fit.",
+  "gate": "Allshapechecks must pass before any nativebatched target execution. No favorableaccuracy gate.",
+  "sha256": {
+    "data/xspecies/falcon/000941/sub-MonkeyL-held-in-calib_ses-20120924_behavior+ecephys.npz": "8c1986fdb2e277bb85cd4f732fea8989870e5a3256a7cc687d5abb8fc2de9001",
+    "data/audit/wacv_external_baselines_20261011/ndt3_45m_200h.ckpt": "74e39356e4a5099fe64aee637b4b7298ae4923d8f69daf48a7b77b02cdca8745",
+    "scripts/ndt3_native_adapter.py": "f84840ca6b8fc98843b50f3be5196e29b6e836a2eb46d9b7dbbb59147fb7fd51",
+    "scripts/ndt3_batched_query.py": "0a6fc821cc37898ce437e376496ba23e0f89ac1f56bdadd60561c75cfeb329e7",
+    "scripts/audit_ndt3_batched_query.py": "89bbe04426225290d56e01d8cbc4a40ddef53ed84e44521e5a5c2f64cee8e648",
+    "data/audit/wacv_external_baselines_20261011/ndt3/context_general_bci/model.py": "a15d470418ea7fc3e73a7863d1a35a0de9e73385678b784e1ceb2f8598a6099b",
+    "data/audit/wacv_external_baselines_20261011/ndt3/context_general_bci/data_utils.py": "02bd327776df0f754103aa4aa7a7bf7673519f100eb08768bf983bab8d0a5ffa",
+    "data/audit/wacv_external_baselines_20261011/runtime_freeze.txt": "ca49d2d60135cb246ba01ffeb69a1e690c95e5de1e219923682a15a091807df1"
+  }
+}

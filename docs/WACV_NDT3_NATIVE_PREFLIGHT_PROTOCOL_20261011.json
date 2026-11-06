@@ -1,0 +1,50 @@
+{
+  "registered_utc": "2026-10-11T17:47:13.762108+00:00",
+  "stage": "Before native backward or feature-extraction test, source-only, no target fit/inference.",
+  "source_file": "data/xspecies/falcon/000941/sub-MonkeyL-held-in-calib_ses-20120924_behavior+ecephys.npz",
+  "checkpoint": "data/audit/wacv_external_baselines_20261011/ndt3_45m_200h.ckpt",
+  "learning_rate": 0.0004,
+  "shapes": [
+    [
+      64,
+      16
+    ],
+    [
+      176,
+      7
+    ],
+    [
+      96,
+      2
+    ]
+  ],
+  "steps_per_shape": 4,
+  "data": "Original first40 source-L training bins; repeat source counts for extra channels, retain firstdof real EMGs. Scale by source maxabsolute with1e-6floor, clip[-1,1]. Shapes only, not fresh dataset.",
+  "gradient_contract": "Unwrap published inference/autocast decorators only, preserve native body, capture native differentiable covariate classification loss before its detached reporting copy; AdamW LR.0004/decay.01/clip1; eval mode for deterministic numerical test. Check nonzero finite backbone updates. Not final target tuning protocol.",
+  "leakage_checks": "All behavior input masked; negating actual source labels changes neither native predictions nor covariate features. Changingfuturecounts after20 changes neither first20 features nor predictions.",
+  "gate": "All3 shapes12updates must pass; no target training authorized by this preflight; separate exact baseline protocol required.",
+  "sha256": {
+    "data/xspecies/falcon/000941/sub-MonkeyL-held-in-calib_ses-20120924_behavior+ecephys.npz": "8c1986fdb2e277bb85cd4f732fea8989870e5a3256a7cc687d5abb8fc2de9001",
+    "data/audit/wacv_external_baselines_20261011/ndt3_45m_200h.ckpt": "74e39356e4a5099fe64aee637b4b7298ae4923d8f69daf48a7b77b02cdca8745",
+    "scripts/ndt3_native_adapter.py": "f84840ca6b8fc98843b50f3be5196e29b6e836a2eb46d9b7dbbb59147fb7fd51",
+    "scripts/audit_ndt3_native_gradients.py": "d2122ba758527f7ee6a47b083fca844fa253b91aec1168629964b08d7ac2c2c7",
+    "data/audit/wacv_external_baselines_20261011/runtime_freeze.txt": "ca49d2d60135cb246ba01ffeb69a1e690c95e5de1e219923682a15a091807df1",
+    "data/audit/wacv_external_baselines_20261011/ndt3/context_general_bci/model.py": "a15d470418ea7fc3e73a7863d1a35a0de9e73385678b784e1ceb2f8598a6099b",
+    "data/audit/wacv_external_baselines_20261011/ndt3/context_general_bci/task_io.py": "ea6c1ea59e5dabd29878357e694371e38862c06489224b52ee385ec6b4593ceb",
+    "data/audit/wacv_external_baselines_20261011/source_adapter_preflight.json": "69830042e51f9af0bc6eaf429dbb70e6633d4d2580e43e9b424cf20a00267e10"
+  },
+  "source_only_amendments": [
+    {
+      "utc": "2026-10-11T17:48:28.160385+00:00",
+      "old_script_sha256": "c92bc375e90ae8bfd5b761a03969984736641d35f6126e3d26bc5c351d4bfde3",
+      "reason": "Remove CPU-only audit import that overwrote CUDA_VISIBLE_DEVICES. Failure occurred before first CUDA forward/backward. Native model/scientific settings unchanged, no target data read.",
+      "archive": "data/audit/wacv_external_baselines_20261011/source_native_failure_cuda_environment"
+    },
+    {
+      "utc": "2026-10-11T17:50:13.315359+00:00",
+      "old_adapter_sha256": "77921f8ac7d60a50c01b7370c0112d9ff8f2da89e62cec8a1f2e46da85d6eeaf",
+      "reason": "Clone inference-mode batch tensors outside inference context to permit native embedding backward. No value, model, checkpoint or scientific setting change; firstgradientforward failed before any source update; no target data.",
+      "archive": "data/audit/wacv_external_baselines_20261011/source_native_failure_inference_tensor"
+    }
+  ]
+}

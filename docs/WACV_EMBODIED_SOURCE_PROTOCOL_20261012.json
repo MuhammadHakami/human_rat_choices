@@ -1,0 +1,307 @@
+{
+  "registered_utc": "2026-10-12T00:02:01.404570+00:00",
+  "version": "embodied-source-development-v1",
+  "status": "Source-development registration before any new visual-maze learner fit; not target GO.",
+  "purpose": "Correct useful learning/source-only recipe selection before biological rule fitting, brain-derived controls and cross-species transfer/retention. Simulation-only calibration is not learned species transfer.",
+  "author_scope": "Embodied sensory actions, outcome learning, OOD, continual plasticity, retained skills and spiking cost; real observations separate from digital reconstruction.",
+  "tasks": "data/unified/tartarus/tasks.json",
+  "tasks_sha256": "6a18b87ffee816a2bfd4e92edbcb28ad4319626c18a2561283518742ec6353a8",
+  "task_arrays_sha256": "30aa3346465d12cfe38ea1439143cea63632ed3d2610844683c4bb28ba5a7c77",
+  "native_trajectories": "data/unified/tartarus_trajectories.json",
+  "native_trajectories_sha256": "ec35d0b3f507b783578a5fd4ad868cbaafe6502e16c24b88963bbbfec5d22212",
+  "native_data_use": "Published geometry only. No animal trajectory or neuron outcomes fitted at this stage.",
+  "known_prior_data": "Native data/older results were already analyzed; no claim of untouched confirmatory data. No new visual-maze learner fits at registration.",
+  "source": {
+    "train_configurations": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "select_configurations": [
+      6,
+      7
+    ],
+    "open_arena": true,
+    "target_configurations_not_evaluated": [
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25
+    ],
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "training_frames": 32768,
+    "curriculum": [
+      {
+        "until_total_frames": 4096,
+        "configurations": [
+          0
+        ],
+        "spawn_distance_min": 1,
+        "spawn_distance_max": 4,
+        "native_starts": false
+      },
+      {
+        "until_total_frames": 8192,
+        "configurations": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "spawn_distance_min": 1,
+        "spawn_distance_max": 8,
+        "native_starts": false
+      },
+      {
+        "until_total_frames": 32768,
+        "configurations": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "native_starts": true
+      }
+    ],
+    "curriculum_information": "Goal-based spawn bands are simulator-side source curricula, never policy inputs; sampling rules and total interaction allowance shared.",
+    "boundary_rule": "Curriculum/final run boundaries force episode terminal in every method; PPO marks8slots terminal at matching total-frame boundary. Last reward credited once, no phantom action.",
+    "select_protocol": {
+      "tasks_per_configuration": 10,
+      "repeats": 3,
+      "max_decisions_per_trial": 45,
+      "frozen_arm": "Fresh checkpoint clone, no weight updates, state reset per trial.",
+      "adaptation_arm": "Fresh checkpoint clone per repeat, configs6then7,10native starts each, weights kept across trials/layouts, state reset per trial; no layout/boundary ID.",
+      "primary_selection": "Mean adaptive success over both layouts/all10trials/3repeats, averaged over all3seeds for a rate.",
+      "tie_break": "Higher frozen mean success, then lower registered candidate index; no seed-specific choices.",
+      "feedback_accounting": "Selection is source development, reported separately; each arm60trials/2700decision maximum, count actual interactions and rejected candidates."
+    },
+    "fits_planned": 63,
+    "selection_rule": "Complete all7methods x3rates x3seeds including failures, independent audit before selection; no partial-result tuning.",
+    "subsequent_stage": "Fresh longer selected source runs and biological-rule fitting require separate bound settings; no target fit GO from this protocol."
+  },
+  "view": {
+    "width": 64,
+    "height": 36,
+    "hfov": 110.0,
+    "eye_h": 0.25,
+    "pitch": 0.0,
+    "fog_top": 0.35,
+    "fog_clear": 1.0,
+    "fog_density": 2.0,
+    "curtain_margin": 1.0,
+    "curtain_h": 4.0,
+    "cue_edge": "row0",
+    "pit_depth": 2.0,
+    "tex_amp": 0.08,
+    "tex_period": 0.25,
+    "lum": {
+      "floor": 0.55,
+      "pit": 0.05,
+      "white": 0.85,
+      "black": 0.05,
+      "sky": 0.6,
+      "fog": 0.7,
+      "side": 0.2
+    }
+  },
+  "renderer": "scripts/tartarus_visual_env.py",
+  "renderer_sha256": "3f2a1f6a30471d11ebf9f297855273b2c8c153996c73cfac117321da7e15345e",
+  "features": {
+    "camera_quantization": "round(255*clip(luminance,0,1)), uint8",
+    "pooled_height": 9,
+    "pooled_width": 16,
+    "pooled_transform": "4x4mean;float32;2*(mean/255)-1",
+    "extra_inputs": [
+      "previous_contact",
+      "previous_reward",
+      "previous_action_onehot4"
+    ],
+    "obs_dim": 150,
+    "texture_rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "texture_sampling": "Uniform per episode, environment RNG independent of layout/goal/policy RNG/phase; not deterministic layout ID.",
+    "policy_information": "Pixels, contact, last reward and own last action only; no pose/goal/map/geodesic/layout/phase inputs.",
+    "clock": "One neural update per digital decision; tau values are decision-step constants, not physiological milliseconds.",
+    "physical_equivalence": false,
+    "raw_animal_sensation": false
+  },
+  "actions": {
+    "mode": "allocentric",
+    "n_actions": 4,
+    "names": [
+      "row+1",
+      "row-1",
+      "column+1",
+      "column-1"
+    ],
+    "camera": "Faces attempted move; initial heading toward centre is declared assumption.",
+    "egocentric": "Separate future sensitivity; not pooled."
+  },
+  "reward": {
+    "goal_first_arrival": 1.0,
+    "other": 0.0,
+    "goal_hidden": true,
+    "trial_limit": 45,
+    "shortest_path_shaping": false,
+    "native_time_equivalence": false
+  },
+  "methods": [
+    {
+      "name": "eprop_symmetric",
+      "rates": [
+        0.003,
+        0.01,
+        0.03
+      ],
+      "hidden": 64,
+      "core_rate_ratio": 0.1
+    },
+    {
+      "name": "eprop_random",
+      "rates": [
+        0.003,
+        0.01,
+        0.03
+      ],
+      "hidden": 64,
+      "core_rate_ratio": 0.1
+    },
+    {
+      "name": "rate_bptt_sgd",
+      "rates": [
+        0.003,
+        0.01,
+        0.03
+      ],
+      "hidden": 64,
+      "core_rate_ratio": null
+    },
+    {
+      "name": "rate_bptt_adam",
+      "rates": [
+        0.0001,
+        0.0003,
+        0.001
+      ],
+      "hidden": 64,
+      "core_rate_ratio": null
+    },
+    {
+      "name": "spike_bptt_sgd",
+      "rates": [
+        0.003,
+        0.01,
+        0.03
+      ],
+      "hidden": 64,
+      "core_rate_ratio": null
+    },
+    {
+      "name": "spike_bptt_adam",
+      "rates": [
+        0.0001,
+        0.0003,
+        0.001
+      ],
+      "hidden": 64,
+      "core_rate_ratio": null
+    },
+    {
+      "name": "recurrent_ppo",
+      "rates": [
+        0.0001,
+        0.0003,
+        0.001
+      ],
+      "hidden": 20,
+      "core_rate_ratio": null
+    }
+  ],
+  "common_learning": {
+    "dtype": "float32",
+    "gamma": 0.95,
+    "entropy": 0.01,
+    "value_coefficient": 0.5,
+    "tau_m": 20.0,
+    "tau_a": 200.0,
+    "threshold": 0.6,
+    "pseudo_derivative_gain": 0.3,
+    "alif_fraction": 0.5,
+    "adaptive_threshold_beta": 1.0,
+    "readout_kappa": "exp(-1/20)",
+    "parameter_matching": "~14kplastic weights; LSTM20vs64rate/spiking; report effective/stored/fixed/state counts."
+  },
+  "ppo": {
+    "n_envs": 8,
+    "n_steps": 128,
+    "epochs": 4,
+    "minibatches": 2,
+    "lambda": 0.95,
+    "clip": 0.2,
+    "adam_epsilon": 1e-05,
+    "max_grad_norm": 0.5,
+    "value_loss": "MSE",
+    "advantage_normalization": true
+  },
+  "bptt": {
+    "loss": "Episode Monte Carlo actorcritic, detached actor advantage, independent entropy; SGD/Adam distinct.",
+    "spiking_graph": "Same forward/filter/initialization as eprop; recurrent spike input differentiable, reset detached.",
+    "adam_epsilon": 1e-08
+  },
+  "eprop": {
+    "form": "Reward online Methods form/plainSGD; not released Atari Adam/nstep or benchmark reproduction.",
+    "feedback": [
+      "symmetric",
+      "fixed_random"
+    ],
+    "entropy_mode": "independent",
+    "plastic_core": true,
+    "self_synapses": false,
+    "core_rate_ratio": 0.1
+  },
+  "resource_policy": {
+    "device": "CPU; CUDA_VISIBLE_DEVICES empty. GPU1only later; noGUI/Unity/GPU0.",
+    "workers_max": 2,
+    "threads_per_worker": 1,
+    "measure": [
+      "actual_tensor_bytes",
+      "fixed_structure_feedback",
+      "eligibility",
+      "optimizer",
+      "BPTT_buffer_lower_bound/RSS",
+      "PPO_buffer",
+      "input_MACs",
+      "spikes_events",
+      "wall_time",
+      "actual_interactions"
+    ],
+    "energy": "Events/bytes are proxies, not measured joules."
+  },
+  "technical_GO_requirements": [
+    "Independent source cache/pooling checks",
+    "Parameter/dtype/seed replay",
+    "Eprop entropy/TDordering gradients",
+    "Full-spiking forward/gradient comparator",
+    "Exact32768frames and boundary/reward accounting source-shaped dryrun",
+    "Finite states/checkpoint replay and code/data hashes bound"
+  ],
+  "failure_policy": "Retain failed/nonfinite fits; no silent retry/clip/reset. Technical repair gets new version before affected fits.",
+  "scientific_next_gate": "Useful control beyond matched random reference and absolute source competence/uncertainty before longer/biological/target protocol; no universal conclusion from one failure."
+}

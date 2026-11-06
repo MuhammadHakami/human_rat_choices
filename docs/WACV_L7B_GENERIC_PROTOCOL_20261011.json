@@ -1,0 +1,47 @@
+{
+  "id": "WACV-L7B-generic-temporal-initialization-controls-20261011",
+  "registered_utc": "2026-10-11T10:36:14.433199+00:00",
+  "state": "Prospective separate exploratory comparison after L6 outcomes; before human L7B fits. Source-only development/dry checks permitted. L7 unchanged.",
+  "question": "Does real-macaque initialization improve target adaptation beyond a hand-designed multiscale bank and a generic label-free target temporal covariance bank?",
+  "depends_on": "Complete independently audited L7 common-query budget results, source-only independent PCA reconstruction and dry result audit, then technical GO.",
+  "budgets": [
+    2,
+    3,
+    5
+  ],
+  "sets": "The same13H1recording sets in frozen structuremanifest, one human across6dates",
+  "inits": [
+    "multiscale",
+    "temporal_pca"
+  ],
+  "fits": 78,
+  "scheduled_updates": 11700,
+  "max_cpu_workers": 16,
+  "source_pca_recipe": {
+    "rows": "All eligible support rows of firstkwholetrials; retain PCA lag rows only if full25binhistory is within that trial. No futuretrial spikes/labels enter statistics.",
+    "input": "Rawspike counts; perunit mean/std from eligible support rows, standarddeviation floor0.1counts. Readonly non-support arrays may be present in file but cannot affect output.",
+    "covariance": "Stack normalized25lags for full-window eligible support rows, flatten rows\u00d7units into samples\u00d725; center each lag across those samples and divide crossproduct by number samples.",
+    "basis": "Five eigenvectors corresponding to largest eigenvalues of25x25covariance, descendingorder. Nonnegative tap-sum convention, largest-absolute tap positive if sum effectivelyzero.",
+    "scale": "Each row scaled to corresponding fixedV1bank row L2norm.",
+    "interpretation": "Deterministic label-free support initialization. It includes neural inputs of every support fold; reused LOO objective is training, not an independent validation.",
+    "failure": "Emptyfullwindow/nonfinitecovariance or zero variance explicitfailures, no alternatebasis/substitutedseed/omittedset."
+  },
+  "multiscale": "Exact frozen hand-designed five-exponential-kernel bank from L5 manifest; no retuning.",
+  "adaptation": "Invoke immutable L7.job unchanged: same150Adam updates, same six ridge strengths chosen once from initial support k-fold objective; cp0/15/30/60/90/150, same earlytie rule and supportselected/fixed150 results.",
+  "query": "The identical L7 rows on wholetrials afterfirst5, no query-based choice; all lowerbudget intervening trial labels unused.",
+  "persist": "Every source/inputSHA, L7resultSHA, initialPCA taps/eigenvalues/supportrow IDs/trial boundaries, allsavedcheckpoint taps/losses/predictions/counters, all failures retained.",
+  "analysis": {
+    "primary": "Support-objective-selected real-source meanof3seedR2 minus each adapted generic bank, paired perbudget/set. Not averaging real predictions.",
+    "secondary": "Fixed150, allcheckpoints, ownsame-lambda step0 adaptation gains, eachgeneric minus L7random_mean. No budget/queryselection.",
+    "intervals": "Same10000six-datecluster draws with seed20261011 asL7. Conditionaloneparticipant, no population inference or equivalence claim."
+  },
+  "inputs": {
+    "scripts/xspecies_l6_target_adapt.py": "485b32fe9429ce65c41717fd011aa49689db06e178e709f6f3478c7156821eff",
+    "scripts/xspecies_l7_budget.py": "03794c24fbfca0224796201a5ccc76eede07eb8d320fb581427f029a9a7480d3",
+    "docs/WACV_L7_BUDGET_PROTOCOL_20261011.json": "7fdf6fe60e3adbb9d078802e13b2acbb6f9c83509fdc0f6cb84faa02f7e47f61",
+    "data/audit/wacv_l5_frozen_banks_20261011.json": "79dd0989c2c965fed544c7d278ea689fb4a4b32f90951995afe4b5b051d4393a",
+    "data/audit/falcon_h1_forward_structure_20261011.json": "11ecad7619b92e9425c2d9ecf4b5f91a60173020130fd02cbf02ecbf9db6e9a5"
+  },
+  "allowed_claim": "Additional fair generic controls to assess biological source specificity of named real-source prior, without proving no other generic strategy succeeds. No local-gradient or newsubject claim.",
+  "venue_decision": "Constructive transfer remains supporting work; WACV embodied interface study remains main candidate pending completed intervention outcomes."
+}

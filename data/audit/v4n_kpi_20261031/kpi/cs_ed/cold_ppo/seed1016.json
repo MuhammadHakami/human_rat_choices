@@ -1,0 +1,1 @@
+{"learner": "cs_ed", "prior": "cold_ppo", "seed": 1016, "source": "data/audit/v4n_local_stability_20261102/test/cs_ed/cold_ppo/seed1016.json", "familiar_trained_room": 3, "moved_heldout_room": 9, "familiar_heldout_room": 3}

@@ -1,0 +1,7 @@
+{
+ "written_utc": "2026-10-31T12:07:37Z",
+ "amends": "PROTOCOL.json + AMENDMENT1-2",
+ "reason": "v1 dev calibration: local learners reached <=1.8/30 at the chosen rates and diverged at higher rates (31/72) while PPO reached up to 29/30 on the same dev rooms. v1 used plain fixed-rate SGD; PPO uses Adam. The test was stopped before any test output was written (none exists).",
+ "change": "v2: same three-factor directions (TD error x eligibility trace; DFA random feedback for hidden layers) plus the policy's own entropy term (coef .05, as PPO), applied with per-synapse Adam scaling (beta .9/.999, eps 1e-5), as e-prop practice (Bellec 2020). Rates (1e-4,3e-4,1e-3,3e-3) calibrated on the same dev rooms/seeds; outputs calib2/test2/PICK2.json. v1 calibration kept and will be reported in the supplement.",
+ "script_sha256": "459ff0ab87d3eadacaed9c9cd3adae590c31ad26cc73eaab2f0b8a95778215ed"
+}

@@ -1,0 +1,1 @@
+{"learner": "s2_head", "prior": "human_legal_uniform", "seed": 1008, "source": "data/audit/v4n_local_search2_20261102/test/s2_head/human_legal_uniform/seed1008.json", "familiar_trained_room": 7, "moved_heldout_room": 15, "familiar_heldout_room": 6}

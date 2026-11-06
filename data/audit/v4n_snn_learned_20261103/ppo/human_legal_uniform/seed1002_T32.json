@@ -1,0 +1,1 @@
+{"learner": "ppo", "prior": "human_legal_uniform", "seed": 1002, "T": 32, "goals": 28, "dense_goals": 28, "synops_per_decision": 103147.77897574124, "dense_macs": 20544}

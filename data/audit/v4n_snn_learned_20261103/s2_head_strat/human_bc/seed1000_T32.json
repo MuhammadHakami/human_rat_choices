@@ -1,0 +1,1 @@
+{"learner": "s2_head_strat", "prior": "human_bc", "seed": 1000, "T": 32, "goals": 30, "dense_goals": 30, "synops_per_decision": 3536782.435483871, "dense_macs": 152631}

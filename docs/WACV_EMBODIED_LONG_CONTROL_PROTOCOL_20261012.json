@@ -1,0 +1,130 @@
+{
+  "registered_utc": "2026-10-12T02:39:51.885532+00:00",
+  "status": "Longconventional SOURCE-only registration before code/dry/fullfits",
+  "purpose": "Establish strong successful conventional sourcecontrol before judging localcredit or biologicalruletransfer. Neither genericPPO nor this sourcepretraining is novelty.",
+  "parent": "docs/WACV_EMBODIED_SPATIAL_SOURCE_PROTOCOL_20261012.json",
+  "parent_sha256": "de6f74294e5560de4c25badd2c77bc4486c87a9a8a80bca1126372618a35f07e",
+  "known_evidence": "Two complete32kneural sweeps known (bestsourceadaptive5.56% both), visualstatefilter works onvisitedstreams, strongmodelbasedsource reference100%. No long-controlfit yet.",
+  "train_configurations": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "select_configurations": [
+    6,
+    7
+  ],
+  "no_target_fits": true,
+  "no_native_data_fits": true,
+  "observations": {
+    "dim": 252,
+    "contract": "Original150camera/contact/reward/ownaction plus100frozen posterior plus2posterior coordinate means normalized[-1,1]. Coordinate means are a declared deterministic transform of source-calibrated belief, not oracle pose or goalbearing.",
+    "fixed_coordinate_matrix_bytes": 800,
+    "source_atlas": "Same400labeledopen0views,102400B.",
+    "initial_prior": "Uniform100cells x4headings",
+    "limits": "Stableknownroomframe, deterministicallocentric/contact/lastmovecamera priors. Earlier250dim/seeds/budgets differ; no purecausalarchitecture/representationclaim."
+  },
+  "architectures": {
+    "ppo_shared_ff64x64": {
+      "shared_layers": [
+        64,
+        64
+      ],
+      "activation": "tanh",
+      "actor_head": 4,
+      "critic_head": 1,
+      "orthogonal_gain": "sqrt2hidden,.01actor,1critic",
+      "no_recurrent_policy_state": true,
+      "expected_parameters": 20677
+    },
+    "ppo_lstm19": {
+      "hidden": 19,
+      "initialization": "OriginalreviewedRecurrentPPO default",
+      "expected_parameters": 20848
+    }
+  },
+  "rates": [
+    0.0003,
+    0.001
+  ],
+  "seeds": [
+    20,
+    21,
+    22
+  ],
+  "fits_planned": 12,
+  "training_frames_each": 524288,
+  "curriculum": [
+    {
+      "until_total_frames": 32768,
+      "configurations": [
+        0
+      ],
+      "native_starts": false,
+      "spawn_distance_min": 1,
+      "spawn_distance_max": 4
+    },
+    {
+      "until_total_frames": 65536,
+      "configurations": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "native_starts": false,
+      "spawn_distance_min": 1,
+      "spawn_distance_max": 8
+    },
+    {
+      "until_total_frames": 524288,
+      "configurations": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "native_starts": true
+    }
+  ],
+  "common_learning": {
+    "gamma": 0.95,
+    "gae_lambda": 0.95,
+    "entropy": 0.01,
+    "value_coefficient": 0.5,
+    "clip": 0.2,
+    "max_grad_norm": 0.5,
+    "adam_epsilon": 1e-05,
+    "n_envs": 8,
+    "n_steps": 128,
+    "epochs": 4,
+    "minibatches": 2,
+    "advantage_normalization": true,
+    "dtype": "float32",
+    "optimizer": "Adam"
+  },
+  "selection": "Same3repeats x20native source starts6then7; freshcheckpoint clones perarm/repeat, frozen/no weightsupdate versusadaptive/weightsretained across20trials; originalone-slot128segment PPOselection,1minibatch andcounted singletonguard. Exactinteger successcounts across3seeds, thenfrozen thenlowercandidate index; full12caseaudit before scores.",
+  "competence_review": "50%adaptive mean on6/7 is sourcecompetence target, not automatic targetGO/publication. Sourcecontrol lacking => improve strategy/sourcecurriculum/demonstrations, not failurepaper closure.",
+  "technical_gate": [
+    "FFforward/actiondistribution/criticgradient/optimizerparameters andclipping",
+    "Independentcausalbelief/coordinate input checks",
+    "Exact524288frames/forced-boundary/reward accounting",
+    "Allarchitectures source-shapeddry checkpoint replay",
+    "Currentcode/protocol/cache hashes bound rootGO"
+  ],
+  "resources": {
+    "device": "CPU",
+    "workers": 2,
+    "threads": 1,
+    "costs": "Alltraining/selection interactions,400sourceviews, fixedencoder/posterior/memoization/coordinate matrix, actualweights/Adam/buffer, MACs, RSS,time. Countdummy APIstate if allocated, labelFFusedrecurrentstate0.",
+    "no_energy_claim": true
+  },
+  "failure": "Retain everypartial/nonfinite case; nullmeasuredaccuracy/zero robustness utility; no silentrestart, repairnewversion beforeaffected fits.",
+  "sequence": "Implementation+meaningfulchecks => rootGO => all12fits => independentphysics/checkpoint/metric audit => interpretation. Localoptimizer/decisionclock andbiologicalrule recovery separate subsequent protocols."
+}

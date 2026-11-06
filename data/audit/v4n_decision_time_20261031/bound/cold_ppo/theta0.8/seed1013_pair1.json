@@ -1,0 +1,1 @@
+{"prior": "cold_ppo", "seed": 1013, "theta": 0.8, "pair": 1, "goals": 22, "steps": 4.652413793103448, "synops_per_decision": 10236.31724137931, "first_step_agree": 0.6055172413793104, "stop_agree": 0.8510344827586207, "decisions": 725}

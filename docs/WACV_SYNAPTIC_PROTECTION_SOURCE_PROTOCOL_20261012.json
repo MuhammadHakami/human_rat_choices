@@ -1,0 +1,282 @@
+{
+  "registered_utc": "2026-10-12T17:31:55Z",
+  "status": "source-only protection development",
+  "configurations": [
+    {
+      "id": "local_selected_meta_switch",
+      "rule": "local",
+      "rate": 0.001,
+      "protection": "meta",
+      "shift": "switch",
+      "B_goal": [
+        6,
+        6
+      ]
+    },
+    {
+      "id": "local_selected_slow_switch",
+      "rule": "local",
+      "rate": 0.001,
+      "protection": "slow",
+      "shift": "switch",
+      "B_goal": [
+        6,
+        6
+      ]
+    },
+    {
+      "id": "local_selected_both_switch",
+      "rule": "local",
+      "rate": 0.001,
+      "protection": "both",
+      "shift": "switch",
+      "B_goal": [
+        6,
+        6
+      ]
+    },
+    {
+      "id": "local_selected_uniform_meta_switch",
+      "rule": "local",
+      "rate": 0.001,
+      "protection": "uniform_meta",
+      "shift": "switch",
+      "B_goal": [
+        6,
+        6
+      ]
+    },
+    {
+      "id": "local_selected_none_stationary",
+      "rule": "local",
+      "rate": 0.001,
+      "protection": "none",
+      "shift": "stationary",
+      "B_goal": [
+        3,
+        3
+      ]
+    },
+    {
+      "id": "local_selected_both_stationary",
+      "rule": "local",
+      "rate": 0.001,
+      "protection": "both",
+      "shift": "stationary",
+      "B_goal": [
+        3,
+        3
+      ]
+    },
+    {
+      "id": "bp_selected_meta_switch",
+      "rule": "bp",
+      "rate": 0.0003,
+      "protection": "meta",
+      "shift": "switch",
+      "B_goal": [
+        6,
+        6
+      ]
+    },
+    {
+      "id": "bp_selected_slow_switch",
+      "rule": "bp",
+      "rate": 0.0003,
+      "protection": "slow",
+      "shift": "switch",
+      "B_goal": [
+        6,
+        6
+      ]
+    },
+    {
+      "id": "bp_selected_both_switch",
+      "rule": "bp",
+      "rate": 0.0003,
+      "protection": "both",
+      "shift": "switch",
+      "B_goal": [
+        6,
+        6
+      ]
+    },
+    {
+      "id": "bp_selected_uniform_meta_switch",
+      "rule": "bp",
+      "rate": 0.0003,
+      "protection": "uniform_meta",
+      "shift": "switch",
+      "B_goal": [
+        6,
+        6
+      ]
+    },
+    {
+      "id": "bp_selected_none_stationary",
+      "rule": "bp",
+      "rate": 0.0003,
+      "protection": "none",
+      "shift": "stationary",
+      "B_goal": [
+        3,
+        3
+      ]
+    },
+    {
+      "id": "bp_selected_both_stationary",
+      "rule": "bp",
+      "rate": 0.0003,
+      "protection": "both",
+      "shift": "stationary",
+      "B_goal": [
+        3,
+        3
+      ]
+    },
+    {
+      "id": "bp_common_meta_switch",
+      "rule": "bp",
+      "rate": 0.001,
+      "protection": "meta",
+      "shift": "switch",
+      "B_goal": [
+        6,
+        6
+      ]
+    },
+    {
+      "id": "bp_common_slow_switch",
+      "rule": "bp",
+      "rate": 0.001,
+      "protection": "slow",
+      "shift": "switch",
+      "B_goal": [
+        6,
+        6
+      ]
+    },
+    {
+      "id": "bp_common_both_switch",
+      "rule": "bp",
+      "rate": 0.001,
+      "protection": "both",
+      "shift": "switch",
+      "B_goal": [
+        6,
+        6
+      ]
+    },
+    {
+      "id": "bp_common_uniform_meta_switch",
+      "rule": "bp",
+      "rate": 0.001,
+      "protection": "uniform_meta",
+      "shift": "switch",
+      "B_goal": [
+        6,
+        6
+      ]
+    },
+    {
+      "id": "bp_common_none_stationary",
+      "rule": "bp",
+      "rate": 0.001,
+      "protection": "none",
+      "shift": "stationary",
+      "B_goal": [
+        3,
+        3
+      ]
+    },
+    {
+      "id": "bp_common_both_stationary",
+      "rule": "bp",
+      "rate": 0.001,
+      "protection": "both",
+      "shift": "stationary",
+      "B_goal": [
+        3,
+        3
+      ]
+    }
+  ],
+  "source_models": [
+    {
+      "arm": "rat_bc",
+      "seed": 60,
+      "path": "data/audit/wacv_native_behavior_prior_20261012/cohort/rat_bc/seed60/checkpoint_source.pt",
+      "sha256": "a71a534675630d63cc4ed01707963d4435c1bfc01a13f33b3ba938166a69079f"
+    },
+    {
+      "arm": "rat_bc",
+      "seed": 61,
+      "path": "data/audit/wacv_native_behavior_prior_20261012/cohort/rat_bc/seed61/checkpoint_source.pt",
+      "sha256": "3fc81a33a4ed48b11cd16f930571509f10cdfbf0d83b96fd353c2e75c2092389"
+    },
+    {
+      "arm": "rat_bc",
+      "seed": 62,
+      "path": "data/audit/wacv_native_behavior_prior_20261012/cohort/rat_bc/seed62/checkpoint_source.pt",
+      "sha256": "3c6d7c3b64f6bd1dc8ee3cabb4785ad0d389ce94051f3674bd2fef47159cee28"
+    }
+  ],
+  "source_seeds": [
+    60,
+    61,
+    62
+  ],
+  "fits": 54,
+  "frames_per_phase": 65536,
+  "environments": 16,
+  "source_configuration": 0,
+  "goals": {
+    "A": [
+      3,
+      3
+    ]
+  },
+  "settings": {
+    "slow_tau": 4096,
+    "meta_tau": 2048,
+    "meta_max": 25,
+    "consolidation": 0.001
+  },
+  "fixed_learning": {
+    "gamma": 0.99,
+    "eligibility_lambda": 0.95,
+    "entropy": 0.01,
+    "value_coefficient": 0.5,
+    "optimizer": "Adam maximize, eps=1e-5",
+    "gradient_clip": "component-wise +/-0.1",
+    "feedback_scale": 0.1
+  },
+  "acquisition_selection": {
+    "local": 0.001,
+    "bp": 0.0003,
+    "readout": 0.001
+  },
+  "reference_none_switch": "Reused acquisition-pilot runs at the source-selected rates; common-rate BP uses its original rate2 runs",
+  "primary_development_metrics": [
+    "B acquisition success and success-weighted shortest-path efficiency",
+    "A efficiency change after B",
+    "Joint A/B competence; all seeds retained"
+  ],
+  "diagnostics": [
+    "Uniform_meta uses the same tensor-mean gate but removes synapse selectivity",
+    "Stationary reward goal controls continued-learning drift",
+    "Mean/min/max availability and slow-reference displacement at A/B endpoints",
+    "Visits to the alternative goal distinguish target retrieval from goal-agnostic tours"
+  ],
+  "interpretation": "Exploratory source development. Inherited source A competence and frozen hidden-goal recall do not establish a task-inferred memory mechanism or lifetime no-forgetting guarantee.",
+  "no_task_id": true,
+  "no_phase_reset": true,
+  "target_maps_accessed": false,
+  "device": "GPU1 RTX3090, one worker",
+  "readout": "Scores read only after full cohort and independent audit",
+  "code": {
+    "runner": "d620db84b851098137ff39bf4b16f55702cee5176331635de5d763b953ad36d3",
+    "credit": "090493c6917e1ed0c9ac2edb03dd3d570cad3e320c8bb72a6b4d5dccb091100e",
+    "protection": "381972dab10fa7b61d939c276c667800bb91dff1bc6d49719e465f152700d0f4"
+  }
+}

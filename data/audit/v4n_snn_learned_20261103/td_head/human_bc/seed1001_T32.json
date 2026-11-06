@@ -1,0 +1,1 @@
+{"learner": "td_head", "prior": "human_bc", "seed": 1001, "T": 32, "goals": 4, "dense_goals": 4, "synops_per_decision": 83435.27768595041, "dense_macs": 20544}

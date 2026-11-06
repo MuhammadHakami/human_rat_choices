@@ -1,0 +1,203 @@
+{
+  "registered_utc": "2026-10-12T08:19:11.518823+00:00",
+  "version": "native-prior-fresh-spatial-retention-confirmation-v1",
+  "status": "registered-before-new-geometry-or-evaluation; implementation/technical checks required before GO",
+  "question": "Does the rat-prior development gain persist on fresh spatial layouts, under sensory noise, and after learning a competing topology?",
+  "parent_protocol": "docs/WACV_NATIVE_BEHAVIOR_PRIOR_SOURCE_PROTOCOL_20261012.json",
+  "parent_protocol_sha256": "686d4d2e49e93c3502c37832991ee3b272081806b9845084c439a79cc826daa6",
+  "source_report_sha256": "27d4e49a0411ca72b62a8d9d321d512104ae7f07d2ab12fec3ffb0675f1d7b62",
+  "source_audit_sha256": "b982724872697dc68377f9e2660cb2fff216af79fca87a7944feb06b87fa3c25",
+  "source_models": [
+    {
+      "arm": "rat_bc",
+      "seed": 60,
+      "path": "data/audit/wacv_native_behavior_prior_20261012/cohort/rat_bc/seed60/checkpoint_source.pt",
+      "sha256": "a71a534675630d63cc4ed01707963d4435c1bfc01a13f33b3ba938166a69079f"
+    },
+    {
+      "arm": "rat_bc",
+      "seed": 61,
+      "path": "data/audit/wacv_native_behavior_prior_20261012/cohort/rat_bc/seed61/checkpoint_source.pt",
+      "sha256": "3fc81a33a4ed48b11cd16f930571509f10cdfbf0d83b96fd353c2e75c2092389"
+    },
+    {
+      "arm": "rat_bc",
+      "seed": 62,
+      "path": "data/audit/wacv_native_behavior_prior_20261012/cohort/rat_bc/seed62/checkpoint_source.pt",
+      "sha256": "3c6d7c3b64f6bd1dc8ee3cabb4785ad0d389ce94051f3674bd2fef47159cee28"
+    },
+    {
+      "arm": "human_bc",
+      "seed": 60,
+      "path": "data/audit/wacv_native_behavior_prior_20261012/cohort/human_bc/seed60/checkpoint_source.pt",
+      "sha256": "14b630a63a94c4053c76f0ebbf398d0c3d63a6d5462135697ed27365d94b5d7c"
+    },
+    {
+      "arm": "human_bc",
+      "seed": 61,
+      "path": "data/audit/wacv_native_behavior_prior_20261012/cohort/human_bc/seed61/checkpoint_source.pt",
+      "sha256": "6b7c5df5e4e6d984bc4945dc65006a99fa701cce0d045b8c6e063aaddfa3dedc"
+    },
+    {
+      "arm": "human_bc",
+      "seed": 62,
+      "path": "data/audit/wacv_native_behavior_prior_20261012/cohort/human_bc/seed62/checkpoint_source.pt",
+      "sha256": "9b382b78958019336326eee6fe2ac4e27ce2baacac374c6ed6cc295ee11510ec"
+    },
+    {
+      "arm": "rat_sham",
+      "seed": 60,
+      "path": "data/audit/wacv_native_behavior_prior_20261012/cohort/rat_sham/seed60/checkpoint_source.pt",
+      "sha256": "6975349466781f185fa6023074ea8489a3847253eb398422b97229379ec5e121"
+    },
+    {
+      "arm": "rat_sham",
+      "seed": 61,
+      "path": "data/audit/wacv_native_behavior_prior_20261012/cohort/rat_sham/seed61/checkpoint_source.pt",
+      "sha256": "eb733afb0a278d562f5c09bb921fd41d3195158903ab4a383d8d889172968922"
+    },
+    {
+      "arm": "rat_sham",
+      "seed": 62,
+      "path": "data/audit/wacv_native_behavior_prior_20261012/cohort/rat_sham/seed62/checkpoint_source.pt",
+      "sha256": "d47fc402b5c29dabaf927e53471d1902653eb78f30d8bdb74b55f4dc88f02ddf"
+    },
+    {
+      "arm": "human_sham",
+      "seed": 60,
+      "path": "data/audit/wacv_native_behavior_prior_20261012/cohort/human_sham/seed60/checkpoint_source.pt",
+      "sha256": "2d508f7b167b7040610b1f1b26c86d4b7ef76aa0018327c62172792f4ffdc5aa"
+    },
+    {
+      "arm": "human_sham",
+      "seed": 61,
+      "path": "data/audit/wacv_native_behavior_prior_20261012/cohort/human_sham/seed61/checkpoint_source.pt",
+      "sha256": "4a4448fe0c6c3dca6cb6046b2e403648b82f9c781ab7867f01ef80f25855ac44"
+    },
+    {
+      "arm": "human_sham",
+      "seed": 62,
+      "path": "data/audit/wacv_native_behavior_prior_20261012/cohort/human_sham/seed62/checkpoint_source.pt",
+      "sha256": "66fbf44748e560cbab13bc7ca591ef1de5e61ce069a44506bc180e4db1fccbec"
+    },
+    {
+      "arm": "rat_expert",
+      "seed": 60,
+      "path": "data/audit/wacv_native_behavior_prior_20261012/cohort/rat_expert/seed60/checkpoint_source.pt",
+      "sha256": "5ad6c16bfbd6f481b7aea628b43d5b794e4948cd062a7be5df54f25870643c93"
+    },
+    {
+      "arm": "rat_expert",
+      "seed": 61,
+      "path": "data/audit/wacv_native_behavior_prior_20261012/cohort/rat_expert/seed61/checkpoint_source.pt",
+      "sha256": "24afc446b06935d1463d0445b1088ce0e732180a110f22266b1863396cd127a2"
+    },
+    {
+      "arm": "rat_expert",
+      "seed": 62,
+      "path": "data/audit/wacv_native_behavior_prior_20261012/cohort/rat_expert/seed62/checkpoint_source.pt",
+      "sha256": "84452ac7b72415ec597cf8215d5f7d2024fb95775a5aa525973141f7a877da07"
+    },
+    {
+      "arm": "human_expert",
+      "seed": 60,
+      "path": "data/audit/wacv_native_behavior_prior_20261012/cohort/human_expert/seed60/checkpoint_source.pt",
+      "sha256": "920e4a03a95e8a9c509b166b503c6159511cfc9da788453008ecc599b4cd2e63"
+    },
+    {
+      "arm": "human_expert",
+      "seed": 61,
+      "path": "data/audit/wacv_native_behavior_prior_20261012/cohort/human_expert/seed61/checkpoint_source.pt",
+      "sha256": "8cdcfe697d6061984407cdfd138c22144b48c6b0b01c171617ee0835473bd5c7"
+    },
+    {
+      "arm": "human_expert",
+      "seed": 62,
+      "path": "data/audit/wacv_native_behavior_prior_20261012/cohort/human_expert/seed62/checkpoint_source.pt",
+      "sha256": "1fb310673cccca3be8db0a0076215aa4343df1a4426f5301771e60ee1cff4e46"
+    },
+    {
+      "arm": "cold_ppo",
+      "seed": 60,
+      "path": "data/audit/wacv_native_behavior_prior_20261012/cohort/cold_ppo/seed60/checkpoint_source.pt",
+      "sha256": "5a67a687a34ee044b81a24d14f520f5f4ca587bf7afe158880d76d586245cf39"
+    },
+    {
+      "arm": "cold_ppo",
+      "seed": 61,
+      "path": "data/audit/wacv_native_behavior_prior_20261012/cohort/cold_ppo/seed61/checkpoint_source.pt",
+      "sha256": "c9f7b65e0721f429fcd7e4e0a5c680ab3864d64fd5112f2d4fe4ea04d95ec4fc"
+    },
+    {
+      "arm": "cold_ppo",
+      "seed": 62,
+      "path": "data/audit/wacv_native_behavior_prior_20261012/cohort/cold_ppo/seed62/checkpoint_source.pt",
+      "sha256": "e927fa1ba8e2654afccfb4bb0eec47f7eb698631b3f209ed49cd9b503ea8a944"
+    }
+  ],
+  "selection_boundary": "All7 source arms/all3 seeds retained; no selecting favorable source checkpoint, new learning rate or target setting after seeing confirmation. Native8\u201325 known to researchers remain excluded; final fresh generated geometry is separate from real biological measurements.",
+  "geometry": {
+    "pairs": 8,
+    "seed": 89310276,
+    "room_shape": [
+      10,
+      10
+    ],
+    "goal": [
+      3,
+      3
+    ],
+    "starts": "Same10 boundary start coordinates from source layout1, forced walkable; source geometry otherwise not reused.",
+    "generation": "For each pair, independently sample18 blocked cells per A and B from cells excluding goal and starts; deterministic rejection until all free cells connect to goal, all starts have shortest distance<=30, and symmetric difference of A/B blocked sets>=20. Seed/accepted candidates/geometry hashes stored before policy evaluation; no rejection based on agent success.",
+    "clock": "45 decisions per trial, reward on goal entry; source digital movement/contact semantics unchanged.",
+    "textures": "Registered source3 texture rotations; source renderer/camera/fog/bounds/action semantics fixed."
+  },
+  "perception": {
+    "tiers": [
+      "clean",
+      "noisy"
+    ],
+    "noise_standard_deviation_normalized_pixels": 0.1,
+    "noise": "Independent seeded additive Gaussian noise on all144 normalized pooled pixel features, clipped[-1,1], applied before policy AND observer; contact/reward/last-action uncorrupted. This models sensory perturbation, not a measured species retina.",
+    "observer": "Common frozen400-view source atlas/sigma.03, source known room/allocentric motion/contact priors. NEW numerically safe log-domain Bayes arithmetic, mathematically matched to source filter on clean technical streams; no target calibration or oracle positions. All controller inputs252 dims.",
+    "why": "Peer audit found source MAP positions exact100%; do not claim uncertain localisation or memory necessity from old single-view MLP scores. Confirmation reports empirical MAP accuracy/true-cell posterior per phase/tier, plus full-scaffold cost."
+  },
+  "phases": {
+    "A_before": "30 frozen-policy probe trials:10 starts x3 rotations, no weight updates.",
+    "B_frozen": "8192 physical decisions on topologyB with source weights frozen; repeat the start/rotation bank until charged decision budget ends.",
+    "B_adapt": "Independent source-weight clone, same8192 decision allowance/start order/initial RNG; online parentPPO settings unchanged.",
+    "A_after": "30 frozen-policy probes afterB_adapt, same starts/rotations/action RNG/sensor-noise seed asA_before. No A learning occurs in retention probe.",
+    "inference": "B_adapt minusB_frozen measures adaptation utility at matched decision allowance; A_after minusA_before measures retained task performance. A frozenB clone must yield identical A probes under reset state/RNG. Changing topology is a competing navigation setting, not a novel object-category or goal task."
+  },
+  "learning": {
+    "source_net": "FF64x64 all7 native-prior arms",
+    "online_rate": 0.001,
+    "gamma_and_gae": "unchanged parent long-control recipe",
+    "optimizer": "Carry each source PPO Adam state; clone independently for frozen/adaptive phases.",
+    "recurrent_state": "FF controllers have none; frozen belief resets on episode starts. Memory updating and weight updating are distinguished."
+  },
+  "planned_cases": 336,
+  "denominators": "7arms x3modelseeds x8freshpairs x2sensor tiers; same scenario banks and coupled random seeds across arms.",
+  "primary_comparisons": [
+    "rat_bc vs rat_sham and cold_ppo on A_before success and B adaptation gains",
+    "rat_bc vs matched rat_expert and strongest human_expert; retain human_bc/human_sham counterexamples",
+    "A_after-A_before paired retention difference per modelseed and freshpair; do not equate nonsignificance with no forgetting"
+  ],
+  "metrics": [
+    "Exact success counts/30 for A probes",
+    "Cumulative completed goals per8192B decisions plus per-episode success, forced-budget truncations and actual episode inventory",
+    "B adaptation improvement vs frozen with same decision allowance",
+    "A retention delta, paired byseed/scenario/tier",
+    "Belief MAP/true-cell probability and contact/loop statistics",
+    "Actual visual frames, training updates, model/optimizer/observer/buffer state and operation estimates; no energy claim"
+  ],
+  "uncertainty": "Report seed effects and scenario effects as crossed dependence; shared source dataset and only3trainingseeds limit inference. Biological subjects do not become336 independent animals.",
+  "conventional_reference": "Source-reward-learned goal/contact planner with identical common observer evaluated as a separately scoped symbolic-control reference; no hidden target map/pose/goal given. Protocol hashes/models/instances specified before its scientific launch.",
+  "numerical_policy": "Log-domain observation probabilities remain positive in internal state; implementation/nonfinite observation failures invalidate study, not learner failure. No retries or scenario deletion after evaluation.",
+  "cost_resources": {
+    "GPU": "GPU0, two workers maximum, desktop3GiBheadroom preserved; no GUI/Unity",
+    "CPU_threads_each": 1
+  },
+  "completion_gate": "All336 cases terminal and independent geometry/causal sensory/budgets/checkpoint/weights/sampling/replay audits before scores. Go requires technical preflight and geometry manifest hash binding.",
+  "claims_boundary": "No measured neural mechanism, cross-species homology, clinical utility, physical deployment, universally backprop-free learner, energy advantage or absence of catastrophic forgetting is presumed."
+}

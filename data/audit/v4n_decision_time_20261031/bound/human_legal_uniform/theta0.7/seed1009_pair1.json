@@ -1,0 +1,1 @@
+{"prior": "human_legal_uniform", "seed": 1009, "theta": 0.7, "pair": 1, "goals": 22, "steps": 1.4901960784313726, "synops_per_decision": 2268.788235294118, "first_step_agree": 0.7450980392156863, "stop_agree": 0.9071895424836601, "decisions": 765}

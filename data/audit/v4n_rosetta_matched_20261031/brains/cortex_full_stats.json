@@ -1,0 +1,7 @@
+{
+ "n_neurons": 9941,
+ "n_frames": 2900,
+ "pca144_variance_kept_fit": 0.9999910593032837,
+ "pca144_variance_kept_test": 0.9999204277992249,
+ "zscored_pca144_variance_kept_fit": 0.9999382495880127
+}

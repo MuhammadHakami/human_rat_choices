@@ -1,0 +1,12 @@
+{
+  "registered_utc": "2026-10-12T18:50:26.525402+00:00",
+  "amends_sha256": "e5151bdfda9ea5d8a925fd9092de9539eb710c251d5af404ff96f061e8d87204",
+  "reason": "Completed18 PPO source fits fail B competence: only one competent seed at every rate. Strong comparator needs source-only tuning before target comparisons.",
+  "amendment": "PPO and PPO-replay use the competent configuration selected from the registered54 source tuning fits: rate, entropy and rollout length together. Selection by B competence then pooled B success/SPL and registered tie breaks. No task geometry, primary factorial, initial weights or target budget changes.",
+  "source_tuning_protocol": "docs/WACV_CONTINUAL_PPO_TUNING_SOURCE_PROTOCOL_20261012.json",
+  "condition": "No visual-room scientific GO until expanded source cohort passes its audit. If it fails competence, do not describe PPO as a competent retention baseline.",
+  "preserved_preparation": "data/audit/wacv_continual_geometry_development_20261012/manifest.json contains the earlier unqualified source PPO selection; no dry or full visual fits were created. It remains untouched; revised manifest is manifest_v2.json.",
+  "target_outcomes_seen": false,
+  "target_fits_started": 0,
+  "device": "GPU1 only"
+}

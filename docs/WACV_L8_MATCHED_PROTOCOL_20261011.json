@@ -1,0 +1,45 @@
+{
+  "registered_utc": "2026-10-11T14:37:57.581011+00:00",
+  "status": "Prospective exploratory extension registered after full L7/L7B interpretation, before new fits. Previously examined human; not a preregistered independent validation.",
+  "question": "Does source temporal ordering improve adaptation beyond source-matched amplitudes and cross-filter Gram structure?",
+  "real_reference": "Reuse original audited L7 real_linear_s0/1/2 for identical files/budgets; do not refit or select seeds.",
+  "controls": {
+    "reversed": "For each seed reverse all25taps of its exact real frozen bank. Preserves row Gram, row norms, singular values and original adjacent-tap roughness; remains causal but reverses recent/distant lag weighting.",
+    "gram_random": "For each real seed construct L=Cholesky(GG.T), Q=positive-diagonal thin QR of25x5Gaussian matrix from NumPydefault_rng([20261011,801,seed]); nullbank=L@Q.T. Preserves exact row Gram/norms/spectrum with random temporal orientation. Roughness need not match."
+  },
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "support_trials": [
+    2,
+    3,
+    5
+  ],
+  "query_after_trials": 5,
+  "sets": 13,
+  "fits": 234,
+  "successful_updates_if_complete": 35100,
+  "adaptation": "Immutable original L7.job: support-only step0ridgegrid,150Adamupdates,sameLOO objective/checkpoints/supportselection/smoothing/normclipping. No query-based choices.",
+  "comparisons": "Real mean over3seeds minus each control mean overthe same3pairedseeds; allbudgets and all8original checkpoint summaries, six-date10000draw bootstrap, conditional and unadjusted. No selective3-budget/seed headline.",
+  "null_information": "Both controls use the learned real-source filters and thus source supervision, statistics and real-source selection. They are perturbation controls, not source-free models.",
+  "limits": [
+    "Real-versus-null difference tests the specified perturbation, not conservation or all generic strategies.",
+    "Matching initial Gram does not match subsequent target feature variance, effective penalty or optimization path.",
+    "Reversal matches initial smoothness only; behavior-dependent dynamics can change covariance.",
+    "No newhuman; incremental labels conditional on prior H1-informed development.",
+    "No independent replay of every gradient update."
+  ],
+  "preflight": "Independent bank algebra/reconstruction plus all3budgets/all6nullinitializations on4alreadyexamined macaque stand-in files. Independent rawprediction/selection/refit/bootstrap audit must pass before any newhumanfit.",
+  "execution": "CPUonly,8spawn workers viaProcessPoolExecutor; per-fit atomic records/predictions retained. A native worker death fails the executor rather than hanging on a lost pool task. Refuse overwrite or implicit retry.",
+  "sha256": {
+    "scripts/xspecies_l7_budget.py": "03794c24fbfca0224796201a5ccc76eede07eb8d320fb581427f029a9a7480d3",
+    "scripts/xspecies_l6_target_adapt.py": "485b32fe9429ce65c41717fd011aa49689db06e178e709f6f3478c7156821eff",
+    "data/audit/wacv_l5_frozen_banks_20261011.json": "79dd0989c2c965fed544c7d278ea689fb4a4b32f90951995afe4b5b051d4393a",
+    "data/wacv/xspecies_l7_budget/results.json": "cb2a0760a60420e62259aa01273a26767c57fb94bb288de1c70751a938442010",
+    "data/wacv/xspecies_l7_budget/prediction_audit.json": "5000c245d0a39bd18795424c17756639fcd6ce792de1713ea6d2dcd2a7ac0d99"
+  },
+  "new_method_code": "scripts/xspecies_l8_matched.py",
+  "independent_auditor": "scripts/audit_xspecies_l8.py"
+}

@@ -1,0 +1,166 @@
+{
+ "note": "Paired per-seed differences (same seed = same init/PPO RNG) from the audited 7-arm cohort and 4-arm controls; exact",
+ "arms": {
+  "cold_ppo": {
+   "60": 24,
+   "61": 21,
+   "62": 24
+  },
+  "human_bc": {
+   "60": 22,
+   "61": 26,
+   "62": 27
+  },
+  "human_expert": {
+   "60": 53,
+   "61": 44,
+   "62": 49
+  },
+  "human_legal_uniform": {
+   "60": 16,
+   "61": 25,
+   "62": 12
+  },
+  "human_sham": {
+   "60": 23,
+   "61": 42,
+   "62": 25
+  },
+  "human_surrogate": {
+   "60": 21,
+   "61": 13,
+   "62": 24
+  },
+  "rat_bc": {
+   "60": 48,
+   "61": 53,
+   "62": 27
+  },
+  "rat_expert": {
+   "60": 15,
+   "61": 19,
+   "62": 29
+  },
+  "rat_legal_uniform": {
+   "60": 54,
+   "61": 16,
+   "62": 49
+  },
+  "rat_sham": {
+   "60": 17,
+   "61": 9,
+   "62": 12
+  },
+  "rat_surrogate": {
+   "60": 31,
+   "61": 7,
+   "62": 42
+  }
+ },
+ "pairs": {
+  "rat_bc-cold_ppo": {
+   "diffs": [
+    24.0,
+    32.0,
+    3.0
+   ],
+   "mean": 19.666666666666668,
+   "sd": 14.977761292440647,
+   "seeds_80pct_delta10": 20,
+   "seeds_80pct_delta10_2xsd": 73,
+   "seeds_80pct_delta20": 7,
+   "seeds_80pct_delta20_2xsd": 20
+  },
+  "rat_bc-rat_sham": {
+   "diffs": [
+    31.0,
+    44.0,
+    15.0
+   ],
+   "mean": 30.0,
+   "sd": 14.52583904633395,
+   "seeds_80pct_delta10": 19,
+   "seeds_80pct_delta10_2xsd": 69,
+   "seeds_80pct_delta20": 7,
+   "seeds_80pct_delta20_2xsd": 19
+  },
+  "rat_bc-rat_legal_uniform": {
+   "diffs": [
+    -6.0,
+    37.0,
+    -22.0
+   ],
+   "mean": 3.0,
+   "sd": 30.512292604784715,
+   "seeds_80pct_delta10": 76,
+   "seeds_80pct_delta10_2xsd": null,
+   "seeds_80pct_delta20": 21,
+   "seeds_80pct_delta20_2xsd": 76
+  },
+  "rat_bc-rat_surrogate": {
+   "diffs": [
+    17.0,
+    46.0,
+    -15.0
+   ],
+   "mean": 16.0,
+   "sd": 30.512292604784715,
+   "seeds_80pct_delta10": 76,
+   "seeds_80pct_delta10_2xsd": null,
+   "seeds_80pct_delta20": 21,
+   "seeds_80pct_delta20_2xsd": 76
+  },
+  "rat_legal_uniform-cold_ppo": {
+   "diffs": [
+    30.0,
+    -5.0,
+    25.0
+   ],
+   "mean": 16.666666666666668,
+   "sd": 18.929694486000912,
+   "seeds_80pct_delta10": 31,
+   "seeds_80pct_delta10_2xsd": 115,
+   "seeds_80pct_delta20": 10,
+   "seeds_80pct_delta20_2xsd": 31
+  },
+  "human_bc-human_legal_uniform": {
+   "diffs": [
+    6.0,
+    1.0,
+    15.0
+   ],
+   "mean": 7.333333333333333,
+   "sd": 7.094598884597588,
+   "seeds_80pct_delta10": 7,
+   "seeds_80pct_delta10_2xsd": 18,
+   "seeds_80pct_delta20": 4,
+   "seeds_80pct_delta20_2xsd": 7
+  },
+  "human_expert-cold_ppo": {
+   "diffs": [
+    29.0,
+    23.0,
+    25.0
+   ],
+   "mean": 25.666666666666668,
+   "sd": 3.0550504633038935,
+   "seeds_80pct_delta10": 3,
+   "seeds_80pct_delta10_2xsd": 6,
+   "seeds_80pct_delta20": 3,
+   "seeds_80pct_delta20_2xsd": 3
+  }
+ },
+ "seeds_at_or_above_40_of_60": {
+  "human_bc": 0,
+  "rat_bc": 2,
+  "rat_sham": 0,
+  "human_sham": 1,
+  "rat_expert": 0,
+  "human_expert": 3,
+  "cold_ppo": 0,
+  "human_surrogate": 0,
+  "rat_surrogate": 1,
+  "rat_legal_uniform": 2,
+  "human_legal_uniform": 0
+ }
+}

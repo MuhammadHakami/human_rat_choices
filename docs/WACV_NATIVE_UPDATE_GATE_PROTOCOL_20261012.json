@@ -1,0 +1,218 @@
+{
+  "registered_utc": "2026-10-12T04:24:09.711073+00:00",
+  "version": "native-gated-SR-source-v1",
+  "purpose": "Identify a source-data-learned update-rate function within a canonical predictive-map model; source-only functionalmodel, not anatomical mechanism or crossspecies/agent result.",
+  "prior_work": "Originalsource SR and olderlocalparameter/memory-decay fits exist; this adds normalizedsurprise/pastoutcome-dependent update-rate functions and recovery/heldoutcontrols. Adaptivelearningrates themselves notnovel.",
+  "data": "data/unified/tartarus_trajectories.json",
+  "data_sha256": "ec35d0b3f507b783578a5fd4ad868cbaafe6502e16c24b88963bbbfec5d22212",
+  "tasks": "data/unified/tartarus/tasks.json",
+  "tasks_sha256": "6a18b87ffee816a2bfd4e92edbcb28ad4319626c18a2561283518742ec6353a8",
+  "source_models": "data/audit/wacv_embodied_rule_20261012/decothi_helper_manifest.json",
+  "source_models_sha256": "315f7e350a7aef3dd0af50a5db5dc7a84be47160199d8e1e4cdb70c382f647d8",
+  "train": {
+    "configurations": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "subjects": {
+      "rat": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "human": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ]
+    }
+  },
+  "validation": {
+    "configurations": [
+      6,
+      7
+    ],
+    "subjects": {
+      "rat": [
+        6,
+        7,
+        8
+      ],
+      "human": [
+        12,
+        13,
+        14,
+        15,
+        16,
+        17
+      ]
+    },
+    "conditioning": "Frozen source coefficients; replay heldoutindividual recordedhistory1-7, score6-7 only. Previousactualchoices mayupdate latentmap. No futurechoice/outcome enters ownprediction."
+  },
+  "boundary": "Read/export native1-7 only; no native8-25fit/score or crossspeciesdirection/agentfit GO. Olderwholedataanalyses known, exploratorysource work.",
+  "native_semantics": {
+    "position": "Observedfirstcell, not nominalstart; no syntheticprepend/goalappend; retain all observedmoves and nativeflags.",
+    "goal": "Designgoalstate34=(3,3), known source task/pretraining prior, not a new observedneuralstate.",
+    "clock": "One modelupdate perobserved movingtransition; no physical/ms equivalence; blockedattempts/waiting notobserved.",
+    "reward_history": "Initial.5; exponentiallyweighted completed-trial native success,decay.8; update onlyafter completeobservedtrial, no per-move fake reward.",
+    "missing_trials": "Unknownomittedtrials detected by publishedarray ordinal gaps; reset outcomehistory to.5atgap, latentM retains modeledobservedupdates asdeclaredconditional replay. No imputedfeedback.",
+    "zero_move_trials": "Keep outcomeevent/no-choice-update, no fabricatedmovement.",
+    "order": "Releasedconfiguration/trial arrayorder as in originalsource model, not independent physicaltimestampverification.",
+    "legal_information": "Choice likelihood conditioned on observedmovement using currentgeometrylegal neighbors; sourceinformationprior, not retinal/perception parity."
+  },
+  "model": {
+    "state_count": 100,
+    "M0": "ExactoptimalopenT inverse(I-gamma*T), verifiedofficialtrain_T; knownrewardatgoal",
+    "gamma_candidates": [
+      0.9,
+      0.95,
+      0.99
+    ],
+    "choice": "softmax(beta*M[nextcandidate,goal]+kappa*samepreviousmove), legalneighbors only; predict before current observedtransition update.",
+    "update": "delta=onehot(currentstate)+gamma*M[nextstate]-M[currentstate]; M[currentstate]+=alpha_t*delta",
+    "normalized_surprise": "L2(delta)/(L2(target)+L2(previousrow)+1e-12), in[0,1]",
+    "alpha": "sigmoid(b0+bq*q+bh*pastoutcomehistory)",
+    "families": [
+      "constant",
+      "surprise",
+      "history",
+      "joint"
+    ],
+    "family_masks": {
+      "constant": [
+        1,
+        0,
+        0
+      ],
+      "surprise": [
+        1,
+        1,
+        0
+      ],
+      "history": [
+        1,
+        0,
+        1
+      ],
+      "joint": [
+        1,
+        1,
+        1
+      ]
+    },
+    "locality": "Canonicalrow/synapse prediction-error update with global scalarcoefficient; numericalarray implementation, no spiking/energy or observedbiophysicalclaim."
+  },
+  "fit": {
+    "optimizer": "scipy L-BFGS-B finite-difference gradient through deterministicNumba replay",
+    "maxiter": 200,
+    "ftol": 1e-09,
+    "gtol": 1e-06,
+    "bounds": {
+      "b0": [
+        -6,
+        6
+      ],
+      "bq": [
+        -6,
+        6
+      ],
+      "bh": [
+        -6,
+        6
+      ],
+      "log_beta": [
+        -3,
+        3
+      ],
+      "kappa": [
+        -3,
+        3
+      ]
+    },
+    "fixed_inactive_coefficients": 0,
+    "starts": [
+      {
+        "alpha": 0.1,
+        "slopes": 0,
+        "beta": 1,
+        "kappa": 0
+      },
+      {
+        "alpha": 0.5,
+        "slopes": 0,
+        "beta": 1,
+        "kappa": 0
+      }
+    ],
+    "planned_real_source_fits": 48,
+    "selection": "All2species x4families x3gamma x2starts before sourcevalidation interpretation. Withinfamily bestvalidation meanindividualper-moveLL; ties trainLL thenlowergamma/startindex. Compare each bestfamily tobestconstant; all failures/choices retained."
+  },
+  "recovery": {
+    "datasets": 24,
+    "design": "4groundtruthfunctions x rat6/human12trainingcohorts x3fixedseeds100/101/102. Same sourcegeometry/observedfirstposes/trialinventory andnative observedmove count ascap; sampledlegalmoves untilgoal/cap. Fullysyntheticoutcomes anddifferentresultingmovementcounts reported.",
+    "truth": {
+      "constant": [
+        -1.3862943611198906,
+        0,
+        0
+      ],
+      "surprise": [
+        -2,
+        4,
+        0
+      ],
+      "history": [
+        -2,
+        0,
+        4
+      ],
+      "joint": [
+        -2,
+        3,
+        2
+      ]
+    },
+    "gamma": 0.95,
+    "beta": 1.0,
+    "kappa": 0.5,
+    "fit_families": 4,
+    "fit_starts": 2,
+    "planned_synthetic_fits": 192,
+    "metrics": [
+      "predictionlogloss",
+      "updatefunctionerror onvisited(q,history)",
+      "coefficientrecovery/modelconfusion"
+    ],
+    "interpretation": "Recovery required beforemechanistic/transportclaims; poorrecovery is model/data limitation, not absentbiology."
+  },
+  "technical_requirements": [
+    "IndependentNumPyvsNumba replay/probabilities/mapupdates",
+    "Nativegeometry/adjacency/flags/missinghistory/zero-move audit",
+    "Currentoutcome/choice/futureisolation andsegment resets",
+    "Syntheticgeneratorphysicallegality andknownfunction",
+    "Boundprotocol/code/data hashes andsource dry"
+  ],
+  "resources": {
+    "device": "CPU",
+    "workers_max": 2,
+    "threads": 1,
+    "NUMBA_NUM_THREADS": 1
+  },
+  "failure_policy": "Preservefailed/nonfinitefits, no silentretry; validoptimizeriterationlimit statusreported, no automaticconvergenceclaim.",
+  "future_gate": "Sourceheldoutbenefit andfunctionalrecovery before nativecrossspecies/agenttarget protocols. Do nottransferraw learningrate numbers intoeprop."
+}

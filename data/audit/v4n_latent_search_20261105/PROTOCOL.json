@@ -1,0 +1,73 @@
+{
+ "written_utc": "2026-11-04T21:10:02Z",
+ "script_sha256": "80ba3a389f7255539fa184ecf4370e3d2acd331c6bdf315190d42ad45249bb2b",
+ "design": "Latent-cause inference search (camera-ready, author 2026-11-05: \"unsupported claims we don't want to give up on easily;\nuse NAS/postNAS/Optuna to improve our gains\"). GPU 1. Registered before any outcome of this search.\nSeen before writing: v4n_context_gating G0/G1/G2 (familiar goal kept 4.7 / 57.5 / 42.7%; moved goal ~99.8% all).\nThe cue-free gate G2 loses 15 pp to the oracle G1; its runs switch 2.2x per familiar-goal probe and 1.2x per moved-goal\nprobe (false alarms) and end learning in the moved half in only 82% of runs: the gap is inference, not capacity.\nSearch (postNAS: the learner, expansion, budget, schedule and rooms are FIXED to G2; only the latent-cause rule changes):\n  est     episodes before a context is established        3..30\n  emin    expectation needed to be established           .05..0.5 log\n  drop    hypothesised drop ratio q = e / drop            1.5..10 log\n  bound   CUSUM bound                                     1..15 log\n  dwell   minimum episodes after a switch                 3..40\n  ref     cap on the frozen reference rate                .5..0.95\nBayesian-changepoint flavour of Gershman, Blei & Niv 2010; parameters are biological time constants of a switch circuit.\nObjective: NSGA-II over (moved goal, familiar goal) in the trained room, dev rooms (FR.EXPOSED), 3 dev seeds x 3 priors.\nSelection (fixed here): largest dev sum. Test once: 30 seeds x 3 priors, fresh rooms (FR.MAN), the four KPI probes.\nRegistered contrasts (paired by prior x seed, Holm over 4): G2s-G2 familiar, G2s-G2 moved, G2s-G0 familiar, G2s-G1 familiar.\n  check | prereg | search W TRIALS | best | test W N | analyse\n",
+ "outcomes_seen": "v4n_context_gating G0/G1/G2 test results (fresh rooms); no outcome of this search",
+ "base_cfg": {
+  "plastic": "head",
+  "feedback": "dfa",
+  "expand": 2048,
+  "kwta": 0.09899739411211594,
+  "T": 32,
+  "epochs": 8,
+  "minibatches": 1,
+  "clip": 0.2,
+  "gae": 0.7655137846040901,
+  "ent": 0.09820603325538366,
+  "critic_ratio": 1.577024282193385,
+  "fb_scale": 0.10782727537113315,
+  "rate": 0.003480875212374212,
+  "adv_norm": true,
+  "decay": false
+ },
+ "default": {
+  "est": 20,
+  "emin": 0.25,
+  "drop": 4.0,
+  "bound": 12.0,
+  "dwell": 20,
+  "ref": 0.95
+ },
+ "dev_seeds": [
+  1000,
+  1001,
+  1002
+ ],
+ "test_seeds": [
+  1000,
+  1001,
+  1002,
+  1003,
+  1004,
+  1005,
+  1006,
+  1007,
+  1008,
+  1009,
+  1010,
+  1011,
+  1012,
+  1013,
+  1014,
+  1015,
+  1016,
+  1017,
+  1018,
+  1019,
+  1020,
+  1021,
+  1022,
+  1023,
+  1024,
+  1025,
+  1026,
+  1027,
+  1028,
+  1029
+ ],
+ "priors": [
+  "human_bc",
+  "human_legal_uniform",
+  "cold_ppo"
+ ]
+}

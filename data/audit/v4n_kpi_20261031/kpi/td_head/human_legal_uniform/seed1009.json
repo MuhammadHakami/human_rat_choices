@@ -1,0 +1,1 @@
+{"learner": "td_head", "prior": "human_legal_uniform", "seed": 1009, "source": "data/audit/v4n_moved_goal_learning_20261031/test2/td_head/rate0.003/human_legal_uniform/seed1009.json", "familiar_trained_room": 6, "moved_heldout_room": 4, "familiar_heldout_room": 6}

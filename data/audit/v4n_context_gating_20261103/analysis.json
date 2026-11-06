@@ -1,0 +1,110 @@
+{
+ "n": 90,
+ "means": {
+  "G0": {
+   "moved_trained_room": 99.77777777777777,
+   "familiar_trained_room": 4.740740740740741,
+   "moved_heldout_room": 39.48148148148148,
+   "familiar_heldout_room": 7.851851851851853
+  },
+  "G1": {
+   "moved_trained_room": 99.92592592592591,
+   "familiar_trained_room": 57.51851851851853,
+   "moved_heldout_room": 46.70370370370371,
+   "familiar_heldout_room": 35.55555555555556
+  },
+  "G2": {
+   "moved_trained_room": 99.74074074074073,
+   "familiar_trained_room": 42.7037037037037,
+   "moved_heldout_room": 30.925925925925927,
+   "familiar_heldout_room": 27.77777777777777
+  }
+ },
+ "per_prior": {
+  "G0": {
+   "human_bc": {
+    "moved_trained_room": 99.88888888888889,
+    "familiar_trained_room": 4.444444444444444
+   },
+   "human_legal_uniform": {
+    "moved_trained_room": 99.66666666666667,
+    "familiar_trained_room": 4.666666666666667
+   },
+   "cold_ppo": {
+    "moved_trained_room": 99.77777777777779,
+    "familiar_trained_room": 5.111111111111112
+   }
+  },
+  "G1": {
+   "human_bc": {
+    "moved_trained_room": 99.88888888888889,
+    "familiar_trained_room": 64.44444444444444
+   },
+   "human_legal_uniform": {
+    "moved_trained_room": 99.8888888888889,
+    "familiar_trained_room": 57.33333333333334
+   },
+   "cold_ppo": {
+    "moved_trained_room": 100.0,
+    "familiar_trained_room": 50.77777777777778
+   }
+  },
+  "G2": {
+   "human_bc": {
+    "moved_trained_room": 99.8888888888889,
+    "familiar_trained_room": 47.888888888888886
+   },
+   "human_legal_uniform": {
+    "moved_trained_room": 99.77777777777777,
+    "familiar_trained_room": 41.8888888888889
+   },
+   "cold_ppo": {
+    "moved_trained_room": 99.55555555555557,
+    "familiar_trained_room": 38.33333333333333
+   }
+  }
+ },
+ "switches": {
+  "G0": 0.0,
+  "G1": 0.0,
+  "G2": 1.2
+ },
+ "tests": {
+  "G1-G0/familiar_trained_room": {
+   "mean": 52.77777777777778,
+   "ci": [
+    47.45848474627503,
+    58.097070809280524
+   ],
+   "p": 3.136039296230182e-34,
+   "holm_p": 1.2544157184920729e-33
+  },
+  "G1-G0/moved_trained_room": {
+   "mean": 0.14814814814814808,
+   "ci": [
+    -0.08378380030765553,
+    0.3800800966039517
+   ],
+   "p": 0.2076800630940688,
+   "holm_p": 0.4153601261881376
+  },
+  "G2-G0/familiar_trained_room": {
+   "mean": 37.96296296296296,
+   "ci": [
+    33.52432837373536,
+    42.401597552190566
+   ],
+   "p": 1.1021319568990289e-29,
+   "holm_p": 3.306395870697087e-29
+  },
+  "G2-G0/moved_trained_room": {
+   "mean": -0.03703703703703714,
+   "ci": [
+    -0.35951903462831947,
+    0.2854449605542452
+   ],
+   "p": 0.8200108510682163,
+   "holm_p": 0.8200108510682163
+  }
+ }
+}

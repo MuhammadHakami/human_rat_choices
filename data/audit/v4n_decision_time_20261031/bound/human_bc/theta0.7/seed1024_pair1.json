@@ -1,0 +1,1 @@
+{"prior": "human_bc", "seed": 1024, "theta": 0.7, "pair": 1, "goals": 5, "steps": 1.4008, "synops_per_decision": 2123.7208, "first_step_agree": 0.7632, "stop_agree": 0.7992, "decisions": 1250}

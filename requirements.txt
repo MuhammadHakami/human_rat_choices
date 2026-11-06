@@ -1,0 +1,9 @@
+# Python 3.13. Versions are the ones the paper's numbers were produced with.
+# torch: pick the wheel for your machine, e.g. pip install torch==2.13.0 --index-url https://download.pytorch.org/whl/cu130 (or /whl/cpu)
+torch==2.13.0
+numpy==2.3.5
+scipy==1.18.0
+optuna==5.0.0
+matplotlib==3.11.1
+pillow==12.3.0
+scikit-learn==1.9.1   # Rosetta geometry only

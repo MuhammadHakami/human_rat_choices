@@ -1,0 +1,75 @@
+{
+  "registered_utc": "2026-10-11T22:20:56.035403+00:00",
+  "stage": "Data access and geometry calibration; no new agent training, behavior contrasts or test scores. Candidate protocol, not a final model-training GO.",
+  "author_scope": "Embodied intelligence: perception-action coupling, memory, learning/adaptation and knowledge transfer across environments/species. Motor outputs/bodypart counts are not the central contribution.",
+  "working_question": "What learning or memory knowledge transfers when useful sensory evidence must be acquired by action, and when the action-observation contingency changes?",
+  "candidate_title": "Learning When to Move to See: Transferable Active Vision with Biological References",
+  "transfer_objects_to_distinguish": [
+    "policy",
+    "learning rule",
+    "memory/evidence-update strategy",
+    "visual representation"
+  ],
+  "not_established_yet": [
+    "novel method",
+    "cross-species policy transfer",
+    "first-exposure mouse comparison",
+    "full source-paper reproduction",
+    "biological mechanism",
+    "improvement over strong PPO/local-learning references"
+  ],
+  "data_artifacts_sha256": {
+    "data/unified/benquet_active_vision_trials.json": "90f3da9f273e1e239a515d84b8a77cc68e0b53823f6ebc80422ca9b1120a2685",
+    "data/unified/cocosearch18_active_vision.json": "ca16e1613ab6c0aca2c23d37a45fd3eef08f07ec1a93c3f1637d47ce0cb511f9",
+    "data/raw_transfer/benquet_active_vision/trajectory_prefix_exports/recovery_report.json": "0e503191d40aeb94aec1d088b78dbead99f1dfa189a61bd7f21ba09edff0f14c"
+  },
+  "real_mouse": "72482trials/453sessions in completeCRC-verified original metric tables;19provisional recording prefixes, task/inclusion/lab identities need audit. Recovered200complete updated interpolated records:28067trials/2806700progress rows/4800exact official decoder comparisons, plus raw label checks against verified original metric tables. Nonrandom incomplete prefix, offline future-normalized trajectories.",
+  "real_human": "COCO-Search18 official train/validation:24880target-present and24886target-absent episodes,239731fixations,10participants/18categories. Two target-present split variants are identical observations except partitions; do not pool. Raw/derived rows local under source restrictions. Image stimuli not yet acquired.",
+  "scope_limits": "Mouse locomotor discrimination and human gaze search are different tasks. Species differences cannot be isolated by comparing their raw scores. Transfer must be demonstrated on an explicit shared learning/control interface; acquisition is not evidence of transfer. Single-cell interest remains in program, no unsupported single-cell measurement added to this assay.",
+  "closest_prior": [
+    {
+      "work": "Jayaraman & Grauman2017",
+      "url": "https://arxiv.org/abs/1709.00507",
+      "overlap": "Already learns and transfers active visual exploration to unseen tasks/environments."
+    },
+    {
+      "work": "Nayebi etal2023",
+      "url": "https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1011506",
+      "overlap": "Mouse-like self-supervised visual encoders and reward-based navigation transfer."
+    },
+    {
+      "work": "Benquet/Sainsbury2026",
+      "url": "https://doi.org/10.1016/j.cub.2026.06.011",
+      "overlap": "Already demonstrates graded mouse active sensing; reproducing curve is not novelty."
+    },
+    {
+      "work": "ESI-Bench2026",
+      "url": "https://arxiv.org/abs/2605.18746",
+      "overlap": "Embodied spatial active exploration, action blindness and human comparison."
+    },
+    {
+      "work": "Yang etal CVPR2020",
+      "url": "https://openaccess.thecvf.com/content_CVPR_2020/html/Yang_Predicting_Goal-Directed_Human_Attention_Using_Inverse_Reinforcement_Learning_CVPR_2020_paper.html",
+      "overlap": "IRL learns human goal-directed visual-search policies and belief maps."
+    }
+  ],
+  "minimum_experimental_controls": [
+    "Reactive/memoryless and recurrent PPO with matched observations/rewards/source/target interaction accounting",
+    "Locally updated actor/critic with explicit three-factor learning and eligibility memory; encoder/outer optimization scope disclosed",
+    "Fixed approach/scan, random cost-matched sensing and task-success controls",
+    "Live versus parallax-locked rendering with matched initial views, with all reachable-view observability tested",
+    "Genuinely unrevealable scene separate from nominal0percent starting-view visibility",
+    "Sensor corruption tested for action-reducibility; matched initial discriminability alone insufficient",
+    "Source-free/target-only and frozen transfer/adapted transfer with counted target feedback for the chosen transfer object"
+  ],
+  "technical_gates": [
+    "Verify source transforms, actual mesh/orientation and per-session physical units before claiming rig reproduction; prototypes stay labeled reimplementations",
+    "Separate published offline animal observables from causal agent input; no trial-length normalization leaked to policy",
+    "Establish inclusion/task-stage/lab mapping or limit claims; earliest released session alone does not establish first exposure",
+    "Positive-control sensing policy must actually reveal useful evidence and improve task performance at counted cost",
+    "Register agent settings, development choices and complete evaluation/control grid before training/test inspection"
+  ],
+  "decision": "Continue constructive active-vision investigation; do not expand motor panel or freeze a failure-only submission. Existing WACV manuscript remains available while the focused contribution is tested.",
+  "compute": "GPU1only. No graphical-session/Unity use. CPU/network extraction and headless renderer only so far.",
+  "current_goal_turn": "progress: scope correction, new real data acquisition/recovery/export, independent audits and direct Claude debate. Previous goal turn also progress."
+}

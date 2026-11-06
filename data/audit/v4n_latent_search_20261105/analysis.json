@@ -1,0 +1,81 @@
+{
+ "n": 90,
+ "means": {
+  "G2s": {
+   "moved_trained_room": 99.55555555555556,
+   "familiar_trained_room": 40.0,
+   "moved_heldout_room": 28.481481481481485,
+   "familiar_heldout_room": 28.703703703703706
+  },
+  "G0": {
+   "moved_trained_room": 99.77777777777777,
+   "familiar_trained_room": 4.740740740740741,
+   "moved_heldout_room": 39.48148148148148,
+   "familiar_heldout_room": 7.851851851851853
+  },
+  "G1": {
+   "moved_trained_room": 99.92592592592591,
+   "familiar_trained_room": 57.51851851851853,
+   "moved_heldout_room": 46.70370370370371,
+   "familiar_heldout_room": 35.55555555555556
+  },
+  "G2": {
+   "moved_trained_room": 99.74074074074073,
+   "familiar_trained_room": 42.7037037037037,
+   "moved_heldout_room": 30.925925925925927,
+   "familiar_heldout_room": 27.77777777777777
+  }
+ },
+ "tests": {
+  "G2s-G2/familiar_trained_room": {
+   "mean": -2.7037037037037033,
+   "ci": [
+    -6.556033213927616,
+    1.1486258065202097
+   ],
+   "p": 0.16662785577732084,
+   "holm_p": 0.19154030690446633
+  },
+  "G2s-G2/moved_trained_room": {
+   "mean": -0.1851851851851851,
+   "ci": [
+    -0.40374447578567774,
+    0.033374105415307526
+   ],
+   "p": 0.09577015345223316,
+   "holm_p": 0.19154030690446633
+  },
+  "G2s-G0/familiar_trained_room": {
+   "mean": 35.25925925925925,
+   "ci": [
+    30.334813873762553,
+    40.18370464475595
+   ],
+   "p": 1.2048241141069403e-24,
+   "holm_p": 4.819296456427761e-24
+  },
+  "G2s-G1/familiar_trained_room": {
+   "mean": -17.51851851851852,
+   "ci": [
+    -21.95328536248659,
+    -13.083751674550449
+   ],
+   "p": 8.852304246388167e-12,
+   "holm_p": 2.6556912739164502e-11
+  }
+ },
+ "per_prior": {
+  "human_bc": {
+   "moved_trained_room": 99.77777777777779,
+   "familiar_trained_room": 49.777777777777764
+  },
+  "human_legal_uniform": {
+   "moved_trained_room": 99.66666666666667,
+   "familiar_trained_room": 35.11111111111111
+  },
+  "cold_ppo": {
+   "moved_trained_room": 99.22222222222223,
+   "familiar_trained_room": 35.11111111111111
+  }
+ }
+}

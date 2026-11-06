@@ -1,0 +1,14 @@
+{
+  "ok": true,
+  "technical_only": true,
+  "rooms": 16,
+  "attempts": 24,
+  "first_valid_rooms_exact": true,
+  "independent_bfs": true,
+  "disjoint_from_native_and_exposed": true,
+  "all_230_checkpoint_bindings": true,
+  "go_sha256": "13c41d69b1eb6f2900e0ed87b907a0dcca994d52fa6b9c41edba13eb76d8590e",
+  "manifest_sha256": "10b24bf228d7ec81d58a0c45ef5019c408a6c696ef5e3b8cdbc26167bddebda6",
+  "auditor_sha256": "08730ffe7c5e68010886e99bb8aba8c6d186516d2fc7a8bcbfbb29a2e5f6f618",
+  "scope": "Independent deterministic RNG/BFS reconstruction of all 16 retained rooms, registered source goal, start connectivity/distance, exposed/native nonduplication and 230 frozen digests. No policy outcome read; same task/renderer/scale."
+}

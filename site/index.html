@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Same States, Different Choices</title>
+<meta name="description" content="Human choices make visual agents loop less and transfer to unseen rooms; a mushroom-body circuit learns new goals with local plasticity. Live, in the browser (WACV 2027 Vision4Neuro).">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<nav class="top"><a href="#top" class="brand"><span class="dot h"></span><span class="dot r"></span>Same States, Different Choices</a>
+  <span class="navlinks"><a href="#play">Play</a><a href="#architecture">Model</a><a href="#learn">Learn &amp; forget</a><a href="#animals">Humans vs rats</a><a href="#results">Evidence</a><a href="#cite">Cite</a></span></nav>
+
+<header id="top" class="hero">
+  <div class="hero-in">
+    <div class="hero-text">
+      <p class="venue">WACV 2027 · Vision4Neuro</p>
+      <h1>Same states,<br><span class="h">different</span> <span class="r">choices</span></h1>
+      <p class="subtitle">Humans and rats solved the same mazes. Agents trained on <b class="h">human choices</b> loop less and find goals in rooms they never saw. On top of them, a <b style="color:#c9a6e0">mushroom-body circuit</b>, modelled on the insect learning centre, learns new goals with local plasticity only, better than backpropagation-trained PPO.</p>
+      <p class="authors">Muhammad Y. Hakami</p>
+      <p class="links">
+        <a class="btn" data-link="paper">Paper</a><a class="btn ghost" data-link="supp">Supplement</a>
+        <a class="btn ghost" data-link="code">Code</a><a class="btn ghost" data-link="models">Models</a><a class="btn ghost" href="#cite">BibTeX</a>
+      </p>
+    </div>
+    <div class="hero-live" id="hero"></div>
+  </div>
+  <p class="hero-cap">live</p>
+</header>
+
+<section class="tiles" id="tiles"></section>
+
+<section id="play">
+  <div class="sec-head"><h2>Play</h2><p>Human choices, rat choices, the mushroom-body circuit and PPO, with the paper's own weights. Pick a scenario or a <b>random episode</b>, or <b>click a room cell</b> to move the goal or edit walls.</p></div>
+  <div class="controls" id="play-controls"></div>
+  <div class="agents" id="play-agents"></div>
+  <div class="probe-row"><div id="play-probe" class="chartbox"></div><p class="note" id="play-probe-note">Run a 30-trial probe to score the agents in this room.</p></div>
+</section>
+
+<section id="architecture">
+  <div class="sec-head"><h2>Inside the model</h2><p>The selected agent, layer by layer, at its current step. <b>Click a block</b> for details.</p></div>
+  <div class="arch" id="arch"></div>
+  <div class="arch-detail" id="arch-detail"></div>
+  <h3 class="gl-head">The mushroom-body circuit in brain terms <span>each term is a textbook idea you can look up</span></h3>
+  <div class="glossary" id="glossary"></div>
+</section>
+
+<section id="learn">
+  <div class="sec-head"><h2>Learn &amp; forget</h2><p>The goal moves. The mushroom-body circuit learns it with <b>local plasticity only</b>, with and without the
+    <b class="g">latent-cause gate</b>. Watch what happens to the old goal.</p></div>
+  <div class="controls" id="learn-controls"></div>
+  <div class="duel" id="duel"></div>
+  <div class="duel-chart"><div id="learn-chart" class="chartbox"></div><p class="note" id="learn-note"></p></div>
+</section>
+
+<section id="animals">
+  <div class="sec-head"><h2>Humans vs rats</h2><p>The recorded behaviour the agents learn from. Same maze, same start, hidden ★ goal.</p></div>
+  <div class="controls" id="animal-controls"></div>
+  <div class="animals"><figure class="room-fig"><canvas id="an-a"></canvas><figcaption id="an-a-cap"></figcaption></figure>
+                       <figure class="room-fig"><canvas id="an-b"></canvas><figcaption id="an-b-cap"></figcaption></figure>
+                       <figure><div id="an-revisit" class="chartbox"></div><figcaption>moves that revisit a cell, per subject</figcaption></figure></div>
+</section>
+
+<section id="results">
+  <div class="sec-head"><h2>Evidence</h2><p>From the registered records: 30 paired seeds and 16 fresh rooms. Dots are seeds, bars are 95% CIs. <b>Toggle and hover.</b></p></div>
+  <div class="grid2">
+    <figure><div id="r-ood" class="chartbox"></div><figcaption><b>Out-of-distribution transfer</b> <span class="seg" id="r-ood-seg"></span></figcaption></figure>
+    <figure><div id="r-keep" class="chartbox"></div><figcaption><b>Keep vs learn.</b> Top right is best; the mushroom-body circuits are in purple.</figcaption></figure>
+    <figure><div id="r-forget" class="chartbox"></div><figcaption><b>Forgetting</b> <span class="seg" id="r-forget-seg"></span></figcaption></figure>
+    <figure><div id="r-curves" class="chartbox"></div><figcaption><b>Continual learning</b> <span class="seg" id="r-curve-seg"></span> ◯ = mushroom-body circuit at the end</figcaption></figure>
+    <figure><div id="r-snn" class="chartbox"></div><figcaption><b>Spiking</b> <span class="seg" id="r-snn-seg"></span><details><summary>about</summary>Agents converted to integrate-and-fire networks. Frozen priors: human choices keep their advantage. After learning: the local-rule networks convert without loss. The mushroom-body circuit itself was not converted; its operations are counted in the paper instead.</details></figcaption></figure>
+    <figure><div id="r-vla" class="chartbox"></div><figcaption><b>Vision–language–action.</b> A view predicts the move, but not the route.</figcaption></figure>
+    <figure><div id="r-cka" class="chartbox"></div><figcaption><b>Rosetta geometry</b> <span class="seg" id="r-cka-seg"></span></figcaption></figure>
+    <figure><div id="r-brain" class="chartbox"></div><figcaption><b>Brain alignment.</b> Similarity to mouse visual cortex (MICrONS-predicted).
+      <details><summary>about the data</summary>Responses of all 9,941 units, predicted by the MICrONS foundation model for the agents' own frames. The human and rat data are behaviour; no human or monkey neural recordings are used.</details></figcaption></figure>
+  </div>
+</section>
+
+<section id="proofs">
+  <div class="sec-head"><h2>Proved in Lean</h2><p>Machine-checked, with no <code>sorry</code>.</p></div>
+  <div class="proofs" id="proof-list"></div>
+</section>
+
+<section id="cite">
+  <div class="sec-head"><h2>Cite</h2></div>
+  <pre id="bibtex">@inproceedings{hakami2027samestates,
+  title     = {Same States, Different Choices: Human Decisions Improve Same-Goal Maze Transfer and Shape Forgetting and Vision--Language--Action Geometry},
+  author    = {Hakami, Muhammad Y.},
+  booktitle = {WACV Workshops (Vision4Neuro)}, year = {2027}}</pre>
+  <button class="btn" id="copy-bib">Copy</button>
+</section>
+
+<footer>Behaviour: de Cothi et al., <i>Current Biology</i> 2022 (Zenodo 10.5281/zenodo.6734981), shown as per-maze aggregates · Mouse cortex: MICrONS foundation model · Code: Apache-2.0 ·
+  Everything on this page runs in your browser with the paper's weights and learning rule.</footer>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

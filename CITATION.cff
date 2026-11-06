@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite the paper."
+title: "Same States, Different Choices: Human Decisions Improve Same-Goal Maze Transfer and Shape Forgetting and Vision-Language-Action Geometry"
+authors:
+  - family-names: Hakami
+    given-names: Muhammad Y.
+license: Apache-2.0
+preferred-citation:
+  type: conference-paper
+  title: "Same States, Different Choices: Human Decisions Improve Same-Goal Maze Transfer and Shape Forgetting and Vision-Language-Action Geometry"
+  authors:
+    - family-names: Hakami
+      given-names: Muhammad Y.
+  collection-title: "WACV Workshops (Vision4Neuro)"
+  year: 2027

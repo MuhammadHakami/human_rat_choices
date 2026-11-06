@@ -1,0 +1,10 @@
+{
+ "written_utc": "2026-10-31T12:10:26Z",
+ "outcomes_seen": "no test outcome; v1 dev calibration seen",
+ "search_space": "\n  NAS:    plastic layers {head, last, all}; hidden-credit route {dfa: fixed random feedback (Nokland 2016),\n          ed: modulo error routing of Error Diffusion (Yamada et al. 2026, 'Diffusing Blame', Sakana AI), unit j <- action j mod 4}\n  Optuna: Adam rate [1e-5, 1e-2] log; trace lambda [.5, .99]; entropy [0, .1]; critic/actor rate ratio [.3, 3] log; feedback scale [.1, 3] log\n",
+ "objective": "mean final dev success (/30) over 3 priors x 3 dev seeds + AUC tie-break",
+ "selection": "best trial per hidden-credit family (dfa, ed; plastic != head) and best head-only trial",
+ "test": "30 seeds x 3 priors, fresh rooms, as v4n_moved_goal_learning PROTOCOL",
+ "primary": "per selected learner: human_bc - human_legal_uniform and human_bc - cold_ppo learning-curve AUC; Holm over all selected learners",
+ "caveat": "search uses the dev rooms only; learners start from backprop-trained priors; ED = routing only, not dual-stream Dale"
+}

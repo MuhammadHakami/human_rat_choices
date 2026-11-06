@@ -1,0 +1,117 @@
+{
+  "name": "L3 source-only gate: continuous meta-learned local plasticity on FALCON M1",
+  "owner": "Claude (code/protocol); Codex audits before any human scoring",
+  "fixed_before_any_fit": true,
+  "status": "SOURCE ONLY. No H1 (human) L3 score is computed by this protocol or script; human scoring needs a separate amendment after Codex audits code and the source gate.",
+  "question": "Can shared scalar coefficients of a two-layer local plasticity rule, meta-learned on macaque M1 (64 units -> 16 EMG), reconstruct held-out source targets from short labelled calibration prefixes, beyond the unchanged initial rule and a time-shifted source?",
+  "data": {
+    "source": "data/xspecies/falcon/000941/*.npz (FALCON M1 held-in calibration, one macaque, 64 units, 16 measured EMG, 20 ms bins); hashes in data/xspecies/falcon/export_manifest.json",
+    "fit_days": [
+      "20120924",
+      "20120926",
+      "20120927"
+    ],
+    "validation_day": "20120928 (always real data, never used for generator profiles or meta-training)",
+    "eligible_rows": "eval_mask rows only are labelled calibration or query rows; features use all bins causally",
+    "features": "Fixed, not selected by L3: reference finite causal exponential kernel 240 ms reset at trial boundaries, current + 4 past bins (Codex V1 human-floor configuration, reused via scripts/wacv_falcon_floor_v2.features read-only). It was selected on H1 held-in development data, so feature choice is not source-only; it is shared by every method."
+  },
+  "evaluation_design": {
+    "type": "calibration-prefix learning curve, frozen weights, no test feedback",
+    "budgets_labelled_bins": [
+      40,
+      80,
+      160,
+      320
+    ],
+    "window": "prefix = first 320 eligible rows from a start trial; budget b uses the first b of them; query = eligible rows of the next 8 whole trials after the trial holding row 320, identical for every budget and method; next window starts after the query",
+    "normalisation": "per budget, calibration rows only: inputs z-scored with sd floor 0.1 (wacv_falcon_floor_v2.normalise); targets centred per channel and divided by one pooled sd; predictions mapped back to raw units before scoring",
+    "metric": "official FALCON variance-weighted R2 per query window (wacv_falcon_floor_v2.scores, float64), averaged over windows; FALCON scores whole sessions, so per-window R2 is a diagnostic unit",
+    "validation_split": "day-4 windows in time order; first half = SELECTION (checkpoints, comparator hyperparameters, primary budget); second half = GATE (reported, never used for selection)",
+    "no_prequential": "No evaluation with feedback at query bins; therefore no last-label floor is needed. Any later prequential proposal must include a label-only autoregressive floor."
+  },
+  "learner": {
+    "network": "x (z-scored) -> a0 = x/sqrt(d) -> h = softplus_beta10(W1 a0), a1 = h/sqrt(128) -> y = W2 a1; 128 hidden units; no biases",
+    "fresh_per_episode": "W1 ~ N(0,1), W2 = 0, fixed random feedback B1 ~ N(0,1/k) (k outputs -> hidden) and B0 ~ N(0,1/128) (hidden -> input) drawn afresh for every episode, window, draw and budget; within a window, one generator seed per (window, draw) gives IDENTICAL weights and feedback for every budget and for every rule arm and BP (paired learning curves); meta-training episodes likewise share one draw across their four budgets",
+    "errors": "e2 = y_hat - y; e1 = (e2 B1) * (1 - exp(-beta h)) as published; e0 = e1 B0 (MODIFICATION: inputs are signed z-scores, so no softplus-derivative factor at the input)",
+    "update_per_layer_i": "dW_ji = -theta0_i e_{i+1,j} a_{i,i'} - theta1_i e_{i+1,j} e_{i,i'} + theta2_i (a_{i+1,j} a_{i,i'} - a_{i+1,j}^2 W_ji). Terms 0 (pseudo-gradient) and 1 (eHebb, error_post x error_pre) are the published plasticity_rule terms of Shervani-Tabar & Rosenbaum 2023 optim.py, checked numerically equal to the downloaded code with the Oja coefficient at 0; term 2 is STRICTLY PER-NEURON Oja (checked against a scalar per-synapse loop), replacing the published subspace form (a_post^T a_post W), which depends on other postsynaptic neurons and weights",
+    "inner_loop": "one labelled bin per update (published batch size 1), one pass over the prefix in time order; no autograd in evaluation adaptation",
+    "transferred_quantities": "six scalars only (3 terms x 2 layers)",
+    "not_exact_replication": [
+      "regression with squared-error teaching signal instead of softmax classification",
+      "two layers instead of five; fan-in scaling of activations (a0 = x/sqrt(d), a1 = h/sqrt(128)) so scalars are dimension-free across 64->176 units and 16->7 outputs",
+      "separate coefficients per layer (published shares Theta across layers)",
+      "input-layer error without derivative factor (signed inputs)",
+      "no L1 penalty on coefficients; meta-loss is 1 - pooled variance-weighted R2 on the query",
+      "per-neuron Oja replaces the published subspace Oja (main local rule); the published subspace form is not run"
+    ],
+    "outer_loop": "global gradient meta-training (Adam 3e-3, grad-norm clip 1, 600 episodes, one episode = one fit-day window with all four budgets and a 4-trial query); outer gradients are not a local mechanism; supervised teaching errors are not rewards",
+    "initial_rule": "theta0 identical for both layers chosen from {0.01,0.03,0.1,0.3,1} on 60 fixed real fit-day episodes; theta1 = theta2 = 0 (pure feedback alignment)",
+    "checkpoints": "every 100 episodes including 0; chosen by mean SELECTION R2 over budgets"
+  },
+  "source_arms_x_seeds_0_1_2": {
+    "real": "fit days as recorded",
+    "synthetic": "train-profile-matched, not data-free: Poisson spikes with per-unit mean rates from the three fit days pooled and generic random linear tuning (depth 0.75, clipped) to the recorded EMG z-scored with fit-day moments; EMG targets unchanged; no day-4 moments",
+    "time_shift": "each fit session's spike matrix circularly shifted relative to its EMG by a seeded offset in [0.25, 0.75] of its length (preserves both autocorrelations, removes alignment)",
+    "fa_only": "real source, only theta0 meta-learned (theta1 = theta2 = 0): isolates eHebb/Oja from learning-rate retuning"
+  },
+  "comparators_same_windows_inputs_normalisation": {
+    "initial_rule": "theta at meta-training start",
+    "ridge": "batch ridge with intercept (wacv_falcon_floor_v2.moments/solve), lambda per budget from {0.01,0.1,1,10,100} on SELECTION",
+    "ewridge": "exponentially weighted ridge (the RLS-with-forgetting family endpoint), forgetting per bin from {0.97,0.99,0.995,0.998}, lambda = selected ridge lambda, chosen on SELECTION",
+    "nlms": "readout-only normalised LMS on x, zero init, one bin per update, one pass, mu from {0.03,0.1,0.3,1} per budget on SELECTION",
+    "bp": "same network, same weight draws, exact backprop with Adam, one bin per update, one pass, lr from {1e-3,3e-3,1e-2,3e-2} per budget on SELECTION",
+    "draws": "3 paired weight/feedback draws per window and budget for rule and BP arms"
+  },
+  "primary_budget": "chosen on SELECTION windows only: the budget maximising mean over seeds of real-rule R2 minus the best of ridge/ewridge/nlms/bp at that budget",
+  "gate_on_GATE_windows_at_primary_budget": {
+    "G1_not_weak": "real-rule mean R2 >= max(0.10, 0.5 x ridge R2)",
+    "G2_learned_beyond_start": "real minus initial rule: 95% bootstrap lower bound > 0 (10000 resamples over gate windows; seeds and draws averaged within window)",
+    "G3_source_alignment_matters": "real minus time_shift: 95% bootstrap lower bound > 0",
+    "reported_not_gated": "real minus synthetic, real minus fa_only, real minus ridge/ewridge/nlms/bp; all budgets",
+    "pass": "G1 and G2 and G3. PASS only permits proposing a human protocol to Codex; FAIL is reported as is."
+  },
+  "counts_reported": "labelled prefix rows per budget (exact), trials spanned per budget, query rows and trials per window, eligible rows per fit day",
+  "compute": "CPU only (CUDA_VISIBLE_DEVICES empty), one BLAS/torch thread per worker, spawn pool",
+  "outputs": "data/wacv/xspecies_l3/{init.json, fit_<arm>_s<seed>.json, checkpoints, summary.json, windows.npz}",
+  "disclosures": {
+    "initial_rule_is_real_source_knowledge": "theta0 of the initial rule is tuned on REAL fit days and is the meta-training start for every arm, including synthetic and time_shift; it is additional real-source knowledge shared by the controls (as in L2)",
+    "features_not_source_only": "240 ms / 5-bin features were selected on H1 human held-in development data (Codex V1), so the method is not fully source-only; they are fixed and shared by all methods",
+    "interval_meaning": "gate bootstrap intervals resample temporal windows of one animal on one day; they are conditional on that recording, not population or species intervals",
+    "time_shift_caveat": "the circular shift preserves RAW spike autocorrelation approximately; causal features are reset at the unchanged trial boundaries after the shift, so exact feature autocorrelation is not preserved and residual alignment is not proven absent",
+    "human": "no human L3 score until Codex audits code and the source gate"
+  },
+  "amendments": [
+    {
+      "when": "before any meta-fit; only the fit-day initial-rule grid had run (theta0 0.03 chosen; 0.3 and 1 diverged)",
+      "by": "Codex preflight",
+      "changes": [
+        "per-neuron Oja main rule",
+        "draws paired across budgets and arms (seed excludes budget)",
+        "disclosures above",
+        "initial-rule grid re-run with the paired draws; non-finite grid losses ranked last"
+      ]
+    },
+    {
+      "when": "before any completed meta-fit: a first fit launch (commit 2680605) was stopped by Claude after ~18 s on Codex's second preflight; no fit file was written; its 2-line log archived unread as data/wacv/xspecies_l3/fit_aborted_v1.out",
+      "by": "Codex preflight 2",
+      "changes": [
+        "outer RNG excludes the arm: identical outer episodes, windows and draws for every arm at a seed (only source spikes differ)",
+        "gradient finiteness checked before clipping/stepping; coefficients checked finite after the step (restored if not); physical bounds projected after each step: theta0 in [1e-4,1], |eHebb|<=1, |Oja|<=1; counts of updates, non-finite losses/gradients/coefficients and clamps saved",
+        "evaluation saves absolute prefix/query bin indices (windows.npz) and raw-unit predictions per method/draw (preds/*.npz) for independent rescoring",
+        "ridge/EW-ridge labelled closed-form endpoints, not runtime/memory-benchmarked RLS",
+        "added checks: raw calibration/query rows, normalisation invariance to query data, outer gradient vs central finite differences (float64)",
+        "smoke test (4 outer steps per arm) ran on SELECTION windows only, in a scratch directory; no GATE window was scored"
+      ]
+    },
+    {
+      "when": "during the 85b8d63 fits, before evaluate and before any GATE window was scored; prompted by NaN SELECTION-window checkpoint scores at budget 320 in the fit log (inner-loop divergence; seen by Claude and Codex)",
+      "by": "Claude",
+      "changes": [
+        "checkpoint eligibility made explicit: a checkpoint whose selection score is non-finite for any budget is ineligible (stability requirement); this equals the running fits' own max() behaviour and is asserted in evaluate",
+        "scoring of divergence, previously unspecified: a run with any non-finite prediction falls back to the calibration mean (zero update) for that window/budget/draw, for EVERY method; diverged-run counts per method and split are reported",
+        "rescore mode: independent recomputation of weighted R2 (1 - sum SSres / sum SStot) from saved raw-unit predictions and raw M1 targets read at the saved absolute query bins",
+        "no refit, no change to the rule, bounds or budgets"
+      ]
+    }
+  ]
+}

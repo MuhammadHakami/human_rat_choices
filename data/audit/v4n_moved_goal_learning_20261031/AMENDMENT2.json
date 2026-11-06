@@ -1,0 +1,6 @@
+{
+ "written_utc": "2026-10-31T11:59:15Z",
+ "amends": "PROTOCOL.json",
+ "change": "also save final weights (.final.pt) and probe paths (.paths.json.gz) per run for visual rollouts; no change to learning or scoring",
+ "script_sha256": "f5502b59fc6abce7ddb95496f9ef38c16ee2908c096d86d320020944702d8c3e"
+}

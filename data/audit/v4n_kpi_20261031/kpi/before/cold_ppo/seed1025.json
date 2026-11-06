@@ -1,0 +1,1 @@
+{"learner": "before", "prior": "cold_ppo", "seed": 1025, "source": "source checkpoint", "familiar_trained_room": 12, "moved_heldout_room": 2, "familiar_heldout_room": 14}

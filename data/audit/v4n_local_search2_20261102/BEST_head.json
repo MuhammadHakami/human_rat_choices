@@ -1,0 +1,32 @@
+{
+ "written_utc": "2026-11-02T19:55:42Z",
+ "trials": 60,
+ "configs": {
+  "head": {
+   "plastic": "head",
+   "feedback": "dfa",
+   "expand": 2048,
+   "kwta": 0.09899739411211594,
+   "T": 32,
+   "epochs": 8,
+   "minibatches": 1,
+   "clip": 0.2,
+   "gae": 0.7655137846040901,
+   "ent": 0.09820603325538366,
+   "critic_ratio": 1.577024282193385,
+   "fb_scale": 0.10782727537113315,
+   "rate": 0.003480875212374212,
+   "adv_norm": true,
+   "decay": false
+  }
+ },
+ "trial_numbers": {
+  "head": 43
+ },
+ "dev_scores": {
+  "head": 30.841666666666665
+ },
+ "dev_final": {
+  "head": 30.0
+ }
+}

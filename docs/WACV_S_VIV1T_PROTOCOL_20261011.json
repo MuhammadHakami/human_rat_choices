@@ -1,0 +1,140 @@
+{
+  "registered_utc": "2026-10-11T09:43:40.422334+00:00",
+  "author_scope": "WACV constructive real-data follow-through; existing manuscript remains fallback. No external submission.",
+  "authorization": "User already requested continued experiments and direct Claude debate. Both GPUs explicitly allowed in the active Claude tmux session; leave desktop memory headroom.",
+  "design_origin": "docs/CLAUDE_CODEX_REPLY_20261011_TRANSFER.md, R/S amended 09:40 UTC",
+  "prospective_limit": "Registered after existing MICrONS/control outcomes; future R outcomes and S real-label scores not examined at registration. Existing E1 tasks are already-examined, so this is exploratory generality, not fresh benchmark validation.",
+  "go_rule": "Implementation and input/protocol hashes recorded after structural smoke. No R AllTest/far run or S real-label probe until that technical check. This is reproducibility review within existing user authorization, not a request for additional user permission.",
+  "id": "WACV-S-Sensorium-ViV1T-matched-probes-20261011",
+  "question": "Does the matched navigation-readout pattern extend to another released neural-prediction architecture with ten mouse readouts?",
+  "inputs": {
+    "data/cvpr/mouse_twin_e1_features.npz": "3b4b0be2c7b583944885c23cd1ad0d0b3691d3d56bc3d544e7e9b446b7f83c84",
+    "data/cvpr/umwelt_e1_features.npz": "6b1423bf23914fb6638c7e39c5bfb8d1a1dadad384a73fd35f8b465369068d65",
+    "data/raw_transfer/sensorium_viv1t/download_manifest.json": "6dd84b6b77e77f7ce771812c3e0a96c50a1323d7aec7df7ec7af53d5edb1fa34",
+    "data/raw_transfer/sensorium_viv1t/source_manifest.json": "ace6fd53296a5926684e6d5b13789d75842f1f58b8bcf9028d9151bef2163953",
+    "data/audit/wacv_sensorium_viv1t_loading_20261011.json": "c4d7578e7c8b7a0ded91bb01aaa48c970666427441bc136bceba870a5a8c8311"
+  },
+  "model": {
+    "repository": "https://github.com/bryanlimy/ViV1T-closed-loop",
+    "code_revision": "89c77225610e0d0408bc5deb45cfe6ecc67a7601",
+    "weight_revision": "88a05f83cba12b6904f79f5ed9339160f338b86b",
+    "weight_sha256": "b4f3ab3414311c1a157913709a0e5ccc8fe8d805fb282bc7543d7e961f4f6512",
+    "mice": "ABCDEFGHIJ",
+    "modeled_neurons_total": 78853,
+    "independence": "Ten readouts share one learned core. Training animal/cohort overlap with the Wang foundation model is not verified; do not claim ten additional independent animals.",
+    "responses": "predicted single-cell responses, not recorded responses to rendered mazes"
+  },
+  "views": {
+    "poses": "Exact existing E1 sampler rng0 and move/goal labels/split, asserted against cached arrays",
+    "render_monitor_cm": [
+      56.5,
+      31.8
+    ],
+    "eye_distance_cm": 15.0,
+    "center_assumption_deg": [
+      60.0,
+      20.0
+    ],
+    "render_resolution": [
+      144,
+      256
+    ],
+    "model_input_resolution": [
+      36,
+      64
+    ],
+    "downsample": "nonoverlapping4x4 area pooling; exact same low-resolution arrays go to all primary floors",
+    "gamma": "retain existing renderer pixel convention; do not claim measured retinal luminance matching",
+    "normalization": "author per-mouse video training mean/std with same epsilon as released transform",
+    "behavior_and_pupil": "author training means, no task-derived behavior inputs",
+    "clip": {
+      "gray_value": 128,
+      "gray_frames": 10,
+      "render_frames": 15,
+      "frame_rate_hz_assumption": 30,
+      "feature": "mean predicted neuronal response over last10 frames"
+    },
+    "same_information": "pixels36 directly from36x64; V1 from only those same arrays upsampled bilinearly to144x256 to preserve angular kernel convention",
+    "original_high_resolution_floors": "context only, separately labeled; never primary ViV1T comparison"
+  },
+  "arms": {
+    "alone_per_mouse": [
+      "learned viv1t readout",
+      "same readout with author-initialized core seed0"
+    ],
+    "floors": [
+      "pixels36",
+      "v1_36"
+    ],
+    "fusion_per_mouse": [
+      "v1_36(PCA256)+viv1t(PCA128)",
+      "v1_36(PCA256)+random_core(PCA128)"
+    ],
+    "capacity_floors": [
+      "v1_36(PCA384)",
+      "v1_36(PCA256)+Gaussian noise128, RNG1"
+    ]
+  },
+  "probe": {
+    "function": "mouse_twin_family.correct / umwelt_e1._reduce and _train",
+    "type": "two-layer nonlinear MLP, not linear decoder",
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "pca": "fit only training poses; alone256; fusion components separately256+128; capacity384",
+    "epochs_max": 400,
+    "patience": 30,
+    "selection": "existing validation split only",
+    "labels": [
+      "move",
+      "goal"
+    ],
+    "splits": "fixed existing source-family-disjoint E1 split; no changing after outcomes"
+  },
+  "statistics": {
+    "cluster": "10 original held-out source maze families, mouse_twin_family.source_family, not27 descendant tasks",
+    "bootstrap_draws": 2000,
+    "seed": 0,
+    "accuracy": "per-test-pose correctness averaged over three probe seeds; bootstrap original families retaining their pose rows",
+    "alone_contrasts": [
+      "viv1t-pixels36",
+      "viv1t-v1_36",
+      "viv1t-random_core"
+    ],
+    "fusion_contrasts": [
+      "v1+viv1t-v1",
+      "v1+viv1t-v1_384",
+      "v1+viv1t-v1+noise",
+      "v1+viv1t-v1+random_core"
+    ],
+    "primary": "Descriptive count of A-J whose paired95percent interval is entirely positive for each prespecified floor; report all mouse/task-label differences alongside counts. No selection of readouts.",
+    "secondary": "readout-averaged correctness before family bootstrap, conditional on shared core",
+    "multiplicity": "Full contrast matrix retained; descriptive exploratory intervals without a new-animal significance interpretation"
+  },
+  "smoke": {
+    "allowed_before_real_scores": [
+      "finite/shapes on64poses",
+      "strict weight load",
+      "future-input causality perturbation",
+      "probe/bootstrap mechanics on permuted labels only"
+    ],
+    "forbidden": "real held-out label scoring even a5percent pilot before this registration"
+  },
+  "interpretation": {
+    "positive": "Conditional generality or added information beyond the exact matched floor, on already-examined E1 tasks. Probe success does not establish useful closed-loop control.",
+    "negative": "Limited readout under fixed clip/probe, not a claim that all learned neural representations are unusable.",
+    "novelty_limit": "Lima already probed latent representations and explicitly anticipated across-family/dataset comparisons. This generality check is supporting evidence, not a first-use headline."
+  },
+  "outputs_required": [
+    "exact render/low-resolution image hashes",
+    "training statistics hashes",
+    "model/config/code/protocol hashes",
+    "all learned and random feature arrays",
+    "PCA/probe source hashes, seeds and settings",
+    "per-pose correctness and split/label/family IDs",
+    "all contrast inputs/results and all10 readouts",
+    "model family and cohort-overlap disclosure"
+  ]
+}

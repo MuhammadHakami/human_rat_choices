@@ -1,0 +1,95 @@
+{
+  "name": "L6 calibrated target adaptation of cross-species temporal initialization",
+  "created_utc": "2026-10-11T09:13:50.008907+00:00",
+  "status": "Prospectively fixed AFTER L5 pilot outcomes, before any L6 human fit; exploratory on an already examined participant",
+  "question": "Does macaque initialization improve same-architecture target adaptation beyond target-only initialization and strong ridge references?",
+  "prior_information": "L5 H1 forward primary real .132208, synthetic .106048, random .123506 and raw full-history ridge10 .160240 already inspected. Original minival scores invalid as held-out data. This follow-up is not fresh confirmatory human evidence.",
+  "data": {
+    "structure": "data/audit/falcon_h1_forward_structure_20261011.json",
+    "subjects": 1,
+    "recording_dates": 6,
+    "sets": 13,
+    "outputs": "Seven instructed open-loop velocity axes, not measured movements",
+    "source_banks": "data/audit/wacv_l5_frozen_banks_20261011.json"
+  },
+  "split": {
+    "support": "First three whole trials containing eligible rows; ALL eval_mask True rows, including rest",
+    "query": "Identical to L5 k3_all: eligible rows in every whole trial after three; never used for normalization, gradients, ridge choice or checkpoint choice",
+    "trial_flags": "Official unshifted trial starts; causal25tap history reset per trial/file",
+    "label_cost": "All eligible support labels, actual counts and nominal seconds recorded; replay adds computation and repeated supervised exposure, not new labels"
+  },
+  "initializations": {
+    "real_linear": 3,
+    "synthetic_linear": 3,
+    "time_shift_linear": 3,
+    "random_smooth": 3,
+    "v1": 1,
+    "count": 13,
+    "source_selection": "Exact immutable L5 selected checkpoints; no reselection from H1 outcomes",
+    "pairing": "Identical cyclic support-trial schedule and 150 attempted optimizer updates per initialization; deterministic Adam, no stochastic target reseeding"
+  },
+  "head": {
+    "ridge_grid": [
+      0.01,
+      0.1,
+      1,
+      10,
+      100,
+      1000
+    ],
+    "choice": "At step0, choose once per initialization by mean three-fold support whole-trial LOO normalized SSE, ties smallest lambda; freeze chosen lambda throughout all filter updates and checkpoints",
+    "normalization": "Each episode uses fitting-trial feature mean/std only, floor .1; unpenalized target mean, pooled target scale; final head fitted on all three support trials",
+    "inference": "Float64 primal/dual ridge chosen by min(n,d); form weights before query product",
+    "frozen_comparison": "Same initialization step0 at its support-selected lambda isolates adaptation from readout retuning; original L5 common-lambda1 results retained separately"
+  },
+  "target_training": {
+    "encoder": "Shared linear 5x25 causal per-neuron filter bank,125 parameters",
+    "episodes": "At step t, hold out support trial t mod3, fit ridge on other two; normalize SSE on held-out trial using fitting-trial target scale",
+    "optimizer": "Global backprop through ridge; Adam lr .001",
+    "steps": 150,
+    "checkpoints": [
+      0,
+      15,
+      30,
+      60,
+      90,
+      150
+    ],
+    "grad_norm_clip": 1,
+    "filter_row_l2_clip_above": 2,
+    "smoothness_penalty": 0.0001,
+    "limits": "No local learning claim. All three support labels repeatedly influence meta-training; LOO objective is training objective, not independent validation."
+  },
+  "selection": {
+    "primary": "Minimum mean three-fold support LOO normalized SSE at saved checkpoints including step0, ties earliest; no future query labels",
+    "secondary": "All fixed checkpoints including step150; do not replace primary based on future R2",
+    "failure": "Record attempted/successful/nonfinite updates; terminate failed fit, no replacement, no silent fallback or omitted failed initialization"
+  },
+  "references": [
+    "All four frozen L5 full-history raw/sqrt ridge1/10 references",
+    "Both raw/sqrt full-history heads with same support-only LOO lambda grid, no trained filters",
+    "Original L5 common-lambda1 frozen scores (context only)",
+    "Each adapted initialization compared to its own step0 at same selected lambda"
+  ],
+  "aggregation": {
+    "point": "Average three initialization scores within set for real/synthetic/time/random; V1 single score; then unweighted13-set mean, not prediction ensemble",
+    "interval": "Six recording-day cluster bootstrap, retain all sets per sampled day, weighted-by-set means,10000 draws rng20261011; descriptive one participant",
+    "contrasts": [
+      "real adapted minus V1 adapted/random adapted/synthetic adapted/time adapted",
+      "real adapted minus its own frozen support-selected-lambda baseline",
+      "Each adapted method minus all fixed and support-selected capacity references"
+    ],
+    "selection_interpretation": "Support-objective selection can overfit those three trials; only future-query scoring measures conditional generalization. No population significance or species conservation claim"
+  },
+  "preflight": [
+    "Source-only stand-ins and finite-difference gradient through target objective",
+    "All per-initialization chosen lambdas/checkpoint selections reconstructed from support losses",
+    "Step0 exact equivalence to frozen pilot when lambda1 forced and own selected-lambda independent refits",
+    "Future query neural context independent of support trial spikes; no query labels in fit function",
+    "Neuron permutation equivariance",
+    "Immutable source/protocol hashes and prospective root execution record"
+  ],
+  "artifacts": "data/wacv/xspecies_l6_target_adapt: per-update/cp losses, all selected/raw predictions, states, support/query IDs and SHA, costs, failures, independent audit",
+  "execution": "Claude owns implementation/CPU fits; root independently checks before human execution. GPU0 untouched.",
+  "novelty": "Cross-species pretraining, neuronwise encoders and differentiable ridge already prior art; this compact attribution assay is not a first-transfer/model novelty claim."
+}

@@ -1,0 +1,48 @@
+{
+ "written_utc": "2026-11-05T00:25:35Z",
+ "script_sha256": "2f651d04a18a264dcce3b92e83090ebde4b24a81031910f3a45a6400b879b95c",
+ "design": "Brain-constrained circuit, stage 2 (camera-ready, author 2026-11-05: \"unsupported claims we don't want to give up on\neasily; use NAS/postNAS/Optuna\"). GPU 1. Registered before any outcome of this stage.\nSeen before writing: stage 1 (v4n_brainlike_20261103) test: new goal 15% (PPO 61%), old goal 55%; dev new goal ~24%.\nDiagnosis: stage 1 learns strictly online (one three-factor update per step); every learner here that learns the moved\ngoal reuses each experience several times. Stage 2 keeps the stage-1 circuit and rule and adds two biological mechanisms:\n  awake replay  after every T steps, the last T steps (all animals) are replayed E times with the SAME three-factor rule,\n                values and policy recomputed from the current synapses (awake sharp-wave-ripple replay of recent experience;\n                Foster & Wilson 2006; Ambrose, Pfeiffer & Foster 2016). E = 0 is stage 1.\n  adaptive DA   optional: the dopamine signal is divided by a slow running RMS of past TD errors (adaptive coding of\n                reward-prediction errors; Tobler, Fiorillo & Schultz 2005). A slow per-animal state, no batch statistics.\nStill none of: backprop through the prior, batches statistics, adaptive optimisers, clipping, ratios.\nSpace: stage-1 space + E {0, 1, 2, 4, 8}, T {8, 16, 32}, A {0, 1}. NSGA-II, 96 trials, dev rooms, 3 dev seeds x 3 priors.\nSelection (fixed here): largest dev sum per gate setting. Test once: 30 seeds x 3 priors, fresh rooms, four probes.\nContrasts (descriptive, as stage 1): stage2 - stage1 and stage2 - PPO on the four probes.\n  check | prereg | search W TRIALS | best | test W N | analyse\n",
+ "outcomes_seen": "stage-1 brainlike test and dev; context gating G0/G1/G2 tests; latent search test; none of stage 2",
+ "dev_seeds": [
+  1000,
+  1001,
+  1002
+ ],
+ "test_seeds": [
+  1000,
+  1001,
+  1002,
+  1003,
+  1004,
+  1005,
+  1006,
+  1007,
+  1008,
+  1009,
+  1010,
+  1011,
+  1012,
+  1013,
+  1014,
+  1015,
+  1016,
+  1017,
+  1018,
+  1019,
+  1020,
+  1021,
+  1022,
+  1023,
+  1024,
+  1025,
+  1026,
+  1027,
+  1028,
+  1029
+ ],
+ "priors": [
+  "human_bc",
+  "human_legal_uniform",
+  "cold_ppo"
+ ]
+}

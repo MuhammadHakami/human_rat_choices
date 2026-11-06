@@ -1,0 +1,262 @@
+{
+  "registered_utc": "2026-10-12T18:48:55Z",
+  "configurations": [
+    {
+      "id": "rate0_steps16_entropy0",
+      "rate": 0.0001,
+      "shift": "switch",
+      "B_goal": [
+        6,
+        6
+      ],
+      "n_steps": 16,
+      "ent": 0.01
+    },
+    {
+      "id": "rate0_steps16_entropy1",
+      "rate": 0.0001,
+      "shift": "switch",
+      "B_goal": [
+        6,
+        6
+      ],
+      "n_steps": 16,
+      "ent": 0.05
+    },
+    {
+      "id": "rate0_steps16_entropy2",
+      "rate": 0.0001,
+      "shift": "switch",
+      "B_goal": [
+        6,
+        6
+      ],
+      "n_steps": 16,
+      "ent": 0.1
+    },
+    {
+      "id": "rate0_steps32_entropy0",
+      "rate": 0.0001,
+      "shift": "switch",
+      "B_goal": [
+        6,
+        6
+      ],
+      "n_steps": 32,
+      "ent": 0.01
+    },
+    {
+      "id": "rate0_steps32_entropy1",
+      "rate": 0.0001,
+      "shift": "switch",
+      "B_goal": [
+        6,
+        6
+      ],
+      "n_steps": 32,
+      "ent": 0.05
+    },
+    {
+      "id": "rate0_steps32_entropy2",
+      "rate": 0.0001,
+      "shift": "switch",
+      "B_goal": [
+        6,
+        6
+      ],
+      "n_steps": 32,
+      "ent": 0.1
+    },
+    {
+      "id": "rate1_steps16_entropy0",
+      "rate": 0.0003,
+      "shift": "switch",
+      "B_goal": [
+        6,
+        6
+      ],
+      "n_steps": 16,
+      "ent": 0.01
+    },
+    {
+      "id": "rate1_steps16_entropy1",
+      "rate": 0.0003,
+      "shift": "switch",
+      "B_goal": [
+        6,
+        6
+      ],
+      "n_steps": 16,
+      "ent": 0.05
+    },
+    {
+      "id": "rate1_steps16_entropy2",
+      "rate": 0.0003,
+      "shift": "switch",
+      "B_goal": [
+        6,
+        6
+      ],
+      "n_steps": 16,
+      "ent": 0.1
+    },
+    {
+      "id": "rate1_steps32_entropy0",
+      "rate": 0.0003,
+      "shift": "switch",
+      "B_goal": [
+        6,
+        6
+      ],
+      "n_steps": 32,
+      "ent": 0.01
+    },
+    {
+      "id": "rate1_steps32_entropy1",
+      "rate": 0.0003,
+      "shift": "switch",
+      "B_goal": [
+        6,
+        6
+      ],
+      "n_steps": 32,
+      "ent": 0.05
+    },
+    {
+      "id": "rate1_steps32_entropy2",
+      "rate": 0.0003,
+      "shift": "switch",
+      "B_goal": [
+        6,
+        6
+      ],
+      "n_steps": 32,
+      "ent": 0.1
+    },
+    {
+      "id": "rate2_steps16_entropy0",
+      "rate": 0.001,
+      "shift": "switch",
+      "B_goal": [
+        6,
+        6
+      ],
+      "n_steps": 16,
+      "ent": 0.01
+    },
+    {
+      "id": "rate2_steps16_entropy1",
+      "rate": 0.001,
+      "shift": "switch",
+      "B_goal": [
+        6,
+        6
+      ],
+      "n_steps": 16,
+      "ent": 0.05
+    },
+    {
+      "id": "rate2_steps16_entropy2",
+      "rate": 0.001,
+      "shift": "switch",
+      "B_goal": [
+        6,
+        6
+      ],
+      "n_steps": 16,
+      "ent": 0.1
+    },
+    {
+      "id": "rate2_steps32_entropy0",
+      "rate": 0.001,
+      "shift": "switch",
+      "B_goal": [
+        6,
+        6
+      ],
+      "n_steps": 32,
+      "ent": 0.01
+    },
+    {
+      "id": "rate2_steps32_entropy1",
+      "rate": 0.001,
+      "shift": "switch",
+      "B_goal": [
+        6,
+        6
+      ],
+      "n_steps": 32,
+      "ent": 0.05
+    },
+    {
+      "id": "rate2_steps32_entropy2",
+      "rate": 0.001,
+      "shift": "switch",
+      "B_goal": [
+        6,
+        6
+      ],
+      "n_steps": 32,
+      "ent": 0.1
+    }
+  ],
+  "seeds": [
+    60,
+    61,
+    62
+  ],
+  "fits": 54,
+  "source_models": [
+    {
+      "arm": "rat_bc",
+      "seed": 60,
+      "path": "data/audit/wacv_native_behavior_prior_20261012/cohort/rat_bc/seed60/checkpoint_source.pt",
+      "sha256": "a71a534675630d63cc4ed01707963d4435c1bfc01a13f33b3ba938166a69079f"
+    },
+    {
+      "arm": "rat_bc",
+      "seed": 61,
+      "path": "data/audit/wacv_native_behavior_prior_20261012/cohort/rat_bc/seed61/checkpoint_source.pt",
+      "sha256": "3fc81a33a4ed48b11cd16f930571509f10cdfbf0d83b96fd353c2e75c2092389"
+    },
+    {
+      "arm": "rat_bc",
+      "seed": 62,
+      "path": "data/audit/wacv_native_behavior_prior_20261012/cohort/rat_bc/seed62/checkpoint_source.pt",
+      "sha256": "3c6d7c3b64f6bd1dc8ee3cabb4785ad0d389ce94051f3674bd2fef47159cee28"
+    }
+  ],
+  "frames_per_phase": 65536,
+  "environments": 16,
+  "ppo": {
+    "n_steps": 128,
+    "gamma": 0.99,
+    "lam": 0.95,
+    "clip": 0.2,
+    "ent": 0.01,
+    "vf": 0.5,
+    "epochs": 4,
+    "minibatches": 2,
+    "gradient_clip": 0.5,
+    "adam_eps": 1e-05
+  },
+  "selection": "First require B_after>=15/30 in at least2/3 seeds; select maximum pooled B acquisition, then higher mean B SPL, then lower entropy, lower rate, longer rollout. If no configuration passes, do not claim a competent strong PPO reference.",
+  "metrics": [
+    "B acquisition success/SPL",
+    "Immediate A-probe success/SPL",
+    "Alternative-goal visits",
+    "Stationary drift",
+    "Actual persistent and rollout storage"
+  ],
+  "interpretation": "Standard strong backprop reference; source development, not selective hidden-task retrieval or pure-local whole-pipeline evidence.",
+  "source_initialization": "Same BP-trained rat_bc source checkpoints as local/protection studies; fresh optimizer at start only.",
+  "protocol_continuity": "Engine goal changes only. Observation, world, optimizer, sampler and rollout state carry. Switch aligned with a normal PPO rollout boundary; no extra update or reset.",
+  "device": "Physical GPU1 only; one worker",
+  "sampling": "Reviewed CPU categorical generator, distinct from local CUDA sampling; same seed identities, not identical sampled actions.",
+  "readout": "Full cohort and independent audit before scores. Full seed61 re-execution for each of the eighteen configurations.",
+  "code": {
+    "scripts/wacv_continual_ppo_tuning_source_20261012.py": "88f6bc8d247ba1359799125a73ce72293af318b7124337a2a1b2db31d91b451e",
+    "scripts/recurrent_ppo.py": "fc66ac16f739bf1dae03794a9b6390e1e80eae74459e211694183124ef43fd88",
+    "scripts/ppo_feedforward_reference.py": "e52aa2ea0b787b5a9a4845dbbddfbcc3bd399f5fd3ff3a2663a8cd52246b3b2c"
+  }
+}

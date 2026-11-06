@@ -1,0 +1,230 @@
+{
+ "written_utc": "2026-10-31T11:39:10Z",
+ "new_outcomes_seen": false,
+ "authority": "Program Chairs' camera-ready requests (decision 2026-10-29): moved-goal test, pose-belief and evaluation-policy clarification with loop-rate reporting; author 2026-10-31: take the upper limit, GPU 1.",
+ "checkpoints": "seeds30 main family (6 arms x 30 seeds), sha256 bound by data/audit/wacv_fresh_rooms_confirm_claude/GO.json",
+ "rooms": "16 fresh confirmation rooms (fresh_geometry_manifest.json, generated 2026-10-14 before any outcome)",
+ "probe": "wacv_continual_factorial_claude.probe unchanged: 10 native starts x 3 textures = 30 trials/room, 45 decisions, clean",
+ "conditions": {
+  "registered_sample_source": "existing confirmation records (multinomial sample, goal (3,3))",
+  "greedy_source": "argmax of the same action probabilities, goal (3,3)",
+  "sample_moved": "multinomial sample, each of 3 moved goals",
+  "greedy_moved": "argmax, each of 3 moved goals"
+ },
+ "moved_goal_rule": "targets (3,6),(6,3),(6,6); nearest walkable non-start cell reachable from every start (Manhattan, row, col)",
+ "moved_goals": {
+  "(3, 6)": {
+   "100": [
+    3,
+    6
+   ],
+   "101": [
+    3,
+    6
+   ],
+   "102": [
+    3,
+    6
+   ],
+   "103": [
+    2,
+    6
+   ],
+   "104": [
+    3,
+    6
+   ],
+   "105": [
+    3,
+    6
+   ],
+   "106": [
+    3,
+    6
+   ],
+   "107": [
+    3,
+    6
+   ],
+   "108": [
+    3,
+    6
+   ],
+   "109": [
+    3,
+    6
+   ],
+   "110": [
+    3,
+    6
+   ],
+   "111": [
+    3,
+    6
+   ],
+   "112": [
+    3,
+    6
+   ],
+   "113": [
+    3,
+    6
+   ],
+   "114": [
+    3,
+    6
+   ],
+   "115": [
+    2,
+    6
+   ]
+  },
+  "(6, 3)": {
+   "100": [
+    6,
+    3
+   ],
+   "101": [
+    5,
+    3
+   ],
+   "102": [
+    6,
+    3
+   ],
+   "103": [
+    6,
+    3
+   ],
+   "104": [
+    6,
+    3
+   ],
+   "105": [
+    6,
+    3
+   ],
+   "106": [
+    6,
+    3
+   ],
+   "107": [
+    5,
+    3
+   ],
+   "108": [
+    6,
+    3
+   ],
+   "109": [
+    6,
+    3
+   ],
+   "110": [
+    6,
+    3
+   ],
+   "111": [
+    6,
+    3
+   ],
+   "112": [
+    5,
+    3
+   ],
+   "113": [
+    6,
+    3
+   ],
+   "114": [
+    5,
+    3
+   ],
+   "115": [
+    6,
+    3
+   ]
+  },
+  "(6, 6)": {
+   "100": [
+    6,
+    6
+   ],
+   "101": [
+    5,
+    6
+   ],
+   "102": [
+    6,
+    6
+   ],
+   "103": [
+    5,
+    6
+   ],
+   "104": [
+    5,
+    6
+   ],
+   "105": [
+    6,
+    6
+   ],
+   "106": [
+    5,
+    6
+   ],
+   "107": [
+    6,
+    6
+   ],
+   "108": [
+    6,
+    6
+   ],
+   "109": [
+    5,
+    6
+   ],
+   "110": [
+    6,
+    6
+   ],
+   "111": [
+    6,
+    6
+   ],
+   "112": [
+    6,
+    6
+   ],
+   "113": [
+    5,
+    6
+   ],
+   "114": [
+    6,
+    6
+   ],
+   "115": [
+    6,
+    6
+   ]
+  }
+ },
+ "primary": {
+  "M1": "moved goal (sample, mean over 3 goals x 16 rooms): human_bc - human_legal_uniform, paired t over 30 seeds",
+  "M2": "moved goal: human_bc - cold_ppo",
+  "M3": "moved goal: rat_bc - rat_legal_uniform",
+  "G1": "greedy source goal: human_bc - human_legal_uniform",
+  "multiplicity": "Holm over M1-M3, G1"
+ },
+ "secondary": {
+  "L1": "revisit rate and trapped fraction per arm (all conditions incl. registered records); human_bc - human_legal_uniform paired",
+  "L2": "old-goal attraction: fraction of moved-goal episodes entering (3,3), human_bc - human_legal_uniform and - cold",
+  "B1": "pose belief top-1 / within-1 accuracy and mean posterior at the true cell, per condition, incl. retrospective generality relit/retextured records",
+  "BC": "held-out BC accuracy and NLL (5 trial-grouped folds, same net/recipe, 3 seeds) for real, legal-uniform, sham and shortest-path labels"
+ },
+ "reading": "moved-goal gain positive and Holm p<.05 => choice content beyond goal memory; otherwise claims restricted to same-goal transfer",
+ "exclusions": "none"
+}

@@ -1,0 +1,9 @@
+{
+ "written_utc": "2026-11-02T21:11:50Z",
+ "outcomes_seen": "stratified outcomes: none",
+ "change": "Descriptive stratification of the same moments by situation (forced / junction / dead end; goal in the visible range; goal-directed move) with stage-B probes and the Rosetta authors' geometry_scores per stratum, image-action and text-action, plus a goal-bearing caption (what a view would say if the goal were visible). Author 2026-11-03: the pooled conclusion mixes moments where the view determines the move with moments where it cannot.",
+ "script": "scripts/v4n_rosetta_strata_claude_20261103.py",
+ "script_sha256": "cfe9972bcb8cda90662ae186f2a33c80b5cb449035486458aa6202986fba0266",
+ "script_sha256_final": "62cb10cd3c3641679b841305eb1c404ce05687c1153363addeb6d28903b78a88",
+ "note": "encoder call switched to the study's own Encoders (sentence_transformers not installed); no outcome computed before"
+}

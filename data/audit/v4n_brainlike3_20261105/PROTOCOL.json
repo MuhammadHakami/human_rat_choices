@@ -1,0 +1,49 @@
+{
+ "written_utc": "2026-11-05T07:07:26Z",
+ "script_sha256": "3763980a6b606e943b3a6a4dcf99135822ab4422f1f235e076a7916d86576303",
+ "design": "Brain-constrained circuit, stage 3 (camera-ready, author 2026-11-05: \"use both GPUs and improve our significance,\nespecially the biologically plausible ones; utilize postNAS/Optuna and Lean\"). Registered before any outcome of this stage.\nSeen before writing: stage 2 test (v4n_brainlike2_20261105): ungated new 60.1 / old 24.6 (equivalent to PPO within\n+/-10 pp); gated new 53.4 / old 37.4 (old +13.3 vs PPO, new -7.3 [-16.9, 2.2]); unseen-room new goal -7.9 vs PPO.\nStage 3 = stage 2 + one mechanism aimed at keeping the old goal while learning the new one:\n  sleep replay  rewarded episodes of the familiar-goal phase are stored (hippocampal memory, at most 64) and, after every\n                T moved-goal steps, O of them are replayed in reverse with the same three-factor rule, values and\n                policy recomputed from the current synapses (interleaved replay / complementary learning systems;\n                McClelland et al. 1995; offline replay of old experience, Wilson & McNaughton 1994). O = 0 is stage 2.\nLean (proofs/Proofs/Trace.lean): the eligibility trace is bounded by M / (1 - gamma lambda); the value rate is therefore\nsearched in these units, rho = eta_v / (1 - gamma lambda), which decouples it from lambda.\npostNAS: K = 2048 and c = 7 fixed (both stage-2 winners); searched f [.02,.12] log, eta [3,200] log, tau [1.5,5] log,\nlam [.8,.99], rho [.1,4] log, m {0,1,10}, R {0,1}, E {1,2,4,8}, T {8,16,32}, A {0,1}, O {0,1,2,4}, gate {none, inferred}.\nThe two stage-2 winners are enqueued first (O = 0) as references. NSGA-II, 2 workers (one per GPU), 60 trials each;\nobjective and dev rooms as stages 1-2. Selection (fixed here): largest dev sum per gate. Test once on GPU 1 only\n(30 seeds x 3 priors, fresh rooms, four probes). Contrasts (descriptive): stage 3 - stage 2, - PPO, - G2.\n  check | prereg | search W TRIALS | best | test W N | analyse\n",
+ "outcomes_seen": "stages 1-2 dev and test; gating G0/G1/G2; latent search; none of stage 3",
+ "lean": "proofs/Proofs/Trace.lean (lake build ok)",
+ "dev_seeds": [
+  1000,
+  1001,
+  1002
+ ],
+ "test_seeds": [
+  1000,
+  1001,
+  1002,
+  1003,
+  1004,
+  1005,
+  1006,
+  1007,
+  1008,
+  1009,
+  1010,
+  1011,
+  1012,
+  1013,
+  1014,
+  1015,
+  1016,
+  1017,
+  1018,
+  1019,
+  1020,
+  1021,
+  1022,
+  1023,
+  1024,
+  1025,
+  1026,
+  1027,
+  1028,
+  1029
+ ],
+ "priors": [
+  "human_bc",
+  "human_legal_uniform",
+  "cold_ppo"
+ ]
+}

@@ -1,0 +1,1 @@
+{"learner": "s2_head_strat", "prior": "cold_ppo", "seed": 1008, "source": "data/audit/v4n_local_search2_20261102/test/s2_head_strat/cold_ppo/seed1008.json", "familiar_trained_room": 4, "moved_heldout_room": 22, "familiar_heldout_room": 10}

@@ -1,0 +1,320 @@
+{
+  "registered_utc": "2026-10-12T02:00:18.545990+00:00",
+  "version": "embodied-common-spatial-source-v1",
+  "status": "Source-development before any new common-spatial neural fits; no target/native-fit GO.",
+  "purpose": "Isolate credit/control from visual localization with identical frozen source-calibrated spatial belief plus original camera for all7methods. Not a crossspecies or retention result.",
+  "author_scope": "Embodied sensory actions, outcome learning, OOD, continual plasticity, retained skills and spiking cost; real observations separate from digital reconstruction.",
+  "tasks": "data/unified/tartarus/tasks.json",
+  "tasks_sha256": "6a18b87ffee816a2bfd4e92edbcb28ad4319626c18a2561283518742ec6353a8",
+  "task_arrays_sha256": "30aa3346465d12cfe38ea1439143cea63632ed3d2610844683c4bb28ba5a7c77",
+  "native_trajectories": "data/unified/tartarus_trajectories.json",
+  "native_trajectories_sha256": "ec35d0b3f507b783578a5fd4ad868cbaafe6502e16c24b88963bbbfec5d22212",
+  "native_data_use": "Geometry only; real trajectory rule fitting remains separate.",
+  "known_prior_data": "Original63source/neural results,6beliefQ results and source modelbased diagnostics already known. This is exploratory source development; no newtarget fit.",
+  "source": {
+    "train_configurations": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "select_configurations": [
+      6,
+      7
+    ],
+    "open_arena": true,
+    "target_configurations_not_evaluated": [
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25
+    ],
+    "seeds": [
+      10,
+      11,
+      12
+    ],
+    "training_frames": 32768,
+    "curriculum": [
+      {
+        "until_total_frames": 4096,
+        "configurations": [
+          0
+        ],
+        "spawn_distance_min": 1,
+        "spawn_distance_max": 4,
+        "native_starts": false
+      },
+      {
+        "until_total_frames": 8192,
+        "configurations": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "spawn_distance_min": 1,
+        "spawn_distance_max": 8,
+        "native_starts": false
+      },
+      {
+        "until_total_frames": 32768,
+        "configurations": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "native_starts": true
+      }
+    ],
+    "curriculum_information": "Goal-based spawn bands are simulator-side source curricula, never policy inputs; sampling rules and total interaction allowance shared.",
+    "boundary_rule": "Curriculum/final run boundaries force episode terminal in every method; PPO marks8slots terminal at matching total-frame boundary. Last reward credited once, no phantom action.",
+    "select_protocol": {
+      "tasks_per_configuration": 10,
+      "repeats": 3,
+      "max_decisions_per_trial": 45,
+      "frozen_arm": "Fresh checkpoint clone, no weight updates, state reset per trial.",
+      "adaptation_arm": "Fresh checkpoint clone per repeat, configs6then7,10native starts each, weights kept across trials/layouts, state reset per trial; no layout/boundary ID.",
+      "primary_selection": "Mean adaptive success over both layouts/all10trials/3repeats, averaged over all3seeds for a rate.",
+      "tie_break": "Higher frozen mean success, then lower registered candidate index; no seed-specific choices.",
+      "feedback_accounting": "Selection is source development, reported separately; each arm60trials/2700decision maximum, count actual interactions and rejected candidates."
+    },
+    "fits_planned": 63,
+    "selection_rule": "Complete all7methods x3rates x3seeds including failures, independent audit before selection; no partial-result tuning.",
+    "subsequent_stage": "All63source32kfits/independentaudit thenglobalpermethodrate selection. Longer source competence runs need separateprotocol; no target or nativefit GO."
+  },
+  "view": {
+    "width": 64,
+    "height": 36,
+    "hfov": 110.0,
+    "eye_h": 0.25,
+    "pitch": 0.0,
+    "fog_top": 0.35,
+    "fog_clear": 1.0,
+    "fog_density": 2.0,
+    "curtain_margin": 1.0,
+    "curtain_h": 4.0,
+    "cue_edge": "row0",
+    "pit_depth": 2.0,
+    "tex_amp": 0.08,
+    "tex_period": 0.25,
+    "lum": {
+      "floor": 0.55,
+      "pit": 0.05,
+      "white": 0.85,
+      "black": 0.05,
+      "sky": 0.6,
+      "fog": 0.7,
+      "side": 0.2
+    }
+  },
+  "renderer": "scripts/tartarus_visual_env.py",
+  "renderer_sha256": "3f2a1f6a30471d11ebf9f297855273b2c8c153996c73cfac117321da7e15345e",
+  "features": {
+    "camera_quantization": "round(255*clip(luminance,0,1)), uint8",
+    "pooled_height": 9,
+    "pooled_width": 16,
+    "pooled_transform": "4x4mean;float32;2*(mean/255)-1",
+    "extra_inputs": [
+      "previous_contact",
+      "previous_reward",
+      "previous_action_onehot4"
+    ],
+    "obs_dim": 250,
+    "texture_rotations": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "texture_sampling": "Uniform per episode, environment RNG independent of layout/goal/policy RNG/phase; not deterministic layout ID.",
+    "policy_information": "Pixels, contact, last reward and own last action only; no pose/goal/map/geodesic/layout/phase inputs.",
+    "clock": "One neural update per digital decision; tau values are decision-step constants, not physiological milliseconds.",
+    "physical_equivalence": false,
+    "raw_animal_sensation": false,
+    "representation": "Original150pixel/contact/reward/ownaction observations concatenated with100position posterior. No oraclepose/goal/map/layout/phase supplied.",
+    "source_calibration": "400openarena0 labeledpose/heading views,102400Bfixedatlas, shared frozen and counted for eachlearner; initial100position x4heading prior uniform.",
+    "actuator_priors": "Stable learned10x10roomframe, deterministic allocentric motions andcontact/lastmovecamera alignment; not rat/human sensory parity. No6/7atlas labels."
+  },
+  "actions": {
+    "mode": "allocentric",
+    "n_actions": 4,
+    "names": [
+      "row+1",
+      "row-1",
+      "column+1",
+      "column-1"
+    ],
+    "camera": "Faces attempted move; initial heading toward centre is declared assumption.",
+    "egocentric": "Separate future sensitivity; not pooled."
+  },
+  "reward": {
+    "goal_first_arrival": 1.0,
+    "other": 0.0,
+    "goal_hidden": true,
+    "trial_limit": 45,
+    "shortest_path_shaping": false,
+    "native_time_equivalence": false
+  },
+  "methods": [
+    {
+      "name": "eprop_symmetric",
+      "rates": [
+        0.003,
+        0.01,
+        0.03
+      ],
+      "hidden": 64,
+      "core_rate_ratio": 0.1
+    },
+    {
+      "name": "eprop_random",
+      "rates": [
+        0.003,
+        0.01,
+        0.03
+      ],
+      "hidden": 64,
+      "core_rate_ratio": 0.1
+    },
+    {
+      "name": "rate_bptt_sgd",
+      "rates": [
+        0.003,
+        0.01,
+        0.03
+      ],
+      "hidden": 64,
+      "core_rate_ratio": null
+    },
+    {
+      "name": "rate_bptt_adam",
+      "rates": [
+        0.0001,
+        0.0003,
+        0.001
+      ],
+      "hidden": 64,
+      "core_rate_ratio": null
+    },
+    {
+      "name": "spike_bptt_sgd",
+      "rates": [
+        0.003,
+        0.01,
+        0.03
+      ],
+      "hidden": 64,
+      "core_rate_ratio": null
+    },
+    {
+      "name": "spike_bptt_adam",
+      "rates": [
+        0.0001,
+        0.0003,
+        0.001
+      ],
+      "hidden": 64,
+      "core_rate_ratio": null
+    },
+    {
+      "name": "recurrent_ppo",
+      "rates": [
+        0.0001,
+        0.0003,
+        0.001
+      ],
+      "hidden": 19,
+      "core_rate_ratio": null
+    }
+  ],
+  "common_learning": {
+    "dtype": "float32",
+    "gamma": 0.95,
+    "entropy": 0.01,
+    "value_coefficient": 0.5,
+    "tau_m": 20.0,
+    "tau_a": 200.0,
+    "threshold": 0.6,
+    "pseudo_derivative_gain": 0.3,
+    "alif_fraction": 0.5,
+    "adaptive_threshold_beta": 1.0,
+    "readout_kappa": "exp(-1/20)",
+    "parameter_matching": "~20.4k effectiveplastic weights,64rate/spike and19LSTM; maximum gap~1.7%; actual fixed/state/eligibility/optimizer/representation costs separate."
+  },
+  "ppo": {
+    "n_envs": 8,
+    "n_steps": 128,
+    "epochs": 4,
+    "minibatches": 2,
+    "lambda": 0.95,
+    "clip": 0.2,
+    "adam_epsilon": 1e-05,
+    "max_grad_norm": 0.5,
+    "value_loss": "MSE",
+    "advantage_normalization": true
+  },
+  "bptt": {
+    "loss": "Episode Monte Carlo actorcritic, detached actor advantage, independent entropy; SGD/Adam distinct.",
+    "spiking_graph": "Same forward/filter/initialization as eprop; recurrent spike input differentiable, reset detached.",
+    "adam_epsilon": 1e-08
+  },
+  "eprop": {
+    "form": "Reward online Methods form/plainSGD; not released Atari Adam/nstep or benchmark reproduction.",
+    "feedback": [
+      "symmetric",
+      "fixed_random"
+    ],
+    "entropy_mode": "independent",
+    "plastic_core": true,
+    "self_synapses": false,
+    "core_rate_ratio": 0.1
+  },
+  "resource_policy": {
+    "device": "CPU,2workersmaximum,1thread each. GPU0/GUI/Unity untouched.",
+    "workers_max": 2,
+    "threads_per_worker": 1,
+    "measure": [
+      "actual_tensor_bytes",
+      "fixed_structure_feedback",
+      "eligibility",
+      "optimizer",
+      "BPTT_buffer_lower_bound/RSS",
+      "PPO_buffer",
+      "input_MACs",
+      "spikes_events",
+      "wall_time",
+      "actual_interactions",
+      "400additional source calibration observations",
+      "fixed pose atlas",
+      "posterior state",
+      "computational likelihood memoization"
+    ],
+    "energy": "Events/bytes are proxies, not measured joules."
+  },
+  "technical_GO_requirements": [
+    "Independent source cache/pooling checks",
+    "Parameter/dtype/seed replay",
+    "Eprop entropy/TDordering gradients",
+    "Full-spiking forward/gradient comparator",
+    "Exact32768frames and boundary/reward accounting source-shaped dryrun",
+    "Finite states/checkpoint replay and code/data hashes bound"
+  ],
+  "failure_policy": "Retain failed/nonfinite fits; no silent retry/clip/reset. Technical repair gets new version before affected fits.",
+  "scientific_next_gate": "Wholecohort audit then useful changed-layout control and fixed biologicaltransferobject; compare strongmodelbased/in-contextreference, not just random.",
+  "parent_protocol": "docs/WACV_EMBODIED_SOURCE_PROTOCOL_20261012.json",
+  "parent_sha256": "2ae1b1c6db84298ecc583e13c73559ad18c3ec054caeb2dbcd91eaef0eccedda",
+  "representation_code": "scripts/wacv_embodied_belief_source.py",
+  "representation_code_sha256": "47b8371dcc5847baafc5d63eda351b6cafa7a097f790b2996e658dc7de285ef8",
+  "representation_protocol": "docs/WACV_EMBODIED_BELIEF_SOURCE_PROTOCOL_20261012_v2.json",
+  "representation_protocol_sha256": "312b270cb2b090d4b6d2001466815793cb20724540230920986f78f16b4dad8d"
+}

@@ -1,0 +1,25 @@
+# environments and caches
+.venv
+.venv/
+__pycache__/
+*.pyc
+proofs/.lake/
+proofs_ml/.lake/
+# generated locally
+outputs/
+_site/
+*.log
+# raw animal data: downloaded by setup.sh from Zenodo, never redistributed
+data/real_sources/
+data/unified/tartarus_trajectories.json
+data/audit/sota_reproduction_20261017/
+# large files: GitHub release assets (setup.sh --models / --records), not git
+*.tar
+*.tar.gz
+*.zip
+*.final.pt
+data/wacv/seeds30/cohort/*/seed*/checkpoint_source.pt
+!data/wacv/seeds30/cohort/*/seed1000/checkpoint_source.pt
+# private notes for Claude sessions
+CLAUDE.local.md
+.claude/

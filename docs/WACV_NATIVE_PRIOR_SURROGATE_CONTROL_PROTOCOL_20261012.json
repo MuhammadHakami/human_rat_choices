@@ -1,0 +1,63 @@
+{
+  "registered_utc": "2026-10-12T08:56:49.604411+00:00",
+  "version": "native-prior-conditional-choice-controls-v1",
+  "purpose": "Separate conditional action structure from legal-move support, simple goal preference, persistence and native observation coverage before biological-specificity claims.",
+  "source_parent": "docs/WACV_NATIVE_BEHAVIOR_PRIOR_SOURCE_PROTOCOL_20261012.json",
+  "source_parent_sha256": "686d4d2e49e93c3502c37832991ee3b272081806b9845084c439a79cc826daa6",
+  "data_manifest_sha256": "b7ac76769a0e026b9af9c4dcc0a2d0a9cf1f3eb71ea227a3fb8eeae4187b17c9",
+  "source_only": "Same6000 first-goal-censored recorded transitions/species from train individuals and layouts1\u20135; no other native path/cells read by helper. Source camera and frozen belief arrays remain byte-identical.",
+  "policy": "For each source row, softmax over actual legal neighboring moves: kappa*indicator(current action equals previous recorded move)+beta*(d(current cell)-d(candidate next cell)). Distance is to source goal on source maze, for OFFLINE labels only. No legal mask/goal/map added to acting policy.",
+  "fit": {
+    "species_separate": true,
+    "parameters": [
+      "kappa_persistence",
+      "beta_goal"
+    ],
+    "bounds": [
+      [
+        -20,
+        20
+      ],
+      [
+        -20,
+        20
+      ]
+    ],
+    "initial": [
+      0,
+      0
+    ],
+    "solver": "L-BFGS-B, float64 analytic gradient",
+    "maxiter": 1000,
+    "ftol": 2e-12,
+    "gtol": 1e-09,
+    "objective": "Negative conditional log likelihood of real6000 recorded moving labels; no brain/update-rule identification."
+  },
+  "label_arms": {
+    "rat_surrogate": "Sample fitted rat policy at exactly rat input rows",
+    "human_surrogate": "Sample fitted human policy at exactly human input rows",
+    "rat_legal_uniform": "Sample beta=kappa=0 over legal moves at exactly rat input rows",
+    "human_legal_uniform": "Sample beta=kappa=0 over legal moves at exactly human input rows"
+  },
+  "randomness": "Surrogates seed641793+species index; uniform-legal seed642793+species index. One label/unique move repeated over3 texture reconstructions, X/identity not changed. Never resample favorable labels.",
+  "why_uniform_control": "Original subject/layout shams sometimes assign illegal moves. Legal-uniform preserves cellwise available action support without goal/persistence fitting, rather than interpreting a sham gap as uniquely biological. Original expert deterministically breaks shortest-path ties; stochastic controls remove reliance on that direction tie bias.",
+  "learner_followup": {
+    "planned_fits": 12,
+    "arms": [
+      "rat_surrogate",
+      "human_surrogate",
+      "rat_legal_uniform",
+      "human_legal_uniform"
+    ],
+    "seeds": [
+      60,
+      61,
+      62
+    ],
+    "bc": "Identical20epochs/360000 presentations/Adam.001/clip.5; freshPPOoptimizer; fixed source arrays",
+    "rl": "Identical FF64x64/PPO.001/524288frames/8slots/curriculum and source6\u20137validation to original21casecohort",
+    "status": "Implementation and independent dry/data audit/GO required before learner fitting; statistical-label fitting and generation have their own narrowly scoped GO."
+  },
+  "confirmation_boundary": "Added arms may enter fresh confirmation only with a hash-bound addendum BEFORE any target policy outcomes. All original7 arms remain; no sample deletion or selecting favorable old seeds.",
+  "failure_policy": "Preserve nonconvergence/partial/numerical/implementation errors; no silent retries or new seeds. Independent legality/identity/likelihood/gradient/hash checks before labels or downstream fits are interpreted."
+}

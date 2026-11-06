@@ -1,0 +1,65 @@
+{
+  "name": "L5 frozen macaque-to-human representation pilot with forward whole-trial holdout",
+  "created_utc": "2026-10-11T08:52:30.162561+00:00",
+  "status": "Locked before any H1 L5 score; H1 dataset and prior methods already examined, exploratory target assay",
+  "prior_information": "M1 source and three new source sessions audited positive. Old H1 minival scores invalid for held-out claims because neural/target arrays copy calibration prefixes. All H1 calibration values and earlier F1b outcomes already viewed. V1 timescale/history and common ridge1 were selected previously on H1 development; shared by all matched feature banks. Encoder optimization/weights/checkpoint selection used M1 only.",
+  "data": {
+    "selection": "Exactly13 held-IN calibration files matching old13 H1 minival stems; no minival arrays used as query",
+    "root": "data/xspecies/falcon/000954",
+    "structure": "data/audit/falcon_h1_forward_structure_20261011.json",
+    "subjects": 1,
+    "neuron_count": 176,
+    "outputs": "All7 instructed open-loop velocity axes, not measured hand trajectories",
+    "recording_days": "Six coded recording dates containing13 calibration sets",
+    "metric": "Float64 variance-weighted R2 over all seven outputs and every eligible future query row; unweighted13-set average primary"
+  },
+  "support_and_query": {
+    "trials": "Use unique trial IDs containing eligible rows, in time order; H1 official trial_change indicates starts (TrialNum positive differences), do not shift flags",
+    "support": "First k whole trials, k1 and3. All methods inspect the same eligible labels within those trials. Exact raw bins/trial IDs/hashes and actual eligible label counts saved.",
+    "query": "Common across both k: ALL whole trials strictly after the first3 support trials, all eval_mask True rows, including zero-velocity rows. No overlap in trial IDs, bins or feature context.",
+    "features": "Causal25tap frozen banks; trial/file reset. BaselineV1 finite240ms exponential plus lags0..4, coefficients/history preserved exactly; normalizations support-only std floor0.1.",
+    "primary_support_mode": "ALL eligible rows in the first3 trials. This includes rest labels and prevents a moving-only training/rest-inclusive query mismatch. Whole-trial label costs reported, not just moving seconds.",
+    "secondary_support_mode": "MOVING eligible rows only, abs target>=.001 on anyaxis, for every method at both k. This reconstructs old V1 fitting convention with disjoint queries. No choice of mode from outcomes.",
+    "calibration_cost": "Support label inspection uses all eligible rows of k whole trials in both modes. Readout fitted rows differ between all/moving. Report labelled bins, nominal20ms time, trial recording span and earlier unlabelled context. No replay/gradient on target for this frozen pilot."
+  },
+  "banks": {
+    "trained": "All18 real/synthetic/time_shift x linear/softplus x3 source fits, exact selected checkpoints; weights frozen under data/audit/wacv_l5_frozen_banks_20261011.json",
+    "fixed": "V1, sqrt-count V1, multiscale, three smooth random banks, initialsoftplus V1",
+    "capacity": "25lag raw andsqrtcount, 4400dimensions versus880 in five-filterbanks; both ridge1 andsource-selected10, all reported; no target selection of which lambda",
+    "references": "Calibrationmean andzero, with support-mode-specific mean"
+  },
+  "head": {
+    "matched_banks_lambda": 1.0,
+    "purpose": "Same readout regularization for all matched banks so representation differences cannot be attributed to different source-selected head lambdas",
+    "intercept": "Unpenalized support target mean, one pooled scale cancels algebraically",
+    "normalization": "Support-only feature mean/std fixedfloor0.1; no query activity or labels in moments",
+    "solve": "Mean-normalized primal or dual ridge in float64, exactly equivalent. Form weights before multiplying query features to avoid a large query-by-support matrix. Wide capacity heads may use Cholesky; verify against independent direct solve.",
+    "target_selection": "No new target tuning, checkpoint selection, fine-tuning or calibrated bank learning. Shared human-derived preprocessing/lambda acknowledged, not a wholly source-only method design."
+  },
+  "primary": "k3, ALL-eligible support, LINEAR source bank; mean three source-fit scores within set, then unweightedmean13 sets. Not a prediction ensemble.",
+  "secondary": "k1, moving-only support, softplus variant, perseed and perday scores; no replacement of primary",
+  "contrasts": [
+    "Primary real-linear minus V1",
+    "Primary real-linear minus synthetic-linear",
+    "real minus multiscale/random mean/time_shift/episodezero",
+    "real minus both lambda1/10 capacity models, unequal dimensions disclosed",
+    "same contrasts for secondary budgets/modes/nonlinearity"
+  ],
+  "intervals": {
+    "draws": 10000,
+    "seed": 20261011,
+    "clusters": "Six coded recording days; resample days, retaining all sets in each sampledday, and compute weighted-by-set primary mean. Average source-fit scores within set BEFORE cluster resampling.",
+    "meaning": "Descriptive conditional on one participant and source fits; already-seen target dataset, multiple contrasts exploratory. No population/species conservation or confirmatory significance claim."
+  },
+  "failures": "Record every failed set/bank/mode and reason; save partial predictions. No excluded file, fallback, seed replacement, variant/mode selection from outcomes.",
+  "preflight": [
+    "Exact V1 features/predictions on same support/query rows",
+    "Primal/dual/Cholesky head equivalence including constant-support features",
+    "Whole-trial temporal disjointness and query history independent of support",
+    "Neuron permutation equivariance and query labels do not define support weights",
+    "Frozen source fit-file hashes and no target gradient updates",
+    "Synthetic source-calibration dry only, no H1 score before independent numerical/code checks"
+  ],
+  "artifacts": "data/wacv/xspecies_l5_human_forward: protocol/source hashes, every per-set raw prediction/bank/mode/budget, source/filter IDs, calibration/query row IDs, label costs, scores/per-axis errors and cluster contrasts, independent audit.",
+  "interpretation": "A source-specific target benefit requires real beating matched synthetic training and a credible human-only/generic baseline under disjoint queries. Frozen pilot does not exhaust proper transfer strategies or replicate foundation models. Target-only learned filters, genuine target fine-tuning and local readout are separately registered follow-through, not retrospectively added to this primary."
+}

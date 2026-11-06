@@ -1,0 +1,1 @@
+{"learner": "td_fa", "prior": "cold_ppo", "seed": 1008, "T": 32, "goals": 13, "dense_goals": 14, "synops_per_decision": 95874.53405405405, "dense_macs": 20544}

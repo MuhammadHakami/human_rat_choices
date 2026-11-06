@@ -1,0 +1,22 @@
+{
+  "ok": true,
+  "source_only": true,
+  "comparisons": 96,
+  "obs_dim": 150,
+  "max_independent_pool_error": 2.384185791015625e-07,
+  "array_sha256": "da48dbd82d745c6e787f9c181d6725e4fe34d3e95f920c64908f217b1c11b6cc",
+  "protocol_sha256": "2ae1b1c6db84298ecc583e13c73559ad18c3ec054caeb2dbcd91eaef0eccedda",
+  "configurations": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "frames": 11168,
+  "raw_retinal_data": false,
+  "fits": 0
+}

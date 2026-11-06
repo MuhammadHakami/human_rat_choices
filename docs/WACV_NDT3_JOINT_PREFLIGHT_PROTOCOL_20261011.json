@@ -1,0 +1,55 @@
+{
+  "registered_utc": "2026-10-11T19:24:24.142591+00:00",
+  "stage": "Before any joint-objective native gradient/update. Old behavior-only NDT3 M2 and compact N2 outcomes known; old X/H1 studies active, no partial outcomes read. This is exploratory repair, not untouched-target confirmation.",
+  "reason": "Primary NDT3 NeurIPS2025 A.2.11 recommends neural reconstruction during fine-tuning. Released checkpoint has linear behavior MSE, not behavior classification. Old immutable recipe omitted neural objective.",
+  "source_file": "data/xspecies/falcon/000941/sub-MonkeyL-held-in-calib_ses-20120924_behavior+ecephys.npz",
+  "checkpoint": "data/audit/wacv_external_baselines_20261011/ndt3_45m_200h.ckpt",
+  "shapes": [
+    [
+      64,
+      16
+    ],
+    [
+      176,
+      7
+    ],
+    [
+      96,
+      2
+    ]
+  ],
+  "learning_rate": 3e-05,
+  "steps_per_shape": 4,
+  "physical_gpu": "0",
+  "task_weights": {
+    "spike_infill": 1.0,
+    "kinematic_linear": 1.0,
+    "constraints": 0.0,
+    "return_context": 0.0
+  },
+  "data": "First40 source-L training bins only. Extra channels repeat source counts; outputs firstdof real EMGs. All three are shape checks, not separate datasets.",
+  "objective": "Native causal autoregressive spike objective via predict_simple_batch(compute_loss=True), native differentiable behavior MSE captured before reporting detach. Checkpoint weights1+1; other tasks0. Correct per-token true-channel counts exclude16H1shape padded channels. Counts in full same-trial support prefix; behavior MSE restricted actual valid bins; all behavior inputs masked.",
+  "checks": "Independent NumPy/SciPy MSE and softened Poisson classification reconstruction; true-channel count sums; padding-target-only perturbation; invalid label loss isolation; all-label feature/prediction isolation; future-count causal prefix and own-count-token neural-logit isolation; each objective gives nonzero backbone gradients; both native output heads and backbone actually update under train-mode dropout.",
+  "optimizer": "Full-model AdamW LR3e-5, checkpoint.cfg.weight_decay, globalclip1. Native dropout. No architecture/native source modification or fabricated reward target.",
+  "gate": "All3shapes/12updates complete and finite; no target training authorized. Separate source calibration full dry/audit before18sourcefits.",
+  "primary_source": "https://papers.nips.cc/paper_files/paper/2025/file/a00000e6a2208172700510bcd69d48e9-Paper-Conference.pdf",
+  "sha256": {
+    "data/audit/wacv_external_baselines_20261011/ndt3_45m_200h.ckpt": "74e39356e4a5099fe64aee637b4b7298ae4923d8f69daf48a7b77b02cdca8745",
+    "scripts/ndt3_native_adapter.py": "f84840ca6b8fc98843b50f3be5196e29b6e836a2eb46d9b7dbbb59147fb7fd51",
+    "scripts/ndt3_joint_adapter.py": "7d8411b6ee5dbe703806d62f65b6b85958b34396fc6267ac606019efa6942bf0",
+    "data/audit/wacv_external_baselines_20261011/runtime_freeze.txt": "ca49d2d60135cb246ba01ffeb69a1e690c95e5de1e219923682a15a091807df1",
+    "data/audit/wacv_external_baselines_20261011/ndt3/context_general_bci/model.py": "a15d470418ea7fc3e73a7863d1a35a0de9e73385678b784e1ceb2f8598a6099b",
+    "data/audit/wacv_external_baselines_20261011/ndt3/context_general_bci/task_io.py": "ea6c1ea59e5dabd29878357e694371e38862c06489224b52ee385ec6b4593ceb",
+    "data/audit/wacv_external_baselines_20261011/ndt3/context_general_bci/data_utils.py": "02bd327776df0f754103aa4aa7a7bf7673519f100eb08768bf983bab8d0a5ffa",
+    "scripts/audit_ndt3_joint_gradients.py": "8d824f209c612a0cb4c88d61059fa06ec25a83a58e70c109b44655bf8c39adf3",
+    "data/xspecies/falcon/000941/sub-MonkeyL-held-in-calib_ses-20120924_behavior+ecephys.npz": "8c1986fdb2e277bb85cd4f732fea8989870e5a3256a7cc687d5abb8fc2de9001"
+  },
+  "source_only_amendments": [
+    {
+      "utc": "2026-10-11T19:31:15.618274+00:00",
+      "old_auditor_sha256": "7fbe3bb3fadaec32e143bf58cc7aa6faaaaf46821fe9efad8499099a06c3850a",
+      "reason": "Independent NumPy audit initially used float64 log-softmax, while native soft-target CrossEntropyLoss uses BF16 log-softmax followed by float32 soft-target multiplication. Reconstruct explicit BF16 nearest-even rounding; original2e-6scalar tolerance unchanged. Native model, objective, counts, optimizer and all source/target scientific settings unchanged. Failed first preflight completed source64shape4updates then stopped at176shape loss check; no calibration or target fits. Preserve all diagnostics; invalid empty diagnostic summary is explicitly excluded from audits/GO.",
+      "archive": "data/audit/wacv_external_baselines_20261011/joint_preflight_loss_disagreement"
+    }
+  ]
+}

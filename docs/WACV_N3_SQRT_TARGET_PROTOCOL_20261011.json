@@ -1,0 +1,181 @@
+{
+  "question": "Prospective matching of source-learned and target square-root count preprocessing under same scarce-label causal assay; compare allraw/sqrthistory and bothconstrained variants without outcome-selected modes.",
+  "source_animals": [
+    "L",
+    "X"
+  ],
+  "variants": [
+    "unit_adam",
+    "subspace_sgd"
+  ],
+  "target_cohorts": {
+    "M2": {
+      "data/xspecies/falcon/000953/sub-MonkeyN-held-out-calib_ses-2020-10-30-Run1_behavior+ecephys.npz": "fa4186d35a0ad3d25b8323c4aadc3d37c0d2c2cff7c70e72a670b56da027aa11",
+      "data/xspecies/falcon/000953/sub-MonkeyN-held-out-calib_ses-2020-10-30-Run2_behavior+ecephys.npz": "08500201152252972ad9eba22a1c2351947b97d960a0a8e80f9ac84579f20696",
+      "data/xspecies/falcon/000953/sub-MonkeyN-held-out-calib_ses-2020-11-18-Run1_behavior+ecephys.npz": "a55b5324292baa661ae948c468d5e7a6f33fc74fb014dbfc3bdae4606cf885ed",
+      "data/xspecies/falcon/000953/sub-MonkeyN-held-out-calib_ses-2020-11-19-Run1_behavior+ecephys.npz": "d8f50a38eee4039d3e25807d04e066eb8bf6f483c6a3aae554ba926dc7018e4a",
+      "data/xspecies/falcon/000953/sub-MonkeyN-held-out-calib_ses-2020-11-24-Run1_behavior+ecephys.npz": "7a62ce3bb8a0e63253c6bc3ef6951fe980242a526ee217523ffcfd600ba3c2f6",
+      "data/xspecies/falcon/000953/sub-MonkeyN-held-out-calib_ses-2020-11-24-Run2_behavior+ecephys.npz": "4f6bbb81452b9aaabedc60985a0ba05556b7a1529d5e17a78e0ae13822d015c3"
+    },
+    "X": {
+      "data/xspecies/falcon/001209/sub-MonkeyX-held-in-calib_ses-20121212_behavior+ecephys.npz": "3ea4c06db31a3ee0b1f5243e35fd06f9f2c36d59827b483d510e4e935f18a975",
+      "data/xspecies/falcon/001209/sub-MonkeyX-held-out-calib_ses-20121213_behavior+ecephys.npz": "9a7a100b2eaa1c32a2decce59ba5c327daeb7e54c91784670bc4fbcbd3a7d187",
+      "data/xspecies/falcon/001209/sub-MonkeyX-held-out-calib_ses-20121214_behavior+ecephys.npz": "540a31f74baadbeedf156fe49a2e71935bf0d5f565a4d0de5d516904f5a172c7",
+      "data/xspecies/falcon/001209/sub-MonkeyX-held-out-calib_ses-20121218_behavior+ecephys.npz": "9e9c41ec109bf78a3497a0a42577ce0ef1bb623d0e0b0094176f91488d9a707f",
+      "data/xspecies/falcon/001209/sub-MonkeyX-held-out-calib_ses-20121219_behavior+ecephys.npz": "9eb988c7dbec603056a2bea6711f809411848c6999b73955df0c2072be019943"
+    },
+    "H1": {
+      "data/xspecies/falcon/000954/sub-HumanPitt-held-in-calib_ses-19250101T111740.npz": "c9d4ca829c2e9cfe1b4551eb41302473c90160e8eac3ca7b6c81965286a55db1",
+      "data/xspecies/falcon/000954/sub-HumanPitt-held-in-calib_ses-19250101T112404.npz": "a40e3f55215ecf5a176f3d9a38052d303d7d1511ba65d1a4cf310afeff65045e",
+      "data/xspecies/falcon/000954/sub-HumanPitt-held-in-calib_ses-19250108T110520.npz": "bc39c122389de210fc4503121c7ce3a0f8dcf0a8161e4701f668e1cf02c61c10",
+      "data/xspecies/falcon/000954/sub-HumanPitt-held-in-calib_ses-19250108T111022.npz": "2ab3a50fd4f7ae7fe96ef56eb1766edd19607272de855ef721a2918f90c6a13c",
+      "data/xspecies/falcon/000954/sub-HumanPitt-held-in-calib_ses-19250108T111455.npz": "f56d7afbba642ff30c9d6acb22c6909456643623b484cd530a8f5e139d1b47d4",
+      "data/xspecies/falcon/000954/sub-HumanPitt-held-in-calib_ses-19250113T120811.npz": "d150f35dea7582ecb632798d4771134add2414e695b90f43a2d038e43ccca8cd",
+      "data/xspecies/falcon/000954/sub-HumanPitt-held-in-calib_ses-19250113T121303.npz": "f8df1bd3771b97bcb325eede74c91277c5d526aafc53f24c76b80c5922a7be37",
+      "data/xspecies/falcon/000954/sub-HumanPitt-held-in-calib_ses-19250115T110633.npz": "6847a9db42b2561edb4b2a24df41106dc6810c3e0c234c881290b2e7e2a3d4f7",
+      "data/xspecies/falcon/000954/sub-HumanPitt-held-in-calib_ses-19250115T111328.npz": "23f8f644d6f7b4e46af6a532e64227042c9ceb6b5894ebe1e53f95f2e513ed04",
+      "data/xspecies/falcon/000954/sub-HumanPitt-held-in-calib_ses-19250119T113543.npz": "351de40b3fe7277c7184c32440ec3bd4e62643450a777bfa022047f9f903ec39",
+      "data/xspecies/falcon/000954/sub-HumanPitt-held-in-calib_ses-19250119T114045.npz": "1802d66ce0933466da8c4a65e947917e03c9951a8ce948975bc91b4b2725f33f",
+      "data/xspecies/falcon/000954/sub-HumanPitt-held-in-calib_ses-19250120T115044.npz": "b6277deb0bfbb2dfe9a1f63784c5685991c9a1f08afc9282b3228a24888e07e6",
+      "data/xspecies/falcon/000954/sub-HumanPitt-held-in-calib_ses-19250120T115537.npz": "d77cbd3bed862f8c645cac45a9eac13dcda87e81b064f7df0e1f0482c420d20c"
+    }
+  },
+  "budgets": [
+    2,
+    3,
+    5
+  ],
+  "query_after_trial_index": 5,
+  "split": "Original L7 author-loader eligible rows; first k whole support trials, common later query after 5 whole trials. Per-fold normalization uses only fitting trials. No future label/activity in fitting, PCA or selection.",
+  "initializations": {
+    "source": "Real, synthetic, time_shift, 3 source-trained seeds each, selected solely on real source day3.",
+    "generic": "V1, multiscale, random0/1/2, each projected to variant constraint; same architecture/head.",
+    "matched": "For each real-source seed, time reversal and random lag direction with identical initial row Gram via Cholesky(GG.T) times a seeded 25x5 positive-diagonal QR basis. Controls retain source information for unit variant; orthogonal variant Gram is identity.",
+    "pca": "One support-spike-only temporal PCA bank per target set/budget, projected to variant constraint. Never query spikes/labels.",
+    "count": 21
+  },
+  "adaptation": {
+    "modes": [
+      "free",
+      "anchor1"
+    ],
+    "frozen": "Checkpoint0 is mandatory, with same initial support-selected lambda as each adapted branch. Frozen comparisons reported for all budgets, never select mode by query.",
+    "optimizer": "150 updates, LR0.001, clip1, checkpoints0/15/30/60/90/150. Unit rows: Adam then unit projection. Subspace: horizontal Grassmann global-clipped SGD then polar projection. No coordinatewise Adam for subspace.",
+    "objective": "Whole-support-trial LOO, heldout-trial SSE normalized by fitting-trial target variance, cycling holdout=t mod k; smoothness1e-4; free beta0 or anchor beta1.",
+    "anchor": "Unit variant ||G-G0||_F^2/(2*5). Subspace 1-||Q Q0.T||_F^2/5, normalized projector distance (basis invariant). Weight1 fixed, not tuned on target queries; L2-SP is established prior art.",
+    "ridge_grid": [
+      0.01,
+      0.1,
+      1,
+      10,
+      100,
+      1000
+    ],
+    "ridge_selection": "Minimum mean whole-trial LOO at checkpoint0; smallest-lambda ties. Fixed over all target updates, shared frozen/free/anchor.",
+    "checkpoint_selection": "Minimum mean pure support LOO among all six checkpoints, earliest ties. Support LOO repeatedly optimized, not independent validation. Also report frozen and final150. Retain all raw checkpoint predictions.",
+    "failure": "Any nonfinite loss/gradient/update/score or missing checkpoint terminates explicitly; no implicit retry, silent fallback or outcome-dependent exclusion."
+  },
+  "references": "Raw/sqrt full25lag history, fixed lambda1/10 plus support-only selected lambda. Run once per target file/budget, shared by source/variant. All6 retained.",
+  "planned_target_fits": {
+    "X": 2520,
+    "H1": 6552,
+    "total": 9072,
+    "updates_if_complete": 1360800
+  },
+  "execution": "Source-only small-step complete pipeline and independent NumPy gradient/head/schedule/selection audit first. X complete phase then its audit, H1 complete phase then its audit. No favorable outcome gate. Both sources/variants/all arms retained.",
+  "analysis": "All frozen/selected/final checkpoints, bothsources/variants, free/anchor1, all2/3/5budgets, allnull/genericbanks andsixhistoryreferences. Seedmeans withinfile; allsametargetcommonqueryandcrossbudgetcontrasts; descriptive10000dateclustersseed20261011, ISO10orcompact8dates. M24dates1animal, X5dates1animal, H16dates1person.",
+  "claim_limits": "Existing X/H1exploratory; newM2method hypothesis fixedbefore firstM2outcomeinterpretation, but manyrelatedcomparisons and only1newanimal. Not firstsqrt method, newGrassmannoptimizer, globalnovelty, independenthuman, isolatedsinglecells, locallearning, clinicalreadiness orofficialFALCON.",
+  "prior_sources": [
+    {
+      "url": "https://proceedings.mlr.press/v80/li18a.html",
+      "overlap": "Source-preserving L2-SP regularization is not novel."
+    },
+    {
+      "url": "https://arxiv.org/abs/2506.05320",
+      "overlap": "POSSM already shows fast causal monkey-to-human transfer and compares learning efficiency."
+    }
+  ],
+  "registered_utc": "2026-10-11T18:48:03.413851+00:00",
+  "stage": "Before anyN3targetfit or reading completeN2MonkeyN accuracy/contrast outcomes. N3sqrt hypothesis/sourceprotocol already registered before N2auditcompletion. N1X/existinghuman/L7/L8 outcomes known. Exactcode+source-bank bindings later beforefirstpreflight/dry.",
+  "source_protocol": "docs/WACV_N3_SQRT_SOURCE_PROTOCOL_20261011.json",
+  "source_bank_root": "data/wacv/xspecies_n3_source",
+  "count_preprocessing": "Sqrt nonnegativecounts before alllearned/generic temporalheads and supportPCA. Rawtargets unchanged. Capacityraw/sqrt references use originalrawcounts exactlyonce; no sqrt-of-sqrt or rawPCA/sqrtfeature mismatch.",
+  "fit_counts": {
+    "M2": 3024,
+    "X": 2520,
+    "H1": 6552,
+    "total": 12096,
+    "successful_updates_if_complete": 1814400
+  },
+  "source_selection_sha256": {
+    "data/wacv/xspecies_n3_source/L_unit_adam_selection.json": "56eafc193a96d0fc438c93cd05838034ffdbf8ead2e91961b00826018d32bec2",
+    "data/wacv/xspecies_n3_source/L_subspace_sgd_selection.json": "bb83a8b52a76c8494e8a666309dabdffcb34871c46b3887cad4861324d985c65",
+    "data/wacv/xspecies_n3_source/X_unit_adam_selection.json": "c4cd46a2dc70ce6409c96ece207c8a5b9e1cbd46f83b2666501a5000b173c3fe",
+    "data/wacv/xspecies_n3_source/X_subspace_sgd_selection.json": "f19a48aae5d1bfab686480d6bab82e0fe71c241cfa4f71eef8ffc2f0ce39cb0c"
+  },
+  "dependency_sha256": {
+    "scripts/xspecies_n1_target.py": "0ddad9b025810a53ce3b9c268e5edb99f7c478ca01e184ef7441ce7da3722717",
+    "scripts/xspecies_l7_budget.py": "03794c24fbfca0224796201a5ccc76eede07eb8d320fb581427f029a9a7480d3",
+    "scripts/xspecies_l7b_generic.py": "0912512594a354769ae4d32ec3b8d1af75a2fe07cba991971ebcdd6e6143f074",
+    "scripts/xspecies_l6_target_adapt.py": "485b32fe9429ce65c41717fd011aa49689db06e178e709f6f3478c7156821eff",
+    "scripts/xspecies_l5_human.py": "fdcd0269c0db9b37c78a3468e69957c7e27beec8d1acf1676d367b41aa7ba4be",
+    "scripts/xspecies_l5_validate.py": "3e8f2b475eb434ec832605df05acab42cdb9e6eb9429fb23b1f0f60bd30a93f8",
+    "scripts/xspecies_l4_validate.py": "62974ae973884267718ae3ed23463f86c8bd63935585fba77da93e83a59d77c9",
+    "scripts/xspecies_n1_source.py": "a7a480819a3358e8d61cce6dc71eaccf0b56240cbf112443ab95f15ad56a47ae",
+    "scripts/xspecies_l5_encoder.py": "f714ca3aa2d33ed58e7e0ec0f558323b3636ca1bee50e2d6ad2087d8c8b0a498",
+    "scripts/temporal_subspace_head.py": "67e0f0381f0287a549e16477901eefdf7091366dfe69a7f0b4c16d9e4183de81",
+    "data/wacv/xspecies_n1_source/prediction_audit.json": "f8b8c7652db112383914dba1f2f5d78a3307dbada5e385ab490881344cd1a0d2",
+    "scripts/xspecies_n2_target.py": "aa7ba552828f535b16da944488066449e81e15583926c716af20390d99f343f2",
+    "scripts/audit_xspecies_n2_target.py": "27b4c86835a2b070e540fdb4a54814631a2fffbe90948f99a804565e982cc92f",
+    "scripts/analyze_xspecies_n2_target.py": "c86bb2082d1ec37b5cc1442347daf02024b318b976ec09808e57c98a7871bc8b",
+    "scripts/run_xspecies_n2_target.py": "f52da2e1098488e1789f30eed7d3caa04922e44b0cc08de4c832ca3800b9ecdb",
+    "scripts/audit_xspecies_n2_preflight.py": "7eaa511b0883e315a300f6341df4b0529115c08d3e9992a612b79e7851e8d98a",
+    "scripts/prepare_n2_source_proxy.py": "16a842661021528a07cd5a30f0cce60d60a5c07f4213fd887e6fab503322789e",
+    "scripts/audit_xspecies_n1_target.py": "51d320e84ee65eb30862610fe0f058be4a0c2a2dba7272e197ffb052f78a5851",
+    "scripts/audit_xspecies_n1_target_preflight.py": "ed60ee0c988141109d6e6bf263c4f216cf84ef7d8659acf3de506108c9133d20",
+    "scripts/analyze_xspecies_n1_target.py": "11892d07cd1b6d6458218177899c243ab3c51b7887d9cffc5bf488a97d81dc46",
+    "scripts/analyze_xspecies_n1_dates.py": "917266810aa91df5e7bb8275b0ae7d490340073d32cefc906e74ed9f4f3aff68",
+    "docs/WACV_N2_MONKEYN_PROTOCOL_20261011.json": "be7c1e7b2c8d30fe6b644a723225470fb1947bcc5f6e1c49926dfce98e3f2436",
+    "data/xspecies/falcon/000953/causal_count_audit.json": "58c978f3947b842131e816328aee5840a619a5960eaf1b9f11705bcfdf3e596a",
+    "data/xspecies/falcon/000953/causal_export_manifest.json": "597f45369e83bed4cd1e38b83fcd262f0f2e93d22d4d057e7199c7972b823886",
+    "data/raw_transfer/falcon/000953/download_manifest.json": "965b31fe9bbc4ea2ec609eb7baf800391ef6b248c4d0760c18d52e8a4716edd2",
+    "data/audit/wacv_n2_source_proxy_20261011/binding.json": "445413239a24ec7a681cc3e9d2d543143f0d483c901672a15962bd56c2609595",
+    "scripts/xspecies_n3_target.py": "63e162affc1dbb2802c252f07e5c48fb30684ff3d38f88e2d29ab5ad33ad17c8",
+    "scripts/audit_xspecies_n3_target.py": "e725cababe4591c1f0c088f6fde253aa6172cc4c9b74079960720129a543eb01",
+    "scripts/analyze_xspecies_n3_target.py": "eee2510b88ea30e68ec2651e34d9eb01b90ce981af0e998650b806d8b2a2bae2",
+    "scripts/run_xspecies_n3_target.py": "e3d9c551939c51a1fd6aceebb055afce5c100317a353a454c618e0e6436023b4",
+    "scripts/prepare_n3_target_proxies.py": "eda119762c858daf2109829ef646fc0f85a95fc49f91ed8d5e1447a79c533a85",
+    "scripts/audit_xspecies_n3_target_preflight.py": "c4a941400e5427ba82dfec208574ce79ac9482ac5aa3f61f38bab2156e81e4fb",
+    "scripts/run_n3_target_after_source.py": "995163c834cf4868043116ab8329c9c10729f0e8125e95bd22a8c155aae7dae1",
+    "data/audit/wacv_n3_target_source_proxy_20261011/binding.json": "df05d217dca468ac7423f5b31cd815c87136929e47e2522ab59f1aad8b7678e6",
+    "docs/WACV_N3_SQRT_SOURCE_PROTOCOL_20261011.json": "a1226ffc659c8921cffeed141cc565c5745d3f6f3a8b14708b9c83de01f38015",
+    "data/wacv/xspecies_n3_source/prediction_audit.json": "83fb70a63845c2fd7bbd86aa8811237a35762a63d95be6a0e5730e487a9f328d",
+    "data/wacv/xspecies_n3_source/completion.json": "0d738f96fccf9d5f75cd5f47f992552f4c5ee250df933e700943a17c4afc2362",
+    "data/audit/wacv_n3_target_source_proxy_20261011/L_source_96x2.npz": "f1171b32b307d0b980011dede509a0234d6dc3c192972332b7bb7421f1aace39",
+    "data/audit/wacv_n3_target_source_proxy_20261011/X_source_176x7.npz": "968bd1c871550e9039292d85b28ec16f29624e096a39f92ba74303c665dd809f"
+  },
+  "execution_priority": "M2 thenX thenH1; no favorableaccuracygate. Sourceonlytarget-shape directional/rotation/PCApreflight+complete1008fourstepfitdry+independentNumPyaudit beforefulltargets. Full38fit600stepN3sourceaudit required beforebankbinding. Resource-bounded4workers.",
+  "scientific_inheritance": {
+    "docs/WACV_N1_TARGET_PROTOCOL_20261011.json": "59b35b0dffb58b3c30eaa5fe11436e9b9ff156df1bf676160a20900d2ed9b67f",
+    "docs/WACV_N2_FITTING_PROTOCOL_20261011.json": "2f41379356ee4cdad012a4a2cb0070d8dbd76f2182971132a8848e216fc0e369",
+    "docs/WACV_N3_SQRT_SOURCE_PROTOCOL_20261011.json": "a1226ffc659c8921cffeed141cc565c5745d3f6f3a8b14708b9c83de01f38015"
+  },
+  "implementation_sha256": {
+    "scripts/xspecies_n3_target.py": "63e162affc1dbb2802c252f07e5c48fb30684ff3d38f88e2d29ab5ad33ad17c8",
+    "scripts/audit_xspecies_n3_target.py": "e725cababe4591c1f0c088f6fde253aa6172cc4c9b74079960720129a543eb01",
+    "scripts/analyze_xspecies_n3_target.py": "eee2510b88ea30e68ec2651e34d9eb01b90ce981af0e998650b806d8b2a2bae2",
+    "scripts/run_xspecies_n3_target.py": "e3d9c551939c51a1fd6aceebb055afce5c100317a353a454c618e0e6436023b4",
+    "scripts/prepare_n3_target_proxies.py": "eda119762c858daf2109829ef646fc0f85a95fc49f91ed8d5e1447a79c533a85",
+    "scripts/audit_xspecies_n3_target_preflight.py": "c4a941400e5427ba82dfec208574ce79ac9482ac5aa3f61f38bab2156e81e4fb",
+    "scripts/run_n3_target_after_source.py": "995163c834cf4868043116ab8329c9c10729f0e8125e95bd22a8c155aae7dae1"
+  },
+  "continuation_sha256": "995163c834cf4868043116ab8329c9c10729f0e8125e95bd22a8c155aae7dae1",
+  "wrapper_sha256": "63e162affc1dbb2802c252f07e5c48fb30684ff3d38f88e2d29ab5ad33ad17c8",
+  "independent_auditor_sha256": "e725cababe4591c1f0c088f6fde253aa6172cc4c9b74079960720129a543eb01",
+  "analyzer_sha256": "eee2510b88ea30e68ec2651e34d9eb01b90ce981af0e998650b806d8b2a2bae2",
+  "source_preflight_sha256": "c4a941400e5427ba82dfec208574ce79ac9482ac5aa3f61f38bab2156e81e4fb",
+  "implementation_registered_utc": "2026-10-11T18:55:23.412678+00:00",
+  "implementation_gate": "Backgroundcontinuation waitscomplete38fit22800update source audit before binding sourcebanks and independently validating sqrtcounts/PCA/head/gradients plus bit-exact unchangedraw/sqrthistory capacities on96x2/176x7sourceproxies. Then1008fourstepfitdry+NumPyaudit, immutableGO, allM2/X/H1targets. No accuracy gate or implicit retry.",
+  "source_audit_sha256": "83fb70a63845c2fd7bbd86aa8811237a35762a63d95be6a0e5730e487a9f328d",
+  "source_binding_utc": "2026-10-11T19:29:45.243233+00:00"
+}

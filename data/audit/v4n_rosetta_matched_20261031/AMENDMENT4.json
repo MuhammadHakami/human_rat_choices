@@ -1,0 +1,5 @@
+{
+ "written_utc": "2026-10-31T17:28:14Z",
+ "change": "bug fix, stage E: the shuffled-geometry control indexed 1000 test rows but one arm/seed cell has 961; crash after hours with no outputs (rosetta_crash2.log). Geometry now uses n=min(1000, available) rows (recorded as n_geometry); each job result is cached in rosetta_jobs/. No stage-E outcome was seen. Protocol otherwise unchanged.",
+ "script_sha256": "e0c293e91746067de03d84e4aff81bd3b8ad57a8870d892a831403ceb614b152"
+}

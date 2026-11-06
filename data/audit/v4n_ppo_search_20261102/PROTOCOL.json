@@ -1,0 +1,11 @@
+{
+ "written_utc": "2026-11-02T07:54:55Z",
+ "outcomes_seen": "47 dev trials of v4n_local_search2 (dev ceiling reached); no test outcome of either search",
+ "script_sha256": "7522a81a54b3f6488c2f183aa2c1ab038c97e1c58230904990fe76faf68fb38c",
+ "design": "Matched PPO search: the fairness reference for v4n_local_search2 (camera-ready, 2026-11-02). GPU 1.\nWritten after 47 dev trials of the local search had reached the dev ceiling (30/30): the registered PPO was never tuned,\nso a tuned local rule against an untuned PPO would not be a fair comparison. Same dev rooms, seeds, priors, budget,\nobjective, trial count (160) and expansion option; the space matches wherever PPO has the knob (rollout T, epochs,\nminibatches, clip, GAE lambda, entropy, value weight, Adam rate, linear decay, expansion K / k-WTA). Backprop through\nall layers (PPO's own credit), registered gamma 0.99, advantage normalisation and grad-norm clip 0.5 as registered.\nBest trial tested once on 30 seeds x 3 priors in the fresh rooms, then the three frozen KPI probes.\n  check | prereg | search W TRIALS | best | test W N | kpi W N\n",
+ "trials": 160,
+ "objective": "as v4n_local_search2",
+ "selection": "best trial",
+ "test": "30 seeds x 3 priors, fresh rooms; three frozen KPI probes",
+ "reading": "secondary/descriptive: s2 learners vs tuned PPO, final success and AUC paired by prior x seed; per-prior contrasts as v4n_moved_goal_learning"
+}

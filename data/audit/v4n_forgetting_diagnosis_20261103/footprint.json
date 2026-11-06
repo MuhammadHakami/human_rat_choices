@@ -1,0 +1,200 @@
+{
+ "ppo": {
+  "body.0.weight": {
+   "moved": 0.622,
+   "rel": 0.33,
+   "gini": 0.533
+  },
+  "body.2.weight": {
+   "moved": 0.592,
+   "rel": 0.196,
+   "gini": 0.424
+  },
+  "pi.weight": {
+   "moved": 0.635,
+   "rel": 0.233,
+   "gini": 0.427
+  },
+  "v.weight": {
+   "moved": 0.679,
+   "rel": 0.282,
+   "gini": 0.439
+  }
+ },
+ "td_head": {
+  "body.0.weight": {
+   "moved": 0.0,
+   "rel": 0.0,
+   "gini": 0.0
+  },
+  "body.2.weight": {
+   "moved": 0.0,
+   "rel": 0.0,
+   "gini": 0.0
+  },
+  "pi.weight": {
+   "moved": 0.929,
+   "rel": 0.939,
+   "gini": 0.382
+  },
+  "v.weight": {
+   "moved": 0.843,
+   "rel": 0.66,
+   "gini": 0.467
+  }
+ },
+ "td_fa": {
+  "body.0.weight": {
+   "moved": 0.652,
+   "rel": 0.383,
+   "gini": 0.531
+  },
+  "body.2.weight": {
+   "moved": 0.697,
+   "rel": 0.269,
+   "gini": 0.42
+  },
+  "pi.weight": {
+   "moved": 0.831,
+   "rel": 0.483,
+   "gini": 0.402
+  },
+  "v.weight": {
+   "moved": 0.844,
+   "rel": 0.557,
+   "gini": 0.438
+  }
+ },
+ "head": {
+  "body.0.weight": {
+   "moved": 0.0,
+   "rel": 0.0,
+   "gini": 0.0
+  },
+  "body.2.weight": {
+   "moved": 0.0,
+   "rel": 0.0,
+   "gini": 0.0
+  },
+  "pi.weight": {
+   "moved": 0.937,
+   "rel": 1.054,
+   "gini": 0.389
+  },
+  "v.weight": {
+   "moved": 0.885,
+   "rel": 0.829,
+   "gini": 0.449
+  }
+ },
+ "dfa": {
+  "body.0.weight": {
+   "moved": 0.0,
+   "rel": 0.0,
+   "gini": 0.0
+  },
+  "body.2.weight": {
+   "moved": 0.809,
+   "rel": 0.436,
+   "gini": 0.426
+  },
+  "pi.weight": {
+   "moved": 0.925,
+   "rel": 0.798,
+   "gini": 0.37
+  },
+  "v.weight": {
+   "moved": 0.859,
+   "rel": 0.658,
+   "gini": 0.445
+  }
+ },
+ "ed": {
+  "body.0.weight": {
+   "moved": 0.772,
+   "rel": 0.619,
+   "gini": 0.515
+  },
+  "body.2.weight": {
+   "moved": 0.777,
+   "rel": 0.363,
+   "gini": 0.418
+  },
+  "pi.weight": {
+   "moved": 0.855,
+   "rel": 0.54,
+   "gini": 0.402
+  },
+  "v.weight": {
+   "moved": 0.87,
+   "rel": 0.693,
+   "gini": 0.416
+  }
+ },
+ "s2_dfa": {
+  "body.0.weight": {
+   "moved": 0.71,
+   "rel": 0.597,
+   "gini": 0.571
+  },
+  "body.2.weight": {
+   "moved": 0.683,
+   "rel": 0.265,
+   "gini": 0.431
+  },
+  "pi.weight": {
+   "moved": 0.518,
+   "rel": 0.167,
+   "gini": 0.434
+  },
+  "v.weight": {
+   "moved": 0.394,
+   "rel": 0.143,
+   "gini": 0.467
+  }
+ },
+ "s2_ed": {
+  "body.0.weight": {
+   "moved": 0.725,
+   "rel": 0.631,
+   "gini": 0.569
+  },
+  "body.2.weight": {
+   "moved": 0.687,
+   "rel": 0.269,
+   "gini": 0.433
+  },
+  "pi.weight": {
+   "moved": 0.536,
+   "rel": 0.173,
+   "gini": 0.43
+  },
+  "v.weight": {
+   "moved": 0.456,
+   "rel": 0.164,
+   "gini": 0.469
+  }
+ },
+ "s2_head_strat": {
+  "body.0.weight": {
+   "moved": 0.0,
+   "rel": 0.0,
+   "gini": 0.0
+  },
+  "body.2.weight": {
+   "moved": 0.0,
+   "rel": 0.0,
+   "gini": 0.0
+  },
+  "pi.weight": {
+   "moved": 0.577,
+   "rel": 0.219,
+   "gini": 0.458
+  },
+  "v.weight": {
+   "moved": 0.097,
+   "rel": 0.067,
+   "gini": 0.528
+  }
+ }
+}

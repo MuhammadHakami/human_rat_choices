@@ -1,0 +1,5 @@
+{
+ "written_utc": "2026-10-31T12:51:17Z",
+ "change": "sys.path adds repo root (import arc_fly); no logic change; no outcome read",
+ "script_sha256": "a9738d546182135021518790259fba4ac0eb93edc877c7eff6344c894b6a0cee"
+}

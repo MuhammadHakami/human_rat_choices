@@ -1,0 +1,26 @@
+{
+  "name": "V1 FALCON H1 public validation baseline check",
+  "fixed_utc": "2026-10-11T02:43:12.446270+00:00",
+  "status": "Internal F1/F1b scores viewed; minival NWB not acquired/read, new configuration fixed before public validation scoring",
+  "purpose": "Establish decoding signal on original separated public benchmark partitions before a source meta-rule comparison; no novel-method claim",
+  "train": "H1 held-in calibration13files: first1/3/ALL chronological wholetrials permatchingfile; source-free calibration ridge. Human_prior carries all13human held-in calibration training files, explicitly additional human-label budget. F1b chosen smoothing240ms/history5/ridge1 fixed. No validation selection.",
+  "validation": "13official H1 held-in-minival files, exactunchangedloader pin67f85481e49dd280257b15141fd965cba0e02dba; maskTrueeligible includingrest; datasetmappingSx_set_y perofficialconfig. All minivalfiles scoreonce afterfixedconfiguration. PublicvalidationONLY,notprivate-test/leaderboard. Held-out minivalnotinpublicassetlisting.",
+  "models": [
+    "calibration_only ridge",
+    "human held-in pooled prior",
+    "zero output",
+    "calibration mean"
+  ],
+  "features": "Same F1b fixed causalfinite exponential count kernel240ms extent1,current+4pastbins; reset smoothing/history atwholetrialboundary; calibrationmoving-bin featuremean/std withsd floor0.1; no query feature normalization fitting",
+  "metric": "Per-set variance-weighted R2mean; uniform and7DoF secondary. Recordactual eligible moving labelbin counts andseconds.",
+  "references": [
+    "https://snel-repo.github.io/falcon/",
+    "https://dandiarchive.org/dandiset/000954",
+    "https://github.com/snel-repo/falcon-challenge"
+  ],
+  "scripts": {
+    "scripts/download_falcon_validation_data.py": "1acb55dd7e7176fb1d108cc54a0d80ec516f3819432b6d2d7ad9104166ca5574",
+    "scripts/prepare_falcon_validation.py": "8df54eb39992ea6a31f1e57a45da562900c1c693ebe09ebb05d227906590f42c",
+    "scripts/wacv_falcon_public_validation.py": "f40e1ca0b48c9713e2518772fda85e51ae1acf0207f7cd4b4ccc4ca5c27133cf"
+  }
+}

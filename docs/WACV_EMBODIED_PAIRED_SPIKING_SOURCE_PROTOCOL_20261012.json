@@ -1,0 +1,113 @@
+{
+  "registered_utc": "2026-10-12T04:41:10.954782+00:00",
+  "version": "paired-windowed-spiking-source-v1",
+  "purpose": "Compare released-gradient local-cut versus full temporal backpropagation with identical neurons, task information, clocks, optimiser and objective. Conventional PPO is an external recipe comparator, not an isolated gradient comparison.",
+  "parent": "docs/WACV_EMBODIED_LONG_CONTROL_PROTOCOL_20261012.json",
+  "parent_sha256": "4cb5604f7b7047e5862313a28630d8fcdc34812dc7626e46865e26ce079dadf1",
+  "prototype": "scripts/eprop_windowed_reference.py",
+  "prototype_sha256": "c9c82e382e0ed0d686983a5cec1242dce2e4d7410c82a5958519731df2069446",
+  "primary_reference": "https://github.com/IGITUGraz/eligibility_propagation/tree/efd02e6879c01cda3fa9a7838e8e2fd08163c16e/Figure_4_and_5_ATARI",
+  "source": {
+    "training_configurations": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "selection_configurations": [
+      6,
+      7
+    ],
+    "training_frames_each": 524288,
+    "parallel_slots": 8,
+    "curriculum": "Unchanged long-control near/mid/native phase boundaries 32768/65536/final; actual environmental frames, not network substeps.",
+    "seeds": [
+      30,
+      31,
+      32
+    ],
+    "selection": "Unchanged 3 repeats x 20 native source starts, frozen/adaptive independently cloned source checkpoint per repeat, 45 decisions maximum. Reset neuron state at episodes; head filter retained across episodes as declared released convention; fresh whole network state at each selection repeat."
+  },
+  "methods": [
+    "windowed_local_cut",
+    "windowed_full_bptt"
+  ],
+  "rates": [
+    0.001,
+    0.01
+  ],
+  "planned_fits": 12,
+  "observation": {
+    "dim": 252,
+    "representation": "Unchanged frozen source-calibrated image/contact/action/reward belief scaffold plus 2 deterministic posterior-coordinate means",
+    "privileges": "400 labelled open-arena views, known room dimensions and allocentric own-action/contact model. No target layout pose/goal labels at inference.",
+    "charge_all_scaffold_costs": true
+  },
+  "network": {
+    "units": 64,
+    "expected_parameters": 20549,
+    "substeps_per_decision": 5,
+    "alif_units": 26,
+    "tau_m": 15,
+    "tau_adapt": 70,
+    "tau_readout": 2,
+    "threshold": 1,
+    "beta": 0.1,
+    "refractory": 5,
+    "surrogate_damp": 0.3,
+    "masked_autapses": true,
+    "detach_old_spikes": "Only local-cut recurrent current and voltage reset. Own-neuron adaptation retains old spike derivative."
+  },
+  "learning": {
+    "objective": "A2C n-step reverse-scan returns, no GAE/PPO clipping/advantage normalisation",
+    "gamma": 0.99,
+    "entropy_cost": 0.0025,
+    "baseline_cost": 1,
+    "rate_cost": 50,
+    "rate_target": 0.02,
+    "voltage_cost": 0.0001,
+    "reduction": "Released sums with batch-mean voltage penalty; regularisers include bootstrap observation.",
+    "optimizer": "Adam",
+    "adam_epsilon": 1,
+    "window_decisions": 100,
+    "final_short_window": "Use actual remaining decisions; no excess physical steps.",
+    "state": "Carry detached neural/readout state between updates; recompute bootstrap observation as first frame of next window.",
+    "reset": "Neuron reset flag tiled across all 5 substeps of first episode frame; head filter not reset, matching reviewed source convention."
+  },
+  "selection": {
+    "rule": "For each method choose one global rate maximising adaptive success count across 3 seeds/repeats/starts (180 trials); ties frozen success then lower registered rate index.",
+    "minimum_competence_fraction": 0.5,
+    "threshold_is_development_gate": true,
+    "no_threshold_redefinition": true,
+    "full_cohort_before_score_interpretation": true
+  },
+  "deviations": [
+    "64 recurrent units instead of 400",
+    "252 frozen source inputs replace spiking CNN; omit CNN skip features",
+    "No Atari action repeats",
+    "Adam updates per 100-decision window replace released default episode-synchronous gradient accumulation",
+    "Task and reward differ; this is not an Atari score reproduction"
+  ],
+  "claims": {
+    "local_cut": "Explicit-trace-equivalent windowed gradient reference; software uses stop-gradient autodiff, not online backprop-free hardware.",
+    "full_bptt": "Same forward pass; temporal recurrent/reset credit paths retained.",
+    "cost": "Report actual frames/substeps/spikes, weights/optimizer/state/buffer/scaffold memory and estimated ops; no joules/whole-agent energy or universal forgetting claim.",
+    "biology": "No measured brain mechanism and no actual biological native-data fit in this source comparator."
+  },
+  "checks": [
+    "Independent root rerun of same-forward, explicit-trace and smooth-forward finite-difference tests",
+    "All-arm technical dry with independently replayed selection probabilities/values and physics",
+    "Episode-start/termination/bootstrap and readout persistence checks",
+    "Full physical budget accounting including shortened final window and all forced curriculum boundaries",
+    "Bound current code/protocol/cache/driver/auditor/output hashes and root GO before full fits"
+  ],
+  "resources": {
+    "device": "CPU",
+    "workers_max": 2,
+    "threads": 1
+  },
+  "failure_policy": "Preserve nonfinite/failed/partial cases; no silent retry or seed replacement. No full-fit score until all12 end and independent audit completes.",
+  "boundary": "Source only. No native or digital target layouts8\u201325, no shared biological/agent transfer, no manuscript success/submission claim."
+}

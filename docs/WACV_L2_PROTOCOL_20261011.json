@@ -1,0 +1,84 @@
+{
+  "name": "L2: cross-species transfer of a shared local plasticity rule",
+  "fixed_utc": "2026-10-11T01:54:20.723507+00:00",
+  "scope": "Exploratory supervised offline direction decoding on real public macaque and human recordings; not physical/closed-loop control, reinforcement learning, neural mechanism conservation, or a new plasticity algorithm claim.",
+  "status": "Implementation invariants passed; no L2 human scores inspected or generated.",
+  "outer_training": {
+    "dataset": "NLB MC_Maze / DANDI000128 Jenkins M1/PMd",
+    "labels": "MC_Maze goal sectors: [563,459,265,331,447,166,0,64]. Seven occupied classes (270deg absent), independently remapped into8output IDs each episode. No direction-specific weight carries. Area2/human have8classes, so this additionally tests7to8class generalisation.",
+    "trials": "80% stratified training; 20% held out unused for fitting or selection",
+    "episodes": 600,
+    "meta_seeds": [
+      0,
+      1,
+      2
+    ],
+    "optimiser": "Adam .03, query crossentropy, outer gradient norm clipping5",
+    "episode": "fresh naive weights and feedback; channel subset24..96; k1/2/4/8 per class; 1or3 shuffled passes; up to8 disjoint query trials per class",
+    "representation": "source support-only CIS rise -100..+300ms; rawsqrt counts4x100ms means; withintrialcentring; globalcalibrationRMSnormscalar",
+    "source_query_labels_per_episode": 56
+  },
+  "source_selection": {
+    "dataset": "NLB Area2_Bump / DANDI000127 Han S1",
+    "rule": "20fixed k2 one-pass support/query episodes; checkpoint0/100/200/300/400/500/600; maximise query accuracy, break ties by CE",
+    "access": "No Area2 meta-gradient; ALL rules use the same REAL Area2 validation episodes. Synthetic/time controls thus receive recorded-source information through shared checkpoint selection. They are not source-free. This is also a region/task shift.",
+    "bp": "Adam lr.001/.01/.03/.1, same validation episodes; maximise query accuracy then CE"
+  },
+  "inner_rule": {
+    "network": "direct plastic linear direction branch plus tanh32 hidden branch; direct readout class-row normalised; random fixed8to32feedback; zero direct/readout weights, fresh random hidden/feedback; no source weights/initialisation learned",
+    "coefficients": "9scalar coefficients: error/labelled-Hebbian/decay direct; random-feedback error/local Oja/decay hidden; error/labelled-Hebbian/decay hidden readout",
+    "signal": "full class-labelled supervised teaching signal; NOT reward-only feedback",
+    "locality": "No targetautograd inlocalarms. Ownweight/pre/post/teaching signal updates. Globalcalibration preprocessing, softmaxcompetition, perneuronweightnormalisation explicitly outside synapseupdate localityclaim.",
+    "prior": "Adaptation of meta-learning local plasticity idea, not exact reproduction of Shervani-Tabar/Rosenbaum2023."
+  },
+  "arms": [
+    "real full rule",
+    "synthetic cosine-Poisson full rule; source TRAIN-only per-bin/unit mean profile; no recorded trial trajectories",
+    "real source with each trial fourchunks shuffled AFTER common support-derived preprocessing; preserves time-averaged rates",
+    "real-source rate-only rule; error gains learned with same600episodes",
+    "real-source direct-only rule; no hidden learning",
+    "target-only conventional Adam BP; same architecture, init/order and feedback events",
+    "target-only labelled Hebbian correlation templateV; same target features; exact expressibility verified",
+    "source-free initial9coefficient rule; SAME exact manually set coefficients as sourcefitcheckpoint0"
+  ],
+  "target": {
+    "dataset": "N2 BMI Zenodo19445138; ONE human participant, three sessions20241105/20241211/20250408; pooledMC-MED/MC-LAT",
+    "labels": "8-sector cued target direction, not observed hand movement",
+    "calibration": "P1 SAVED IDs from data/wacv/xspecies_p1_draws_<session>_k<k>.npz,50draws at k1/2/4/8",
+    "primary": "k2, onepass,16 unique labelled trials and16feedbackevents;3metaseeds; real>V and>synthetic and>timepermuted and>initial_rule inall3sessions. No transfer-learningattribution fromcheckpoint0.",
+    "primary_comparison": "report paired per-draw deltas averaged across3meta seeds; percentile interval is calibration-split variability, not human population CI; endpoint point criterion + full ranges, no significance claim",
+    "secondary": "k1/4/8;3passes at same unique-label budgets (3xfeedback events); compare BP/rate-only/direct-only; reference existing P1 results",
+    "preprocessing": "CIS from targetcalibrationONLY. Rawsqrt-rate chunk features asP1V; withintrialcentring and onecalibration-derived globalnormscalar (preserves exact P1V). No perunitzscore. Identical finite-test inclusion toP1; directperdraw Vscore equality required.",
+    "states": "Fully reset each target draw; same random hidden/feedback and sample order acrossallarms of a seed. Prototype receives the same labels; repeated presentations leave its predictor unchanged.",
+    "limits": "Human test outcomes have already been examined by earlier X1/P1 methods. Whole project exploratory; no independent untouched human holdout. Neural decoded cursor is not independent kinematics. No brain plasticity recordings."
+  },
+  "validation": [
+    "Exact template recovery from pure-labelled-Hebbian coefficient setting",
+    "Selected scalar local increments match analytic arithmetic",
+    "Outer gradients agree with finite differences",
+    "Target local arms run under torch.no_grad",
+    "Changing held-out data does not change calibration features or adapted state",
+    "Deterministic paired reset with genuinely different seeds"
+  ],
+  "references": [
+    "https://www.nature.com/articles/s41467-023-37562-1",
+    "https://github.com/NeuralDynamicsAndComputing/MetaLearning-Plasticity",
+    "https://papers.nips.cc/paper_files/paper/2020/hash/f291e10ec3263bd7724556d62e70e25d-Abstract.html",
+    "https://neurallatents.github.io/datasets"
+  ],
+  "script_sha256": "fd83b77caa1543608d47cbb479c39fecc8a15605c39fa154e82e0c80426af6c0",
+  "input_audit": "Actual raw hand and target coordinates both2D, same x/y columns; no alternate-coordinate artifact. Source occupation audited BEFORE training/human scoring.",
+  "pre_human_amendment": {
+    "utc": "2026-10-11T01:56:34.565977+00:00",
+    "reason": "Root self-audit and Claude independent audit found original L2per-unit zscoredtemplate differsfrom P1strongrawtemplate. Stopped only ownCPUservice, archived allpartialsource-onlyfits; no L2human scoring.",
+    "archive": "data/wacv/xspecies_l2/aborted_source_only_v1",
+    "correction": "rawsqrt-rate4chunk means; withintrialcentring; single calibration-derived globalnormscalar. EXACT rawP1V predictor preserved, checkedbefore restart."
+  },
+  "pre_human_attribution_amendment": {
+    "utc": "2026-10-11T02:02:09.787023+00:00",
+    "sourcefits": "All15x600 sourcefits complete; no learned-rule human scores yet. Sourcefit code at7a4db3c preserved. Evaluation-only addition initial_rule; no source selection change.",
+    "comparator": "Explicitsourcefree INITIAL9coefficients rule, same freshstate/order/budget aslearnedrealrule. A positivelearned-sourceclaim also requires outperforming this. Checkpoint0 selections carry no learnedrule byconstruction.",
+    "baseline_note": "BPsingle-pass samearchitecture source accuracy .15 is weak; strongesthuman-onlytemplate remains primary. Never promote BPgain alone."
+  },
+  "source_fit_code_commit": "7a4db3c"
+}

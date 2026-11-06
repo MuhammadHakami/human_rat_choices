@@ -1,0 +1,13 @@
+{
+ "written_utc": "2026-10-31T12:48:20Z",
+ "outcomes_seen": false,
+ "script_sha256": "f1507c6932bc3332d0b07983cb16358f6f7748f5cfacb235d28e7bef0c0e146e",
+ "design": "Matched-content image-text-action study (reviewer 6g1M; camera-ready supplement; author-approved 2026-10-31).\nThe reviewed Rosetta analysis paired images (current view) with text GENERATED FROM the action plan, so text-action\ngeometry was circular and modalities carried unequal information. Here every modality describes the SAME moment:\n  image   DINOv2-base CLS of the rendered first-person frame (64x36, upsampled)\n  text    a caption of what is VISIBLE in that frame, never of the action: exact template from geometry (primary);\n          Qwen2.5-VL-3B caption of the frame (secondary)  -> MPNet sentence embedding\n  action  the frozen agent's own action probabilities (and its last hidden layer)\nMoments: decisions of frozen agents (human_bc, human_legal_uniform, rat_bc, cold_ppo; seeds 1000-1004) in the 16 fresh\nconfirmation rooms, re-rendered from the registered records (no new probes). Rooms 100-107 = fit, 108-115 = test.\nTests (per arm x seed):\n  A  linear CKA image-text, text-action, image-action; 100 row shuffles; untrained-encoder controls\n  B  room-held-out ridge probes: predict the agent's action from image and from text (accuracy, chance, majority)\n  C  composition on disjoint data: image->text ridge map fit on fit-rooms moments of seeds 1000-1002, text->action\n     probe fit on fit-rooms of seeds 1003-1004; composed image->text->action evaluated on test rooms\n  D  closed loop in test rooms (familiar goal, 30 trials/room): the composed map drives the agent; vs its own head\n     and a uniform policy\n  python scripts/v4n_rosetta_matched_claude_20261031.py check | prereg | moments | features | analyse | closed W N\n",
+ "primary": {
+  "P1": "B: text->action held-out accuracy minus chance (per arm, paired over 5 seeds)",
+  "P2": "C: composed image->text->action agreement with the agent's own action vs a shuffled-text-map control",
+  "P3": "D: closed-loop success of the composed map vs uniform (13.3%) and vs the agent's own head"
+ },
+ "secondary": "A CKA with shuffle/untrained controls; VLM-caption replication; arm comparisons (human_bc vs others) descriptive",
+ "reading": "matched-content linkage is supported if P1-P3 exceed controls; otherwise reported as not supported"
+}

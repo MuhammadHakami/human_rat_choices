@@ -1,0 +1,71 @@
+{
+  "registered_utc": "2026-10-12T05:44:18.125237+00:00",
+  "version": "source-visual-belief-model-reference-v1",
+  "purpose": "Test useful conventional control with the identical frozen camera/action/contact spatial belief. Explicit memory/planning reference; neither biological rule nor novel planner.",
+  "parent": "docs/WACV_EMBODIED_LONG_CONTROL_PROTOCOL_20261012.json",
+  "parent_sha256": "4cb5604f7b7047e5862313a28630d8fcdc34812dc7626e46865e26ce079dadf1",
+  "source": {
+    "train": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "select": [
+      6,
+      7
+    ],
+    "frames_each": 524288,
+    "parallel_slots": 8,
+    "seeds": [
+      40,
+      41,
+      42
+    ],
+    "curriculum": "Unchanged long-control boundaries32768/65536/final",
+    "selection": "Same3repeats x20native starts x45decision cap, fresh checkpointclone/wholeinitial agent state perrepeat; one slot"
+  },
+  "methods": [
+    "belief_planner_episode_map",
+    "belief_planner_continuous_map"
+  ],
+  "cases": 6,
+  "observations": {
+    "dim": 252,
+    "policy": "Only supplied252observation, own commandedaction, reward anddone. Uses100-cell belief150:250 andcontact144. No env/cache/geometry/layout/truepose/goal/start/heading handle enters policy.",
+    "priors": "Same400 labelledopenarena0views/known10x10room/allocentricownactions/contact/lastmovecamera scaffold, source labelled calibration charged.",
+    "terminal": "Auto-reset removes terminalcontact/pose. Use nonterminal nextobservation contact only; positive reward proves successful ownmove and shifts PREVIOUS belief into learnedgoal evidence. No terminalpose oracle."
+  },
+  "goal": {
+    "initial": "Unknown, zero100-cell evidence",
+    "learning": "Accumulate shifted normalized previousposebelief on actualreward1; no sourcegoalcoordinate supplied. Goalestimate argmax evidence afterfirstpositiveevent; retain learnedgoalevidence across trials.",
+    "selection": "Goal evidence fixed from training; any positive selection reward counted but never changes goal estimate."
+  },
+  "model": {
+    "confidence_threshold": 0.999,
+    "place": "Usebelief argmax for mapping/planning onlyabove fixed confidence; else seeded uniformaction for localisation, no wall update fromuncertainoldbelief.",
+    "walls": "Initiallyunknown, optimisticopen. A nonterminal contact marks attempted inbounds cell blocked onlyifpreviousbeliefconfident. Highconfidence observed currentcell removes contradictedblock. No unseen wall labels.",
+    "episode_map": "Clearblocked/visited memory at everytrial end; goal retained.",
+    "continuous_map": "Keepblocked/visited memory across trials withoutlayoutIDs. Clearblocked once ifestimatedgoal unreachable; count everyreset.",
+    "planning": "Optimistic BFS using knownroom bounds, currentlearnedblockedcells and learnedgoal. Beforegoalknown nearestunvisitedcell. Fixeddirection tie order down/up/right/left. Each call returns anaction, bounded fallback avoidsunmetered retries.",
+    "cache": "Known-goal BFS distance cache keyed onlyby learnedgoal and observedblockedset; no currentgeometry/configuration key. Memoises calculation, doesnot retrieve unobservedmaps."
+  },
+  "selection_initialisation": "Eachrepeat uses learnedgoalevidence and firsttrainingslot map from itscheckpoint, cloned. Episode-map clearsmap beforefirsttrial; continuousmap retains sourcefirstslot map. No fresh source data orprivilegedlayout match.",
+  "resources": "Actualenvironmentframes/rewards/events, goal/map arrays, computationcache entries/bytes, BFS expansions/calls/hits, unlocalisedactions, goalobservations, mapresets/contradictions; frozenbeliefatlas/filter/memo andRSS charged. No spiking/hardwareenergy claim.",
+  "checks": [
+    "Meaningful unit checks for unknowngoal, causal terminalreward shift, no terminalcontact consumption, uncertainty fallback, stale unreachable mapreset and boundedaction selection",
+    "Both-method technicaldry with independent sourcephysics/belief/provenance/goal/map/action replay and allselectionrepeats",
+    "Policy receives no simulator truth handles; forbiddenfields never policyinputs",
+    "Hashbound code/parent/cache/auditor/driver/output androotGO beforeall6fits",
+    "All6case cohortcomplete andindependent audit before interpreted source scores"
+  ],
+  "failure_policy": "Exclusivecase reservations, no silentretry; preservefailures. Code/IOfailures invalidatecomparisons, not learnerfailures.",
+  "scope": "Source only. No native model fit, digital/native8\u201325, crossspecies knowledge transfer or retentionclaim. Comparatorarchitectures/workingmemory differfromPPO/SNN, so no isolated causal memory effect.",
+  "resources_policy": {
+    "device": "CPU",
+    "workers_max": 2,
+    "threads": 1
+  }
+}

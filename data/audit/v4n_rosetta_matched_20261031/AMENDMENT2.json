@@ -1,0 +1,5 @@
+{
+ "written_utc": "2026-10-31T12:56:11Z",
+ "change": "add stage E: the Rosetta paper's own protocol and code (geometry_scores, disjoint_split, WassersteinProcrustes 0/16 pairs, FOSCTTM) on image-text, text-action, image-action; author request 'use their code, no assumptions'. Stages A-C outcomes were read before this amendment.",
+ "script_sha256": "7b61115ee72e9ce7949eca836dec05598deb559806937cd55ba376d5ac06568a"
+}

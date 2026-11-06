@@ -1,0 +1,65 @@
+{
+  "name": "L5 prospective public M1 source validation",
+  "created_utc": "2026-10-11T08:23:40.183109+00:00",
+  "fixed_before_minival_neural_target_values": true,
+  "scope": "Four public held-IN minival files, same MonkeyL/dates; unexamined outcomes, not new animals/private benchmark/human transfer.",
+  "prior_information": "L3/L4/D1, L5 source development and temporal capacity diagnostic already examined. Metadata masks/timestamps/trialstarts/unitIDs read; spike/target values remain unread before locking. Linear primary chosen after source outcomes for125parameter interpretability; softplus slightlyhigher source R2 is secondary. V1 initialtimescale originallyH1development-selected, shared acrosscontrols.",
+  "prerequisite": "Complete independentL5sourceaudit and root allow_fresh_m1 record containing exactsource-code/evaluate/audit/protocol hashes. L4 advance remainsFALSE and is notused.",
+  "data": {
+    "manifest": "data/raw_transfer/falcon/m1_validation_download_manifest.json",
+    "structure": "data/raw_transfer/falcon/m1_validation_structure.json",
+    "loader_commit": "67f85481e49dd280257b15141fd965cba0e02dba",
+    "files": "All four without outcomeexclusions",
+    "eligible_query_rows": [
+      252,
+      256,
+      255,
+      262
+    ],
+    "trials_per_file": 2,
+    "units": 64,
+    "outputs": "All16measured EMG muscles"
+  },
+  "support_and_query": {
+    "support": "Last320eligible rows of same-day calibration; retain sourcefile/trial/absolutebin IDs. Labelled support320unique20msbins; recordingduration/span/earlierunlabelledhistory reported.",
+    "query": "Everyeligible row in separate date-matched minival; noquerylabels/activity in supportreadout, feature normalization or encoderadaptation.",
+    "chronology": "Both clocksrebasedzero, original chronologicalorderunknown. Useofficialcal/minival split, audit25consecutiveneural-bin duplicates beforeinterpretation; do notclaimonline support immediatelybeforequery.",
+    "features": "Selectedsourcebank frozen, causal25taps, trial/file historyreset. Fivefeatures/neuron exceptcapacityreference25features/neuron. Support historyusesearlierunlabelledspikeswithinthesametrial.",
+    "normalization": "Supportmean/stdwithfixed0.1count-unit floor, per-output targetintercept andonepooledscale; fresh ridgehead eachfile andbank. Mean-normalizedGram exactlysame asL5source.",
+    "labels": "Allsupporteligible movingbins chosen solelymask; no selectionby minivaltargets."
+  },
+  "primary": "Mean weightedR2 across3real-trained LINEAR sourceencoders, eachwithfreshsupporthead, thenunweightedmeanover4files. AverageSCORESwithinfile; notpredictionensemble.",
+  "secondary": "Softplusreal-trainedsameprotocol; reportwithoutreplacingprimary.",
+  "methods": {
+    "trained": "Everyreal/synthetic/time_shift \u00d7linear/softplus \u00d73sourcefits, exactday3selectedcheckpoint and320binridge fromL5 evaluate.json. No sourceweightsfine-tuned.",
+    "fixed": "V1, sqrt-countV1, multiscale,3randombanks, initialsoftplusV1; eachlambda frozen L5day3 selection.",
+    "capacity": "Full25lag raw/sqrtcount ridge, lambda10 fromindependentlyregistered sourcecapacitydiagnostic.1600Dvs320D explicitunequalcapacity.",
+    "references": "Calibrationmean andzero"
+  },
+  "selection": "No change of filters, biases, checkpoint, lambda, supports, primaryvariant, bins, orcontrols fromminivalvalues/outcomes.",
+  "metric": "Float64variance-weightedR2, all16outputs/allmaskTruequeryrows; per-muscleR2andSSE/SSTsaved. Allfourfilesreported.",
+  "contrasts": [
+    "primary real-linear minusV1",
+    "minusmultiscale",
+    "minusrandom-bankmean",
+    "minussynthetic-linear",
+    "minustime_shift-linear",
+    "minusrawfull-history",
+    "minussqrtfull-history",
+    "secondaryreal-softplusminusfixedcontrols/pairedtrainedcontrols"
+  ],
+  "intervals": {
+    "draws": 10000,
+    "seed": 20261011,
+    "unit": "Fourdates, averageall3sourcefit scoreswithinfilefirst",
+    "interpretation": "Conditional descriptiveintervals withonly4dates; not population inference/formalnoninferiority/speciesconservation. Exactsignflip2sminimum.125 for4pairs ifreported."
+  },
+  "quality_reporting": {
+    "functional": "All3primary realbank predictionsfinitewithnofallback; reportmeanR2andcountfailedfiles/fitseeds. MeanR2>=.10 isdescriptivequalityscreen.",
+    "specificity": "Reportreal-minus-synthetic/time/matchedgeneric separatelybyfileandmean/interval. No causalmechanismdecompositionfromcontrols.",
+    "advance": "After independentaudit, recordseparatehumanprotocol/decision. Sourcefunctionalquality/consistency informsjudgment; descriptivebootstrap screensneitherprove norveto crossspeciestransfer. Nohumanscoringunderthisprotocol."
+  },
+  "failures": "Recordall failures/numericalerrors,savepartialoutputs,noexcludedfile/replacementseed/fallback. Primaryfailurespreventautomaticadvance.",
+  "artifacts": "data/wacv/xspecies_l5_m1_validation: exactsource/protocol/exporthashes, duplicateaudit, support/queryabsolutebins/trialspans, rawpredictionperfile/bank, metric/contrastsummary andindependentaudit.",
+  "limitations": "Offlineone-monkeyEMGdecoding; globaloutertraining/globalridgehead, notlocalplasticity/biologicalconservation/closed-loopembodiedcontrol. Neuronwiseencoders/freshheads/crossspeciespretraining alreadyknown."
+}

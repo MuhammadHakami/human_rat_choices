@@ -1,0 +1,341 @@
+{
+ "means": {
+  "before": {
+   "familiar_trained_room": {
+    "cold_ppo": 33.22222222222222,
+    "human_bc": 52.222222222222214,
+    "human_legal_uniform": 34.55555555555556
+   },
+   "moved_heldout_room": {
+    "cold_ppo": 2.777777777777778,
+    "human_bc": 4.111111111111112,
+    "human_legal_uniform": 3.3333333333333335
+   },
+   "familiar_heldout_room": {
+    "cold_ppo": 25.22222222222222,
+    "human_bc": 42.0,
+    "human_legal_uniform": 28.555555555555554
+   }
+  },
+  "dfa": {
+   "familiar_trained_room": {
+    "cold_ppo": 20.444444444444446,
+    "human_bc": 37.0,
+    "human_legal_uniform": 25.444444444444446
+   },
+   "moved_heldout_room": {
+    "cold_ppo": 34.333333333333336,
+    "human_bc": 16.555555555555557,
+    "human_legal_uniform": 30.888888888888893
+   },
+   "familiar_heldout_room": {
+    "cold_ppo": 20.77777777777778,
+    "human_bc": 33.77777777777778,
+    "human_legal_uniform": 22.666666666666668
+   }
+  },
+  "ed": {
+   "familiar_trained_room": {
+    "cold_ppo": 27.66666666666667,
+    "human_bc": 22.11111111111111,
+    "human_legal_uniform": 18.333333333333332
+   },
+   "moved_heldout_room": {
+    "cold_ppo": 18.888888888888893,
+    "human_bc": 21.444444444444446,
+    "human_legal_uniform": 19.88888888888889
+   },
+   "familiar_heldout_room": {
+    "cold_ppo": 28.88888888888889,
+    "human_bc": 21.666666666666668,
+    "human_legal_uniform": 16.88888888888889
+   }
+  },
+  "head": {
+   "familiar_trained_room": {
+    "cold_ppo": 21.666666666666668,
+    "human_bc": 21.0,
+    "human_legal_uniform": 18.444444444444446
+   },
+   "moved_heldout_room": {
+    "cold_ppo": 29.111111111111107,
+    "human_bc": 24.444444444444443,
+    "human_legal_uniform": 29.333333333333336
+   },
+   "familiar_heldout_room": {
+    "cold_ppo": 18.888888888888893,
+    "human_bc": 20.77777777777778,
+    "human_legal_uniform": 13.11111111111111
+   }
+  },
+  "ppo": {
+   "familiar_trained_room": {
+    "cold_ppo": 22.222222222222225,
+    "human_bc": 31.555555555555554,
+    "human_legal_uniform": 18.555555555555554
+   },
+   "moved_heldout_room": {
+    "cold_ppo": 22.333333333333332,
+    "human_bc": 28.999999999999996,
+    "human_legal_uniform": 32.11111111111111
+   },
+   "familiar_heldout_room": {
+    "cold_ppo": 23.666666666666668,
+    "human_bc": 22.444444444444446,
+    "human_legal_uniform": 16.11111111111111
+   }
+  },
+  "td_fa": {
+   "familiar_trained_room": {
+    "cold_ppo": 26.111111111111107,
+    "human_bc": 33.111111111111114,
+    "human_legal_uniform": 40.11111111111111
+   },
+   "moved_heldout_room": {
+    "cold_ppo": 18.888888888888893,
+    "human_bc": 12.444444444444445,
+    "human_legal_uniform": 15.0
+   },
+   "familiar_heldout_room": {
+    "cold_ppo": 25.22222222222222,
+    "human_bc": 30.888888888888893,
+    "human_legal_uniform": 32.0
+   }
+  },
+  "td_head": {
+   "familiar_trained_room": {
+    "cold_ppo": 18.333333333333332,
+    "human_bc": 38.22222222222222,
+    "human_legal_uniform": 24.333333333333332
+   },
+   "moved_heldout_room": {
+    "cold_ppo": 28.444444444444446,
+    "human_bc": 13.555555555555554,
+    "human_legal_uniform": 20.666666666666668
+   },
+   "familiar_heldout_room": {
+    "cold_ppo": 18.888888888888893,
+    "human_bc": 32.44444444444444,
+    "human_legal_uniform": 20.555555555555557
+   }
+  }
+ },
+ "delta": {
+  "dfa/cold_ppo/familiar_trained_room": [
+   -12.777777777777777,
+   8.417514024844294
+  ],
+  "dfa/cold_ppo/moved_heldout_room": [
+   31.555555555555554,
+   4.8602465744631385
+  ],
+  "dfa/cold_ppo/familiar_heldout_room": [
+   -4.444444444444445,
+   6.283233448057828
+  ],
+  "dfa/human_bc/familiar_trained_room": [
+   -15.222222222222221,
+   8.707449421980924
+  ],
+  "dfa/human_bc/moved_heldout_room": [
+   12.444444444444448,
+   5.222284241907749
+  ],
+  "dfa/human_bc/familiar_heldout_room": [
+   -8.222222222222223,
+   8.38627287621644
+  ],
+  "dfa/human_legal_uniform/familiar_trained_room": [
+   -9.11111111111111,
+   7.319138985389024
+  ],
+  "dfa/human_legal_uniform/moved_heldout_room": [
+   27.555555555555557,
+   5.452098833874714
+  ],
+  "dfa/human_legal_uniform/familiar_heldout_room": [
+   -5.888888888888888,
+   6.560935308002507
+  ],
+  "ed/cold_ppo/familiar_trained_room": [
+   -5.555555555555556,
+   10.405035294131194
+  ],
+  "ed/cold_ppo/moved_heldout_room": [
+   16.11111111111111,
+   5.604304433398064
+  ],
+  "ed/cold_ppo/familiar_heldout_room": [
+   3.6666666666666665,
+   8.988400869541303
+  ],
+  "ed/human_bc/familiar_trained_room": [
+   -30.111111111111107,
+   9.996941516106718
+  ],
+  "ed/human_bc/moved_heldout_room": [
+   17.333333333333336,
+   7.152793736544336
+  ],
+  "ed/human_bc/familiar_heldout_room": [
+   -20.33333333333333,
+   9.65677200031956
+  ],
+  "ed/human_legal_uniform/familiar_trained_room": [
+   -16.222222222222225,
+   6.752927700225918
+  ],
+  "ed/human_legal_uniform/moved_heldout_room": [
+   16.555555555555557,
+   7.462197576969884
+  ],
+  "ed/human_legal_uniform/familiar_heldout_room": [
+   -11.666666666666664,
+   7.182569364927312
+  ],
+  "head/cold_ppo/familiar_trained_room": [
+   -11.555555555555555,
+   8.274369747670088
+  ],
+  "head/cold_ppo/moved_heldout_room": [
+   26.333333333333332,
+   5.141012716350808
+  ],
+  "head/cold_ppo/familiar_heldout_room": [
+   -6.333333333333334,
+   7.73890762238053
+  ],
+  "head/human_bc/familiar_trained_room": [
+   -31.22222222222222,
+   8.581450745200055
+  ],
+  "head/human_bc/moved_heldout_room": [
+   20.33333333333333,
+   6.093082483497365
+  ],
+  "head/human_bc/familiar_heldout_room": [
+   -21.22222222222222,
+   9.39478289685357
+  ],
+  "head/human_legal_uniform/familiar_trained_room": [
+   -16.111111111111107,
+   6.533959101577031
+  ],
+  "head/human_legal_uniform/moved_heldout_room": [
+   26.000000000000004,
+   5.796382894664404
+  ],
+  "head/human_legal_uniform/familiar_heldout_room": [
+   -15.444444444444446,
+   6.53696195529225
+  ],
+  "ppo/cold_ppo/familiar_trained_room": [
+   -11.000000000000004,
+   10.806648821369349
+  ],
+  "ppo/cold_ppo/moved_heldout_room": [
+   19.555555555555557,
+   8.00309705909218
+  ],
+  "ppo/cold_ppo/familiar_heldout_room": [
+   -1.5555555555555551,
+   7.417684803909439
+  ],
+  "ppo/human_bc/familiar_trained_room": [
+   -20.666666666666668,
+   12.771971867708114
+  ],
+  "ppo/human_bc/moved_heldout_room": [
+   24.888888888888893,
+   8.274369747670088
+  ],
+  "ppo/human_bc/familiar_heldout_room": [
+   -19.555555555555554,
+   7.9106058644464055
+  ],
+  "ppo/human_legal_uniform/familiar_trained_room": [
+   -16.0,
+   9.215069894175182
+  ],
+  "ppo/human_legal_uniform/moved_heldout_room": [
+   28.77777777777778,
+   9.642196499856636
+  ],
+  "ppo/human_legal_uniform/familiar_heldout_room": [
+   -12.444444444444448,
+   7.887002569796256
+  ],
+  "td_fa/cold_ppo/familiar_trained_room": [
+   -7.111111111111112,
+   10.40220574572193
+  ],
+  "td_fa/cold_ppo/moved_heldout_room": [
+   16.11111111111111,
+   4.933884543435559
+  ],
+  "td_fa/cold_ppo/familiar_heldout_room": [
+   -5.921189464667501e-17,
+   6.912810770290859
+  ],
+  "td_fa/human_bc/familiar_trained_room": [
+   -19.111111111111107,
+   11.025902734906806
+  ],
+  "td_fa/human_bc/moved_heldout_room": [
+   8.333333333333334,
+   5.405253581796592
+  ],
+  "td_fa/human_bc/familiar_heldout_room": [
+   -11.111111111111109,
+   9.95193420726494
+  ],
+  "td_fa/human_legal_uniform/familiar_trained_room": [
+   5.555555555555555,
+   9.451275239941559
+  ],
+  "td_fa/human_legal_uniform/moved_heldout_room": [
+   11.666666666666666,
+   4.6011415097612485
+  ],
+  "td_fa/human_legal_uniform/familiar_heldout_room": [
+   3.4444444444444446,
+   8.609989703275296
+  ],
+  "td_head/cold_ppo/familiar_trained_room": [
+   -14.88888888888889,
+   8.791840483594662
+  ],
+  "td_head/cold_ppo/moved_heldout_room": [
+   25.666666666666668,
+   5.734688069472542
+  ],
+  "td_head/cold_ppo/familiar_heldout_room": [
+   -6.333333333333333,
+   6.0201767178315295
+  ],
+  "td_head/human_bc/familiar_trained_room": [
+   -13.999999999999998,
+   8.654983932452385
+  ],
+  "td_head/human_bc/moved_heldout_room": [
+   9.444444444444445,
+   5.298299043500995
+  ],
+  "td_head/human_bc/familiar_heldout_room": [
+   -9.555555555555554,
+   6.903814950950592
+  ],
+  "td_head/human_legal_uniform/familiar_trained_room": [
+   -10.222222222222221,
+   8.674990246012504
+  ],
+  "td_head/human_legal_uniform/moved_heldout_room": [
+   17.333333333333332,
+   5.913696550935946
+  ],
+  "td_head/human_legal_uniform/familiar_heldout_room": [
+   -7.999999999999999,
+   7.4300211853543745
+  ]
+ }
+}

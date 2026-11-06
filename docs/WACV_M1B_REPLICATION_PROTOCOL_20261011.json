@@ -1,0 +1,59 @@
+{
+  "registered_utc": "2026-10-11T15:05:29.220540+00:00",
+  "stage": "Prospective protocol; implementation/preflight next. No new MonkeyX fits or reserved-file content read.",
+  "purpose": "Replicate source learning in a second real macaque, and test frozen MonkeyL priors on new MonkeyX evaluation sessions with measuredEMG labels. One originalhuman remains, so no subject-invariant human claim.",
+  "known_information": "All8NWBs downloaded by metadata-only selection; only first3development days exported for structure. 64channels/16EMGs and395/429/446eligibletrials known. Original H1design/results alreadyexamined.",
+  "source_roles": {
+    "20121206": "train weights",
+    "20121207": "train weights",
+    "20121210": "source checkpoint/ridge selection and synthetic-profile statistics",
+    "20121212": "fresh source evaluation after source fit/selection auditor PASS; no update after score",
+    "20121213/14/18/19": "reserved small public-calibration sessions; no array/label read before fixed target protocol/preflight"
+  },
+  "source_method": "Immutable L5 linearbank only:5x25 sharedcausalfilters,240ms shiftedexpinitialization; real/synthetic/time_shift arms x3seeds;600episodes each, samepairedwindow RNG andAdam/ridge/smoothing/normcap. Original source-only numerical checks retained; new data/config preflight required.",
+  "source_profile_information": "RetainoriginalL5 convention: Poisson rate/target-drive normalization uses all3source-development days, including selection. Allarms receive same real source checkpoint/ridge selection. Not train-days-only profiling or label-free sourcecontrol.",
+  "source_fits": 9,
+  "source_updates_if_complete": 5400,
+  "source_selection": "Original day3realwindows, budgets40/80/160/320eligiblebins, sixridgevalues, checkpoint chosen at320by original rule thenridgeperbudget. Retain allsourcearms/seeds/genericbanks and objective/trace failures.",
+  "source_array_bindings": {
+    "data/xspecies/falcon/001209/sub-MonkeyX-held-in-calib_ses-20121206_behavior+ecephys.npz": "5d7b6cb8c16d91ce416688483a081ba07b3e9d9f5a5bb72ce59fc52ffe6f78ae",
+    "data/xspecies/falcon/001209/sub-MonkeyX-held-in-calib_ses-20121207_behavior+ecephys.npz": "62891047c7acc9f270fe048ece5265f84e905eb92db296f41e09dd7359811643",
+    "data/xspecies/falcon/001209/sub-MonkeyX-held-in-calib_ses-20121210_behavior+ecephys.npz": "bab146bfb08e7e09e113111363481dd08d7ffa66e9701abf563f202b52101344"
+  },
+  "held_out_export_gate": "Independent source fit/selection audit verifies complete finite savedupdates, commonwindows, source input bindings, train/selectionroles, initial bank, causalfeatures and savedrawselection scores/heads. Only then export all5reservedNWBs with pinnedofficialloader; preserve originalbytes. Gate is technical, not favorable-performance threshold.",
+  "fresh_monkey_target_assay": {
+    "target_files": "All5reserved dates; never choose favorablefiles.",
+    "source_reference": "Original frozen MonkeyL real/synthetic/time_shift/random/exponential banks and originalstrongraw/sqrtfullhistory heads; adaptedmultiscale and support-onlyPCA. No MonkeyX sourcefit enters these sourceL-to-X primary comparisons.",
+    "budgets": [
+      2,
+      3,
+      5
+    ],
+    "query_after_trials": 5,
+    "label_semantics": "Measured16-channelEMG, not humaninstruction velocities or assumed matching neuralunits.",
+    "adaptation": "Same originalL7 targetprocedure,150updates, support-only initialridge grid/LOO training/checkpointselection, identicalfuturequery for everybudget.",
+    "short_file_rule": "Determine eligible whole-trial count after gate. If<=5, log thatfile as prospectivelyineligible for this common-query design at everybudget; do not replaceit or chooseabudget basedon outcomes. Report allcounts/files/exclusions.",
+    "statistics": "Seedmean withinfile;paired recording-date bootstrap conditional on one targetanimal. Allbudgets,allcomparators reported. Not populationanimals or officialFALCONprivate score."
+  },
+  "human_source_replication": {
+    "bank_source": "NewsourceX real/synthetic/time_shift x3seeds; source-day3 selectedbanks frozen before targetfit.",
+    "targets": "Same13alreadyexaminedH1sets/commonquery; originalL7L7Bstrongcomparators reused byte-identically.",
+    "budgets": [
+      2,
+      3,
+      5
+    ],
+    "new_fits": 351,
+    "primary_hypothesis": "Prospective replication of original intermediate3-trial source-versus-generic effect; original2/5results remainprimaryoforiginalstudy. Report allnewbudgets and no selective source/seed success.",
+    "claim_limit": "Independent source animal, not freshhuman validation, useful label savings, local learning or preservation of cell types."
+  },
+  "implementation_policy": "Standaloneper-process configuration/driver of immutableL5/L7 numerics; no edits to originaldatasets/results/fitcode. Atomicper-fit records;8CPUworkersmax; fullindependentauditbeforeinterpretation. Source preflight must finish before training. No additional user approval required under existing research authorization.",
+  "dependency_sha256": {
+    "scripts/xspecies_l5_encoder.py": "f714ca3aa2d33ed58e7e0ec0f558323b3636ca1bee50e2d6ad2087d8c8b0a498",
+    "scripts/xspecies_continuous_meta.py": "fda04bd3f27734d1ccc6afe854418bcc424d184d40845b066b66856d5b4fb216",
+    "scripts/xspecies_l7_budget.py": "03794c24fbfca0224796201a5ccc76eede07eb8d320fb581427f029a9a7480d3",
+    "scripts/xspecies_l6_target_adapt.py": "485b32fe9429ce65c41717fd011aa49689db06e178e709f6f3478c7156821eff",
+    "data/audit/wacv_l5_frozen_banks_20261011.json": "79dd0989c2c965fed544c7d278ea689fb4a4b32f90951995afe4b5b051d4393a",
+    "docs/WACV_M1B_ACQUISITION_PLAN_20261011.json": "4358a02b76219b43a7c5725109b694d13664de71d96b2270bbd4c0ecc6cf3075"
+  }
+}

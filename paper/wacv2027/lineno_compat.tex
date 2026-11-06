@@ -1,0 +1,17 @@
+% Local TeX Live 2026 compatibility: put the column marker before that
+% column's deferred line-number writes, as the classic lineno wrapper does.
+% The new build/column hook emitted it after them on this installation,
+% placing the review numbers in the gutter over the other column's text.
+% No font, margin, content or line-number visibility changes.
+\makeatletter
+\AtBeginDocument{%
+  \RemoveFromHook{build/column/before}[lineno]%
+  \AddToHook{build/column/after}[wacv-lineno-compat]{%
+    \setbox\@outputbox\vbox{%
+      \boxmaxdepth\@maxdepth
+      \protected@write\@auxout{}{%
+        \string\def\string\@LN@column{\if@firstcolumn1\else2\fi}}%
+      \box\@outputbox}%
+  }%
+}
+\makeatother

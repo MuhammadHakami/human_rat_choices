@@ -1,0 +1,145 @@
+{
+  "id": "WACV-L7-common-query-label-budget-20261011",
+  "registered_utc": "2026-10-11T10:09:52.096463+00:00",
+  "authorization": "Existing user continuation and direct Claude debate; no new user confirmation needed. No external submission.",
+  "status": "Registered before new budget results; implementation and source-only numerical preflight required before full fit.",
+  "origin": "docs/CLAUDE_CODEX_REPLY_20261011_TRANSFER.md, L7 draft10:06UTC and root decision",
+  "inputs": {
+    "docs/WACV_L6_TARGET_ADAPT_PROTOCOL_20261011.json": "69726eddd7b9e3ac44b3b639712006589e55467338881277fb66335a7530ac87",
+    "scripts/xspecies_l6_target_adapt.py": "485b32fe9429ce65c41717fd011aa49689db06e178e709f6f3478c7156821eff",
+    "data/audit/wacv_l5_frozen_banks_20261011.json": "79dd0989c2c965fed544c7d278ea689fb4a4b32f90951995afe4b5b051d4393a",
+    "data/audit/falcon_h1_forward_structure_20261011.json": "11ecad7619b92e9425c2d9ecf4b5f91a60173020130fd02cbf02ecbf9db6e9a5",
+    "data/wacv/xspecies_l6_target_adapt/prediction_audit.json": "0b4fed585721278b14489d0845c6d0ab14a31ce0ccd739b8dac2e7b45f0c2b10",
+    "data/wacv/xspecies_l6_target_adapt/results_summary.json": "dbdbf04c69612a6b6a29d530a0e6482a11ac8a842e5994136c8884c9460084ea"
+  },
+  "question": "Does a real-source initialization help an equally adapted compact decoder when the human calibration budget changes?",
+  "data": {
+    "files": "Same13public H1 session sets as L6, one participant, six dates",
+    "support_budgets_whole_trials": [
+      2,
+      3,
+      5
+    ],
+    "query": "Identical eligible ALL rows from whole trials strictly AFTER the first FIVE eligible trials, for every budget",
+    "unused_support_interval": "At budgets2/3, trials remaining through5 have no labels provided to the head or filter; their causal neural data may not create cross-trial state because feature history resets at actual trial starts.",
+    "labels": "All eligible support rows, movement and rest, same target outputs as L6",
+    "costs_required": [
+      "actual eligible label rows per trial and total",
+      "nominal label seconds at20ms bins",
+      "wall-clock recording span and elapsed trial latency",
+      "first5support-region trial IDs and common query IDs/row hashes",
+      "attempted and successful updates/repeated label usage",
+      "per-axis SSE/SST/R2 and raw prediction arrays"
+    ],
+    "already_examined": "Queries were already in L5/L6; new split/budgets do not create fresh validation."
+  },
+  "initializations": [
+    "real_linear_s0",
+    "real_linear_s1",
+    "real_linear_s2",
+    "synthetic_linear_s0",
+    "synthetic_linear_s1",
+    "synthetic_linear_s2",
+    "time_shift_linear_s0",
+    "time_shift_linear_s1",
+    "time_shift_linear_s2",
+    "v1",
+    "random_s0",
+    "random_s1",
+    "random_s2"
+  ],
+  "encoder": {
+    "shared_taps_shape": [
+      5,
+      25
+    ],
+    "parameters": 125,
+    "variant": "linear, same neuronwise causal bank",
+    "per_trial_history": "same L6 resetting/zero padding and source count preprocessing",
+    "source_bank_selection": "Frozen L5 banks, no refitting/retuning"
+  },
+  "target_learning": {
+    "steps_attempted": 150,
+    "optimizer": "Adam",
+    "learning_rate": 0.001,
+    "gradient_clip_norm": 1.0,
+    "max_row_L2_norm": 2.0,
+    "smoothness_penalty": 0.0001,
+    "fold_rule": "For budgetk, cycle held-out support trial t modulo k; differentiable ridge on the other k-1 support trials",
+    "loss": "Mean squared prediction error on held-out support trial divided by pooled FITTING-trial target variance, same L6 convention",
+    "head_ridge_grid": [
+      0.01,
+      0.1,
+      1.0,
+      10.0,
+      100.0,
+      1000.0
+    ],
+    "lambda_selection": "Once at step0, minimal mean k-fold support LOO loss; ties to smallest lambda, frozen during adaptation",
+    "checkpoints": [
+      0,
+      15,
+      30,
+      60,
+      90,
+      150
+    ],
+    "primary_checkpoint": "Minimal mean k-fold SUPPORT objective; reused for gradients and thus training, not independent validation; ties earliest",
+    "fixed_final_secondary": 150,
+    "query_selection": "None; every checkpoint prediction retained",
+    "failures": "Terminate on nonfinite loss/gradient/parameter; counters reconcile all attempts. Failed/incomplete primary NaN, no fallback/seed replacement/omission. Any nonfinite selection-grid entry explicitly records failure.",
+    "no_budget1_adaptation": "One whole trial cannot define a whole-trial LOO fitting set."
+  },
+  "comparisons": {
+    "per_budget": [
+      "adapted synthetic/time-shift/random/V1",
+      "real ownstep0 withsame selectedlambda",
+      "raw fullhistory lambda1/10",
+      "sqrt fullhistory lambda1/10",
+      "raw/sqrt fullhistory SAME k-fold support-selected lambda"
+    ],
+    "all_seeds": "Mean of three per-seed scores, not ensembling predictions",
+    "one_trial_secondary": {
+      "method": "Frozen banks and a new ridge readout on first eligible whole trial only; no filter adaptation or human selection",
+      "head_strength": "Each frozen bank preselected L5 source day3 lambda_320; full-history source-preselected10. Persist the exact per-method dictionary before new scoring.",
+      "query": "Same after-five common query",
+      "scope": "Separate frozen-readout reference; not an equal-adaptation first point."
+    }
+  },
+  "statistics": {
+    "primary": "Every per-budget real-source paired contrast; all controls reported",
+    "clusters": "Six recording dates, resampling dates while preserving associated session-set rows",
+    "bootstrap_draws": 10000,
+    "rng": 20261011,
+    "trend_descriptive": [
+      "(real-random) at5 minus at2",
+      "(real-synthetic) at5 minus at2",
+      "(real-raw support-selected) at5 minus at2"
+    ],
+    "unit": "same participant; seed score averages before date bootstrap, source seeds not independent human samples",
+    "no_claims": [
+      "new-subject population transfer",
+      "learning-strategy convergence/exhaustion",
+      "query-selected step15 primary",
+      "first neuronwise sharedencoder or crossspecies decoder",
+      "fivefold whole-system compute or memory savings"
+    ]
+  },
+  "preflight_required": [
+    "source-only2/5fold finite differences, independenthead/objective refits and neuron-permutation invariance",
+    "equivalence of generalizedk3 to existing immutableL6 on source-only stand-in at every savedcheckpoint/tap/loss/prediction; already-saved humanL6 representative checksum comparison optional separately labeled",
+    "nonfinite termination/infinite-grid andcounter consistency",
+    "source-only full150step dryrun withtwo/three/fivebudget schema and nohumanperformance",
+    "query separation/neuralhistory/trial IDs and labelcost checks",
+    "no missingcapacity/seed silently dropped"
+  ],
+  "implementation": "New scripts/xspecies_l7_budget.py; L6 and source fitter remain immutable",
+  "compute": {
+    "workers_max": 16,
+    "CPU_only": true,
+    "jobs": 507,
+    "scheduled_encoder_attempts": 76050,
+    "estimate": "About45-95minutes depending source dimensions and contention; prediction retained and full audit afterward."
+  },
+  "decision": "Execute only after source-only preflight/implementation hash review under this protocol; R/S remain priority. No linear fusion claim: linear5bank features are contained in the25lag raw input; any such combination tests structured regularization only."
+}

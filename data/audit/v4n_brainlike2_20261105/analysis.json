@@ -1,0 +1,205 @@
+{
+ "n": 90,
+ "means": {
+  "bl2_none": {
+   "moved_trained_room": 60.148148148148145,
+   "familiar_trained_room": 24.592592592592588,
+   "moved_heldout_room": 19.88888888888889,
+   "familiar_heldout_room": 14.925925925925926
+  },
+  "bl2_inferred": {
+   "moved_trained_room": 53.44444444444444,
+   "familiar_trained_room": 37.370370370370374,
+   "moved_heldout_room": 12.666666666666664,
+   "familiar_heldout_room": 26.629629629629626
+  },
+  "bl1_none": {
+   "moved_trained_room": 15.259259259259261,
+   "familiar_trained_room": 55.074074074074076,
+   "moved_heldout_room": 6.111111111111111,
+   "familiar_heldout_room": 38.59259259259259
+  },
+  "bl1_inferred": {
+   "moved_trained_room": 9.814814814814815,
+   "familiar_trained_room": 46.40740740740741,
+   "moved_heldout_room": 4.296296296296297,
+   "familiar_heldout_room": 34.888888888888886
+  },
+  "G2": {
+   "moved_trained_room": 99.74074074074073,
+   "familiar_trained_room": 42.7037037037037,
+   "moved_heldout_room": 30.925925925925927,
+   "familiar_heldout_room": 27.77777777777777
+  }
+ },
+ "contrasts": {
+  "bl2_none-bl1_none/moved_trained_room": {
+   "mean": 44.88888888888889,
+   "ci": [
+    37.6437704104073,
+    52.13400736737049
+   ]
+  },
+  "bl2_none-bl1_none/familiar_trained_room": {
+   "mean": -30.481481481481485,
+   "ci": [
+    -36.42055578571359,
+    -24.542407177249384
+   ]
+  },
+  "bl2_none-bl1_none/moved_heldout_room": {
+   "mean": 13.777777777777779,
+   "ci": [
+    9.675244390780499,
+    17.88031116477506
+   ]
+  },
+  "bl2_none-bl1_none/familiar_heldout_room": {
+   "mean": -23.666666666666668,
+   "ci": [
+    -27.686335909772378,
+    -19.646997423560958
+   ]
+  },
+  "bl2_none-bl1_inferred/moved_trained_room": {
+   "mean": 50.333333333333336,
+   "ci": [
+    42.700072911392816,
+    57.966593755273855
+   ]
+  },
+  "bl2_none-bl1_inferred/familiar_trained_room": {
+   "mean": -21.814814814814813,
+   "ci": [
+    -27.488282845108102,
+    -16.141346784521524
+   ]
+  },
+  "bl2_none-bl1_inferred/moved_heldout_room": {
+   "mean": 15.592592592592592,
+   "ci": [
+    11.464642871112364,
+    19.72054231407282
+   ]
+  },
+  "bl2_none-bl1_inferred/familiar_heldout_room": {
+   "mean": -19.962962962962962,
+   "ci": [
+    -24.367783667263065,
+    -15.558142258662858
+   ]
+  },
+  "bl2_none-G2/moved_trained_room": {
+   "mean": -39.59259259259259,
+   "ci": [
+    -47.19071122998467,
+    -31.994473955200508
+   ]
+  },
+  "bl2_none-G2/familiar_trained_room": {
+   "mean": -18.11111111111111,
+   "ci": [
+    -24.31050782149804,
+    -11.911714400724183
+   ]
+  },
+  "bl2_none-G2/moved_heldout_room": {
+   "mean": -11.037037037037036,
+   "ci": [
+    -17.47973043593071,
+    -4.594343638143364
+   ]
+  },
+  "bl2_none-G2/familiar_heldout_room": {
+   "mean": -12.851851851851853,
+   "ci": [
+    -17.186018923105358,
+    -8.517684780598346
+   ]
+  },
+  "bl2_inferred-bl1_none/moved_trained_room": {
+   "mean": 38.18518518518518,
+   "ci": [
+    31.70577568532326,
+    44.664594685047106
+   ]
+  },
+  "bl2_inferred-bl1_none/familiar_trained_room": {
+   "mean": -17.703703703703706,
+   "ci": [
+    -22.587180136148564,
+    -12.820227271258847
+   ]
+  },
+  "bl2_inferred-bl1_none/moved_heldout_room": {
+   "mean": 6.555555555555555,
+   "ci": [
+    3.2901941850467575,
+    9.820916926064353
+   ]
+  },
+  "bl2_inferred-bl1_none/familiar_heldout_room": {
+   "mean": -11.962962962962964,
+   "ci": [
+    -16.040342716702042,
+    -7.885583209223886
+   ]
+  },
+  "bl2_inferred-bl1_inferred/moved_trained_room": {
+   "mean": 43.629629629629626,
+   "ci": [
+    37.04054453071216,
+    50.21871472854709
+   ]
+  },
+  "bl2_inferred-bl1_inferred/familiar_trained_room": {
+   "mean": -9.037037037037036,
+   "ci": [
+    -14.264768467861025,
+    -3.809305606213049
+   ]
+  },
+  "bl2_inferred-bl1_inferred/moved_heldout_room": {
+   "mean": 8.37037037037037,
+   "ci": [
+    5.206469456795192,
+    11.534271283945548
+   ]
+  },
+  "bl2_inferred-bl1_inferred/familiar_heldout_room": {
+   "mean": -8.25925925925926,
+   "ci": [
+    -12.348818936335531,
+    -4.169699582182988
+   ]
+  },
+  "bl2_inferred-G2/moved_trained_room": {
+   "mean": -46.2962962962963,
+   "ci": [
+    -52.747916430185015,
+    -39.84467616240758
+   ]
+  },
+  "bl2_inferred-G2/familiar_trained_room": {
+   "mean": -5.333333333333333,
+   "ci": [
+    -10.37694419132896,
+    -0.28972247533770545
+   ]
+  },
+  "bl2_inferred-G2/moved_heldout_room": {
+   "mean": -18.25925925925926,
+   "ci": [
+    -23.95622290069965,
+    -12.562295617818867
+   ]
+  },
+  "bl2_inferred-G2/familiar_heldout_room": {
+   "mean": -1.1481481481481484,
+   "ci": [
+    -5.275237159846993,
+    2.978940863550697
+   ]
+  }
+ }
+}

@@ -1,0 +1,1 @@
+{"learner": "s2_dfa", "prior": "human_legal_uniform", "seed": 1000, "T": 32, "goals": 29, "dense_goals": 29, "synops_per_decision": 3348258.8666666667, "dense_macs": 152716}

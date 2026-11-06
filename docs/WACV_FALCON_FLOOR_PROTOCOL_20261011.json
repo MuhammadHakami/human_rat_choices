@@ -1,0 +1,21 @@
+{
+  "name": "F1: causal human Wiener floor on realFALCONcalibrationdata",
+  "fixed_utc": "2026-10-11T02:31:43.376327+00:00",
+  "status": "NoF1humanscores; conformanceexportscomplete31files, newmodelprotocolbeforefit",
+  "source": "FALCONM1DANDI000941 firstsourcecalibrationfile20120924,64units,16measuredEMG; first75%wholetrialsfit,last25%wholetrialsselecthistory1/5/10bins andridge.001/.01/.1/1/10 byuniformR2. Nohumanselection.",
+  "target": "FALCONH1DANDI000954 onehuman,7instructedopenloopvelocities,176units;14held-out-calibrationfiles; evaluatelastceil(third)wholetrialswithrestascalibrationpool; random1orup-to3completecalibrationtrials,10draws; pairedsametestforalllatermethods.",
+  "causal": "Featurescurrentandpast20msbinnedcounts ONLY; resetpastcontextattrialboundaries. Nofuturecounts, testneuralsusedinmeanstd, ortestlabels inselection. Exactofficialloaderreference67f85481e49dd280257b15141fd965cba0e02dba;MITLICENSEretained.",
+  "fit": "Human-onlyridgeweights; eachcalfitmeanstdandtargetbiascalonly; Trueevalmaskeligible; H1stilltargetbins(7abs<.001)excludedfromfitasauthorbaseline. Alltesteligiblebinsincludingrestscored.",
+  "budget": "Wholecalibrationtrials,actualeligibleMOVINGlabelbins andsecondslogged. No fixed-label-count equivalence acrossfiles; no20seconds claim withoutmeasurement.",
+  "evaluation": "Internalwhole-trialtime split WITHINpublicheld-out-calib files. NOTofficialFALCONminival/private-test/leaderboardscore. Minivalnotacquired orscored.",
+  "dataset_limiter": "H1held-in auditall170trials includeall7DoFs; nopuresingleDoFwholetrials. DoNOTinvent independentunseen-combination ornever-calibratedDoF task; standardfew-shotadaptationfirst.",
+  "claim": "StrongfloorONLY. Source-selectinggenericlag/shrinkage isnotpretrainedneuraldecoder, source-specificbiology, neuralmechanismconservation, novelmethod, PPO/RLcomparison, orclosed-loopcontrol.",
+  "future": "Pretraining/localadaptationarms musthaveownfixedprotocol+equalfeedbackbudget andmatch thisfloor; checkNDT3/POSSMexistingH1usesbeforenoveltyclaim.",
+  "checks": "Futurecountchangescannotchangefeatures; contextresets attrialboundary; knownlinearmaprecovered.",
+  "references": [
+    "https://github.com/snel-repo/falcon-challenge",
+    "https://dandiarchive.org/dandiset/000954",
+    "https://dandiarchive.org/dandiset/000941"
+  ],
+  "script_sha256": "c93405f7b1228f4720fbaa2e7bada8dfc1d01e7885c27ba9a4cefa06e8343fb2"
+}

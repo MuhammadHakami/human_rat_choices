@@ -1,0 +1,3 @@
+{"written_utc": "2026-11-02T20:11:27Z", "outcomes_seen": false,
+ "change": "bookkeeping: the objective read curve['32768'] but fresh records use int keys (KeyError on the first trials of both workers; the trials are FAIL in the study and their runs are not used). Keys are normalised to str; the search restarts in the same study with 144 trials.",
+ "script_sha256": "705e748598eb6476832115406bd16dd89384bad79029b2bc208bb323b95b6ecc"}

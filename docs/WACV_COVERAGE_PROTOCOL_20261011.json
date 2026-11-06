@@ -1,0 +1,41 @@
+{
+  "name": "COV1: partial-direction calibration on real N2BMI data",
+  "fixed_utc": "2026-10-11T02:19:09.923028+00:00",
+  "question": "Does real macaque neural information improve decoding of directions absent from HUMAN calibration, beyond explicit human-fit cosine/generative direction generalisation and matched synthetic/time-permuted source priors?",
+  "prior_limits": "Rizzoglio2023 Fig9 already tests cardinal/diagonal interpolation and hemispheric extrapolation WITHIN macaques (not thatpapers human experiment). Classical population-vector/cosine generalisation is prior. No first-transfer/coverage/novel-method claim. These human trials have been examined byearlier assays; exploratory.",
+  "source": "Area2_Bump DANDI000127 only: one macaque S1,364rewardedactive8directiontrials,65units. MC_Maze omitted because270deggoalclassabsent. Source region S1 differs from human motor region.",
+  "source_representation": "90x10ms sqrtcount recordings, sourceCISrise fromsourcefitdataall364trials asallowed, -100..+300ms epoch,4x100ms means, PCA12 and8classLDA. Existing source-only decodability choiceD12; CCAreg.1fixed frompreviousassays, notretunedhuman.",
+  "source_controls": "3independent syntheticcosinePoissonsources preserving perbin/unit source mean-rateprofile,trial/class/unitcounts, but notrecordedtrialdynamics;3independent withintrial4chunkpermutations preservingmeans. SyntheticCISestimatedsyntheticdata. Allsourceclassifierheads seeall8directions.",
+  "coverage": "Primary: cardinals[0,2,4,6]->diagonals[1,3,5,7] AND reverse; periodicdirection interpolation/coveragegeneralisation, notnewDoFsemantics. Allpredictions choose amongALL8classes; unseen-scoredsubset is not disclosed todecoder as reducedcandidate set.",
+  "calibration": "SavedP1draws filtered toONLY4seen directions; k1/2/4/8trials perseen direction,50draws per(session,k,seen-set),4kunique labelled fittrials. Primaryk2=8labelledtrials. Unseen trials/labels neverenterCIS/PCA/featurestatistics/alignment/readoutfits. Onlycalibrationrawneurons sethumanCISrise.",
+  "human": "ONE N2participant,3sessions20241105/20241211/20250408,MC-MED+MC-LATpooled. Cuedgoal8sector labels, notmeasuredhand orindependentkinematics. Wholeprojectexploratory/previouslyviewed testoutcomes.",
+  "floors": [
+    "Gcorr: human-fitgenerativecosinefield [intercept,cos\u03b8,sin\u03b8]->rawunit/chunkmeans; correlationreadout forALL8directions",
+    "Gdiag: samegenerativecosine withshrinkage diagonalGaussianresidualnoise",
+    "Rvector: humanfitridge neuralfeatures->[cos\u03b8,sin\u03b8],quantiseangle to8classes; strongcontinuous target-onlymapping",
+    "Vseen: correlationtemplate restrictedseenclasses DIAGNOSTICONLY,zeroability topredictunseenclass, NOTa primaryfloor"
+  ],
+  "floor_selection": "Rvectorridge.01/.1/1/10, Gdiagshrink.1/.5/1 chosen separately by held-unseenaccuracy on40fixedSOURCEArea2seenclasscalibrationtasks(k2), NOThuman. Floorsusehumanonlyfitweights but source-tunedalgorithmconfiguration; not entirelysourcefree.",
+  "transfer": "HumanPCA12fitONLYseen-labelcalibrationneurons; CCAalign4seenclassesx4chunks withcorresponding SOURCEmeans; source8classreadout frozen; sourcehasunseenlabels, humanfitdoesnot.",
+  "primary": "RealM improves unseen-direction pointaccuracy over EACHofGcorr,Gdiag,Rvector and ALL3synthetic+ALL3time-shuffledsources inall3humansessions,BOTHcoverageorientations,atk2. Reporteverypaired delta/range, notonlyfavorableconditions. No automatic significance/conservation/deploymentclaim.",
+  "uncertainty": "2.5..97.5 percentiles ofpairedcalibrationdraw deltas; oneparticipant, overlappingtesttrials, notpopulationconfidenceinterval. Sourceseedsperturb synthetic/nullmodel, notparticipants.",
+  "secondary": "k1/4/8; seen-heldout andoverallfull8classaccuracy toshowtradeoffs. Nohemisphere extrapolationorFALCONnew7DoF claim.",
+  "checks": "Noiselesscosine-generativefloors recoverALL8directions includingunseenclasses exactly; changingheldoutrawneurons doesnotchangeCIS/fitfeatures. Scientific source/targetIDs andsavedpredictions laterrechecked.",
+  "references": [
+    "https://pmc.ncbi.nlm.nih.gov/articles/PMC10618714/",
+    "https://www.nature.com/articles/s41586-023-06714-0",
+    "https://neurallatents.github.io/datasets"
+  ],
+  "script_sha256": "36fdddde8caa8aa606dba5622c9975580225c9ae54e35d67ed42c740427ff6a0",
+  "worker_amendment": {
+    "utc": "2026-10-11T02:20:52.879254+00:00",
+    "reason": "Spawn cannot pickle author PCA/LDA closures. No human jobs started. Sources now constructed deterministic once per spawnedworker; same source/floor settings and targetdraws. Oldlog archived."
+  },
+  "short_calibration_recording_amendment": {
+    "utc": "2026-10-11T02:23:14.200207+00:00",
+    "observed": "PartialhumanCOVjobs completed butshortcalibrationrecords producedNaN lateepochs inotherjobs. Previousresultsviewed;ALLpartialoutputsarchivedand allconditions rerun.",
+    "fix": "Clampcalibration-onlyCISrise by earliestfiniteendpoint ofCALIBRATION recordings. No testfitting, no changedcalibrationIDs, no replacedlabels, no changedhyperparameters. Same ruleforALLarms/conditions. Newshortrecord invariant passes.",
+    "archive": "data/wacv/xspecies_coverage/aborted_partial_v2",
+    "interpretation": "Protocol remains exploratory; do not claim allamendments precededhumanresults."
+  }
+}

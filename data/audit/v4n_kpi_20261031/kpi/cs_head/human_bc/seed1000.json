@@ -1,0 +1,1 @@
+{"learner": "cs_head", "prior": "human_bc", "seed": 1000, "source": "data/audit/v4n_local_stability_20261102/test/cs_head/human_bc/seed1000.json", "familiar_trained_room": 6, "moved_heldout_room": 3, "familiar_heldout_room": 2}

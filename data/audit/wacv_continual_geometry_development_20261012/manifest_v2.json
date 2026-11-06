@@ -1,0 +1,157 @@
+{
+  "hashes": {
+    "protocol": "e5151bdfda9ea5d8a925fd9092de9539eb710c251d5af404ff96f061e8d87204",
+    "addendum": "113f90147944d69c22d08c5c696125706e853b7b61f022bc42cb65a09cf5c81f",
+    "addendum2": "97152d7984a5d2ac9d514cb2b6fb627c68ff3f0b9d30e4ccaa21447385d2e069",
+    "code": {
+      "scripts/wacv_continual_geometry_development_20261012.py": "34551621a8932c3ba332fc273c27f3bd2395ca49a37a18d506f2247ce334568c",
+      "scripts/wacv_continual_geometry_env_20261012.py": "3fa2fda20746d5e1c3c7751961452154e9a5c9747a2427dcbebf89e504beeb25",
+      "scripts/local_continual_actor_critic.py": "090493c6917e1ed0c9ac2edb03dd3d570cad3e320c8bb72a6b4d5dccb091100e",
+      "scripts/local_synaptic_protection_20261012.py": "381972dab10fa7b61d939c276c667800bb91dff1bc6d49719e465f152700d0f4",
+      "scripts/recurrent_ppo.py": "fc66ac16f739bf1dae03794a9b6390e1e80eae74459e211694183124ef43fd88",
+      "scripts/ppo_feedforward_reference.py": "e52aa2ea0b787b5a9a4845dbbddfbcc3bd399f5fd3ff3a2663a8cd52246b3b2c",
+      "scripts/ppo_replay_regularized_reference_20261012.py": "fb17a37d38086e0dd38bcf69f56c22bd30edfbf083a2e144046b03ed3ac65285"
+    },
+    "geometry": "f3199ea4098da983f8da90a60ba70df0d5397d1e25c59ced76e00138449ce9f4",
+    "source": {
+      "protocol": "2c82ae833c8129494b45d2b193182398f634abaac4233d88d8bc12d11a5db120",
+      "source": {
+        "protocol": "686d4d2e49e93c3502c37832991ee3b272081806b9845084c439a79cc826daa6",
+        "addendum": "b711f8f13e6bfdbee9181c718d09075ff9b08cdc350b2357492896207c505341",
+        "native_data": "ec35d0b3f507b783578a5fd4ad868cbaafe6502e16c24b88963bbbfec5d22212",
+        "parent": {
+          "protocol": "4cb5604f7b7047e5862313a28630d8fcdc34812dc7626e46865e26ce079dadf1",
+          "cache_manifest": "da705d96b206a75d37ad43ea61932e5a7cb9a6b3639c3aa7a2ec0c5a001e0411",
+          "cache_array": "da48dbd82d745c6e787f9c181d6725e4fe34d3e95f920c64908f217b1c11b6cc",
+          "code": {
+            "scripts/audit_wacv_embodied_source.py": "63c1ccc1b4c1426109244f06d71c0a63a56ba8044ccc5eb0975abd905e1b6c74",
+            "scripts/eprop_actor_critic.py": "89b61335f96b13996b2ae1d51cb0923191ba74ac0d70515eb0e4ce1b5833dee2",
+            "scripts/ppo_feedforward_reference.py": "e52aa2ea0b787b5a9a4845dbbddfbcc3bd399f5fd3ff3a2663a8cd52246b3b2c",
+            "scripts/rate_rnn_actor_critic.py": "50f749b584be400071440e671f7b68144336a91a8abf378faec52975a5e39bab",
+            "scripts/recurrent_ppo.py": "fc66ac16f739bf1dae03794a9b6390e1e80eae74459e211694183124ef43fd88",
+            "scripts/spiking_bptt_actor_critic.py": "eac7e7a439af2bbbf0f22b3867c7fd52e455c01573b407a2d3769880069d8b72",
+            "scripts/tartarus_visual_env.py": "3f2a1f6a30471d11ebf9f297855273b2c8c153996c73cfac117321da7e15345e",
+            "scripts/wacv_embodied_belief_source.py": "47b8371dcc5847baafc5d63eda351b6cafa7a097f790b2996e658dc7de285ef8",
+            "scripts/wacv_embodied_long_control.py": "f4a763b68e1cf3da7c5138eeb37d169c167396d5f83010028c5b45e986cf9e15",
+            "scripts/wacv_embodied_source_cache.py": "ade8dd7ad3b9f0be9e1c811f0517bea8655c162c0fe2366863025fc53a7f2970",
+            "scripts/wacv_embodied_source_env.py": "c6d16d23f529bbbe4b1bb1dba12a9305c414817cecf83e975720f9609ea7067e",
+            "scripts/wacv_embodied_source_runner.py": "66593d29d02d29db7cad22654d50cf6392ab63cdfb3d8ffddac929aa3d56e219",
+            "scripts/wacv_embodied_spatial_source.py": "ed7c7f13b63d42cc88d40ec35810b7d794698a1ccffe755eff3daf1877bd92a3"
+          }
+        },
+        "script": "97cacb9542913e9f8fb4db7ad58b7647b524bcb8afd5cf1ab11c0796483639b2",
+        "parent_ppo": "fc66ac16f739bf1dae03794a9b6390e1e80eae74459e211694183124ef43fd88",
+        "data_manifest": "b7ac76769a0e026b9af9c4dcc0a2d0a9cf1f3eb71ea227a3fb8eeae4187b17c9"
+      },
+      "runner": "d620db84b851098137ff39bf4b16f55702cee5176331635de5d763b953ad36d3",
+      "credit": "090493c6917e1ed0c9ac2edb03dd3d570cad3e320c8bb72a6b4d5dccb091100e",
+      "protection": "381972dab10fa7b61d939c276c667800bb91dff1bc6d49719e465f152700d0f4",
+      "acquisition_report": "65b51d682fe4cada6509987504348f26e5175b674c1b5bbd8eaebb3b3ae8d2dd",
+      "acquisition_audit": "a616a78d5c1157f9a61ff818319a69738f2be15eaa395b545677fcf98fb6ef30"
+    },
+    "ppo_report": "a7a906ae853952fabb5843737577b5509f227c83ed33adcf300e126b46e3f02d",
+    "ppo_audit": "dcc484fb8c8ca11459bf3b1b880cf9f4029ea4a28554716a3c1377df00c29eb0",
+    "ppo_tuning_report": "4b55c24bec3d48e03ed1004ed84960aa86e5bdbc82e68873df56037b782e402d",
+    "ppo_tuning_audit": "692d0c83c6cc157cb32d024ba8493f9387cad974eb821725f6788ff8d24db51b"
+  },
+  "methods": [
+    {
+      "id": "local_none",
+      "family": "eligibility",
+      "credit": "local",
+      "protection": "none",
+      "rate": 0.001,
+      "role": "Primary matched-credit factorial"
+    },
+    {
+      "id": "local_slow",
+      "family": "eligibility",
+      "credit": "local",
+      "protection": "slow",
+      "rate": 0.001,
+      "role": "Primary matched-credit factorial; source candidate"
+    },
+    {
+      "id": "bp_none_common",
+      "family": "eligibility",
+      "credit": "bp",
+      "protection": "none",
+      "rate": 0.001,
+      "role": "Primary matched-credit factorial"
+    },
+    {
+      "id": "bp_slow_common",
+      "family": "eligibility",
+      "credit": "bp",
+      "protection": "slow",
+      "rate": 0.001,
+      "role": "Primary matched-credit factorial"
+    },
+    {
+      "id": "bp_none_tuned",
+      "family": "eligibility",
+      "credit": "bp",
+      "protection": "none",
+      "rate": 0.0003,
+      "role": "Source-selected strong BP control"
+    },
+    {
+      "id": "bp_meta_tuned",
+      "family": "eligibility",
+      "credit": "bp",
+      "protection": "meta",
+      "rate": 0.0003,
+      "role": "Source-competent protected BP reference"
+    },
+    {
+      "id": "ppo",
+      "family": "ppo",
+      "rate": 0.001,
+      "role": "Standard clipped PPO reference",
+      "ppo_settings": {
+        "n_steps": 16,
+        "ent": 0.05
+      }
+    },
+    {
+      "id": "ppo_replay",
+      "family": "ppo_replay",
+      "rate": 0.001,
+      "role": "620-transition reservoir policy/value cloning; CLEAR-inspired, not exact CLEAR",
+      "ppo_settings": {
+        "n_steps": 16,
+        "ent": 0.05
+      }
+    }
+  ],
+  "source_models": [
+    {
+      "arm": "rat_bc",
+      "seed": 60,
+      "path": "data/audit/wacv_native_behavior_prior_20261012/cohort/rat_bc/seed60/checkpoint_source.pt",
+      "sha256": "a71a534675630d63cc4ed01707963d4435c1bfc01a13f33b3ba938166a69079f"
+    },
+    {
+      "arm": "rat_bc",
+      "seed": 61,
+      "path": "data/audit/wacv_native_behavior_prior_20261012/cohort/rat_bc/seed61/checkpoint_source.pt",
+      "sha256": "3fc81a33a4ed48b11cd16f930571509f10cdfbf0d83b96fd353c2e75c2092389"
+    },
+    {
+      "arm": "rat_bc",
+      "seed": 62,
+      "path": "data/audit/wacv_native_behavior_prior_20261012/cohort/rat_bc/seed62/checkpoint_source.pt",
+      "sha256": "3c6d7c3b64f6bd1dc8ee3cabb4785ad0d389ce94051f3674bd2fef47159cee28"
+    }
+  ],
+  "registered_utc": "2026-10-12T19:18:53Z",
+  "withheld_pairs": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ]
+}

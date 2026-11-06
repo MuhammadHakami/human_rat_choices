@@ -1,0 +1,19 @@
+{
+  "registered_utc": "2026-10-12T16:31:56.451627+00:00",
+  "amends_protocol_sha256": "01a2c02b441b63bc9d9665fbeb9ad3fbd63b6f07007021ac5c05f0633b4348f8",
+  "trigger": "First technical dry failed before loading model: earlier trusted local checkpoint uses __main__.DeviceFFAgent. No learning/outcome was computed.",
+  "changes": [
+    "Expose the trusted DeviceFFAgent import alias for pickle loading",
+    "Preserve failed dry reservation; use dry_v2 for new technical runs",
+    "Bind corrected code via this addendum before any scientific fit"
+  ],
+  "preserved_initial_runner": {
+    "path": "data/audit/wacv_local_ac_source_pilot_20261012/technical_runner_v1.py",
+    "sha256": "e179249c1c98a38db059568131900a77155140ac9778f8336ef191cc2b3f5411"
+  },
+  "code": {
+    "learner": "b35e93cb7e22052ca1639b2ba03766c10b08aa9c0cc59487b25d7cea94c971bf",
+    "runner": "cd8ad9ddb2d8ba09366ceff728d8b6168a042803ac8ce8684a60f6b0d4f50add"
+  },
+  "algorithm_changes": false
+}

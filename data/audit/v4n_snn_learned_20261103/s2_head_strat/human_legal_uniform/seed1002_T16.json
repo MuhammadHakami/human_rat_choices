@@ -1,0 +1,1 @@
+{"learner": "s2_head_strat", "prior": "human_legal_uniform", "seed": 1002, "T": 16, "goals": 30, "dense_goals": 30, "synops_per_decision": 1691370.0597826086, "dense_macs": 152631}

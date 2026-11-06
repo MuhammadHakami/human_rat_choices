@@ -1,0 +1,74 @@
+{
+  "registered_utc": "2026-10-12T16:29:50Z",
+  "status": "source-development; no target cases",
+  "rules": [
+    "local",
+    "bp"
+  ],
+  "rates": [
+    0.0001,
+    0.0003,
+    0.001
+  ],
+  "source_seeds": [
+    60,
+    61,
+    62
+  ],
+  "source_models": [
+    {
+      "arm": "rat_bc",
+      "seed": 60,
+      "path": "data/audit/wacv_native_behavior_prior_20261012/cohort/rat_bc/seed60/checkpoint_source.pt",
+      "sha256": "a71a534675630d63cc4ed01707963d4435c1bfc01a13f33b3ba938166a69079f"
+    },
+    {
+      "arm": "rat_bc",
+      "seed": 61,
+      "path": "data/audit/wacv_native_behavior_prior_20261012/cohort/rat_bc/seed61/checkpoint_source.pt",
+      "sha256": "3fc81a33a4ed48b11cd16f930571509f10cdfbf0d83b96fd353c2e75c2092389"
+    },
+    {
+      "arm": "rat_bc",
+      "seed": 62,
+      "path": "data/audit/wacv_native_behavior_prior_20261012/cohort/rat_bc/seed62/checkpoint_source.pt",
+      "sha256": "3c6d7c3b64f6bd1dc8ee3cabb4785ad0d389ce94051f3674bd2fef47159cee28"
+    }
+  ],
+  "fits": 18,
+  "frames_per_phase": 65536,
+  "environments": 16,
+  "source_configuration": 0,
+  "goals": {
+    "A": [
+      3,
+      3
+    ],
+    "B": [
+      6,
+      6
+    ]
+  },
+  "protection": "none for competence selection; protection study follows separately",
+  "learning": {
+    "gamma": 0.99,
+    "eligibility_lambda": 0.95,
+    "entropy": 0.01,
+    "value_coefficient": 0.5,
+    "optimizer": "Adam maximize, eps=1e-5",
+    "gradient_clip": "component-wise +/-0.1",
+    "feedback_scale": 0.1
+  },
+  "switch": "One live environment: engine reward-goal change only; no reset at A/B boundary",
+  "probes": "30 frozen trials: ten native boundary starts times three textures, independent RNG",
+  "competence": "B_after>=15/30 on at least two of three source seeds; A_acquired>=15/30 also reported. All fits retained.",
+  "selection": "Per-rule global rate maximizing summed B_after successes, tie smaller rate; exploratory source only",
+  "provenance": "Shared initialization was trained by BP imitation/PPO. Online local arm is BP-free; complete pipeline is hybrid. Fixed source atlas reveals pose; images synthetic.",
+  "readout": "No scores before all 18 terminal cases and independent physical/sampling accounting audit",
+  "device": "CUDA_DEVICE_ORDER=PCI_BUS_ID, CUDA_VISIBLE_DEVICES=1, RTX3090, one worker",
+  "target_maps_accessed": false,
+  "code": {
+    "learner": "b35e93cb7e22052ca1639b2ba03766c10b08aa9c0cc59487b25d7cea94c971bf",
+    "runner": "e179249c1c98a38db059568131900a77155140ac9778f8336ef191cc2b3f5411"
+  }
+}

@@ -1,0 +1,4 @@
+{"written_utc": "2026-11-01T06:58:40Z", "outcomes_seen": false,
+ "change": "Stage E (the Rosetta authors' unmodified protocol and code) is rerun on the action-word-free captions (AMENDMENT3 features in lexfree/). The jobs, seeds and code are those of AMENDMENT4. Only the text features differ. Image and action features are identical (40,000 moments, same rows), so the 20 image-action jobs must reproduce the original stage E exactly, which serves as a determinism check.",
+ "reading": "descriptive, secondary (as stage E). Text-action/image-text geometry and FOSCTTM are reported next to the original captions. Image-action must match the original to numerical tolerance, or the difference is reported.",
+ "workers": "8 processes x 2 threads (CPU-only upstream solver; machine idle), set with V4N_WORKERS; restart parallelism does not change results"}

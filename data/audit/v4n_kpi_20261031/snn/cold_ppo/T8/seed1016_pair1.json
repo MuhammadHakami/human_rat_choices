@@ -1,0 +1,1 @@
+{"prior": "cold_ppo", "seed": 1016, "T": 8, "pair": 1, "goals": 1, "synops_per_decision": 15575.313578394598, "dense_macs_hidden": 4416, "dense_macs_total": 20544}

@@ -1,0 +1,1 @@
+{"learner": "ppo", "prior": "human_legal_uniform", "seed": 1028, "source": "data/audit/v4n_moved_goal_learning_20261031/test2/ppo/registered/human_legal_uniform/seed1028.json", "familiar_trained_room": 3, "moved_heldout_room": 6, "familiar_heldout_room": 8}

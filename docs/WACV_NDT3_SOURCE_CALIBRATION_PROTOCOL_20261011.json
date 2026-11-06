@@ -1,0 +1,80 @@
+{
+  "registered_utc": "2026-10-11T18:03:02.072972+00:00",
+  "stage": "Before any native source-calibration fit. All target arrays blocked; no NDT3 target fit or score. New MonkeyN compact-model experiment is active; no partial outcomes read.",
+  "question": "Select a stable native pretrained calibration rate/checkpoint on source development arrays before evaluating scarce-label targets.",
+  "source_arrays": {
+    "L": "data/xspecies/falcon/000941/sub-MonkeyL-held-in-calib_ses-20120927_behavior+ecephys.npz",
+    "X": "data/xspecies/falcon/001209/sub-MonkeyX-held-in-calib_ses-20121210_behavior+ecephys.npz"
+  },
+  "checkpoint": "data/audit/wacv_external_baselines_20261011/ndt3_45m_200h.ckpt",
+  "source_status": "Third development day per original source animal, already source-selection data; not independent source generalization.",
+  "training": {
+    "rates": [
+      3e-05,
+      0.0001,
+      0.0004
+    ],
+    "rate_origin": "Pinned official hp_sweep_space.py full_ft/simple_ft rate grids.",
+    "seeds": [
+      0,
+      1,
+      2
+    ],
+    "steps": 150,
+    "checkpoints": [
+      0,
+      15,
+      30,
+      60,
+      90,
+      150
+    ],
+    "optimizer": "Full native model AdamW,constantLR,weightdecay.01,globalclip1;model.train() dropout usespublished.1. No scheduler/reward task training; this is our registered calibration recipe, not author official benchmark reproduction.",
+    "objective": "Native masked-token classification loss; target labels normalized by fitting-support absolute.999quantile and clipped[-1,1], nearzero scale\u21921 perauthor preprocessing. All behaviorinputs masked, constraints/rewards/returns zero. Actual eligibilitymask used for native loss.",
+    "windows": "First3eligiblewhole support trials; rng[20261011,902,seed] uniform eligibleendpointsharedacrossrates. Up to200 preceding same-trial count bins inclusive, loss on eligible last50bins only. No query/spikes in gradient or normalization.",
+    "causal_context": "Author M1 default200bins,reset at trial start, noKVcache, native spike tokenization. Predictions at each query row use only its \u2264200same-trial past/currentcountvectors; no observed or predictedbehavior input."
+  },
+  "query": "Commonfirst4whole eligible future trials atindices5..8, all eligible rows. Intervening supportindices3..4 unused. Source-only dry queriesfirst8eligible rows andone Lseed0/3e-5 fit4steps.",
+  "planned_fits": 18,
+  "planned_updates": 2700,
+  "selection": "After full independent audit, one global LR/checkpoint maximizing mean varianceweighted R2 overbothsourceanimals/3seeds(6values perchoice). Earlieststep/smallestLRties. No query-selected futuretarget choices. Checkpoint0 allowed, allchoices retained.",
+  "gate": "One source-only4stepdry plus independent rawmetric/window/normalization/hash/native replay audit, then technicalGO for18sourcefits. This is not targettraining authorization; exact target protocol still required.",
+  "auditor": "No fitter imported. Allrawscores/supportnormalization/trial/windows/updatecounts andsavedweightSHA verified; predeterminednativecheckpoint15replay16queryrows peranimal/rate seed0 (dry4/8). Usesauthor native model/adapter, not independent attention/backward implementation.",
+  "failure": "Preserve exception/nonfinite/missing artifact; no implicit fitretry or favourable outcome exclusion. No target query inspected to repair source implementation.",
+  "artifacts": "Keep rawcheckpointpredictions andmodelweights for everynonzero checkpoint; approximately16GBfullsourceweights, excludedfromGit.",
+  "claim_limits": "Source numerical/calibration development only; no newtargettransfer, globalnovelty, localbiologicallearning, fullauthorFALCONcomparison or source-specific accuracy benefit.",
+  "primary_sources": [
+    "https://github.com/joel99/ndt3",
+    "https://raw.githubusercontent.com/joel99/ndt3/877f9f5edbcd47f20af6e6c0ba11926da7a22354/context_general_bci/config/hp_sweep_space.py"
+  ],
+  "sha256": {
+    "data/xspecies/falcon/000941/sub-MonkeyL-held-in-calib_ses-20120927_behavior+ecephys.npz": "7127ca499d75a7dbe016755b38ddbf93a90c9f186e3d13319f0094a639380eef",
+    "data/xspecies/falcon/001209/sub-MonkeyX-held-in-calib_ses-20121210_behavior+ecephys.npz": "bab146bfb08e7e09e113111363481dd08d7ffa66e9701abf563f202b52101344",
+    "data/audit/wacv_external_baselines_20261011/ndt3_45m_200h.ckpt": "74e39356e4a5099fe64aee637b4b7298ae4923d8f69daf48a7b77b02cdca8745",
+    "docs/WACV_N1_SOURCE_PROTOCOL_20261011.json": "453362b716a61f283306fe06424359b0e2efb12f6cc18127c20ddf80edb90698",
+    "scripts/ndt3_native_adapter.py": "f84840ca6b8fc98843b50f3be5196e29b6e836a2eb46d9b7dbbb59147fb7fd51",
+    "scripts/ndt3_calibration_source.py": "4891edcf25266057a2fef5c15cb7f7075db2d1b2e7981913490ee6e8851d2ea2",
+    "scripts/audit_ndt3_calibration_source.py": "b19c684ae89adc85595342016f1ce64b7af82fc6bea75fc019711db9e21ab792",
+    "scripts/run_ndt3_calibration_source.py": "515b85cc40ad620e126e8419cf75526b0a5cffdab818ab957541785f8ba9e500",
+    "data/audit/wacv_external_baselines_20261011/runtime_freeze.txt": "ca49d2d60135cb246ba01ffeb69a1e690c95e5de1e219923682a15a091807df1",
+    "data/audit/wacv_external_baselines_20261011/source_native_gradient_preflight.json": "9556c66e99c25b9177bf0f0458218a4c16f64b6bf285141cd280e5bde18deaa1",
+    "data/audit/wacv_external_baselines_20261011/ndt3/context_general_bci/model.py": "a15d470418ea7fc3e73a7863d1a35a0de9e73385678b784e1ceb2f8598a6099b",
+    "data/audit/wacv_external_baselines_20261011/ndt3/context_general_bci/task_io.py": "ea6c1ea59e5dabd29878357e694371e38862c06489224b52ee385ec6b4593ceb",
+    "data/audit/wacv_external_baselines_20261011/ndt3/context_general_bci/data_utils.py": "02bd327776df0f754103aa4aa7a7bf7673519f100eb08768bf983bab8d0a5ffa",
+    "data/audit/wacv_external_baselines_20261011/ndt3/context_general_bci/config/hp_sweep_space.py": "84546f8872fe3510a486ad55ed2f073cda6abfa9273b18bae9a095f5d3e29790"
+  },
+  "source_only_amendments": [
+    {
+      "utc": "2026-10-11T18:04:38.926686+00:00",
+      "old_driver_sha256": "ff07cf09ff03ee19d1f78aa9505736b339653bfbdd1e7bcec610f1e475803937",
+      "reason": "Author predict helper train-mode assembly requires explicit kin_maskout; pass1.0, same registered all-behavior-masked policy. Preserve first source dry failure beforeupdates; no target data. Native model/weights unchanged.",
+      "archive": "data/wacv/ndt3_source_calibration/dry_missing_train_mask_argument"
+    },
+    {
+      "utc": "2026-10-11T18:06:59.536401+00:00",
+      "old_driver_sha256": "eb1655a98d85a98a28d369fc421dd6a0584b16419ec285dc071d95ce32348e55",
+      "reason": "Native state_dict contains non-tensor extra_state metadata. Preserve it alongside CPU tensors; source4updates completed butserialization failed. Archive and full dry rerun; no numerical/scientific change or target read.",
+      "archive": "data/wacv/ndt3_source_calibration/dry_extra_state_serialization"
+    }
+  ]
+}

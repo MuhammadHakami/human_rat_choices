@@ -1,0 +1,1 @@
+{"learner": "td_fa", "prior": "human_legal_uniform", "seed": 1001, "T": 8, "goals": 2, "dense_goals": 3, "synops_per_decision": 26064.993831919815, "dense_macs": 20544}

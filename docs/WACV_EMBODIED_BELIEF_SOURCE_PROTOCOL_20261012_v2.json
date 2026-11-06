@@ -1,0 +1,67 @@
+{
+  "registered_utc": "2026-10-12T01:34:29.741648+00:00",
+  "source_only": true,
+  "purpose": "Test useful control with causal source-calibrated landmark/self-motion belief state; conventional diagnostic baseline, no novelty/crossspecies/retention proof.",
+  "parent": "docs/WACV_EMBODIED_SOURCE_PROTOCOL_20261012.json",
+  "parent_sha256": "2ae1b1c6db84298ecc583e13c73559ad18c3ec054caeb2dbcd91eaef0eccedda",
+  "cache": "data/audit/wacv_embodied_source_20261012/cache/source_visual_cache.json",
+  "cache_sha256": "da705d96b206a75d37ad43ea61932e5a7cb9a6b3639c3aa7a2ec0c5a001e0411",
+  "known_evidence": "All63source outcomes and supervised pose probes known before registration. Top4row source invariance verified without learned policy outcomes.",
+  "methods": [
+    "visual_belief_Q",
+    "privileged_pose_Q"
+  ],
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "training_frames": 32768,
+  "atlas": {
+    "source": "Openarena0, rotation0,100cells x4headings",
+    "views": 400,
+    "features": "First64features = top4of9pooledrows",
+    "labels": "Privileged source simulator positions/headings; shared static spatial frame",
+    "bytes_float32": 102400,
+    "additional_supervision_cost": "400source camera/pose/headings pairs, separate from32768reward interactions"
+  },
+  "belief": {
+    "grid": [
+      10,
+      10
+    ],
+    "initial": "Uniform100cells x4heading hypotheses, marginalize initial heading likelihood; no actual initial heading or center-facing rule in filter.",
+    "transition": "Own attempted allocentric action; contact means stay, otherwise translate; discard hypotheses leaving learned arena bounds; no target walkability map",
+    "observation": "Gaussian on64cuepixels, sigma=.03, mean-square residual; normalize posterior; nearest-MAP cell passed to Q",
+    "sigma": 0.03,
+    "information": "Pixels/contact/own previous action only at runtime, plus400labeled source atlas and stable10x10 spatial frame. Initial4headings uniform; afterfirstaction camera alignment is a declared deterministic actuator assumption, not inferred physical orientation."
+  },
+  "Q": {
+    "states": 100,
+    "actions": 4,
+    "alpha": 0.1,
+    "gamma": 0.95,
+    "epsilon": 0.2,
+    "init": 0.0,
+    "update": "One-stepTDafteractual action; terminal bootstrap0",
+    "state": "Visual method MAPcell from belief; pose-only reference simulator truecell. Neither has neighbor mask, goal/map/configuration input."
+  },
+  "training": "Exactly original curriculum/reset/forced-boundary/reward behavior, freshQ and RNG perseed, no teacher actions/reward shaping.",
+  "selection": "Original3repeats x20native starts6then7, independenttrainedQclone perrepeat/arm; same epsilon; state reset trial, weights retained across20trials inadaptive; frozen weights unchanged.",
+  "technical": "Causal filter checked across source configurations, target-layout metadata not accessible; independent 100hypothesis update/noiseless-pose support checks; exact interaction/reward accounting.",
+  "scientific_audit": "All6results complete before scores, retain per-decision chosen actions/observations/truepose for audit-only/localization, independent NumPyQ update replay and filter replay, recompute selection success.",
+  "limits": [
+    "Static pose atlas uses privileged source labels and structural renderer priors; not reward-only vision or native animal sensation.",
+    "10x10 stable room coordinate frame is a learned world prior; not generic unseen-camera/hardware/world generalization.",
+    "Q is conventional and not biologically plausible credit assignment.",
+    "Pose filter does not learn a species-derived rule or demonstrate retention."
+  ],
+  "resources": {
+    "device": "CPU",
+    "workers": 1,
+    "threads": 1,
+    "memory": "Report102400Bfixedatlas+3200BQtable+800Bposeposterior+initiallikelihood/templates+runtimecachedlikelihood bytes; cacheis computationalmemoization, counted, not learning."
+  },
+  "version": "v2-uniform-initial-heading",
+  "amendment": "Claude peer critique before fullfits: remove known renderer-center-facing assumption from filter. v1protocol/code/dry preserved; dry scores not interpreted. Same allocentric/contact odometry privilege remains explicitly declared."
+}

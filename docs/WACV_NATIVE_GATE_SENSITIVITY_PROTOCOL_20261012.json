@@ -1,0 +1,112 @@
+{
+  "registered_utc": "2026-10-12T04:46:24.706370+00:00",
+  "version": "native-gate-nuisance-practice-v2",
+  "purpose": "Constructive source-only sensitivity to identified beta/gamma ceilings, optimisation ridges and practice confounds. Additional exploratory development, not a retry or untouched test.",
+  "parent": "docs/WACV_NATIVE_UPDATE_GATE_PROTOCOL_20261012.json",
+  "parent_sha256": "277d394639c8a5621dbeb0375f051a7c5de267677d1355f7c10ec716f46ac2e1",
+  "source": "Unchanged real train1\u20135 individuals rat0\u20135/human0\u201311; condition heldout individuals1\u20137 and score6\u20137. No native8\u201325 or agent fits.",
+  "information": "Unchanged conditional legal-neighbour likelihood, observed first cells/full recorded paths/native success, gaps reset outcomehistory only, optimalopenmap/knownreward prior. Free temperature is an extension of original fixed-temperature SR.",
+  "families": [
+    "constant",
+    "surprise",
+    "history",
+    "joint",
+    "practice",
+    "controlled_joint"
+  ],
+  "parameters": [
+    "b0",
+    "bq",
+    "bh",
+    "bp",
+    "bg",
+    "log_beta",
+    "kappa"
+  ],
+  "gates": "sigmoid(b0+bq*q+bh*past_success+bp*within_configuration_practice+bg*overall_practice)",
+  "practice": {
+    "within_configuration": "log(released_trial_ordinal)/log(10)",
+    "overall": "log(1+observed_trials_before_current_trial_for_subject)/log(70)",
+    "availability": "Trial count/layout boundaries are declared experimental covariates, not a hidden-change detector or transferable agent input; omitted trials never imputed."
+  },
+  "bounds": {
+    "gate": [
+      -12,
+      12
+    ],
+    "log_beta": [
+      -3,
+      7
+    ],
+    "kappa": [
+      -6,
+      6
+    ],
+    "inactive": 0
+  },
+  "gamma_candidates": [
+    0.9,
+    0.95,
+    0.99
+  ],
+  "starts": {
+    "total": 12,
+    "fixed": [
+      "alpha.1 slopes0 beta1 kappa0",
+      "alpha.5 slopes0 beta1 kappa0"
+    ],
+    "sobol": 10,
+    "sobol_scramble_seed": 1201,
+    "dimension": 7,
+    "points": "First10 of random_base2(m=4), map full bounds; set inactive coefficients0"
+  },
+  "optimisation": {
+    "method": "L-BFGS-B finite differences",
+    "maxiter": 400,
+    "ftol": 1e-10,
+    "gtol": 1e-06
+  },
+  "real_source_fits": 432,
+  "selection": "Within family choose gamma/start by minimum TRAINING negative mean moveLL; tie lowergamma/start. Validation does not select candidates in v2, but v1 source validation was already inspected, so this is exploratory.",
+  "profile": {
+    "families": [
+      "surprise",
+      "controlled_joint"
+    ],
+    "bq_grid": [
+      -12,
+      -6,
+      0,
+      6,
+      12
+    ],
+    "starts": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "gamma_candidates": [
+      0.9,
+      0.95,
+      0.99
+    ],
+    "fits": 240,
+    "interpretation": "Minimum train loss across gamma/start at each fixedbq; inspect sign/ridges/individual predictive changes. No automatic asymptotic confidence interval or species mechanism."
+  },
+  "technical_requirements": [
+    "Numba and independent NumPy comparisons for all6 families/3gammas/2species",
+    "Zero practice slopes reproduce unchanged v1 kernel, including all flags/resets",
+    "Practice covariates use past trial count/rawordinal only; causal outcome/future-isolation checks",
+    "No-overwrite reservations and bound protocol/code/cache/data/driver/auditor GO",
+    "All432 full fits and all240profiles terminal; independent full NumPy replay before scientific interpretation"
+  ],
+  "resources": {
+    "device": "CPU",
+    "workers_max": 2,
+    "threads": 1
+  },
+  "failure_policy": "Preserve all failures and optimiser statuses, no silent retry. Convergence does not imply an identified gate.",
+  "future": "Register regime-matched synthetic recovery, including estimated gamma/temperature and gamma reselection, before recovery fits. Shared/pooled/separate and closed-loop transfer follow recoverable functions and relevant practice controls.",
+  "scope": "No target native or digital layouts8\u201325, no transport, no paper success/submission claim."
+}

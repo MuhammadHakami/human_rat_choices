@@ -1,0 +1,24 @@
+{
+  "name": "L3 source development diagnostic: calibration coverage and optimization",
+  "status": "Exploratory, registered after viewing the original L3 source gate. Does not replace or rescue that gate.",
+  "data": "The already examined fourth M1 calibration day only. Original first-half SELECTION and second-half GATE windows retained as development-selection and development-report partitions. No H1 or untouched M1 minival file is read.",
+  "questions": [
+    "Does distributing the same number of labels across the available 320-bin prefix reduce short-prefix coverage and centering failures?",
+    "Can a stable linear local readout learn the source task with repeated uses of the same labels, and what is its gap to batch ridge?"
+  ],
+  "budgets": [40, 80, 160, 320],
+  "sampling": {
+    "contiguous": "first b eligible prefix rows",
+    "spread": "b unique evenly spaced indices, including both endpoints, within the same 320 eligible prefix rows; labels at other prefix rows are not fitted",
+    "cost": "Report unique labelled rows, feedback events and elapsed recording time. Spread sampling waits through the whole 320-row prefix even at budget 40; it is not equal acquisition latency. All queries remain unchanged, after the trial holding prefix row 320."
+  },
+  "methods": {
+    "calibration_mean": "per-channel mean from selected calibration labels only",
+    "zero": "zero output, diagnostic only",
+    "ridge": "same L3 intercept ridge; lambda selected from 0.01,0.1,1,10,100 on development-selection windows for each budget and sampling scheme",
+    "nlms": "same L3 linear normalized LMS, zero weights, calibration-only centering/scaling, mu in 0.003,0.01,0.03,0.1,0.3,1; 1,5,20 passes in time order, with mu selected separately on development-selection for each pass count/budget/sampling scheme. Unique labels unchanged but feedback events are b times passes. No claim of equal-update advantage."
+  },
+  "normalization_features_queries": "Reuse original L3 exactly; calibration statistics use selected rows only. Original saved absolute window IDs are asserted identical. Predictions frozen before query; no test labels or feedback used for adaptation.",
+  "outputs": "data/wacv/xspecies_l3_diagnostic/{selection.json,results.json,predictions.npz,figure_diagnostic.pdf,figure_diagnostic.png}",
+  "interpretation": "A model-development diagnosis, not fresh validation or cross-species evidence. Method or budget choices here require a separate prospective protocol and untouched data for validation. Online normalized LMS is known prior work; do not claim algorithm novelty."
+}

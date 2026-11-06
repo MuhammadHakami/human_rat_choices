@@ -1,0 +1,47 @@
+{
+ "written_utc": "2026-10-31T11:54:02Z",
+ "outcomes_seen": false,
+ "script_sha256": "f65f6c7ab6069ec6b294de2fd5d77c74cc34d4db3bcf1993954729b3fc210d35",
+ "question": "Does a human-choice prior speed learning of a NEW goal, and does that depend on the learning rule (PPO vs local three-factor rules)?",
+ "priors": [
+  "human_bc",
+  "human_legal_uniform",
+  "cold_ppo"
+ ],
+ "learners": [
+  "ppo",
+  "td_head",
+  "td_fa"
+ ],
+ "budget": 32768,
+ "n_envs": 16,
+ "curve": [
+  0,
+  4096,
+  8192,
+  16384,
+  32768
+ ],
+ "gamma": 0.95,
+ "trace_lambda": 0.9,
+ "rooms": {
+  "dev": "exposed continual rooms (cfg 100-115), seeds 1000-1002",
+  "test": "16 fresh confirmation rooms, seeds 1000-1029; room = pair seed%8, A"
+ },
+ "moved_goal": "target (6, 6), camera-ready nearest-walkable rule",
+ "calibration": {
+  "rates": [
+   0.001,
+   0.003,
+   0.01,
+   0.03
+  ],
+  "rule": "max mean final dev success over priors; PPO untuned (registered)"
+ },
+ "primary": {
+  "outcome": "normalised learning-curve AUC (trapezoid over CURVE of successes/30, divided by 30 x budget) and final success",
+  "contrasts": "per learner: human_bc - human_legal_uniform, human_bc - cold_ppo (paired over 30 seeds); Holm over the 6 AUC contrasts"
+ },
+ "secondary": "final success; learner contrasts within prior; trapped/revisit at the final probe; dev seeds 1000-1002 also appear in test (different rooms)",
+ "caveat": "local learners are biologically plausible credit-assignment rules on a backprop-trained (BC+PPO) starting network; not spiking, not a full bio-plausible agent"
+}
