@@ -1131,6 +1131,21 @@ new goal in 75\% of test runs ($+14.6$ pp over PPO, $[5.9,23.4]$, $p=.001$). It 
 TOST $p=.047$). It does trail on the familiar goal ($-7.2$, $[-11.5,-2.9]$). Against stage 3 the stage-4 winner is equivalent on
 both new-goal probes (TOST $p\leq.016$) and lower on the familiar goal in the unseen room ($-4.9$, $[-8.7,-1.1]$). It is a fourth tested selection, so the main text keeps stage 3.
 
+\paragraph{Stage 5: a proved transfer identity motivates a place drive, which is rejected (registered NSGA-II, 120 trials on one GPU; one test).}
+For the three-factor update $\Delta W=\eta\,\delta\,g\,z_A^\top$ we prove in Lean~4 (Mathlib; \texttt{proofs\_ml/ProofsML/Transfer.lean},
+standard axioms only) that the readout at any other state $B$ moves by exactly $\eta\,\delta\,g\,\langle z_A,z_B\rangle$. Transfer
+to an unseen room is therefore proportional to code overlap. The same view in the trained and unseen rooms shares cosine .71 of its
+Kenyon-cell code, versus .95 for PPO's learned hidden layer. The filter's place belief is room-invariant (cosine 1.00 along matched
+paths). We also prove that a common drive $\beta c$ added to both pre-activations leaves their difference unchanged and raises
+their inner product by $\beta(\langle a,c\rangle+\langle c,b\rangle)+\beta^2\|c\|^2$. Stage 5 therefore fed the 100-cell place belief to every Kenyon
+cell through $c_p$ random synapses (gain $\beta\in\{0,.5,1,2,4\}$, $c_p\in\{3,7,15\}$), with the stage-4 objectives. One deviation
+is disclosed: a probe-shape bug crashed every $\beta>0$ trial at the first launch, and it was fixed before any $\beta>0$ outcome
+existed (ADDENDUM1). The ungated dev winner uses $\beta=0$, so the drive is rejected there. Its test is a new stage-3 configuration
+that learns the new goal in 69\% of runs ($+8.1$ pp over PPO, $[-0.6,16.7]$). In the unseen room it reaches 23\% on the new goal
+($-4.7$ vs PPO, $[-10.8,1.4]$, TOST $p=.044$; $+2.7$ vs stage 3, $[-2.0,7.5]$). The gated winner ($\beta=1$) keeps the old goal
+better than PPO ($+12.3$, $[6.1,18.4]$) but falls to 11\% on the new goal in the unseen room ($-16.7$, $[-22.3,-11.2]$). Higher
+overlap did not translate into transfer, so the result is a registered null; the main text keeps stage 3.
+
 \paragraph{Spiking cost of the learned networks.} The learned networks were converted to signed integrate-and-fire
 networks exactly as the priors were (10 seeds $\times$ 3 priors, learned task, trained room). Conversion preserves
 success at every $T$ (PPO 63--64\% versus 63\% dense; search 2 99.3--99.9\% versus 99.4--99.9\%). The expansion

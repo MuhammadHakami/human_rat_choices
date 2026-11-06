@@ -118,16 +118,18 @@ export function bfs(walk, from) {
   return d;
 }
 
+const FRAMES = new Map(), FRAME_CAP = 4000;                              // views shared across episodes (least recently used out)
 export class Env {
   // E: env.json; room: {walkable, goal}; spawner(): {spawn, rotation_index}
   constructor(E, room, n, spawner) {
-    this.E = E; this.walk = room.walkable; this.goal = room.goal; this.n = n; this.spawner = spawner; this.frames = new Map();
+    this.E = E; this.walk = room.walkable; this.goal = room.goal; this.n = n; this.spawner = spawner; this.wkey = room.walkable.flat().join("");
     this.belief = Array.from({ length: n }, () => new Belief(E.atlasF, E.sigma)); this.completed = [];
   }
   frame(cell, heading, rot) {
-    const k = `${cell}|${heading}|${rot}`;
-    if (!this.frames.has(k)) { const img = render(this.E.view, this.walk, cell, heading, this.E.rotations[rot]); this.frames.set(k, { img, ...pool(img, this.E.view, ...this.E.pooled) }); }
-    return this.frames.get(k);
+    const k = `${this.wkey}|${cell}|${heading}|${rot}`; let f = FRAMES.get(k);
+    if (f) { FRAMES.delete(k); FRAMES.set(k, f); return f; }
+    const img = render(this.E.view, this.walk, cell, heading, this.E.rotations[rot]); f = { img: Float32Array.from(img), ...pool(img, this.E.view, ...this.E.pooled) };
+    FRAMES.set(k, f); if (FRAMES.size > FRAME_CAP) FRAMES.delete(FRAMES.keys().next().value); return f;
   }
   newWorld() {
     const { spawn, rotation_index } = this.spawner();
@@ -193,8 +195,9 @@ export class Circuit {
   code(h) {                                                          // sparse code: {i: active cell ids, v: rates}
     const K = this.K, cc = this.c.c, pre = new Float64Array(K);
     for (let j = 0; j < K; j++) { let s = 0; for (let q = 0; q < cc; q++) s += h[this.idx[j * cc + q]] * this.w[j * cc + q]; pre[j] = s; }
-    const ids = []; for (let j = 0; j < K; j++) if (!this.gated || this.mask[this.ctx][j]) ids.push(j);
-    ids.sort((a, b) => pre[b] - pre[a]); const top = ids.slice(0, this.k).filter(j => pre[j] > 0);
+    const cand = this.gated ? pre.map((v, j) => this.mask[this.ctx][j] ? v : -Infinity) : pre;   // k-WTA within the active context
+    const thr = Float64Array.from(cand).sort()[K - this.k], top = [];                               // k-th largest, no full argsort
+    for (let j = 0; j < K && top.length < this.k; j++) if (cand[j] >= thr && cand[j] > 0) top.push(j);
     let n = 0; for (const j of top) n += pre[j] * pre[j]; n = Math.sqrt(n) + 1e-6;
     return { i: top, v: top.map(j => pre[j] / n), pre };
   }

@@ -44,7 +44,8 @@ Build and check the page locally:
 ```bash
 python tools/build_site_data.py            # site/data from the repo's code and records (add --cohort DIR for seeds 1001-1004)
 node site/test/parity.mjs                  # JS vs Python: views, belief, logits ~1e-6; circuit synapses after 64 learning steps ~3e-6
-node site/test/learned.mjs                 # the learned PPO and brain-circuit agents the page shows vs the paper's recorded probes
+node site/test/learned.mjs                 # learned PPO and mushroom-body agents vs the paper's recorded probes (30 agents)
+node site/test/frozen.mjs REF.json         # frozen human/rat/legal/PPO agents, 16 rooms x 30 trials per seed, vs the records
 bash tools/build_site.sh && python -m http.server -d _site 8000   # then open http://localhost:8000
 ```
 

@@ -1,0 +1,9 @@
+{
+ "written_utc": "2026-11-06T18:14:00Z",
+ "amends_sha256": "9b15f122462778ce7be2cee1326253c3e40f5f01054ebdccf8475bb8b0e29282",
+ "change": "Bug fix only: every beta>0 trial crashed in the frozen probe ('prob_dist must be 1 or 2 dim'): the probe feeds the backbone a (1,1,252) batch while the Kenyon code receives h as (1,64), so the captured place belief broadcast to 3-D. The belief is now reshaped to h's leading dimensions (same values). check() now also runs the frozen probe with the place drive.",
+ "outcomes_seen": "none of stage 5 with beta>0 (all such trials crashed before writing a record); the two enqueued references (beta=0) completed and reproduce stage 3 9/9; check() smoke probe of an UNTRAINED beta=2 circuit, moved goal: 0/30.",
+ "design_unchanged": true,
+ "failed_trials": "kept as FAIL in optuna.db and not used; the search continues in the same study to 120 completed trials",
+ "script_sha256": "f32404bdcb3efc62c2b6fae1474c2619efb1a346255cc404b8328705df827f14"
+}

@@ -153,7 +153,7 @@ def proofs():
     import re
     src = "".join(f.read_text() for d in ("proofs/Proofs", "proofs_ml/ProofsML") for f in sorted((ROOT / d).glob("*.lean")))
     out = {}
-    for name in ("trapped_forever", "relabel_keeps_states", "species_gap_decomposition", "trace_bounded", "softmax_logit_grad"):
+    for name in ("trapped_forever", "relabel_keeps_states", "species_gap_decomposition", "trace_bounded", "softmax_logit_grad", "transfer_identity"):
         m = re.search(rf"theorem {name}\b(.*?):=", src, re.S); out[name] = re.sub(r"\s+", " ", f"theorem {name}{m.group(1)}").strip()
     return out
 

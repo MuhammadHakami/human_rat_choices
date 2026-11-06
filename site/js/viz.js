@@ -16,8 +16,11 @@ export function fit(cv, w, h) {
 }
 
 export function drawView(cv, img, view) {                          // 64 x 36 luminance image, nearest-neighbour upscale
-  const W = view.width, H = view.height, off = new OffscreenCanvas(W, H), o = off.getContext("2d"), d = o.createImageData(W, H);
-  for (let p = 0; p < W * H; p++) { const v = Math.max(0, Math.min(255, Math.round(img[p] * 255))); d.data.set([v, v, v * .97 + 6, 255], p * 4); }
+  const W = view.width, H = view.height;
+  if (!cv._off) { cv._off = new OffscreenCanvas(W, H); cv._o = cv._off.getContext("2d"); cv._d = cv._o.createImageData(W, H); }   // reused buffers
+  const off = cv._off, o = cv._o, d = cv._d;
+  const px = d.data;
+  for (let p = 0, q = 0; p < W * H; p++, q += 4) { const v = Math.max(0, Math.min(255, Math.round(img[p] * 255))); px[q] = px[q + 1] = v; px[q + 2] = v * .97 + 6; px[q + 3] = 255; }
   o.putImageData(d, 0, 0); const g = cv.getContext("2d"); g.imageSmoothingEnabled = false; g.drawImage(off, 0, 0, cv.width, cv.height);
 }
 

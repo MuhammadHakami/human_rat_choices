@@ -21,7 +21,12 @@ try {
   console.log("hero cards:", await ev(`document.querySelectorAll('#hero .agent').length`), "play cards:", await ev(`document.querySelectorAll('#play-agents .agent').length`));
   await shot("0_hero", "#top");
   const r0 = await ev(`window.__arenas.hero.resets`); await sleep(12000);
+  console.log("play tick (4 agents + model panel):", await ev(`(() => { const A = window.__arenas.play; const t0 = performance.now(); let n = 0; for (; n < 120; n++) { if (!A.tick()) A.reset(); } return ((performance.now() - t0) / n).toFixed(2) + " ms"; })()`));
+  console.log("hero after the curated 8:", await ev(`(() => { const H = window.__arenas.hero; const caps = []; for (let k = 0; k < 3; k++) { H.trial = 8 + k; H.nextEpisode(); caps.push(document.querySelector('.hero-cap').textContent.split(' · ').slice(0, 5).join(' · ')); } H.trial = 1; H.reset(); return caps.join(' | '); })()`));
+  console.log("play auto-cycle:", await ev(`(async () => { const P = window.__arenas.play, r0 = P.resets; P.agents.forEach(A => { A.done = true; A.result = A.env.w[0]; }); P.tick();
+    await new Promise(r => setTimeout(r, 3500)); return \`resets +\${P.resets - r0}, now seed \${P.s.seed}, \${D_room()}\`; function D_room() { return document.querySelector('#play-controls label select').selectedOptions[0].textContent + ', goal ' + P.s.goal + ', start ' + P.s.start; } })()`));
   console.log("hero resets in 12 s:", (await ev(`window.__arenas.hero.resets`)) - r0, "episode caption:", await ev(`document.querySelector('.hero-cap').textContent`));
+  await sleep(15000); console.log("rates:", await ev(`[...document.querySelectorAll('#play-agents .agent')].map(c => c.querySelector('h3').textContent + ': ' + c.querySelector('.rate').innerText.replace(/\\n/g, ' | ')).join(' || ')`));
   await shot("1_play", "#play");
   await ev(`[...document.querySelectorAll('#play button')].find(b => b.textContent.includes('probe')).click()`); await sleep(6000); await shot("2_probe", "#play-probe");
   console.log("probe note:", await ev(`document.getElementById('play-probe-note').textContent`));

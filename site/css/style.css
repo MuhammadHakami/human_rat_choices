@@ -67,7 +67,8 @@ select { background: var(--bg); color: var(--fg); border: 1px solid var(--line);
 .pill { font: inherit; font-size: .8rem; padding: 4px 10px; border-radius: 99px; border: 1.5px solid var(--line); background: var(--bg); color: var(--fg); cursor: pointer; }
 .pill.on { color: #fff; }
 
-.agents { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 300px)); gap: 14px; justify-content: center; }
+.agents { display: grid; grid-template-columns: repeat(var(--n, 4), minmax(0, 300px)); gap: 14px; justify-content: center; }
+.agent .sub { font-size: .72rem; color: var(--muted); margin: -3px 0 6px; height: 2.7em; line-height: 1.35; overflow: hidden; }
 .agent { background: var(--panel); border: 1px solid var(--line); border-radius: var(--r); padding: 10px; box-shadow: var(--shadow); cursor: pointer; transition: border-color .15s; min-width: 0; }
 .agent.sel { border-color: var(--bio); box-shadow: 0 0 0 2px color-mix(in srgb, var(--bio) 35%, transparent); }
 .agent h3 { margin: 0 0 6px; font-size: .9rem; display: flex; justify-content: space-between; gap: 6px; }
@@ -138,6 +139,7 @@ footer { max-width: 1240px; margin: 36px auto 0; padding: 22px 16px 44px; color:
   .arch { grid-template-columns: 1fr 1fr; } .block::after { display: none; }
 }
 @media (max-width: 700px) {
+  .agents { grid-template-columns: repeat(min(var(--n, 4), 2), minmax(0, 1fr)); }
   .hero-live { grid-template-columns: repeat(2, minmax(0, 1fr)); } .tiles { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .duel, .lane, .duel-chart, .grid2, .probe-row, .animals { grid-template-columns: 1fr; } nav .brand { display: none; }
 }
@@ -147,3 +149,5 @@ footer { max-width: 1240px; margin: 36px auto 0; padding: 22px 16px 44px; color:
 .glossary { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 10px; }
 .gl { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 4px; font-size: .84rem; }
 .gl b { color: var(--bio); font-size: .9rem; } .gl i { font-style: normal; color: var(--muted); font-size: .8rem; } .gl a { font-size: .78rem; margin-top: auto; }
+.agent .rate { margin-top: 6px; padding-top: 6px; border-top: 1px dashed var(--line); display: flex; flex-direction: column; gap: 1px; font-size: .74rem; color: var(--muted); }
+.agent .rate b { font-size: .86rem; color: var(--fg); } .hero-live .agent .rate b { color: var(--hero-fg); font-size: .76rem; } .hero-live .agent .rate { font-size: .66rem; border-color: #2b333d; }

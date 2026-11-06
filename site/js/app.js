@@ -36,6 +36,20 @@ const HERO_EPISODES = [
   { seed: 1002, cfg: 105, goal: "familiar", start: 4, rot: 1 }, { seed: 1003, cfg: 106, goal: "moved", start: 6, rot: 2 },
   { seed: 1004, cfg: 109, goal: "familiar", start: 8, rot: 0 }, { seed: 1000, cfg: 100, goal: "moved", start: 5, rot: 1 } ];
 const LINEUP = ["human_bc", "rat_bc", "bl3@human_bc", "ppo@human_bc"];
+// The paper's value for the same kind of condition (30 seeds), shown next to the browser's own measurement.
+function paperRef(key, room, goal, custom) {
+  if (custom) return "paper: n/a (your own room or goal)";
+  const R = D.R, [kind, base] = key.includes("@") ? key.split("@") : [null, key], moved = goal === "moved";
+  if (!kind || kind === "bc0") { const v = R.ood[moved ? "sample_moved" : "registered_sample_source"]?.[base]?.success; return v ? `paper: ${mean(v).toFixed(0)}% (30 seeds × 16 rooms)` : ""; }
+  const l = kind === "ppo" ? "ppo" : "bl3_none", k = room.stage === "A" ? (moved ? "new" : "familiar_trained_room") : (moved ? "moved_heldout_room" : "familiar_heldout_room");
+  const v = R.kpi[`${l}/${base}/${k}`]; return v ? `paper: ${v[0].toFixed(0)}% ± ${v[1].toFixed(0)} (30 seeds)` : "";
+}
+let rateJob = 0;
+let EP_RNG = rng((Date.now() % 1e9) >>> 0);
+function randomEpisode() {                                          // a new scenario: any seed, trained or never-seen room, either goal, any start and texture
+  const u = EP_RNG, seed = D.C.seeds[Math.floor(u() * D.C.seeds.length)], unseen = u() < .55;
+  return { seed, cfg: 100 + 2 * (seed % 8) + unseen, goal: u() < .65 ? "moved" : "familiar", start: Math.floor(u() * D.E.starts.length), rot: Math.floor(u() * 4) };
+}
 const SCENARIOS = {
   learn: { label: "Goal moved, trained room", models: LINEUP, goal: "moved", room: s => D.E.rooms.findIndex(r => r.configuration === 100 + 2 * (s % 8)), start: 1 },
   unseen: { label: "Goal moved, never-seen room", models: LINEUP, goal: "moved", room: s => D.E.rooms.findIndex(r => r.configuration === 101 + 2 * (s % 8)), start: 0 },
@@ -46,15 +60,38 @@ class Arena {
   // default seed 1002: one seed with the typical gap (PPO fails from 7 of 10 starts); the page states the 30-seed mean
   constructor(host, { controls = null, autoplay = false, onSelect = null } = {}) {
     this.host = host; this.autoplay = autoplay; this.onSelect = onSelect; this.sel = 0; this.trial = 0; this.learned = null;
-    this.s = { scenario: "learn", room: SCENARIOS.learn.room(1002), goal: "moved", start: 1, rot: 0, seed: 1002, models: LINEUP.slice(), greedy: false, speed: 6, belief: true, edit: false };
+    this.s = { scenario: "learn", room: SCENARIOS.learn.room(1002), goal: "moved", start: 1, rot: 0, seed: 1002, models: LINEUP.slice(), cycle: !autoplay, greedy: false, speed: 6, belief: true, edit: false };
     if (controls) this.controls(controls);
   }
   room() { return D.E.rooms[this.s.room]; }
+  measure() {                                                      // stable rates for these agents in this room and goal (rates.js)
+    if (!this.rates) { this.rates = new Worker(new URL("./rates.js", import.meta.url), { type: "module" });      // one per arena: jobs never cancel each other
+      this.rates.onmessage = ({ data: m }) => { if (m.id !== this.job || !this.cards?.[m.j]) return;
+        this.cards[m.j].rate.querySelector("b").textContent = m.error ? "–" : `${m.mean.toFixed(0)}%${m.ci != null ? ` ± ${m.ci.toFixed(0)}` : ""} ${this.rateLabels?.[m.j] ?? ""} · ${m.trials} trials${m.done ? "" : "…"}`; }; }
+    const id = this.job = ++rateJob, S = this.s, r = this.room(), goal = this.goal(), custom = S.goal === "click" || this.walk.flat().join() !== r.walkable.flat().join();
+    this.cards.forEach((c, j) => { c.rate.querySelector("span").textContent = paperRef(this.agents[j].m, r, S.goal, custom); c.rate.querySelector("b").textContent = "measuring…"; });
+    const learned = this.agents.map(A => A.learned ? { seed: S.seed, Wa: this.learned.Wa, gate: this.learned.gate, ctx: this.learned.ctx } : null);
+    // Frozen agents never trained in these rooms: measure every seed in this room. Learned agents each learned the moved goal in
+    // their own room (seed % 8): measure each seed in its own trained room, or its own never-seen partner, as the paper does.
+    const own = sd => D.E.rooms.find(q => q.configuration === 100 + 2 * (sd % 8) + (r.stage === "B")), lab = [];
+    const jobs = this.agents.map((A, j) => {
+      const isLearned = A.learned || /^(bl3|ppo)@/.test(A.m);
+      if (!isLearned || custom) { lab[j] = A.learned ? "this run, this room" : "in this room"; return (A.learned ? [S.seed] : D.C.seeds).map(sd => ({ seed: sd, walk: this.walk, goal })); }
+      lab[j] = r.stage === "A" ? "in each seed's trained room" : "in each seed's never-seen room";
+      return (A.learned ? [S.seed] : D.C.seeds).map(sd => { const q = own(sd); return { seed: sd, walk: q.walkable, goal: S.goal === "moved" ? q.moved_goal : q.familiar_goal }; });
+    });
+    this.rateLabels = lab;
+    this.rates.postMessage({ id, models: this.agents.map(A => A.m), jobs, learned });
+  }
+  applyEpisode(ep) {
+    Object.assign(this.s, { scenario: "random", seed: ep.seed, room: D.E.rooms.findIndex(r => r.configuration === ep.cfg), goal: ep.goal, start: ep.start, rot: ep.rot });
+    this.walk = null; this.clickGoal = null; this.syncControls?.();
+  }
   nextEpisode() {                                                   // autoplay: the next of the diverse episodes
-    const ep = HERO_EPISODES[this.trial % HERO_EPISODES.length], S = this.s;
+    const fixed = this.trial < HERO_EPISODES.length, ep = fixed ? HERO_EPISODES[this.trial] : randomEpisode(), S = this.s;   // curated first, then random forever
     Object.assign(S, { seed: ep.seed, room: D.E.rooms.findIndex(r => r.configuration === ep.cfg), goal: ep.goal, start: ep.start, rot: ep.rot }); this.walk = null;
     const r = this.room(), cap = document.querySelector(".hero-cap");
-    if (cap) cap.innerHTML = `episode ${this.trial % HERO_EPISODES.length + 1}/${HERO_EPISODES.length} · seed ${ep.seed} · ${roomName(r)} ${r.stage === "A" ? "(where the learners trained)" : "(never seen by any agent)"} · ` +
+    if (cap) cap.innerHTML = `${fixed ? `episode ${this.trial + 1}/${HERO_EPISODES.length}` : `random episode ${this.trial - HERO_EPISODES.length + 1}`} · seed ${ep.seed} · ${roomName(r)} ${r.stage === "A" ? "(where the learners trained)" : "(never seen by any agent)"} · ` +
       `${ep.goal === "moved" ? "goal moved" : "familiar goal (3,3)"} · start (${D.E.starts[ep.start]}) · ★ goal`;
   }
   renderSlots() {
@@ -66,16 +103,17 @@ class Arena {
   controls(c) {
     const S = this.s, re = () => this.reset();
     const rooms = D.E.rooms.map((r, i) => [i, `${roomName(r)}${r.stage === "B" ? " (never used for learning)" : ""}`]);
-    const pills = h("span", { class: "pills" }), sync = () => { roomSel.querySelector("select").value = S.room; goalSel.querySelector("select").value = S.goal; startSel.querySelector("select").value = S.start; };
+    const pills = h("span", { class: "pills" }), sync = () => { roomSel.querySelector("select").value = S.room; goalSel.querySelector("select").value = S.goal; startSel.querySelector("select").value = S.start;
+      seedSel.querySelector("select").value = S.seed; texSel.querySelector("select").value = S.rot; }; this.syncControls = sync;
     for (const [k, sc] of Object.entries(SCENARIOS)) { const b = h("button", { class: "pill" + (k === S.scenario ? " on" : ""), style: k === S.scenario ? "background:var(--fg)" : "", onclick: () => {
       S.scenario = k; Object.assign(S, { models: sc.models.slice(), goal: sc.goal, room: sc.room(S.seed), start: sc.start }); this.walk = null; this.clickGoal = null;
       pills.querySelectorAll(".pill").forEach(x => { x.classList.remove("on"); x.style.background = ""; }); b.classList.add("on"); b.style.background = "var(--fg)"; this.renderSlots(); sync(); re(); } }, sc.label); pills.append(b); }
-    const roomSel = sel("Room", rooms, S.room, v => { S.room = +v; this.walk = null; re(); }); let seedSel;
+    const roomSel = sel("Room", rooms, S.room, v => { S.room = +v; this.walk = null; re(); }); let seedSel, texSel;
     const goalSel = sel("Goal", [["familiar", "familiar (3,3)"], ["moved", "moved"], ["click", "click a cell"]], S.goal, v => { S.goal = v; re(); });
     const startSel = sel("Start", [[-1, "random"]].concat(D.E.starts.map((s, i) => [i, `(${s})`])), S.start, v => { S.start = +v; re(); });
     c.append(pills, h("span", { style: "flex-basis:100%;height:0" }), roomSel,
       goalSel, startSel,
-      sel("Floor texture", [0, 1, 2, 3].map(i => [i, `rotation ${i}`]), S.rot, v => { S.rot = +v; re(); }),
+      texSel = sel("Floor texture", [0, 1, 2, 3].map(i => [i, `rotation ${i}`]), S.rot, v => { S.rot = +v; re(); }),
       seedSel = sel("Seed", D.C.seeds.map(s => [s, s]), S.seed, v => { S.seed = +v; if (SCENARIOS[S.scenario]) { S.room = SCENARIOS[S.scenario].room(S.seed); this.walk = null; sync(); } re(); }),
       sel("Actions", [["sample", "sampled (as tested)"], ["greedy", "greedy"]], "sample", v => { S.greedy = v === "greedy"; re(); }));
     this.slots = h("span", { class: "seg" }); this.renderSlots();
@@ -86,9 +124,8 @@ class Arena {
       h("button", { class: "btn", onclick: () => this.playing = !this.playing }, "▶ / ❚❚"),
       h("button", { class: "btn ghost", onclick: () => { this.playing = false; this.tick(); } }, "step"),
       h("button", { class: "btn ghost", onclick: () => { this.trial++; re(); } }, "↺ new trial"),
-      h("button", { class: "btn ghost", onclick: () => { const u = Math.random, seed = D.C.seeds[Math.floor(u() * D.C.seeds.length)], pair = seed % 8, unseen = u() < .5;
-        Object.assign(S, { scenario: "random", seed, room: D.E.rooms.findIndex(r => r.configuration === 100 + 2 * pair + unseen), goal: u() < .6 ? "moved" : "familiar", start: Math.floor(u() * 10), rot: Math.floor(u() * 3) });
-        this.walk = null; this.renderSlots(); sync(); seedSel.querySelector("select").value = seed; re(); } }, "🎲 random episode"), editB,
+      h("button", { class: "btn ghost", onclick: () => { this.trial++; this.applyEpisode(randomEpisode()); re(); } }, "🎲 random episode"),
+      h("label", {}, h("input", { type: "checkbox", checked: "", onchange: e => { S.cycle = e.target.checked; if (S.cycle && this.agents?.every(A => A.done)) this.tick(); } }), "auto-cycle"), editB,
       h("button", { class: "btn ghost", onclick: () => this.runProbe() }, "Run 30-trial probe"));
   }
   goal() {
@@ -114,18 +151,20 @@ class Arena {
     this.agents.forEach(A => A.out = circuitAgent(A.L)(A.x)); this.build(); this.draw(); this.onSelect?.(this.agents[this.sel]);
   }
   build() {
-    this.host.innerHTML = "";
+    this.host.innerHTML = ""; this.host.style.setProperty("--n", Math.min(this.agents.length, 4));
     this.cards = this.agents.map((A, j) => {
       const info = INFO(A.m), card = h("div", { class: "agent" + (j === this.sel && !this.autoplay ? " sel" : "") });
-      const view = h("canvas", { class: "view" }), room = h("canvas", { class: "room" }), st = h("div", { class: "status" });
-      card.append(h("h3", { style: `color:${info.col}` }, A.learned ? "mushroom-body circuit, learned here in your browser" : (this.autoplay ? info.short : info.label), h("span", { class: "mini" }, INFO(A.m).from ? `from ${INFO(A.m).from} · seed ${this.s.seed}` : `seed ${this.s.seed}`)), view, room, st);
+      const view = h("canvas", { class: "view" }), room = h("canvas", { class: "room" }), st = h("div", { class: "status" }), rate = h("div", { class: "rate" }, h("b", {}, "measuring…"), h("span", {}, ""));
+      const [kind] = A.m.includes("@") ? A.m.split("@") : [null], name = A.learned || kind === "bl3" || kind === "bc0" ? "mushroom-body circuit" : kind === "ppo" ? "PPO" : info.label;
+      const sub = A.learned ? "learned here, in your browser" : kind === "bl3" ? "learned the moved goal · local plasticity" : kind === "ppo" ? "learned the moved goal · backpropagation" : kind === "bc0" ? "before learning" : "frozen, imitates recorded choices";
+      card.append(h("h3", { style: `color:${info.col}` }, this.autoplay ? info.short : name), this.autoplay ? "" : h("div", { class: "sub" }, `${sub}${info.from ? ` · from ${info.from}` : ""} · seed ${this.s.seed}`), view, room, st, rate);
       card.onclick = () => { if (this.autoplay) return; this.sel = j; this.cards.forEach((c, k) => c.card.classList.toggle("sel", k === j)); this.onSelect?.(A); };
       room.onclick = e => { if (this.autoplay) return; const b = room.getBoundingClientRect(), c = Math.floor((e.clientX - b.left) / b.width * 10), r = Math.floor((e.clientY - b.top) / b.height * 10);
         if (this.s.edit) { this.walk[r][c] = 1 - this.walk[r][c]; this.reset(); } else if (this.s.goal === "click") { this.clickGoal = [r, c]; this.reset(); } };
-      this.host.append(card); return { card, view, room, st };
+      this.host.append(card); return { card, view, room, st, rate };
     });
     const refit = () => { this.cards.forEach(c => { fit(c.view, c.view.clientWidth, c.view.clientWidth * 36 / 64); fit(c.room, c.room.clientWidth, c.room.clientWidth); }); this.draw(); };
-    requestAnimationFrame(refit); this.ro?.disconnect(); this.ro = new ResizeObserver(() => requestAnimationFrame(refit)); this.ro.observe(this.host);
+    this.measure(); requestAnimationFrame(refit); this.ro?.disconnect(); this.ro = new ResizeObserver(() => requestAnimationFrame(refit)); this.ro.observe(this.host);
   }
   tick() {
     let any = false;
@@ -135,12 +174,14 @@ class Arena {
       const o = A.env.step([a]); if (o.done[0]) { A.done = true; A.result = A.env.completed.at(-1); } else { A.x = o.obs[0]; A.out = circuitAgent(A.L)(A.x); }
     }
     this.draw(); this.onSelect?.(this.agents[this.sel]);
+    if (!any && !this.autoplay && this.s.cycle && !this.pending) {          // Play: next random episode
+      this.pending = true; setTimeout(() => { this.pending = false; if (!this.s.cycle) return; this.trial++; this.applyEpisode(randomEpisode()); this.reset(); }, 2500); }
     if (!any && this.autoplay && !this.pending) {                  // once: the loop keeps ticking while the restart waits
       this.pending = true; setTimeout(() => { this.pending = false; this.trial++; this.nextEpisode(); this.reset(); }, 1800); }
     return any;
   }
   draw() {
-    if (!this.cards) return;
+    if (!this.cards || !this.walk) return;                        // between episodes the room is being replaced
     this.agents.forEach((A, j) => {
       const c = this.cards[j], w = A.done ? A.result : A.env.w[0], info = INFO(A.m), E = D.E;
       const fr = A.env.frame(w.pos, w.heading, w.rot); if (c.view.width) drawView(c.view, fr.img, E.view);
@@ -150,8 +191,11 @@ class Arena {
         ` · revisits ${revisits(A.result.path)}%` : `move ${w.decisions}<div class="pbar" style="color:${info.col}">${A.out.p.map(p => `<i style="--w:${(100 * p).toFixed(0)}%"></i>`).join("")}</div><div class="pbar-l"><span>S</span><span>N</span><span>E</span><span>W</span></div>`;
     });
   }
-  loop() { let acc = 0, last = performance.now();
-    const f = t => { acc += (t - last) / 1000 * this.s.speed; last = t; if ((this.playing ?? this.autoplay) && this.agents) while (acc >= 1) { acc -= 1; this.tick(); } else acc = Math.min(acc, 1); requestAnimationFrame(f); };
+  loop() { let acc = 0, last = performance.now(); this.visible = true;
+    new IntersectionObserver(es => { this.visible = es[0].isIntersecting; }).observe(this.host);
+    const f = t => { acc += (t - last) / 1000 * this.s.speed; last = t;
+      if ((this.playing ?? this.autoplay) && this.agents && this.visible && !document.hidden) while (acc >= 1) { acc -= 1; this.tick(); } else acc = Math.min(acc, 1);
+      requestAnimationFrame(f); };
     requestAnimationFrame(f); }
   async runProbe() {
     const out = [], goal = this.goal(), room = { walkable: this.walk };
@@ -309,7 +353,8 @@ function glossary() {
 function proofList() {
   const P = [["trapped_forever", "a frozen agent that revisits a state loops forever"], ["relabel_keeps_states", "the legal-label control changes only actions"],
     ["species_gap_decomposition", "human − rat = coverage gap + choice gap"], ["trace_bounded", "the circuit's eligibility trace stays bounded"],
-    ["softmax_logit_grad", "the local rule is the policy gradient (Mathlib)"]];
+    ["softmax_logit_grad", "the local rule is the policy gradient (Mathlib)"],
+    ["transfer_identity", "learning in one room reaches another only through shared Kenyon cells (Mathlib)"]];
   for (const [n, t] of P) { const e = h("div", { class: "proof", onclick: () => e.classList.toggle("on") }, h("code", {}, n), h("span", {}, t), h("pre", {}, D.R.proofs[n])); $("proof-list").append(e); }
 }
 
@@ -380,7 +425,8 @@ function results() {
   Object.assign(D, { E: prepare(E), C, R, A });
   results(); animals();
   tiles(); proofList();
-  const hero = new Arena($("hero"), { autoplay: true }); hero.s.speed = 5; hero.nextEpisode(); await hero.reset(); hero.loop(); glossary(); window.__arenas = { hero };   // test handle (site/test/browser.mjs)
+  const hero = new Arena($("hero"), { autoplay: true }); hero.s.speed = 5; hero.nextEpisode(); await hero.reset(); hero.loop(); glossary();
   const show = architecture(); const play = new Arena($("play-agents"), { controls: $("play-controls"), onSelect: show }); await play.reset(); play.playing = true; play.loop();
+  window.__arenas = { hero, play };                                   // test handle (site/test/browser.mjs)
   const refitLab = learningLab(play); addEventListener("resize", () => requestAnimationFrame(refitLab)); reveal();
 })().catch(e => { console.error(e); document.body.insertAdjacentHTML("afterbegin", `<p style="padding:12px;background:#c0392b;color:#fff">Could not load the page data: ${e.message}</p>`); });

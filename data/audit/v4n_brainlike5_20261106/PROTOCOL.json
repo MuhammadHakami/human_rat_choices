@@ -1,0 +1,52 @@
+{
+ "written_utc": "2026-11-06T18:07:35Z",
+ "script_sha256": "eb0d958eb01c3e47d5cb18b90aaf7b0f0b46bbd6ba6ac85c29fcb7792b7ab82b",
+ "design": "Mushroom-body circuit, stage 5 (camera-ready, author 2026-11-06: \"continue and make sure to do LEAN based for unseen over bio\nplausible using GPU 1\"). GPU 1 only. Registered before any outcome of this stage.\nSeen before writing: stages 1-4 dev and test, incl. the unseen-room probes (stage 3 test: unseen-room new goal 20.4%, -7.4 pp\n[-13.4, -1.5] vs PPO; stage 4: dense lateral-horn pathway rejected on dev). Descriptive diagnostics (browser port, human-choice\nprior, seeds 1000-1004, not outcomes of this stage): at the same place and heading in the trained room and its never-seen\npartner, backbone hidden codes are cos .86 (.72 along matched trajectories), Kenyon-cell codes .71 (.61; 58% of active cells\nshared), and the agent's place belief 1.00 (same most likely cell in 100% of matched states).\nLean (proofs_ml/ProofsML/Transfer.lean, Mathlib, no sorry): transfer_identity -- after a three-factor update at state A the\nreadout at any state B moves by eta delta g <z_A, z_B>, so transfer to a never-seen room is proportional to Kenyon-code overlap;\nself_interference -- identical views (old and new goal share them) get the full update, so sparseness cannot reduce that\ninterference; drive_inner/drive_diff -- a common drive beta*c added to both pre-activations leaves their difference unchanged\nand adds beta(<a,c>+<c,b>) + beta^2 |c|^2 to their overlap.\nMechanism (one): place drive. Each Kenyon cell also sums cp random entries of the agent's own place belief (fixed, sparse,\nsigned, never trained; hippocampal / central-complex place input converging on a learning circuit), with gain beta, before the\nglobal inhibition (k-WTA) and normalisation: pre = h P + beta * (b Q). beta = 0 is stage 3 exactly (O = 0).\npostNAS: K = 2048, c = 7, O = 0 fixed; searched as stage 3 (f, eta, tau, lam, rho, m, R, E, T, A, gate) + beta {0, .5, 1, 2, 4}\n+ cp {3, 7, 15}. Objectives (NSGA-II, 3), as stage 4: dev new goal, dev old goal, dev new goal in the unseen room (dev seeds\n1000-1002 x 3 priors). The stage-3 winners (beta = 0) are enqueued first as references. 2 workers, both on GPU 1, 60 trials each.\nSelection (fixed here): largest dev (new + old + unseen-room new), per gate. Test once on GPU 1 (30 seeds x 3 priors, fresh rooms,\nfour probes). Contrasts (descriptive): stage 5 - PPO, - stage 3.\n  check | prereg | search W TRIALS | best | test W N | analyse\n",
+ "lean": {
+  "file": "proofs_ml/ProofsML/Transfer.lean",
+  "sha256": "7e763309edff6986672ecf464ebfa7a093be4544534d96017a033074b49e55c9"
+ },
+ "outcomes_seen": "stages 1-4 dev and test (incl. unseen-room probes); descriptive code-overlap diagnostics listed in the design; none of stage 5",
+ "dev_seeds": [
+  1000,
+  1001,
+  1002
+ ],
+ "test_seeds": [
+  1000,
+  1001,
+  1002,
+  1003,
+  1004,
+  1005,
+  1006,
+  1007,
+  1008,
+  1009,
+  1010,
+  1011,
+  1012,
+  1013,
+  1014,
+  1015,
+  1016,
+  1017,
+  1018,
+  1019,
+  1020,
+  1021,
+  1022,
+  1023,
+  1024,
+  1025,
+  1026,
+  1027,
+  1028,
+  1029
+ ],
+ "priors": [
+  "human_bc",
+  "human_legal_uniform",
+  "cold_ppo"
+ ]
+}
