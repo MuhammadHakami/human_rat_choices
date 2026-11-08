@@ -1,22 +1,21 @@
-# Publishes the project page (site/) with GitHub Pages. In the repository settings: Pages -> Source: GitHub Actions.
+# Publishes the project page: builds site/ into _site/ and force-pushes it to the gh-pages branch, which GitHub Pages
+# serves at https://muhammadhakami.github.io/human_rat_choices/ (Settings -> Pages -> Deploy from a branch: gh-pages, / root).
 name: pages
 on:
   push: { branches: [main] }
   workflow_dispatch:
-permissions: { contents: read, pages: write, id-token: write }
+permissions: { contents: write }
 concurrency: { group: pages, cancel-in-progress: true }
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: { name: github-pages, url: "${{ steps.deploy.outputs.page_url }}" }
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: 20 }
       - run: node site/test/parity.mjs          # the browser code must reproduce the Python reference traces
       - run: bash tools/build_site.sh
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
-        with: { path: _site }
-      - id: deploy
-        uses: actions/deploy-pages@v4
+      - run: |                                  # one-commit branch holding only the built site
+          cd _site && git init -q -b gh-pages && git add -A
+          git -c user.name=github-actions -c user.email=github-actions@github.com commit -qm "pages: built site from $GITHUB_SHA"
+          git push -qf "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" gh-pages

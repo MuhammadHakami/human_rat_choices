@@ -137,7 +137,7 @@ Stage-2/3 commands assert the registered device (`CUDA_VISIBLE_DEVICES=1`). On t
 | the page in a browser | `node site/test/browser.mjs http://localhost:8000/` | `errors: []` |
 | the page on a phone (390 px), *Your turn* by taps | `node site/test/mobile.mjs http://localhost:8000/` | `overflowing elements: []`, `"success":true` |
 
-`tests.yml` runs the CPU checks on every push; `pages.yml` publishes `site/` (Settings → Pages → Source: GitHub Actions).
+`tests.yml` runs the CPU checks on every push; `pages.yml` builds `site/` into the `gh-pages` branch that GitHub Pages serves.
 
 ## Repository
 
