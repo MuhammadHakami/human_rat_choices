@@ -1,0 +1,17 @@
+1. distal cue rows (belief input) max |room A - room B| = 0.00e+0; floor rows (layout visible) = 0.851
+bl8 goal map, moved goal (as tested)          89.1% ± 8.6 (n=15)
+bl8 goal map, goal FAR from memory             5.3% ± 5.2 (n=15)
+bl8 goal map, memory pointed at the far goal 100.0% ± 0.0 (n=15)
+bl8 goal map, no memory (G = 0)                8.0% ± 7.9 (n=15)
+stage 3, goal FAR                              3.8% ± 3.1 (n=15)
+PPO, goal FAR                                  4.2% ± 2.6 (n=15)
+PPO, moved goal                               21.1% ± 11.6 (n=15)
+
+1. distal cue rows (belief input) max |room A - room B| = 0.00e+0; floor rows (layout visible) = 0.851
+bl7 goal map, moved goal (as tested)          82.4% ± 17.2 (n=15)
+bl7 goal map, goal FAR from memory             3.3% ± 2.7 (n=15)
+bl7 goal map, memory pointed at the far goal  99.6% ± 1.0 (n=15)
+bl7 goal map, no memory (G = 0)               10.4% ± 8.1 (n=15)
+stage 3, goal FAR                              3.8% ± 3.1 (n=15)
+PPO, goal FAR                                  4.2% ± 2.6 (n=15)
+PPO, moved goal                               21.1% ± 11.6 (n=15)

@@ -1,6 +1,6 @@
 // Stable success rates for the cards: every agent in the current room and goal, 5 seeds x 30 frozen trials (the paper's
 // probe), off the main thread. A newer request cancels an older one between seeds.
-import { Prior, Circuit, prepare } from "./sim.js";
+import { Prior, Circuit, stage7, prepare } from "./sim.js";
 import { probe, frozenAgent, circuitAgent } from "./protocol.js";
 
 const cache = {}, get = (f, kind = "json") => cache[f] ??= fetch(new URL(`../data/${f}`, import.meta.url)).then(r => { if (!r.ok) throw new Error(`${f}: ${r.status}`); return r[kind](); });
@@ -10,6 +10,7 @@ async function agent(key, seed, learnedWa) {                     // same constru
   const [kind, base] = key.includes("@") ? key.split("@") : [null, key];
   if (kind === "ppo") return frozenAgent(new Prior(await get(`learned/ppo_${base}_${seed}.bin`, "arrayBuffer")));
   const P = new Prior(await get(`models/${base}_${seed}.bin`, "arrayBuffer"));
+  if (kind === "bl7" || kind === "bl8") return circuitAgent(stage7(P, await get(`kc/${seed}.bin`, "arrayBuffer"), C.configs[kind], C.gate_half0, await get(`learned/${kind}_${base}_${seed}.bin`, "arrayBuffer")));
   if (kind !== "bl3" && !learnedWa) return frozenAgent(P);       // frozen prior (= the circuit before learning)
   const L = new Circuit(P, await get(`kc/${seed}.bin`, "arrayBuffer"), C.configs[learnedWa?.gate ?? "none"], C.gate_half0);
   if (learnedWa) { L.Wa.set(learnedWa.Wa); L.ctx = learnedWa.ctx; }

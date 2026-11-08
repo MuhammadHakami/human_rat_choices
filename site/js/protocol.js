@@ -15,6 +15,10 @@ export function probe(E, room, goal, act, seed = 1, { onStep, onDone } = {}) {
   return env.completed.slice(0, sched.length);
 }
 
+// Episode metrics as in the paper: wall bumps (contact_rate: a move into a wall leaves the position unchanged) and revisits.
+export const bumps = path => { let b = 0; for (let i = 1; i < path.length; i++) b += String(path[i]) === String(path[i - 1]); return b; };
+export const revisits = path => { const s = new Set([String(path[0])]); let r = 0; for (const c of path.slice(1)) { const k = String(c); r += s.has(k); s.add(k); } return Math.round(100 * r / Math.max(path.length - 1, 1)); };
+
 export const frozenAgent = prior => x => { const b = prior.body(x), hd = prior.heads(b.h); return { ...b, ...hd, p: softmax(hd.lg) }; };
 export const circuitAgent = L => x => { const f = L.forward(x); return { ...f, p: softmax(f.lg) }; };   // probes act at tau = 1
 

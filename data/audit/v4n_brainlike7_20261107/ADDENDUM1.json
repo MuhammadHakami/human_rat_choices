@@ -1,0 +1,6 @@
+{
+ "written_utc": "2026-11-07T11:45:59Z",
+ "event": "search worker 1: trial 43 failed with the source-checkpoint integrity assertion (wacv_continual_factorial_claude.source_checkpoint) at 2026-11-07T11:44Z; worker exited. All 180 seeds30 checkpoints re-verified (status complete, sha256 match) afterwards: transient read failure, no file changed.",
+ "action": "worker 1 restarted with the remaining 18 trials (same study, same sampler seed; trial 43 stays FAILED and is not retried with its parameters); log part 1 kept as search_w1_part1.log",
+ "outcomes_seen": "search trials finished so far (dev only); no test outcome"
+}

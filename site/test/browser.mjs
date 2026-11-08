@@ -28,6 +28,9 @@ try {
   console.log("hero resets in 12 s:", (await ev(`window.__arenas.hero.resets`)) - r0, "episode caption:", await ev(`document.querySelector('.hero-cap').textContent`));
   await sleep(15000); console.log("rates:", await ev(`[...document.querySelectorAll('#play-agents .agent')].map(c => c.querySelector('h3').textContent + ': ' + c.querySelector('.rate').innerText.replace(/\\n/g, ' | ')).join(' || ')`));
   await shot("1_play", "#play");
+  await ev(`window.__arenas.play.s.cycle = false; document.querySelector('#play .pill[data-k=goalmap]').click()`); await sleep(20000);   // stage-7 goal map, never-seen room (no auto-cycle)
+  console.log("goal map rates:", await ev(`[...document.querySelectorAll('#play-agents .agent')].map(c => c.querySelector('h3').textContent + ': ' + c.querySelector('.rate').innerText.replace(/\\n/g, ' | ')).join(' || ')`));
+  await shot("1b_goalmap", "#play");
   await ev(`[...document.querySelectorAll('#play button')].find(b => b.textContent.includes('probe')).click()`); await sleep(6000); await shot("2_probe", "#play-probe");
   console.log("probe note:", await ev(`document.getElementById('play-probe-note').textContent`));
   await ev(`[...document.querySelectorAll('#learn-controls button')].find(b => b.textContent.includes('learn')).click()`);
@@ -41,5 +44,13 @@ try {
   await ev(`[...document.querySelectorAll('#play button')].find(b => b.textContent.includes('edit walls')).click()`);
   await ev(`(() => { const c = document.querySelectorAll('#play-agents .room')[1], b = c.getBoundingClientRect(); c.dispatchEvent(new MouseEvent('click', { clientX: b.left + b.width * .45, clientY: b.top + b.height * .45 })); })()`);
   await sleep(2500); await shot("6_edited", "#play-agents");
+  await shot("7_you", "#you");                                        // Your turn: keys move, the reveal shows the room, the hand-off reaches Play
+  console.log("your turn, keys:", await ev(`(() => { for (const key of ['ArrowUp', 'a', 'ArrowRight']) dispatchEvent(new KeyboardEvent('keydown', { key })); return document.querySelector('.dpad .centre').textContent + ' · ' + document.querySelector('#you-box .know').textContent; })()`));
+  console.log("your turn, never-seen room:", await ev(`(async () => { document.querySelectorAll('#you-box .seg button')[3].click(); const S = await import(new URL('js/sim.js', location.href).href), Y = window.__arenas.you, { ep } = Y.state(), d = S.bfs(ep.room.walkable, ep.goal); let n = 0;
+    while (!Y.state().done && n++ < 60) { const p = Y.state().pos, k = d.get(p[0] * 10 + p[1]); Y.act(S.MOVES.findIndex(([dr, dc]) => d.get((p[0] + dr) * 10 + p[1] + dc) === k - 1)); }
+    const st = Y.state(); return JSON.stringify({ stage: ep.room.stage, success: st.result.success, moves: st.result.decisions, score: document.querySelector('#you-box .score').innerText.replace(/\\n/g, ' | ') }); })()`));
+  await shot("7b_you_done", "#you");
+  await ev(`[...document.querySelectorAll('#you-box .row button')].find(b => b.textContent.includes('watch')).click()`); await sleep(2500);
+  console.log("hand-off to Play:", await ev(`(() => { const P = window.__arenas.play, Y = window.__arenas.you.state().ep; return JSON.stringify({ sameRoom: P.room().configuration === Y.cfg, goal: P.s.goal === Y.cond, start: P.s.start === Y.start, hash: location.hash }); })()`));
   await ev(`document.querySelector('[data-link=code]').href`).then(h => console.log("code link:", h));
 } finally { console.log("errors:", JSON.stringify(errors)); ws?.close(); chrome.kill(); }

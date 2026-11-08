@@ -1,12 +1,12 @@
 // Canvas drawing: first-person view, top-down room, belief, layer activity, Kenyon-cell grid.
 export const COL = { human: "#1b6ca8", rat: "#c0392b", legal_h: "#7fa6c6", legal_r: "#d9928a", sham: "#a0522d", none: "#7a7a7a", bio: "#7d3c98", gold: "#f2b705" };
 export const PRIOR_INFO = {
-  human_bc: { label: "human choices", short: "human", col: COL.human },
-  rat_bc: { label: "rat choices", short: "rat", col: COL.rat },
-  human_legal_uniform: { label: "legal moves at human states", short: "legal (H)", col: COL.legal_h },
-  rat_legal_uniform: { label: "legal moves at rat states", short: "legal (R)", col: COL.legal_r },
-  rat_sham: { label: "rat states, shuffled choices", short: "sham", col: COL.sham },
-  cold_ppo: { label: "no demonstrator (PPO)", short: "scratch", col: COL.none },
+  human_bc: { label: "network trained on human actions", short: "human-trained", col: COL.human },
+  rat_bc: { label: "network trained on rat actions", short: "rat-trained", col: COL.rat },
+  human_legal_uniform: { label: "network trained on random legal moves (human states)", short: "legal (H)", col: COL.legal_h },
+  rat_legal_uniform: { label: "network trained on random legal moves (rat states)", short: "legal (R)", col: COL.legal_r },
+  rat_sham: { label: "network trained on shuffled rat actions", short: "sham", col: COL.sham },
+  cold_ppo: { label: "network trained by PPO, no demonstrator", short: "scratch", col: COL.none },
 };
 const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
 
@@ -34,7 +34,13 @@ export function drawRoom(cv, walk, o = {}) {
   const g = cv.getContext("2d"), S = cv.width / (g.getTransform().a || 1), c = S / 10, dark = matchMedia("(prefers-color-scheme: dark)").matches && document.documentElement.dataset.theme !== "light";
   g.fillStyle = dark ? "#2b2f35" : "#e4dfd4"; g.fillRect(0, 0, S, S);             // soft grid lines between cells
   for (let r = 0; r < 10; r++) for (let q = 0; q < 10; q++) {
-    g.fillStyle = walk[r][q] ? (dark ? "#3a3f47" : "#f4f1ea") : (dark ? "#101214" : "#2b2b2b"); g.fillRect(q * c, r * c, c - 1, c - 1);
+    if (walk[r][q]) { g.fillStyle = dark ? "#3a3f47" : "#f4f1ea"; g.fillRect(q * c, r * c, c - 1, c - 1); }
+    else {                                                            // a removed floor module: a hole (side faces lit, bottom dark)
+      const x = q * c, y = r * c, w = c - 1, k = c * .16, hg = g.createRadialGradient(x + w / 2, y + w * .58, w * .05, x + w / 2, y + w / 2, w * .62);
+      g.fillStyle = dark ? "#55595f" : "#8a857b"; g.fillRect(x, y, w, w);                                    // rim: the module side faces
+      g.fillStyle = dark ? "#2a2d31" : "#5c5850"; g.fillRect(x, y, w, k);                                    // far wall in shadow
+      hg.addColorStop(0, "#000"); hg.addColorStop(1, dark ? "#1b1d20" : "#2e2c28"); g.fillStyle = hg; g.fillRect(x + k * .6, y + k, w - 1.2 * k, w - 1.6 * k);
+    }
     if (o.occ && walk[r][q] && o.occ[r * 10 + q] > 0) { g.globalAlpha = Math.min(.9, o.occ[r * 10 + q] * .9 + .05); g.fillStyle = o.occCol; g.fillRect(q * c, r * c, c - 1, c - 1); g.globalAlpha = 1; }
     if (o.belief) { const b = o.belief[r * 10 + q]; if (b > .01) { g.globalAlpha = Math.min(.85, b * 1.6); g.fillStyle = COL.gold; g.beginPath(); g.arc(q * c + c / 2, r * c + c / 2, c * .42, 0, 7); g.fill(); g.globalAlpha = 1; } }
   }

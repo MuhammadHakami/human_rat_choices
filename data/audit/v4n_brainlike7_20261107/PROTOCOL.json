@@ -1,0 +1,52 @@
+{
+ "written_utc": "2026-11-07T11:04:13Z",
+ "script_sha256": "1ff38f6f26c547f7a8b361de9fad17770daaa7e5b0eaf8b177182bccc4f4c858",
+ "design": "Brain-constrained circuit, stage 7: a hippocampal goal map (camera-ready, author 2026-11-07: \"find a way for our bio plausible\nto excel in transfer to unseen rooms ... adapt evidence based bio plausible strategies and prove them working with LEAN before\ncommiting to them\"). GPU 1 only. Registered before any outcome of this stage's learner.\nSeen before writing: stages 1-6 dev and test (stage 6 gated test: new 83.7 / old 57.7 / unseen-room new 7.5; PPO unseen new 27.8).\nDiagnosis (descriptive, no learner): the agent's own place belief (obs[150:250], the filter every agent receives) peaks on the true\ncell at 100% of steps in all 16 fresh rooms, trained and never-seen alike. Every earlier circuit stores the goal as\nview -> action habits (striatal-like), which are layout-specific. Mammals store goals on the hippocampal place map\n(Tolman 1948; O'Keefe & Nadel 1978; goal over-representation, Hok 2007, Dupret 2010) and read paths out of it by recurrent\npropagation / replay (Pfeiffer & Foster 2013; wavefront model, Ponulak & Hopfield 2013).\nCeiling diagnostics ON THE FRESH TEST ROOMS with a SUPPLIED memory (no learning; disclosed): wavefront planner + bump depression\n+ inhibition of return with both goals blurred (sigma .5): moved A 240/240, familiar A 240/240, moved B 228/240, familiar B 239/240;\nan SR (mean-over-actions) value instead gave 205/177/221/150 (residual blur traps), which is why the wavefront form is used.\nLean (proofs_ml/ProofsML/Wavefront.lean, standard axioms): wave_ascent (away from a goal source the wavefront value always has a\nstrictly better open neighbour, in any layout) and greedy_reaches_source (climbing it reaches a remembered goal within |S| steps).\nMechanism (added to the stage-6 dev winners, MB parameters fixed):\n  goal memory   G over the 100 place cells, written ONLY during learning by a one-shot dopamine-gated Hebbian rule at reward\n                (BTSP-like, Bittner 2017): G <- max(G, eta_g K_sigma(place reached)), K = place-field overlap (width sigma); a plateau\n                sets a fixed-shape field and repetition does not widen it (pre-registration fix: an additive write saturated the\n                field over ~3 cells in the smoke run, 3,936 writes).\n                The reached place is the believed place moved by the taken action (self-motion). Frozen in the probes.\n  map           place-cell lattice links (innate metric, grid-cell-like); a bump (contact) depresses the believed link for the\n                rest of the episode (short-term depression; stp in {0, 1}).\n  value         recurrent wavefront v = max(G_e, gamma_h max_open v(next)), 100 sweeps (gamma_h).\n  inhibition    at a remembered goal with no reward, G_e <- G_e (1 - K_sigma(place)) for the episode (dopamine dip; ior in {0,1}).\n  steering      logits = stage-6 circuit logits + kappa D, D_a = log(q_a / max q) / log(1 / gamma_h) >= -10 (extra steps to the\n                goal; q_a = sum_x b(x) v(next(x, a))). Pre-registration fix: a ratio-scaled D (one step = gamma_h - 1) was outvoted\n                by habit logits of ~10 in the smoke run (agent bumped one wall 40 times).\n  All within-episode state (map, G_e) resets at each episode start; no weights or G change in the probes.\nkappa = 0 is stage 6 exactly (check). Search (NSGA-II, 3 objectives as stages 4-6, dev seeds 1000-1002 x 3 priors, exposed rooms):\nbase in {none, inferred} (stage-6 BEST configs), kappa {0, 2, 5, 10, 20, 50}, sigma {.5, .75, 1, 1.5}, gamma_h {.8, .9, .95},\neta_g {.25, .5, 1}, thr {.3, .5, .7}, stp {0, 1}, ior {0, 1}. Both kappa = 0 bases enqueued first. 2 workers, GPU 1, 40 trials each.\nSelection (fixed here): largest dev (new + old + unseen-room new), per base. Test once (30 seeds x 3 priors, fresh rooms, four probes).\nRegistered ablation arm: the selected config with the larger dev sum, with stp = ior = 0 (goal map only). Contrasts (descriptive):\nstage 7 - PPO, - stage 6.\n  check | prereg | search W TRIALS | best | test W N | analyse\n",
+ "lean": {
+  "file": "proofs_ml/ProofsML/Wavefront.lean",
+  "sha256": "844d1ff90477c4ff0c943383d585eb8a70557d4ec83c143ce8112d64041cd184"
+ },
+ "outcomes_seen": "stages 1-6 dev and test; supplied-memory planner ceilings on the fresh test rooms (in the design text; no learner); of stage 7 only the check runs (kappa = 0 reproduction and kappa = 10 smoke runs, dev rooms, cold_ppo seed 1000, gated base): additive-write smoke new 30, old 23, unseen new 12, unseen familiar 17 of 30 (rule then changed to the max write); max-write ratio-drive smoke 30, 23, 1, 19 with one debug probe of its paths and logits (drive then rescaled to steps); the final check values are in CHECK.json",
+ "dev_seeds": [
+  1000,
+  1001,
+  1002
+ ],
+ "test_seeds": [
+  1000,
+  1001,
+  1002,
+  1003,
+  1004,
+  1005,
+  1006,
+  1007,
+  1008,
+  1009,
+  1010,
+  1011,
+  1012,
+  1013,
+  1014,
+  1015,
+  1016,
+  1017,
+  1018,
+  1019,
+  1020,
+  1021,
+  1022,
+  1023,
+  1024,
+  1025,
+  1026,
+  1027,
+  1028,
+  1029
+ ],
+ "priors": [
+  "human_bc",
+  "human_legal_uniform",
+  "cold_ppo"
+ ]
+}

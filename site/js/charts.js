@@ -81,9 +81,51 @@ export function heat(host, M, rows, cols, o = {}) {
   rows.forEach((r, i) => {
     el("text", { x: ml - 6, y: mt + cw * i + cw / 2 + 3, class: "tick", "text-anchor": "end" }, svg).textContent = r;
     cols.forEach((_, j) => { const v = M[i][j]; if (v == null) return;
-      tip(el("rect", { x: ml + cw * j, y: mt + cw * i, width: cw - 2, height: cw - 2, rx: 3, fill: `rgba(125,60,152,${.08 + .92 * v})` }, svg), `${r} × ${cols[j]}: ${v.toFixed(2)}`);
-      el("text", { x: ml + cw * j + cw / 2 - 1, y: mt + cw * i + cw / 2 + 3, class: "cellv", "text-anchor": "middle", fill: v > .5 ? "#fff" : "var(--fg)" }, svg).textContent = v.toFixed(2); });
+      tip(el("rect", { x: ml + cw * j, y: mt + cw * i, width: cw - 2, height: cw - 2, rx: 3, fill: `rgba(125,60,152,${.08 + .92 * Math.max(0, Math.min(1, v / (o.max || 1)))})` }, svg), `${r} × ${cols[j]}: ${v.toFixed(o.dp || 2)}`);
+      el("text", { x: ml + cw * j + cw / 2 - 1, y: mt + cw * i + cw / 2 + 3, class: "cellv", "text-anchor": "middle", fill: v / (o.max || 1) > .5 ? "#fff" : "var(--fg)" }, svg).textContent = v.toFixed(o.dp || 2); });
   });
+}
+
+// Map of representations: points placed so that distance ~ 1 - similarity (classical SMACOF stress majorisation, uniform weights);
+// edges drawn for every pair, thicker and darker the more geometry two representations share. pts: [{label, col, open?}], S: similarity matrix.
+export function geomap(host, S, pts, o = {}) {
+  host.innerHTML = ""; const n = pts.length, w = o.w || 420, h = o.h || 300, svg = el("svg", { viewBox: `0 0 ${w} ${h}`, class: "chart" }, host);
+  const D = S.map((r, i) => r.map((s, j) => i === j ? 0 : Math.max(.03, 1 - s)));
+  let X = pts.map((_, i) => [Math.cos(2 * Math.PI * i / n + .3), Math.sin(2 * Math.PI * i / n + .3)]);
+  for (let it = 0; it < 400; it++) X = X.map((xi, i) => { let ax = 0, ay = 0; for (let j = 0; j < n; j++) if (j !== i) { const dx = xi[0] - X[j][0], dy = xi[1] - X[j][1], d = Math.hypot(dx, dy) || 1e-9, b = D[i][j] / d; ax += b * dx; ay += b * dy; } return [ax / n, ay / n]; });
+  if (o.anchor) {                                                      // stable orientation: anchor[0] left, anchor[1] right, anchor[2] above
+    const [a, b, c] = o.anchor.map(l => pts.findIndex(p => p.label === l)), ang = Math.atan2(X[b][1] - X[a][1], X[b][0] - X[a][0]);
+    X = X.map(([x, y]) => [x * Math.cos(-ang) - y * Math.sin(-ang), x * Math.sin(-ang) + y * Math.cos(-ang)]);
+    if (c >= 0 && X[c][1] > (X[a][1] + X[b][1]) / 2) X = X.map(([x, y]) => [x, -y]);
+  }
+  const xs = X.map(p => p[0]), ys = X.map(p => p[1]), sc = Math.min((w - 150) / (Math.max(...xs) - Math.min(...xs) || 1), (h - 70) / (Math.max(...ys) - Math.min(...ys) || 1));
+  const P = X.map(([x, y]) => [75 + (x - Math.min(...xs)) * sc + ((w - 150) - (Math.max(...xs) - Math.min(...xs)) * sc) / 2, 35 + (y - Math.min(...ys)) * sc + ((h - 70) - (Math.max(...ys) - Math.min(...ys)) * sc) / 2]);
+  for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) { const s = S[i][j];
+    tip(el("line", { x1: P[i][0], y1: P[i][1], x2: P[j][0], y2: P[j][1], stroke: "var(--bio)", "stroke-width": .5 + 7 * s * s, opacity: .1 + .8 * s }, svg), `${pts[i].label} ↔ ${pts[j].label}: ${s.toFixed(2)}`);
+    el("text", { x: (P[i][0] + P[j][0]) / 2, y: (P[i][1] + P[j][1]) / 2 + 3, class: "lab", "text-anchor": "middle", opacity: .9 }, svg).textContent = s.toFixed(2); }
+  pts.forEach((p, i) => { tip(el("circle", { cx: P[i][0], cy: P[i][1], r: 8, fill: p.open ? "var(--panel)" : p.col, stroke: p.col, "stroke-width": 2.5 }, svg), p.label);
+    el("text", { x: P[i][0], y: P[i][1] - 13, class: "tick", "text-anchor": "middle", "font-weight": 600 }, svg).textContent = p.label; });
+}
+
+// Small multiples of horizontal dot rows (one panel per condition, shared x axis). panels: [{title, rows: [{label, pts: [{x, col, open?, shape?}]}]}]
+export function dotpanels(host, panels, o = {}) {
+  host.innerHTML = ""; const ml = o.ml || 92, pw = o.pw || 176, rh = o.rh || 17, mt = 34, rows = panels[0].rows.length, w = ml + pw * panels.length + 8, h = mt + rh * rows + 26;
+  const svg = el("svg", { viewBox: `0 0 ${w} ${h}`, class: "chart" }, host), xmin = o.xmin ?? -.05, xmax = o.xmax ?? .15;
+  panels[0].rows.forEach((r, i) => el("text", { x: ml - 6, y: mt + rh * i + 12, class: "tick", "text-anchor": "end" }, svg).textContent = r.label);
+  panels.forEach((pn, k) => {
+    const x0 = ml + pw * k, X = v => x0 + 8 + (pw - 20) * (Math.max(xmin, Math.min(xmax, v)) - xmin) / (xmax - xmin);
+    el("text", { x: x0 + pw / 2, y: 12, class: "tick", "text-anchor": "middle", "font-weight": 600 }, svg).textContent = pn.title;
+    if (pn.sub) el("text", { x: x0 + pw / 2, y: 24, class: "lab", "text-anchor": "middle" }, svg).textContent = pn.sub;
+    el("line", { x1: X(0), x2: X(0), y1: mt - 4, y2: mt + rh * rows, class: "base" }, svg);
+    for (const t of (k ? [0, xmax] : [xmin, 0, xmax])) el("text", { x: X(t), y: mt + rh * rows + 12, class: "tick", "text-anchor": t === xmax ? "end" : t === xmin ? "start" : "middle" }, svg).textContent = t;
+    pn.rows.forEach((r, i) => { const y = mt + rh * i + 8; el("line", { x1: x0 + 8, x2: x0 + pw - 12, y1: y, y2: y, class: "grid" }, svg);
+      if (r.band) el("rect", { x: X(Math.min(...r.band)), y: y - 5, width: Math.max(1, X(Math.max(...r.band)) - X(Math.min(...r.band))), height: 10, fill: r.col || "var(--muted)", opacity: .18 }, svg);
+      for (const p of r.pts) { const s = p.shape === "square" ? el("rect", { x: X(p.x) - 4, y: y - 4, width: 8, height: 8, fill: p.col }, svg)
+        : p.shape === "triangle" ? el("polygon", { points: `${X(p.x)},${y - 5} ${X(p.x) - 5},${y + 4} ${X(p.x) + 5},${y + 4}`, fill: p.col }, svg)
+        : el("circle", { cx: X(p.x), cy: y, r: 4.2, fill: p.open ? "var(--panel)" : p.col, stroke: p.col, "stroke-width": 1.6 }, svg);
+        tip(s, `${pn.title} · ${r.label}${p.name ? " " + p.name : ""}: ${p.x.toFixed(3)}`); } });
+  });
+  if (o.legend) o.legend.forEach((t, i) => el("text", { x: w - 8 - 118 * (o.legend.length - 1 - i), y: h - 2, class: "lab", "text-anchor": "end" }, svg).textContent = t);
 }
 
 // Tile sparkline: labelled horizontal bars.

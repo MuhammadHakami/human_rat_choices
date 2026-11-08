@@ -1,0 +1,17 @@
+variant        room       goal      success  trapped(of failures)  bumps/episode  decisions/success
+base          trained    moved      93.3%    63%        1.5      6.6
+base          trained    familiar  100.0%     -%        0.8      10.6
+base          never-seen moved      81.8%    32%        4.9      13.9
+base          never-seen familiar   61.8%    90%       14.7      16.5
+cliff3        trained    moved      93.3%    90%        1.5      6.5
+cliff3        trained    familiar  100.0%     -%        0.0      9.8
+cliff3        never-seen moved      86.2%    89%        2.6      11.2
+cliff3        never-seen familiar   69.6%   100%       10.5      13.8
+cliff4        trained    moved      93.3%    90%        1.5      6.5
+cliff4        trained    familiar  100.0%     -%        0.0      9.8
+cliff4        never-seen moved      86.2%    89%        2.6      11.2
+cliff4        never-seen familiar   69.6%   100%       10.5      13.8
+cliff3-noior  trained    moved      70.7%   100%        9.8      5.3
+cliff3-noior  trained    familiar   29.3%    98%       21.7      5.8
+cliff3-noior  never-seen moved      65.1%    99%       12.0      8.4
+cliff3-noior  never-seen familiar   58.2%   100%       15.0      12.8

@@ -1,0 +1,12 @@
+goal map, at TRAPPED steps (last 16 of a trapped failure):
+condition            success  trapped-eps | belief max  chosen link closed  D[a]   D gap   p_drive(a) | Ge peak: walkable  reachable  = true goal   remembered cells unreachable
+trained    moved       93%    n= 19    |   1.00         93%          0.00   0.00    1.00    |            0%        0%         0%            100%
+trained    familiar   100%    n=  0    |   NaN        NaN%           NaN    NaN    NaN    |          NaN%      NaN%       NaN%            NaN%
+never-seen moved       82%    n= 26    |   1.00         14%         -0.00   0.00    0.61    |           13%       13%         0%             22%
+never-seen familiar    62%    n=155    |   1.00         99%          0.00   0.00    0.78    |          100%      100%       100%             50%
+
+all steps: belief max / chosen link closed / Ge peak = true goal
+trained    moved      0.98     2%    13%
+trained    familiar   0.97     0%   100%
+never-seen moved      0.99     1%     0%
+never-seen familiar   0.97    22%   100%

@@ -1,0 +1,7 @@
+{
+ "written_utc": "2026-11-07T21:19:50Z",
+ "reason": "analyse() crashed on recorded animal paths: 0.1% of rat cells lie on removed modules (tracking) and ~25% of rat trials start off the native starts (KeyError in excess path)",
+ "fix": "metrics(): off-maze cells dropped; excess path only for trials whose first cell has a goal distance; applied identically to animals and agents",
+ "outcomes_seen": "none of the agent outcomes; the crash happened before any agent metric was computed; the counts of off-maze cells / non-native starts were inspected",
+ "script_sha256_before": "7e7ef538ffd03b250f8a8dcc3b3ed79596a2bbffb1b405685e6a88c1a847d847"
+}

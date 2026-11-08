@@ -204,6 +204,8 @@ export class Circuit {
   forward(x) {
     const { h1, h } = this.prior.body(x), z = this.code(h), { lg, v } = this.prior.heads(h); let vv = v;
     for (let t = 0; t < z.i.length; t++) { const j = z.i[t], r = z.v[t]; for (let a = 0; a < 4; a++) lg[a] += this.Wa[a * this.K + j] * r; vv += this.Wv[j] * r; }
+    if (this.Wb) for (let a = 0; a < 4; a++) for (let s = 0; s < 100; s++) lg[a] += this.Wb[a * 100 + s] * this.c.g * x[150 + s];   // stage 6: place-belief synapses
+    if (this.hippo?.k) { const D = this.hippo.drive(x); for (let a = 0; a < 4; a++) lg[a] += this.hippo.k * D[a]; }              // stage 7: goal-map drive
     return { h1, h, z, lg, p: softmax(lg, this.c.tau), v: vv };
   }
   apply(da, dv) {
@@ -286,3 +288,47 @@ export function movedGoal(walk, target, starts, familiar) {
 }
 
 export function prepare(E) { E.atlasF = Float64Array.from(E.atlas); return E; }
+
+// ---------- stage 7: hippocampal goal map (v4n_brainlike7_claude_20261107.Hippo) ----------
+// Goal memory G over the 100 place cells (learned at reward, frozen here); per episode: lattice links that a bump depresses,
+// an inhibited copy of G at visited empty goals, the wavefront value and a drive (extra steps to the goal) added to the logits.
+const NXT = Int32Array.from({ length: 400 }, (_, q) => { const s = q >> 2, [dr, dc] = MOVES[q & 3], r = Math.floor(s / 10) + dr, c = s % 10 + dc;
+  return r >= 0 && r < 10 && c >= 0 && c < 10 ? r * 10 + c : s; });
+const OPEN0 = Uint8Array.from(NXT, (n, q) => +(n !== q >> 2));
+const kern = (c, s) => Float64Array.from({ length: 100 }, (_, x) => Math.exp(-((Math.floor(x / 10) - Math.floor(c / 10)) ** 2 + (x % 10 - c % 10) ** 2) / (2 * s * s)));
+function wave(open, Ge, g) {
+  let v = Float64Array.from(Ge); if (Math.max(...Ge) <= 0) return v;
+  for (let it = 0; it < 100; it++) {
+    const nv = new Float64Array(100); let same = true;
+    for (let s = 0; s < 100; s++) { let m = 0; for (let a = 0; a < 4; a++) m = Math.max(m, open[s * 4 + a] ? v[NXT[s * 4 + a]] : 0); nv[s] = Math.max(Ge[s], g * m); same &&= nv[s] === v[s]; }
+    if (same) break; v = nv;
+  }
+  return v;
+}
+export class Hippo {
+  constructor(cfg, G) { this.k = cfg.kappa; this.sig = cfg.sigma; this.gam = cfg.gamma_h; this.thr = cfg.thr; this.stp = cfg.stp; this.ior = cfg.ior; this.G = Float64Array.from(G); this.prev = null; this.reset(); }
+  reset() { this.open = Uint8Array.from(OPEN0); this.Ge = Float64Array.from(this.G); this.v = wave(this.open, this.Ge, this.gam); }
+  drive(x) {
+    if (this.prev && this.prev.every((y, i) => y === x[i])) return this.D;                  // same observation again: same drive
+    const b = x.subarray(150, 250); let c = 0; for (let s = 1; s < 100; s++) if (b[s] > b[c]) c = s;
+    if (x[146] + x[147] + x[148] + x[149] === 0) this.reset();                               // episode start (no previous move)
+    else {
+      let ch = false; const mx = Math.max(...this.Ge);
+      if (this.stp && x[144] > .5) { let a = 0; for (let q = 1; q < 4; q++) if (x[146 + q] > x[146 + a]) a = q; if (this.open[c * 4 + a]) { this.open[c * 4 + a] = 0; ch = true; } }
+      if (this.ior && mx > 0 && this.Ge[c] > this.thr * mx) { const K = kern(c, this.sig); this.Ge = this.Ge.map((g, s) => g * (1 - K[s])); ch = true; }
+      if (ch) this.v = wave(this.open, this.Ge, this.gam);
+    }
+    const v = this.v, D = new Float64Array(4);
+    if (Math.max(...v) > 0) {
+      const q = [0, 1, 2, 3].map(a => { let s = 0; for (let y = 0; y < 100; y++) s += b[y] * (this.open[y * 4 + a] ? v[NXT[y * 4 + a]] : v[y]); return s; }), qm = Math.max(...q);
+      for (let a = 0; a < 4; a++) D[a] = Math.max(Math.log(Math.max(q[a], 1e-12) / qm) / -Math.log(this.gam), -10);
+    }
+    this.prev = Float32Array.from(x); return this.D = D;
+  }
+}
+// learned/bl7_<prior>_<seed>.bin: KC + place -> action synapses (4 x 2148, rows [2048 KC | 100 place]), then the goal map G (100).
+export function stage7(prior, kcBuf, cfg, half0, buf) {
+  const w = new Float32Array(buf), L = new Circuit(prior, kcBuf, cfg, half0); L.Wb = new Float64Array(400);
+  for (let a = 0; a < 4; a++) { L.Wa.set(w.subarray(a * 2148, a * 2148 + 2048), a * 2048); L.Wb.set(w.subarray(a * 2148 + 2048, (a + 1) * 2148), a * 100); }
+  L.hippo = new Hippo(cfg, w.subarray(8592)); return L;
+}

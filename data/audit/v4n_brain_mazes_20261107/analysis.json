@@ -1,0 +1,935 @@
+{
+ "ceiling": {
+  "rat/CA1": [
+   0.892,
+   0.075,
+   8
+  ],
+  "rat/PFC": [
+   0.907,
+   0.039,
+   8
+  ],
+  "rat/all": [
+   0.908,
+   0.046,
+   8
+  ],
+  "human/all": [
+   0.551,
+   0.082,
+   11
+  ]
+ },
+ "families": {
+  "rat/CA1/bl3/hidden": {
+   "rho": [
+    0.092,
+    0.059,
+    8
+   ],
+   "partial": [
+    0.051,
+    0.099,
+    8
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "rat/CA1/bl3/action": {
+   "rho": [
+    0.055,
+    0.023,
+    8
+   ],
+   "partial": [
+    0.02,
+    0.034,
+    8
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "rat/CA1/bl7/hidden": {
+   "rho": [
+    0.109,
+    0.064,
+    8
+   ],
+   "partial": [
+    0.056,
+    0.107,
+    8
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "rat/CA1/bl7/action": {
+   "rho": [
+    0.121,
+    0.035,
+    8
+   ],
+   "partial": [
+    0.025,
+    0.027,
+    8
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "rat/CA1/frozen/cold_ppo/hidden": {
+   "rho": [
+    0.159,
+    0.045,
+    8
+   ],
+   "partial": [
+    0.046,
+    0.039,
+    8
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "rat/CA1/frozen/cold_ppo/action": {
+   "rho": [
+    0.08,
+    0.031,
+    8
+   ],
+   "partial": [
+    0.03,
+    0.034,
+    8
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "rat/CA1/frozen/human_bc/hidden": {
+   "rho": [
+    0.097,
+    0.057,
+    8
+   ],
+   "partial": [
+    0.054,
+    0.1,
+    8
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "rat/CA1/frozen/human_bc/action": {
+   "rho": [
+    0.081,
+    0.071,
+    8
+   ],
+   "partial": [
+    0.04,
+    0.073,
+    8
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "rat/CA1/frozen/human_legal_uniform/hidden": {
+   "rho": [
+    0.153,
+    0.035,
+    8
+   ],
+   "partial": [
+    0.042,
+    0.076,
+    8
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "rat/CA1/frozen/human_legal_uniform/action": {
+   "rho": [
+    0.045,
+    0.046,
+    8
+   ],
+   "partial": [
+    0.005,
+    0.05,
+    8
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "rat/CA1/frozen/rat_bc/hidden": {
+   "rho": [
+    0.163,
+    0.037,
+    8
+   ],
+   "partial": [
+    0.071,
+    0.048,
+    8
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "rat/CA1/frozen/rat_bc/action": {
+   "rho": [
+    0.101,
+    0.034,
+    8
+   ],
+   "partial": [
+    0.065,
+    0.038,
+    8
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "rat/CA1/ppo/hidden": {
+   "rho": [
+    0.192,
+    0.092,
+    8
+   ],
+   "partial": [
+    0.032,
+    0.035,
+    8
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "rat/CA1/ppo/action": {
+   "rho": [
+    0.094,
+    0.035,
+    8
+   ],
+   "partial": [
+    0.017,
+    0.028,
+    8
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "rat/PFC/bl3/hidden": {
+   "rho": [
+    0.024,
+    0.086,
+    8
+   ],
+   "partial": [
+    -0.029,
+    0.096,
+    8
+   ],
+   "perm_p": 0.039603960396039604
+  },
+  "rat/PFC/bl3/action": {
+   "rho": [
+    0.016,
+    0.043,
+    8
+   ],
+   "partial": [
+    -0.03,
+    0.051,
+    8
+   ],
+   "perm_p": 0.09900990099009901
+  },
+  "rat/PFC/bl7/hidden": {
+   "rho": [
+    0.044,
+    0.082,
+    8
+   ],
+   "partial": [
+    -0.021,
+    0.097,
+    8
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "rat/PFC/bl7/action": {
+   "rho": [
+    0.118,
+    0.043,
+    8
+   ],
+   "partial": [
+    0.015,
+    0.027,
+    8
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "rat/PFC/frozen/cold_ppo/hidden": {
+   "rho": [
+    0.166,
+    0.041,
+    8
+   ],
+   "partial": [
+    0.023,
+    0.042,
+    8
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "rat/PFC/frozen/cold_ppo/action": {
+   "rho": [
+    0.068,
+    0.022,
+    8
+   ],
+   "partial": [
+    0.006,
+    0.034,
+    8
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "rat/PFC/frozen/human_bc/hidden": {
+   "rho": [
+    0.031,
+    0.087,
+    8
+   ],
+   "partial": [
+    -0.026,
+    0.098,
+    8
+   ],
+   "perm_p": 0.0297029702970297
+  },
+  "rat/PFC/frozen/human_bc/action": {
+   "rho": [
+    0.025,
+    0.039,
+    8
+   ],
+   "partial": [
+    -0.016,
+    0.05,
+    8
+   ],
+   "perm_p": 0.0891089108910891
+  },
+  "rat/PFC/frozen/human_legal_uniform/hidden": {
+   "rho": [
+    0.114,
+    0.054,
+    8
+   ],
+   "partial": [
+    -0.035,
+    0.066,
+    8
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "rat/PFC/frozen/human_legal_uniform/action": {
+   "rho": [
+    0.008,
+    0.019,
+    8
+   ],
+   "partial": [
+    -0.04,
+    0.035,
+    8
+   ],
+   "perm_p": 0.25742574257425743
+  },
+  "rat/PFC/frozen/rat_bc/hidden": {
+   "rho": [
+    0.127,
+    0.05,
+    8
+   ],
+   "partial": [
+    0.001,
+    0.062,
+    8
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "rat/PFC/frozen/rat_bc/action": {
+   "rho": [
+    0.063,
+    0.031,
+    8
+   ],
+   "partial": [
+    0.019,
+    0.044,
+    8
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "rat/PFC/ppo/hidden": {
+   "rho": [
+    0.226,
+    0.069,
+    8
+   ],
+   "partial": [
+    0.016,
+    0.044,
+    8
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "rat/PFC/ppo/action": {
+   "rho": [
+    0.092,
+    0.025,
+    8
+   ],
+   "partial": [
+    -0.005,
+    0.024,
+    8
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "rat/all/bl3/hidden": {
+   "rho": [
+    0.06,
+    0.085,
+    8
+   ],
+   "partial": [
+    0.01,
+    0.111,
+    8
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "rat/all/bl3/action": {
+   "rho": [
+    0.034,
+    0.032,
+    8
+   ],
+   "partial": [
+    -0.013,
+    0.043,
+    8
+   ],
+   "perm_p": 0.0297029702970297
+  },
+  "rat/all/bl3/next_move": {
+   "prob": [
+    0.198,
+    0.012,
+    9
+   ]
+  },
+  "rat/all/bl7/hidden": {
+   "rho": [
+    0.084,
+    0.086,
+    8
+   ],
+   "partial": [
+    0.018,
+    0.114,
+    8
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "rat/all/bl7/action": {
+   "rho": [
+    0.139,
+    0.041,
+    8
+   ],
+   "partial": [
+    0.018,
+    0.02,
+    8
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "rat/all/bl7/next_move": {
+   "prob": [
+    0.295,
+    0.018,
+    9
+   ]
+  },
+  "rat/all/frozen/cold_ppo/hidden": {
+   "rho": [
+    0.18,
+    0.034,
+    8
+   ],
+   "partial": [
+    0.034,
+    0.052,
+    8
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "rat/all/frozen/cold_ppo/action": {
+   "rho": [
+    0.076,
+    0.031,
+    8
+   ],
+   "partial": [
+    0.01,
+    0.044,
+    8
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "rat/all/frozen/cold_ppo/next_move": {
+   "prob": [
+    0.241,
+    0.014,
+    9
+   ]
+  },
+  "rat/all/frozen/human_bc/hidden": {
+   "rho": [
+    0.066,
+    0.085,
+    8
+   ],
+   "partial": [
+    0.012,
+    0.112,
+    8
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "rat/all/frozen/human_bc/action": {
+   "rho": [
+    0.065,
+    0.069,
+    8
+   ],
+   "partial": [
+    0.017,
+    0.073,
+    8
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "rat/all/frozen/human_bc/next_move": {
+   "prob": [
+    0.289,
+    0.022,
+    9
+   ]
+  },
+  "rat/all/frozen/human_legal_uniform/hidden": {
+   "rho": [
+    0.145,
+    0.041,
+    8
+   ],
+   "partial": [
+    -0.002,
+    0.086,
+    8
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "rat/all/frozen/human_legal_uniform/action": {
+   "rho": [
+    0.023,
+    0.042,
+    8
+   ],
+   "partial": [
+    -0.031,
+    0.052,
+    8
+   ],
+   "perm_p": 0.06930693069306931
+  },
+  "rat/all/frozen/human_legal_uniform/next_move": {
+   "prob": [
+    0.25,
+    0.012,
+    9
+   ]
+  },
+  "rat/all/frozen/rat_bc/hidden": {
+   "rho": [
+    0.151,
+    0.043,
+    8
+   ],
+   "partial": [
+    0.027,
+    0.067,
+    8
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "rat/all/frozen/rat_bc/action": {
+   "rho": [
+    0.085,
+    0.047,
+    8
+   ],
+   "partial": [
+    0.037,
+    0.058,
+    8
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "rat/all/frozen/rat_bc/next_move": {
+   "prob": [
+    0.288,
+    0.016,
+    9
+   ]
+  },
+  "rat/all/ppo/hidden": {
+   "rho": [
+    0.234,
+    0.053,
+    8
+   ],
+   "partial": [
+    0.026,
+    0.052,
+    8
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "rat/all/ppo/action": {
+   "rho": [
+    0.103,
+    0.016,
+    8
+   ],
+   "partial": [
+    0.004,
+    0.027,
+    8
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "rat/all/ppo/next_move": {
+   "prob": [
+    0.214,
+    0.012,
+    9
+   ]
+  },
+  "human/all/bl3/hidden": {
+   "rho": [
+    0.165,
+    0.055,
+    11
+   ],
+   "partial": [
+    0.107,
+    0.049,
+    11
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "human/all/bl3/action": {
+   "rho": [
+    0.098,
+    0.034,
+    11
+   ],
+   "partial": [
+    0.047,
+    0.025,
+    11
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "human/all/bl3/next_move": {
+   "prob": [
+    0.312,
+    0.012,
+    13
+   ]
+  },
+  "human/all/bl7/hidden": {
+   "rho": [
+    0.157,
+    0.053,
+    11
+   ],
+   "partial": [
+    0.105,
+    0.048,
+    11
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "human/all/bl7/action": {
+   "rho": [
+    0.174,
+    0.037,
+    11
+   ],
+   "partial": [
+    0.054,
+    0.026,
+    11
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "human/all/bl7/next_move": {
+   "prob": [
+    0.335,
+    0.008,
+    13
+   ]
+  },
+  "human/all/frozen/cold_ppo/hidden": {
+   "rho": [
+    0.125,
+    0.032,
+    11
+   ],
+   "partial": [
+    0.051,
+    0.026,
+    11
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "human/all/frozen/cold_ppo/action": {
+   "rho": [
+    0.087,
+    0.028,
+    11
+   ],
+   "partial": [
+    0.039,
+    0.021,
+    11
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "human/all/frozen/cold_ppo/next_move": {
+   "prob": [
+    0.265,
+    0.007,
+    13
+   ]
+  },
+  "human/all/frozen/human_bc/hidden": {
+   "rho": [
+    0.173,
+    0.058,
+    11
+   ],
+   "partial": [
+    0.117,
+    0.052,
+    11
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "human/all/frozen/human_bc/action": {
+   "rho": [
+    0.105,
+    0.041,
+    11
+   ],
+   "partial": [
+    0.066,
+    0.038,
+    11
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "human/all/frozen/human_bc/next_move": {
+   "prob": [
+    0.323,
+    0.012,
+    13
+   ]
+  },
+  "human/all/frozen/human_legal_uniform/hidden": {
+   "rho": [
+    0.149,
+    0.045,
+    11
+   ],
+   "partial": [
+    0.076,
+    0.033,
+    11
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "human/all/frozen/human_legal_uniform/action": {
+   "rho": [
+    0.091,
+    0.036,
+    11
+   ],
+   "partial": [
+    0.052,
+    0.032,
+    11
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "human/all/frozen/human_legal_uniform/next_move": {
+   "prob": [
+    0.249,
+    0.01,
+    13
+   ]
+  },
+  "human/all/frozen/rat_bc/hidden": {
+   "rho": [
+    0.105,
+    0.04,
+    11
+   ],
+   "partial": [
+    0.034,
+    0.03,
+    11
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "human/all/frozen/rat_bc/action": {
+   "rho": [
+    0.072,
+    0.037,
+    11
+   ],
+   "partial": [
+    0.038,
+    0.029,
+    11
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "human/all/frozen/rat_bc/next_move": {
+   "prob": [
+    0.302,
+    0.01,
+    13
+   ]
+  },
+  "human/all/ppo/hidden": {
+   "rho": [
+    0.142,
+    0.048,
+    11
+   ],
+   "partial": [
+    0.069,
+    0.041,
+    11
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "human/all/ppo/action": {
+   "rho": [
+    0.094,
+    0.033,
+    11
+   ],
+   "partial": [
+    0.03,
+    0.024,
+    11
+   ],
+   "perm_p": 0.009900990099009901
+  },
+  "human/all/ppo/next_move": {
+   "prob": [
+    0.308,
+    0.004,
+    13
+   ]
+  }
+ },
+ "controls": {
+  "rat/CA1/image": [
+   0.07,
+   0.027,
+   9
+  ],
+  "rat/CA1/text": [
+   0.141,
+   0.105,
+   9
+  ],
+  "rat/CA1/pixels": [
+   0.23,
+   0.123,
+   9
+  ],
+  "rat/CA1/space": [
+   0.242,
+   0.091,
+   9
+  ],
+  "rat/PFC/image": [
+   0.047,
+   0.056,
+   9
+  ],
+  "rat/PFC/text": [
+   0.171,
+   0.087,
+   9
+  ],
+  "rat/PFC/pixels": [
+   0.294,
+   0.084,
+   9
+  ],
+  "rat/PFC/space": [
+   0.249,
+   0.08,
+   9
+  ],
+  "rat/all/image": [
+   0.057,
+   0.043,
+   9
+  ],
+  "rat/all/text": [
+   0.187,
+   0.05,
+   9
+  ],
+  "rat/all/pixels": [
+   0.294,
+   0.083,
+   9
+  ],
+  "rat/all/space": [
+   0.294,
+   0.084,
+   9
+  ],
+  "human/all/image": [
+   0.04,
+   0.035,
+   13
+  ],
+  "human/all/text": [
+   -0.005,
+   0.03,
+   13
+  ],
+  "human/all/pixels": [
+   0.083,
+   0.046,
+   13
+  ],
+  "human/all/space": [
+   0.28,
+   0.055,
+   13
+  ]
+ },
+ "written_utc": "2026-11-07T21:27:12Z"
+}

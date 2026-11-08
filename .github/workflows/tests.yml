@@ -1,0 +1,18 @@
+# Checks that run on every push (CPU, minutes): the browser simulator reproduces the Python reference traces,
+# the README's numbers are the registered records, and the records match the paper. GPU re-runs are documented in README.md.
+name: tests
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: node site/test/parity.mjs              # JS vs Python: views, belief, logits, circuit synapses
+      - run: node site/test/efficiency.mjs          # path lengths and the 45-move budget
+      - run: node site/test/leakage.mjs             # never-seen rooms share no layout information with training
+      - run: python3 tools/check_readme_numbers.py  # README <-> records <-> paper

@@ -1,0 +1,7 @@
+longest shortest path over all rooms, goals, starts: 14 (budget 45)
+bl8 never-seen familiar success 100.0%  decisions/shortest (successes) mean 1.67, median 1.42, share at exactly 1.0: 17%  bumps/episode 3.0  (n=450)
+bl8 never-seen moved    success 88.7%  decisions/shortest (successes) mean 4.10, median 2.67, share at exactly 1.0: 5%  bumps/episode 4.7  (n=450)
+bl8 trained    moved    success 100.0%  decisions/shortest (successes) mean 1.14, median 1.00, share at exactly 1.0: 71%  bumps/episode 0.2  (n=450)
+bl7 never-seen familiar success 63.6%  decisions/shortest (successes) mean 1.99, median 1.80, share at exactly 1.0: 26%  bumps/episode 14.4  (n=450)
+bl7 never-seen moved    success 83.6%  decisions/shortest (successes) mean 2.64, median 1.83, share at exactly 1.0: 3%  bumps/episode 4.9  (n=450)
+bl7 trained    moved    success 93.3%  decisions/shortest (successes) mean 1.14, median 1.00, share at exactly 1.0: 75%  bumps/episode 1.5  (n=450)

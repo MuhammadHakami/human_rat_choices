@@ -69,6 +69,8 @@ def circuits():
     out = {}
     for g, c in s3.items():
         c = dict(c); c["eta_v"] = c["rho"] * (1 - .95 * c["lam"]); out[g] = c        # stage 3 samples rho = eta_v / (1 - gamma lambda)
+    out["bl7"] = json.loads((BL7 / "BEST.json").read_text())["configs"]["none"]          # stage 7 (ungated): played, not learned, on the page
+    if (BL8 / "PROTOCOL.json").exists(): out["bl8"] = json.loads((BL8 / "PROTOCOL.json").read_text())["configs"]["none"]   # stage 8: stage 7 with inhibition of return at every visited place (thr = 0)
     return out
 
 
@@ -103,6 +105,11 @@ def results():
             for key in ("new", "familiar_trained_room", "moved_heldout_room", "familiar_heldout_room"):
                 v = list(KF.load(l, p, key).values()) if l != "before" or key != "new" else []
                 if v: kpi[f"{l}/{p}/{key}"] = ci(v)
+    for tag, root in (("bl7_none", BL7 / "test/bl7_none"), ("bl8_none", BL8 / "test/bl8_none")):       # stages 7 and 8 (supplement; not in the paper's KPI figure)
+        for p, _, _ in KF.PRI:
+            R7 = [json.loads(f.read_text()) for f in sorted((root / p).glob("seed*.json"))]
+            for key, rk in (("new", "moved_trained_room"), ("familiar_trained_room",) * 2, ("moved_heldout_room",) * 2, ("familiar_heldout_room",) * 2):
+                if len(R7) == 30: kpi[f"{tag}/{p}/{key}"] = ci([r[rk] * 100 / 30 for r in R7])
     s4 = A / "v4n_brainlike4_20261106/test/bl4_none"
     snn = {}
     for p, _, _ in KF.PRI:
@@ -121,7 +128,14 @@ def results():
               for a in ("human_bc", "human_legal_uniform", "rat_bc", "cold_ppo")}
     SL = A / "v4n_snn_learned_20261103/summary.json"                     # learned networks converted to spikes (PPO, local rules)
     snn_learned = {k: dict(synops=round(v["synops"], 1), spiking=round(v["spiking"], 2)) for k, v in json.loads(SL.read_text()).items()}
-    return dict(proofs=proofs(), snn_learned=snn_learned, ood=ood, native=native, curves=curves, kpi=kpi, snn=snn, nice=KF.NICE,
+    BR = json.loads((A / "v4n_brain_rosetta_20261108/analysis.json").read_text())        # Rosetta modalities vs recorded brains, same states
+    brain_rosetta = {t: dict(ceiling=r["ceiling"][0], subjects=r["n_subjects"], sessions=r["n_sessions"],
+                             fam={f: {m: [[c[0] for c in row] for row in M] for m, M in v.items()} for f, v in r["families"].items()})
+                     for t, r in BR["settings"].items()}
+    SM = json.loads((A / "v4n_shared_mazes_20261107/analysis.json").read_text())   # the animals' own layouts 6-25 (seen by no network): recorded animals and the same networks
+    shared = dict(animals={sp: {k: v[:2] for k, v in d.items()} for sp, d in SM["animals"].items()}, agents={k: {m: v[:2] for m, v in d.items()} for k, d in SM["agents"].items()})
+    return dict(proofs=proofs(), snn_learned=snn_learned, brain_rosetta=brain_rosetta, shared=shared, ood=ood, native=native, curves=curves, kpi=kpi, snn=snn,
+                nice={**KF.NICE, "bl7_none": "goal map", **({"bl8_none": "goal map+IOR"} if any(k.startswith("bl8_none/") for k in kpi) else {})},                       # stage 7 joins the keep-vs-learn and forgetting charts (supplement; not in the paper's KPI figure)
                 cka={k: ci(v) for k, v in geo.items()}, closed_loop={a: ci(v) for a, v in closed.items() if v},
                 text_to_move={a: B["C"][a]["composed"] for a in B["C"]})
 
@@ -153,13 +167,25 @@ def proofs():
     import re
     src = "".join(f.read_text() for d in ("proofs/Proofs", "proofs_ml/ProofsML") for f in sorted((ROOT / d).glob("*.lean")))
     out = {}
-    for name in ("trapped_forever", "relabel_keeps_states", "species_gap_decomposition", "trace_bounded", "softmax_logit_grad", "transfer_identity"):
+    for name in ("trapped_forever", "relabel_keeps_states", "species_gap_decomposition", "trace_bounded", "softmax_logit_grad", "transfer_identity", "copies_orthogonal", "wave_ascent", "greedy_reaches_source", "visited_not_source", "visited_has_better_neighbour"):
         m = re.search(rf"theorem {name}\b(.*?):=", src, re.S); out[name] = re.sub(r"\s+", " ", f"theorem {name}{m.group(1)}").strip()
     return out
 
 
 LEARNED = {"ppo": "data/audit/v4n_moved_goal_learning_20261031/test2/ppo/registered/{p}/seed{s}.final.pt",
-           "bl3": "data/audit/v4n_brainlike3_20261105/test/bl3_none/{p}/seed{s}.final.pt"}
+           "bl3": "data/audit/v4n_brainlike3_20261105/test/bl3_none/{p}/seed{s}.final.pt",
+           "bl7": "data/audit/v4n_brainlike7_20261107/test/bl7_none/{p}/seed{s}.final.pt",
+           "bl8": "data/audit/v4n_brainlike8_20261108/test/bl8_none/{p}/seed{s}.final.pt"}
+BL7 = A / "v4n_brainlike7_20261107"; BL8 = A / "v4n_brainlike8_20261108"
+
+
+def goal_map(rec):
+    """Stage-7 goal memory G = max over rewarded places c of eta_g K_sigma(c) (the max write; records keep G to 4 decimals):
+    rebuilt exactly from its peaks and checked against the record."""
+    c = rec["cfg"]; g = np.asarray(rec["goal_memory"]); rc = np.divmod(np.arange(100), 10); G = np.zeros(100)
+    for x in np.flatnonzero(np.isclose(g, round(c["eta_g"], 4))):
+        G = np.maximum(G, c["eta_g"] * np.exp(-((rc[0] - x // 10) ** 2 + (rc[1] - x % 10) ** 2) / (2 * c["sigma"] ** 2)))
+    assert np.allclose(G.round(4), g, atol=1e-4), "goal map not rebuilt"; return G
 
 
 def learned(root, seeds):
@@ -181,10 +207,16 @@ def learned(root, seeds):
                     for j in range(2048): P[i[j], j] = w[j]
                     assert np.array_equal(P, sd["pi.P"].numpy()), f"expansion differs for seed {s}"
                     b = np.concatenate([sd["pi.R.weight"].float().numpy().ravel(), sd["v.R.weight"].float().numpy().ravel()]).astype("<f4")
-                (OUT / "learned" / f"{k}_{p}_{s}.bin").write_bytes(b.tobytes())
                 rec = json.loads(f.with_name(f.name.replace(".final.pt", ".json")).read_text())
+                if k in ("bl7", "bl8"):                          # stages 7-8: frozen backbone + prior head, plastic KC/place synapses, goal map
+                    prior = np.fromfile(OUT / "models" / f"{p}_{s}.bin", "<f4")             # written by main() just before
+                    q = np.concatenate([sd[x].float().numpy().ravel() for x in ("body.0.weight", "body.0.bias", "body.2.weight", "body.2.bias", "pi.base.weight", "pi.base.bias")])
+                    assert np.array_equal(q, prior[:q.size]), f"stage-7 backbone differs from the frozen prior ({p}, {s})"
+                    b = np.concatenate([sd["pi.R.weight"].float().numpy().ravel(), goal_map(rec)]).astype("<f4")
+                (OUT / "learned" / f"{k}_{p}_{s}.bin").write_bytes(b.tobytes())
                 out.append(dict(kind=k, prior=p, seed=s, source=pat.format(p=p, s=s), sha256=hashlib.sha256(f.read_bytes()).hexdigest(),
-                                pair=rec.get("pair", s % 8), recorded=rec.get("moved_trained_room") if k == "bl3" else rec["curve"][max(rec["curve"], key=int)]))
+                                pair=rec.get("pair", s % 8), recorded=rec.get("moved_trained_room") if k in ("bl3", "bl7", "bl8") else rec["curve"][max(rec["curve"], key=int)],
+                                **({"recorded_unseen": rec["moved_heldout_room"]} if k in ("bl7", "bl8") else {})))
     return out
 
 

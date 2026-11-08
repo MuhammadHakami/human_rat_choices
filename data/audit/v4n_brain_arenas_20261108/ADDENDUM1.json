@@ -1,0 +1,7 @@
+{
+ "written_utc": "2026-11-08T00:54:29Z",
+ "issue": "rat open-field sessions where only one unit passes the registered 0.1 Hz filter give a constant correlation-distance neural RDM; rho undefined (NaN) and group means NaN",
+ "fix": "drop sessions whose neural RDM (full, odd or even) is constant; equivalent to the >= 5-unit-style minimum BM applies to region groups; applied to both species identically",
+ "outcomes_seen": "yes: the first analysis output (human arena RSA, rat partial values, next-move probabilities) was printed before this fix; the fix is mechanical (undefined values) and does not depend on any outcome",
+ "first_output_preserved": "analysis_first_run.json"
+}

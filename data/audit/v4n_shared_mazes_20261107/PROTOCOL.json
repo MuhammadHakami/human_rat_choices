@@ -1,0 +1,13 @@
+{
+ "written_utc": "2026-11-07T19:48:20Z",
+ "script_sha256": "7e7ef538ffd03b250f8a8dcc3b3ed79596a2bbffb1b405685e6a88c1a847d847",
+ "rooms": "Tartarus configurations 6-25 (no network saw them; imitation used 1-5), own native starts; layouts hash 2dfbf5b91c59b08208a4e5868da2bdbcdc8035f7594bcf88d6f0adadfb564d2c",
+ "criteria": "10x10, familiar goal (3,3), connected, every start <= 30 steps (all pass); moved goal = paper's rule with own starts",
+ "agents": "frozen human_bc, rat_bc; learned ppo, bl3_none, bl7_none from human_bc / human_legal_uniform / cold_ppo; 30 seeds; no training",
+ "probe": "F.probe, own 10 starts x 3 rotations = 30 trials per layout and goal, weights verified frozen",
+ "outcomes": "descriptive: success per goal; familiar goal vs recorded humans and rats on the same layouts and starts: success within 45, revisit rate, excess path, occupancy Bhattacharyya coefficient per layout (to humans, to rats; human-vs-rat reference)",
+ "role": "addition to the camera-ready; the paper's registered claims stay on the 16 generated rooms",
+ "not_included": "stage-7 gated and ablation arms (compute); moved-goal animal data do not exist",
+ "outcomes_seen": "check (dry, timing) before this file, layouts 6-7, seed 1000: bl7/human_bc familiar 10/30, 15/30, moved 24/30, 16/30; frozen rat_bc familiar 9/30, 10/30, moved 0, 0",
+ "data": "layouts and animal paths are read from data/unified at run time; outputs hold agent paths and aggregate animal metrics only"
+}

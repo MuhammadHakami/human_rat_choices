@@ -1,0 +1,9 @@
+{
+ "written_utc": "2026-11-08T10:15:21Z",
+ "event": "Lean corollary added after registration (no change to the registered script or its predictions): proofs_ml/ProofsML/Visited.lean, visited_not_source (the inhibited field is 0 at the visited cell since K c = 1) and visited_has_better_neighbour (wave_ascent then gives a strictly better open neighbour at any visited cell with positive value). lake build: 8661 jobs, success, no sorry. ProofsML.lean imports the new module.",
+ "lean": {
+  "file": "proofs_ml/ProofsML/Visited.lean",
+  "sha256": "cf88882512743277ebc80bbaf807dec7f86d061d5abee1ec477d42af2b8f86c5"
+ },
+ "outcomes_seen": "none of the stage-8 test (workers running; 8 of 180 records written, none read)"
+}

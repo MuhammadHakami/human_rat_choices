@@ -1146,6 +1146,128 @@ that learns the new goal in 69\% of runs ($+8.1$ pp over PPO, $[-0.6,16.7]$). In
 better than PPO ($+12.3$, $[6.1,18.4]$) but falls to 11\% on the new goal in the unseen room ($-16.7$, $[-22.3,-11.2]$). Higher
 overlap did not translate into transfer, so the result is a registered null; the main text keeps stage 3.
 
+\paragraph{Stage 6: a context-gated goal-vector pathway removes most forgetting but not the unseen-room deficit (registered NSGA-II, 120 trials on one GPU; one test).}
+Following central-complex models of vector memory, the readout also sees the place belief directly, $[z;\,g\,b]$ with
+$g\in\{0,.1,.25,.5,1,2\}$; with the inferred gate each context writes its own copy of $b$. We prove in Lean~4 that the joined
+code's overlap is $\langle z_A,z_B\rangle+g^2\langle b_A,b_B\rangle$ and that copies for different contexts are orthogonal, so
+learning in one context cannot move the other context's place weights. Both dev winners use the pathway ($g=1$ ungated, $g=2$ gated).
+On the test the gated circuit learns the new goal in 84\% of runs and still reaches the old goal in 58\%: $+22.9$ ($[15.0,30.8]$) and
+$+33.6$ ($[26.1,41.0]$) over PPO, and $+30.3$ and $+20.3$ over gated stage 3. In the unseen room it reaches the new goal in only 7.5\%
+($-20.3$ vs PPO, $[-25.7,-14.9]$; $-5.1$ vs stage 3). The ungated circuit learns 81\% ($+20.1$ vs PPO) but forgets (old goal 18\%) and
+reaches 13\% in the unseen room ($-15.2$, $[-20.5,-9.8]$). The place pathway thus buys continual learning in the trained room and
+costs transfer: a place-to-action map learned in one layout steers into walls in another. No configuration matches PPO in the unseen room.
+
+\paragraph{Stage 7: a hippocampal goal map transfers to never-seen rooms (registered NSGA-II, 80 trials on one GPU; one test).}
+Every agent's own place belief peaks on the true cell at every step in all 16 fresh rooms, so the deficit is not perception: stages
+1--6 store the goal in view$\to$action associations, which are layout-specific. Mammals store goals on the hippocampal place
+map~\cite{tolman1948,okeefe1978}, where place fields accumulate at rewarded places~\cite{hollup2001,dupret2010}, and read routes
+out of it by recurrent propagation and replay~\cite{ponulak2013,pfeiffer2013}. Stage 7 adds this to the stage-6 circuit: a one-shot
+dopamine-gated Hebbian write of the rewarded place (fixed place-field shape, as in behavioural-timescale plasticity~\cite{bittner2017}),
+a recurrent wavefront value over the place-cell lattice~\cite{ponulak2013}, short-term depression of a link after a
+bump~\cite{tsodyks1997}, and inhibition of a remembered goal that gives no reward (a dopamine dip at an omitted
+reward~\cite{hollerman1998}, acting as inhibition of return on places~\cite{posner1984}); both reset every episode, and no synapse or
+goal memory changes in the probes. Its drive, in steps to the goal, is added to the circuit's logits with gain
+$\kappa$. We prove in Lean~4 (\texttt{Wavefront.lean}) that, in any layout, the wavefront has no local maximum away from a goal and
+that climbing it reaches a remembered goal within $|S|$ steps. Two scaling choices were fixed on one dev smoke run before
+registration (disclosed); one search worker was restarted after a transient checkpoint read (ADDENDUM1). On the test, the ungated
+winner ($\kappa=50$) learns the new goal in 92\% of runs, keeps the old goal in 100\%, and reaches the new goal in the never-seen room
+in 83\% ($+55.2$ pp over PPO, $[47.4,63.0]$; $+70.4$ over stage 6) and the old goal there in 73\% ($+51.9$). The registered ablation
+without the two within-episode mechanisms falls to 8\% in the never-seen room ($-19.4$ vs PPO): transfer needs both the room-invariant
+goal memory and online repair of the map, a within-episode memory the feed-forward PPO baseline does not have.
+Scope (descriptive, after the test): what transfers is a goal place in the arena frame. In the fresh pairs the familiar goal is the
+same cell in both rooms and the moved goal is the same cell (2 pairs) or one cell away (6 pairs). The goal map reaches it in
+73\% and 86\% of these never-seen-room trials respectively (PPO 32\%, 27\%; stage 3 23\%, 20\%), so it is not replaying one
+coordinate, but a goal far from any remembered place is outside this benchmark and would require search. Leakage control (same
+15 agents, browser port): with the goal moved $\ge$4 cells from every remembered place the goal map succeeds in 3\% (PPO 4\%),
+and 99.6\% when its memory is re-centred there, so nothing in the input reveals the goal; the belief's input (distal cue rows)
+is identical across layouts. The old goal is kept because the map holds both goal places and inhibition of return tries the
+other after an empty visit.
+
+\paragraph{Stage 8: a dopamine dip at every visited place removes the remaining loops (registered, no search; one test).}
+\emph{Diagnosis} (descriptive; the project page's step-exact port of the tested agents, seeds 1000--1004 $\times$ 3 priors, the
+30-trial probe in each seed's trained and never-seen fresh room, both goals). The memoryless agents (frozen priors, PPO, the
+stage-3 circuit) fail by pushing into a wall: at trapped steps the place belief is correct (100\%) while the habit's preferred move
+is optimal in 2--25\% of steps with $p=0.74$--$0.95$, and 8--14 of the last 16 moves are bumps; no within-episode state can change
+this (\texttt{trapped\_forever}). The stage-7 goal map still failed with the familiar goal in never-seen rooms (62\% in these 15
+agents; 90\% of its failures were loops), and there the \emph{drive itself} asked for the bump: the chosen link was already
+depressed (99\% of trapped steps), yet it was the drive's best move ($D_a=0$, $p_{\rm drive}=0.78$--$1.00$). A depressed link is
+valued as staying, and the blurred goal field makes the agent's own cell a local maximum of $v$ next to a wall
+($v_c=G_{e,c}\ge\gamma_h\,v$ of every open neighbour), so staying, i.e.\ bumping, is optimal and short-term depression, which only
+closes links, cannot help. Stage 7 inhibited a place only when $G_e$ exceeded 70\% of its maximum (a searched threshold), never on
+the blur around a goal; a rarer second case was a field peak written at a mis-estimated, unreachable cell. Tested at probe time with
+the stage-7 weights, inhibition at every visited place in proportion to its expectation ($\theta=0$) raised the never-seen familiar
+goal from 61.8\% to 100\%, left the other three probes unchanged (81.8$\to$84.4, 93.3, 100) and removed every loop (trapped failures
+0\%; bumps per episode 14.7$\to$2.5). Alternatives tried there were worse or redundant: valuing a known collision at zero (91.1\%),
+removing the field behind a bump (harmful, 29.6\% on the moved goal), and an oracle that pre-closes the three visible links (69.6\%):
+the loop is not a perception failure. \emph{Brain basis.} A dopamine pause at an omitted reward scales with the expectation that
+was violated~\cite{schultz1997,hollerman1998}; the stage-7 rule already computes this dip ($G_e\leftarrow G_e(1-K_\sigma(c))$,
+with $K_\sigma(c)_c=1$ so a visit removes the expectation at that cell exactly) and acts as inhibition of return on
+places~\cite{posner1984}; the 70\% threshold had no biological reading and is dropped. Lean~4 corollary
+(\texttt{Visited.lean}, standard axioms): after the dip the visited cell is not a source, so by \texttt{wave\_ascent} some open
+neighbour has strictly higher value: the drive can never prefer to stay at a visited cell. \emph{Test} (registered with the
+diagnosis and predictions before any run; the whole learner re-run with $\theta=0$ in both stage-7 winners, nothing else changed;
+with $\theta=0.7$ the script reproduces the stage-7 record exactly; 30 seeds $\times$ 3 priors, paired with stage 7). Ungated: new
+goal 96.7\%, old goal 100\%, never-seen room new goal 88.8\% ($+5.7$ pp, $[0.4,11.1]$; PPO 27.8\%), never-seen room old goal
+\textbf{100\%} ($+27.3$, $[21.4,33.3]$; excluding the five diagnosis seeds $+25.7$, $[19.3,32.2]$). Predictions: P1 ($\ge+20$ on
+the never-seen old goal) and P3 (trained-room probes within $\pm5$: $+4.4$, $0.0$) met; P2 (never-seen new goal within $\pm5$)
+exceeded in the favourable direction ($+5.7$). The gated winner does not share the gain (never-seen old goal $+6.5$, $[3.1,10.0]$;
+never-seen new goal $-6.6$, $[-12.7,-0.4]$; its predictions not met), so the ungated circuit remains the one we report. Disclosed:
+the rule was chosen after probe-time outcomes on five seeds, two of them test seeds (hence the 25-seed contrast); a dry run of the
+registered analysis on 40 partial records per arm was seen before completion (ADDENDUM2); the Lean file was added after
+registration (ADDENDUM1). The page's loop diagnostic (\texttt{site/test/loops.mjs}) and the probe-time scripts are in the study
+folder.
+\emph{What ``never seen'' means here, and what 100\% does not mean} (descriptive, after the test; \texttt{site/test/leakage.mjs},
+\texttt{efficiency.mjs}). The goal is not new: the familiar goal is cell (3,3) in every room, and the moved goal of the never-seen
+room lies 0--1 cells from the one learnt in the trained room (the registered mirror rule). What is new is the layout: each
+never-seen room differs from its trained partner in 30--32 of 100 cells (disjoint wall sets), from every development, prior-training
+and Tartarus layout in $\geq$15 cells, and no two of the 16 rooms coincide. Learning always happens in the trained room
+(\texttt{room\_of}), probes run with frozen weights and never write the goal memory, and the belief filter starts uniform and reads
+only the distal-cue rows, which are identical across rooms (maximum difference $0$); the floor rows differ (the adjacent walls are
+visible, as they should be). Controls with the same 15 agents: a goal $\geq$4 cells from every remembered place is reached in 5.3\%
+of trials (stage 3: 3.8\%, PPO: 4.2\%), 100\% when the memory is re-centred on it, 8\% with no memory; so the 100\% is the
+remembered place reached through unknown walls, not a goal read from the input. Nor is it the shortest route: in never-seen rooms the
+old goal is reached in $1.67\times$ the shortest path on average (median $1.42$; exactly shortest in 17\% of trials; 3 bumps per
+episode), the moved goal in $4.1\times$ (search around the shifted place), against $1.14\times$ in the trained room; the longest
+shortest path is 14 moves, and the budget is 45.
+
+\paragraph{The same networks in the animals' own mazes (registered, descriptive; the paper's claims are unchanged).}
+\emph{Shared Tartarus layouts.} Configurations 6--25 were walked by both species and seen by no network (imitation used
+choices from 1--5). With each layout's own ten starts and no retraining, recorded humans reach the familiar goal within 45
+moves in 97\% of trials and rats in 85\%. Frozen networks trained on human or rat actions reach it in 57\% and 55\%. After
+learning the moved goal, PPO keeps 10\% (new goal 21\%), stage~3 16\% (17\%) and stage~7 66\% (70\%). Successful human-trained
+paths are 1.32$\times$ the shortest (humans 1.26, rats 1.67); visited-cell distributions overlap the humans' with a
+Bhattacharyya coefficient of 0.73 (human versus rat 0.94). One analysis fix (rat tracking cells on removed modules, starts
+off the native set) was registered as an addendum before any agent metric.
+\emph{Brain geometry on the same states.} We rebuilt two recorded mazes in our arena with the same renderer and moves: the
+rat W-track (DANDI 000978; 8 rats, dorsal CA1 and prefrontal units) and the human virtual towns (Zenodo 8058006; 11 patients,
+hippocampal iEEG; streets rasterized at $\sim$14 units per cell, overlap 0.66/0.55). Each recorded trial was replayed through
+every network, so model and brain are compared at identical positions and headings. RSA between condition RDMs (rats: cell
+$\times$ heading, 32--36 conditions; humans: cell, 19--36) is above permutation for all networks, but much of it is space: a
+track-distance RDM alone gives $\rho$=0.29 (rats) and 0.28 (humans), against split-half ceilings of 0.90 and 0.55. After
+partialling out space, heading and raw pixels, rat RSA is $\le$0.07 for every network (best CA1: trained on rat actions,
+0.071$\pm$0.048), and human RSA is largest for the network trained on human actions (0.117$\pm$0.052; stage~3 0.107, stage~7
+0.105, rat-trained 0.034). Post hoc, the human-trained minus rat-trained difference is $+0.084\pm0.048$ in human hippocampus
+(9 of 11 patients) and points the other way in rat CA1 and PFC ($-0.015$ to $-0.027$, intervals include 0). The data come
+from different tasks and recording methods, so this is a descriptive species-matched trend, not a test.
+\emph{Open arenas (second registered study).} The same replay in two open arenas: humans navigating to remembered object
+locations (OpenNeuro ds005522; 40 patients with medial-temporal or hippocampal contacts, bipolar iEEG) and rats foraging in an
+open field (DANDI 000405; 5 rats, 115 sessions of entorhinal, pre- and parasubiculum units). Here neural geometry is mostly
+space: the track-distance RDM gives $\rho$=0.26 (rats) and 0.22 (humans); the human split-half ceiling is only 0.04. Beyond
+space, heading and pixels, every network adds little (partial $\rho$ 0.00--0.05). In rats, the imitation networks and both
+brain circuits sit slightly above PPO (0.048--0.054 versus 0.018; $n$=5); in humans no family differs (0.02--0.04). One
+analysis fix (rat sessions with a single active unit give an undefined RDM) was added after the first output and is disclosed.
+\emph{Rosetta modalities against the brain.} On these replayed states the Rosetta modalities (image: DINOv2 view; text: MPNet
+caption; each network's action probabilities and hidden layer) enter the same condition-RDM comparison as the recordings (Spearman
+$\rho$, seeds then subjects averaged; space and heading partialled out; registered before this output, though brain--image/text
+and brain--network values above had been seen). Too few conditions (13--36) remain for the unpaired solver, so this is geometry
+only. Beyond space, every network's hidden layer is closer to human hippocampal geometry in the towns (0.04--0.12; human-trained
+0.121) than the view (0.011) or caption ($-$0.001). In rat CA1 the view is as close (0.079) as most hidden layers (0.055--0.115),
+in rat PFC the caption (0.095) is exceeded only by PPO after learning (0.148), and in both open arenas view and caption (0.03--0.09)
+are as close as any network (0.02--0.05). Action probabilities are never closer than the hidden layer by more than 0.03
+($-$0.04 to 0.07). Caption and view share geometry (0.33--0.59); each hidden layer shares more with its actions than with the view,
+except the goal-map circuit, whose actions are driven by the place map.
+The interactive matrices for every setting and network are on the project page.
+
 \paragraph{Spiking cost of the learned networks.} The learned networks were converted to signed integrate-and-fire
 networks exactly as the priors were (10 seeds $\times$ 3 priors, learned task, trained room). Conversion preserves
 success at every $T$ (PPO 63--64\% versus 63\% dense; search 2 99.3--99.9\% versus 99.4--99.9\%). The expansion

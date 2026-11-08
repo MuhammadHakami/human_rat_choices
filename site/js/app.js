@@ -1,20 +1,18 @@
 // Project page: live agents, architecture, learning lab, animals and results. Data: site/data (tools/build_site_data.py).
-import { Env, Prior, Circuit, prepare, rng, pick, softmax, movedGoal, bfs, MOVE_NAMES } from "./sim.js";
-import { probe, frozenAgent, circuitAgent } from "./protocol.js";
+import { Env, Prior, Circuit, stage7, prepare, rng, pick, softmax, movedGoal, bfs, MOVE_NAMES } from "./sim.js";
+import { probe, frozenAgent, circuitAgent, bumps, revisits } from "./protocol.js";
 import { fit, drawView, drawPooled, drawRoom, drawStrip, drawKC, drawPolicy, PRIOR_INFO, COL } from "./viz.js";
-import { bars, lines, scatter, heat, mean, minibars } from "./charts.js";
+import { bars, lines, scatter, heat, mean, minibars, geomap, dotpanels } from "./charts.js";
+import { $, h, sel, segment } from "./dom.js";
+import { playYourself } from "./you.js";
 
 const REPO = "MuhammadHakami/human_rat_choices";                                       // set to the GitHub owner/repository
 const LINKS = { paper: "paper/vision4neuro_camera.pdf", supp: "paper/vision4neuro_camera_supp.pdf", code: `https://github.com/${REPO}`,
-  models: `https://github.com/${REPO}/releases/tag/v1.0` };
+  models: `https://github.com/${REPO}/releases` };
 document.querySelectorAll("[data-link]").forEach(a => { a.href = LINKS[a.dataset.link]; if (a.dataset.link !== "paper" && a.dataset.link !== "supp") a.target = "_blank"; });
 document.getElementById("copy-bib").onclick = () => navigator.clipboard?.writeText(document.getElementById("bibtex").textContent);
 
 const get = (f, kind = "json") => fetch(`data/${f}`).then(r => { if (!r.ok) throw new Error(`${f}: ${r.status}`); return r[kind](); });
-const $ = id => document.getElementById(id);
-const h = (tag, at = {}, ...kids) => { const e = document.createElement(tag); for (const k in at) k.startsWith("on") ? e[k] = at[k] : e.setAttribute(k, at[k]); e.append(...kids); return e; };
-const sel = (label, opts, value, onchange) => { const s = h("select", { onchange: () => onchange(s.value) }); for (const [v, t] of opts) s.append(h("option", { value: v }, t)); s.value = value; return h("label", {}, label, s); };
-const segment = (host, opts, value, onchange) => { host.innerHTML = ""; for (const [v, t] of opts) { const b = h("button", { class: v === value ? "on" : "", onclick: () => { host.querySelectorAll("button").forEach(x => x.classList.remove("on")); b.classList.add("on"); onchange(v); } }, t); host.append(b); } onchange(value); };
 
 const D = {}; const priors = {}, kcs = {};
 async function prior(p, s) { const k = `${p}_${s}`; return priors[k] ??= new Prior(await get(`models/${k}.bin`, "arrayBuffer")); }
@@ -24,9 +22,11 @@ const roomName = r => `room ${r.pair + 1}${r.stage}`;
 const LEARN_PRIORS = ["human_bc", "human_legal_uniform", "cold_ppo"];
 const INFO = k => { if (!k.includes("@")) return PRIOR_INFO[k]; const [kind, p] = k.split("@"), from = PRIOR_INFO[p].short;
   if (kind === "ppo") return { label: "PPO (backpropagation), learned the moved goal", short: "PPO", col: "#33383f", from };
+  if (kind === "bl7") return { label: "mushroom body + hippocampal goal map (stage 7), learned the moved goal", short: "goal map", col: "#16a085", from };
+  if (kind === "bl8") return { label: "goal map with inhibition of return at every visited place (stage 8), learned the moved goal", short: "goal map+IOR", col: "#0e7a63", from };
   if (kind === "bc0") return { label: "mushroom-body circuit, before learning", short: "mushroom body", col: COL.bio, from };
   return { label: "mushroom-body circuit (local plasticity), learned the moved goal", short: "mushroom body", col: COL.bio, from }; };
-const MODEL_OPTS = () => D.C.priors.map(p => [p, `${PRIOR_INFO[p].label} (frozen)`]).concat(LEARN_PRIORS.flatMap(p => [[`bl3@${p}`, `mushroom-body circuit after learning, from ${PRIOR_INFO[p].short}`], [`ppo@${p}`, `PPO after learning, from ${PRIOR_INFO[p].short}`], [`bc0@${p}`, `mushroom-body circuit before learning, from ${PRIOR_INFO[p].short}`]]));
+const MODEL_OPTS = () => D.C.priors.map(p => [p, `${PRIOR_INFO[p].label} (frozen)`]).concat(LEARN_PRIORS.flatMap(p => [[`bl3@${p}`, `mushroom-body circuit after learning, from ${PRIOR_INFO[p].short}`], [`bl7@${p}`, `mushroom body + hippocampal goal map (stage 7) after learning, from ${PRIOR_INFO[p].short}`], ...(D.C.configs.bl8 ? [[`bl8@${p}`, `goal map + inhibition of return everywhere (stage 8) after learning, from ${PRIOR_INFO[p].short}`]] : []), [`ppo@${p}`, `PPO after learning, from ${PRIOR_INFO[p].short}`], [`bc0@${p}`, `mushroom-body circuit before learning, from ${PRIOR_INFO[p].short}`]]));
 const learnedBins = {};
 const learnedBin = (k, p, s) => learnedBins[`${k}${p}${s}`] ??= get(`learned/${k}_${p}_${s}.bin`, "arrayBuffer");
 // Autoplay episodes: trained and never-seen rooms, moved and familiar goals, several seeds and starts.
@@ -41,7 +41,7 @@ function paperRef(key, room, goal, custom) {
   if (custom) return "paper: n/a (your own room or goal)";
   const R = D.R, [kind, base] = key.includes("@") ? key.split("@") : [null, key], moved = goal === "moved";
   if (!kind || kind === "bc0") { const v = R.ood[moved ? "sample_moved" : "registered_sample_source"]?.[base]?.success; return v ? `paper: ${mean(v).toFixed(0)}% (30 seeds × 16 rooms)` : ""; }
-  const l = kind === "ppo" ? "ppo" : "bl3_none", k = room.stage === "A" ? (moved ? "new" : "familiar_trained_room") : (moved ? "moved_heldout_room" : "familiar_heldout_room");
+  const l = kind === "ppo" ? "ppo" : kind === "bl7" || kind === "bl8" ? `${kind}_none` : "bl3_none", k = room.stage === "A" ? (moved ? "new" : "familiar_trained_room") : (moved ? "moved_heldout_room" : "familiar_heldout_room");
   const v = R.kpi[`${l}/${base}/${k}`]; return v ? `paper: ${v[0].toFixed(0)}% ± ${v[1].toFixed(0)} (30 seeds)` : "";
 }
 let rateJob = 0;
@@ -53,6 +53,7 @@ function randomEpisode() {                                          // a new sce
 const SCENARIOS = {
   learn: { label: "Goal moved, trained room", models: LINEUP, goal: "moved", room: s => D.E.rooms.findIndex(r => r.configuration === 100 + 2 * (s % 8)), start: 1 },
   unseen: { label: "Goal moved, never-seen room", models: LINEUP, goal: "moved", room: s => D.E.rooms.findIndex(r => r.configuration === 101 + 2 * (s % 8)), start: 0 },
+  goalmap: { label: "Goal maps (stages 7, 8), never-seen room", models: ["bl8@human_bc", "bl7@human_bc", "bl3@human_bc", "ppo@human_bc"], goal: "moved", room: s => D.E.rooms.findIndex(r => r.configuration === 101 + 2 * (s % 8)), start: 0 },
   transfer: { label: "Familiar goal, never-seen room", models: LINEUP, goal: "familiar", room: s => D.E.rooms.findIndex(r => r.configuration === 101 + 2 * (s % 8)), start: 0 } };
 
 // ---------------- Arena: agents acting in one room ----------------
@@ -75,7 +76,7 @@ class Arena {
     // their own room (seed % 8): measure each seed in its own trained room, or its own never-seen partner, as the paper does.
     const own = sd => D.E.rooms.find(q => q.configuration === 100 + 2 * (sd % 8) + (r.stage === "B")), lab = [];
     const jobs = this.agents.map((A, j) => {
-      const isLearned = A.learned || /^(bl3|ppo)@/.test(A.m);
+      const isLearned = A.learned || /^(bl3|bl7|bl8|ppo)@/.test(A.m);
       if (!isLearned || custom) { lab[j] = A.learned ? "this run, this room" : "in this room"; return (A.learned ? [S.seed] : D.C.seeds).map(sd => ({ seed: sd, walk: this.walk, goal })); }
       lab[j] = r.stage === "A" ? "in each seed's trained room" : "in each seed's never-seen room";
       return (A.learned ? [S.seed] : D.C.seeds).map(sd => { const q = own(sd); return { seed: sd, walk: q.walkable, goal: S.goal === "moved" ? q.moved_goal : q.familiar_goal }; });
@@ -104,10 +105,12 @@ class Arena {
     const S = this.s, re = () => this.reset();
     const rooms = D.E.rooms.map((r, i) => [i, `${roomName(r)}${r.stage === "B" ? " (never used for learning)" : ""}`]);
     const pills = h("span", { class: "pills" }), sync = () => { roomSel.querySelector("select").value = S.room; goalSel.querySelector("select").value = S.goal; startSel.querySelector("select").value = S.start;
-      seedSel.querySelector("select").value = S.seed; texSel.querySelector("select").value = S.rot; }; this.syncControls = sync;
-    for (const [k, sc] of Object.entries(SCENARIOS)) { const b = h("button", { class: "pill" + (k === S.scenario ? " on" : ""), style: k === S.scenario ? "background:var(--fg)" : "", onclick: () => {
+      seedSel.querySelector("select").value = S.seed; texSel.querySelector("select").value = S.rot;
+      pills.querySelectorAll(".pill").forEach(x => { const sc = SCENARIOS[x.dataset.k], on = S.goal === sc.goal && S.room === sc.room(S.seed) && S.models.join() === sc.models.join(); x.classList.toggle("on", on); }); };   // the pill lights only when the room and goal are its own
+    this.syncControls = sync;
+    for (const [k, sc] of Object.entries(SCENARIOS)) { const b = h("button", { "data-k": k, class: "pill" + (k === S.scenario ? " on" : ""), onclick: () => {
       S.scenario = k; Object.assign(S, { models: sc.models.slice(), goal: sc.goal, room: sc.room(S.seed), start: sc.start }); this.walk = null; this.clickGoal = null;
-      pills.querySelectorAll(".pill").forEach(x => { x.classList.remove("on"); x.style.background = ""; }); b.classList.add("on"); b.style.background = "var(--fg)"; this.renderSlots(); sync(); re(); } }, sc.label); pills.append(b); }
+      pills.querySelectorAll(".pill").forEach(x => x.classList.remove("on")); b.classList.add("on"); this.renderSlots(); sync(); re(); } }, sc.label); pills.append(b); }
     const roomSel = sel("Room", rooms, S.room, v => { S.room = +v; this.walk = null; re(); }); let seedSel, texSel;
     const goalSel = sel("Goal", [["familiar", "familiar (3,3)"], ["moved", "moved"], ["click", "click a cell"]], S.goal, v => { S.goal = v; re(); });
     const startSel = sel("Start", [[-1, "random"]].concat(D.E.starts.map((s, i) => [i, `(${s})`])), S.start, v => { S.start = +v; re(); });
@@ -135,6 +138,7 @@ class Arena {
     return r.familiar_goal;
   }
   async reset() {
+    this.syncControls?.();
     this.resets = (this.resets || 0) + 1;
     const S = this.s; this.walk ??= this.room().walkable.map(x => x.slice()); const goal = this.goal(), start = D.E.starts[S.start >= 0 ? S.start : (this.trial * 7 + 3) % D.E.starts.length];
     if (!this.walk[start[0]][start[1]] || !this.walk[goal[0]][goal[1]] || !bfs(this.walk, start).has(goal[0] * 10 + goal[1])) { this.status = "start and goal must be open and connected"; }
@@ -142,11 +146,11 @@ class Arena {
     this.agents = await Promise.all(S.models.map(async m => {
       const [kind, base] = m.includes("@") ? m.split("@") : [null, m];
       const P = kind === "ppo" ? new Prior(await learnedBin("ppo", base, seed)) : await prior(base, seed);
-      const L = new Circuit(P, await kc(seed), D.C.configs[mine(m) ? this.learned.gate : "none"], half);
+      const L = kind === "bl7" || kind === "bl8" ? stage7(P, await kc(seed), D.C.configs[kind], half, await learnedBin(kind, base, seed)) : new Circuit(P, await kc(seed), D.C.configs[mine(m) ? this.learned.gate : "none"], half);
       if (kind === "bl3") { const w = new Float32Array(await learnedBin("bl3", base, seed)); L.Wa.set(w.subarray(0, 4 * 2048)); L.Wv.set(w.subarray(4 * 2048)); }
       if (mine(m)) { L.Wa.set(this.learned.Wa); L.ctx = this.learned.ctx; }        // the learned synapses, in the final inferred context
       const env = new Env(D.E, { walkable: this.walk, goal }, 1, () => ({ spawn: start, rotation_index: S.rot }));
-      return { m, L, env, x: env.reset()[0], u: rng(1 + this.trial * 7919), done: false, out: null, a: null, learned: !!mine(m) };
+      return { m, L, env, x: env.reset()[0], u: rng(1 + this.trial * 7919), done: false, out: null, a: null, learned: !!mine(m), seed };
     }));
     this.agents.forEach(A => A.out = circuitAgent(A.L)(A.x)); this.build(); this.draw(); this.onSelect?.(this.agents[this.sel]);
   }
@@ -155,9 +159,11 @@ class Arena {
     this.cards = this.agents.map((A, j) => {
       const info = INFO(A.m), card = h("div", { class: "agent" + (j === this.sel && !this.autoplay ? " sel" : "") });
       const view = h("canvas", { class: "view" }), room = h("canvas", { class: "room" }), st = h("div", { class: "status" }), rate = h("div", { class: "rate" }, h("b", {}, "measuring…"), h("span", {}, ""));
-      const [kind] = A.m.includes("@") ? A.m.split("@") : [null], name = A.learned || kind === "bl3" || kind === "bc0" ? "mushroom-body circuit" : kind === "ppo" ? "PPO" : info.label;
-      const sub = A.learned ? "learned here, in your browser" : kind === "bl3" ? "learned the moved goal · local plasticity" : kind === "ppo" ? "learned the moved goal · backpropagation" : kind === "bc0" ? "before learning" : "frozen, imitates recorded choices";
-      card.append(h("h3", { style: `color:${info.col}` }, this.autoplay ? info.short : name), this.autoplay ? "" : h("div", { class: "sub" }, `${sub}${info.from ? ` · from ${info.from}` : ""} · seed ${this.s.seed}`), view, room, st, rate);
+      const [kind] = A.m.includes("@") ? A.m.split("@") : [null], name = kind === "bl7" ? "hippocampal goal map" : kind === "bl8" ? "goal map + inhibition of return" : A.learned || kind === "bl3" || kind === "bc0" ? "mushroom-body circuit" : kind === "ppo" ? "PPO" : info.label;
+      const sub = A.learned ? "learned here, in your browser" : kind === "bl3" ? "learned the moved goal · local plasticity" : kind === "bl7" ? "goal stored on the place map · local plasticity" : kind === "bl8" ? "goal map · dopamine dip at every visited place" : kind === "ppo" ? "learned the moved goal · backpropagation" : kind === "bc0" ? "before learning" : "frozen · copies recorded actions · no reward learning";
+      const edited = this.walk.flat().join() !== this.room().walkable.flat().join(), isL = A.learned || /^(bl3|bl7|bl8|ppo)@/.test(A.m);
+      const rt = `${edited ? "edited" : isL && this.room().stage === "A" ? "trained" : "unseen"} · ${this.s.goal === "click" ? "custom" : this.s.goal}`;
+      card.append(h("h3", { style: `color:${info.col}` }, this.autoplay ? info.short : name, h("span", { class: "rt" }, rt)), this.autoplay ? "" : h("div", { class: "sub" }, `${sub}${info.from ? ` · from ${info.from}` : ""} · seed ${this.s.seed}`), view, room, st, rate);
       card.onclick = () => { if (this.autoplay) return; this.sel = j; this.cards.forEach((c, k) => c.card.classList.toggle("sel", k === j)); this.onSelect?.(A); };
       room.onclick = e => { if (this.autoplay) return; const b = room.getBoundingClientRect(), c = Math.floor((e.clientX - b.left) / b.width * 10), r = Math.floor((e.clientY - b.top) / b.height * 10);
         if (this.s.edit) { this.walk[r][c] = 1 - this.walk[r][c]; this.reset(); } else if (this.s.goal === "click") { this.clickGoal = [r, c]; this.reset(); } };
@@ -188,7 +194,7 @@ class Arena {
       drawRoom(c.room, this.walk, { goal: A.env.goal, alt: this.s.goal !== "familiar" ? this.room().familiar_goal : null, start: w.spawn, path: w.path, pos: w.pos, heading: w.heading, col: info.col,
         belief: this.s.belief && !A.done ? A.x.subarray(150, 250) : null });
       c.st.innerHTML = A.done ? (A.result.success ? `<span class="ok">reached the goal in ${A.result.decisions} moves</span>` : `<span class="bad">time out (45 moves)</span>`) +
-        ` · revisits ${revisits(A.result.path)}%` : `move ${w.decisions}<div class="pbar" style="color:${info.col}">${A.out.p.map(p => `<i style="--w:${(100 * p).toFixed(0)}%"></i>`).join("")}</div><div class="pbar-l"><span>S</span><span>N</span><span>E</span><span>W</span></div>`;
+        ` · revisits ${revisits(A.result.path)}% · ${bumps(A.result.path)} wall bumps` : `move ${w.decisions} · ${bumps(w.path)} wall bumps<div class="pbar" style="color:${info.col}">${A.out.p.map(p => `<i style="--w:${(100 * p).toFixed(0)}%"></i>`).join("")}</div><div class="pbar-l"><span>S</span><span>N</span><span>E</span><span>W</span></div>`;
     });
   }
   loop() { let acc = 0, last = performance.now(); this.visible = true;
@@ -204,10 +210,9 @@ class Arena {
       out.push({ label: INFO(A.m).short + (A.learned ? "+L" : ""), col: INFO(A.m).col, m: eps.filter(e => e.success).length * 100 / 30, h: 0, rv: mean(eps.map(e => revisits(e.path))) }); }
     bars($("play-probe"), out, { ylabel: "success (%)", ymax: 100, ref: 100 * 4 / 30, refLabel: "" });
     $("play-probe-note").innerHTML = `Success over 30 trials in ${roomName(this.room())}${this.walk.flat().join() !== this.room().walkable.flat().join() ? " (edited)" : ""}, one seed. ` +
-      `Revisits: ${out.map(o => `${o.label} ${o.rv.toFixed(0)}%`).join(", ")}. One seed and one room are noisy. Paper, 30 seeds: mushroom-body circuit +12.4 pp over PPO on the new goal; human choices +9.9 pp over legal moves in unseen rooms (Evidence).`;
+      `Revisits (a move into a wall counts, as in the paper): ${out.map(o => `${o.label} ${o.rv.toFixed(0)}%`).join(", ")}. One seed and one room are noisy. Paper, 30 seeds: mushroom-body circuit +12.4 pp over PPO on the new goal; human choices +9.9 pp over legal moves in unseen rooms (Evidence).`;
   }
 }
-const revisits = path => { const s = new Set([String(path[0])]); let r = 0; for (const c of path.slice(1)) { const k = String(c); r += s.has(k); s.add(k); } return Math.round(100 * r / Math.max(path.length - 1, 1)); };
 
 // ---------------- Architecture panel ----------------
 const ARCH = [
@@ -232,13 +237,16 @@ function architecture() {
   for (const b of ARCH) {
     const el = h("div", { class: "block", onclick: () => { host.querySelectorAll(".block").forEach(x => x.classList.remove("on")); el.classList.add("on"); $("arch-detail").innerHTML = b.detail; } },
       h("h4", {}, b.title), h("div", { class: "sub" }, b.sub));
-    const c = (k, w, hh, cap) => { const x = h("canvas", { width: w, height: hh }); cv[k] = x; el.append(x); if (cap) el.append(h("div", { class: "mini" }, cap)); };
-    if (b.id === "in") { c("view", 256, 144, "camera 64×36"); c("pool", 256, 144, "pooled 16×9 = 144"); c("belief", 120, 120, "place belief 10×10"); cv.belief.classList.add("belief"); el.append(cv.chips = h("div", { class: "chips" })); }
+    const c = (k, w, hh, cap, into = el) => { const x = h("canvas", { width: w, height: hh }); cv[k] = x; into.append(x); if (cap) into.append(h("div", { class: "mini" }, cap)); };
+    if (b.id === "in") {
+      c("view", 256, 144, "camera 64×36");
+      const row = h("div", { class: "inrow" }), pool = h("div"), bel = h("div"); row.append(pool, bel); el.append(row);
+      c("pool", 256, 144, "pooled 16×9 = 144", pool); c("belief", 120, 120, "place belief 10×10", bel); cv.belief.classList.add("belief"); el.append(cv.chips = h("div", { class: "chips" })); }
     if (b.id === "bb") { c("h1", 160, 160, "layer 1 · 64"); c("h2", 160, 160, "layer 2 · 64"); }
     if (b.id === "neck") { c("kc", 320, 160, ""); el.append(cv.kcn = h("div", { class: "mini" })); }
     if (b.id === "head") { c("logit", 240, 110, "logits: prior (light) + plastic (dark)"); el.append(cv.val = h("div", { class: "mini" })); }
     if (b.id === "out") { c("pol", 140, 140, ""); el.append(cv.move = h("div", { class: "mini" })); }
-    for (const [t, k] of b.tags) el.append(h("span", { class: `tag ${k}` }, t));
+    el.append(h("div", { class: "tags" }, ...b.tags.map(([t, k]) => h("span", { class: `tag ${k}` }, t))));
     host.append(el);
   }
   $("arch-detail").innerHTML = ARCH[2].detail;
@@ -256,7 +264,32 @@ function architecture() {
       g.fillStyle = getComputedStyle(document.body).color; g.font = "11px Inter"; g.fillText(n, 2, y + 12); g.fillStyle = "rgba(128,128,128,.5)"; g.fillRect(z0, y - 2, 1, 20); });
     cv.val.textContent = `value V = ${o.v.toFixed(3)} · plastic part ${(o.lg.reduce((s, v, i) => s + Math.abs(v - base[i]), 0)).toFixed(3)}`;
     drawPolicy(cv.pol, o.p, A.a, INFO(A.m).col); const nx = o.p.indexOf(Math.max(...o.p)); cv.move.textContent = `most likely next: ${MOVE_NAMES[nx]} (${(100 * o.p[nx]).toFixed(0)}%)`;
+    sameState(A);
   };
+}
+
+// The paper's Rosetta caption template for one state (v4n_rosetta_matched_claude_20261031.caption): the adjacent module ahead,
+// left and right (fog hides the rest) and the bearing of the black curtain, which hangs along the row-0 edge.
+function captionOf(walk, cell, hd) {
+  const open = d => { const r = cell[0] + d[0], c = cell[1] + d[1]; return r >= 0 && r < 10 && c >= 0 && c < 10 && walk[r][c] ? "open floor" : "a drop with no floor"; };
+  const left = [-hd[1], hd[0]], right = [hd[1], -hd[0]], same = (a, b) => a[0] === b[0] && a[1] === b[1], north = [-1, 0];
+  const cur = same(north, hd) ? "ahead" : same(north, left) ? "to the left" : same(north, right) ? "to the right" : "behind";
+  return `Ahead there is ${open(hd)}. To the left there is ${open(left)}. To the right there is ${open(right)}. ${cur === "behind" ? "The black curtain is behind you, out of view." : `The black curtain is ${cur}.`}`;
+}
+const loadingPriors = new Set();
+function sameState(A) {                                             // the six frozen networks' action probabilities at the selected agent's exact input
+  const row = $("ss-row"), cap = $("ss-cap"); if (!row || !A?.x) return;
+  const w = A.done ? A.result : A.env.w[0];
+  cap.innerHTML = `<b>Caption of this state</b> · “${captionOf(A.env.walk, w.pos, w.heading)}”`;
+  if (row.childElementCount !== D.C.priors.length) { row.innerHTML = ""; for (const p of D.C.priors) row.append(h("div", { class: "ss" }, h("b", { style: `color:${PRIOR_INFO[p].col}` }, PRIOR_INFO[p].short),
+    h("div", { class: "pbar", style: `color:${PRIOR_INFO[p].col}` }), h("div", { class: "pbar-l" }, ...MOVE_NAMES.map(n => h("span", {}, n[0].toUpperCase()))), h("span", {}, "loading…"))); }
+  D.C.priors.forEach((p, j) => {
+    const k = `${p}_${A.seed}`, P = priors[k], card = row.children[j];
+    if (!P) { if (!loadingPriors.has(k)) { loadingPriors.add(k); prior(p, A.seed).then(() => { loadingPriors.delete(k); sameState(A); }); } return; }
+    const pr = softmax(P.heads(P.body(A.x).h).lg), nx = pr.indexOf(Math.max(...pr));
+    card.querySelector(".pbar").innerHTML = pr.map(v => `<i style="--w:${(100 * v).toFixed(0)}%"></i>`).join("");
+    card.lastChild.textContent = `${MOVE_NAMES[nx]} ${(100 * pr[nx]).toFixed(0)}%`;
+  });
 }
 
 // ---------------- Learn & forget: the same circuit, without and with the latent-cause gate, side by side ----------------
@@ -342,6 +375,13 @@ const GLOSSARY = [
   ["Adaptive dopamine and exploration", "Dopamine responses rescale to the range of recent rewards, and noradrenaline sets how exploratory behaviour is.", "δ is divided by its running size; moves are sampled at a temperature while learning.", "adaptive coding dopamine Tobler locus coeruleus exploration"],
   ["Latent-cause inference", "When outcomes suddenly stop matching expectations, the brain infers that the world has changed and starts a new memory.", "a change detector on successes switches to the other half of the Kenyon cells, with no cue.", "latent cause inference Gershman"],
   ["Behavioural cloning", "Learning a policy by imitating recorded choices.", "the backbone (252 → 64 → 64) was trained on human or rat choices, then frozen.", "behavioral cloning imitation learning"],
+  // the hippocampal goal map (stages 7-8)
+  ["Place cells and the cognitive map", "Hippocampal cells fire at particular places; together they form a map of the environment that is independent of any one view (O'Keefe & Nadel 1978; Tolman 1948).", "the goal map lives on the agent's own 10×10 place belief, so what it learns is a place, not a view.", "hippocampal place cells cognitive map O'Keefe Nadel"],
+  ["Goal cells and one-shot plateau plasticity", "Place fields accumulate at rewarded places (Hollup 2001; Dupret 2010), and a single dendritic plateau can create a field in one trial (behavioural-timescale plasticity, Bittner 2017).", "at reward, a dopamine-gated one-shot write stores the reached place as a fixed-width field; repetition does not widen it.", "behavioral timescale synaptic plasticity place field Bittner Magee"],
+  ["Wavefront planning and replay", "Routes to a remembered goal can be read out of the map by propagating activity through it (Ponulak & Hopfield 2013), as place-cell sequences sweep to goals (Pfeiffer & Foster 2013).", "a recurrent wavefront value over the place lattice; the drive is the number of extra steps each move costs.", "wavefront path planning spiking Ponulak Hopfield replay"],
+  ["Short-term synaptic depression", "Synapses weaken transiently after use and recover within seconds (Tsodyks & Markram 1997).", "a bump depresses the believed map link for the rest of the episode, so the route is repaired without changing any weight.", "short-term synaptic depression Tsodyks Markram"],
+  ["Dopamine dip at an omitted reward", "When an expected reward does not arrive, dopamine neurons pause in proportion to what was expected (Schultz, Dayan & Montague 1997; Hollerman & Schultz 1998).", "stage 7 inhibited only the remembered goal cell itself; stage 8 applies the dip at every visited place in proportion to its expectation, which removes the loops next to walls.", "dopamine reward omission negative prediction error Schultz"],
+  ["Inhibition of return", "Orienting is biased away from locations recently attended or visited (Posner & Cohen 1984).", "an inhibited copy of the goal field for the episode: a visited place is not sought again until the episode ends.", "inhibition of return Posner Cohen"],
 ];
 function glossary() {
   const host = $("glossary"); if (!host) return;
@@ -354,7 +394,12 @@ function proofList() {
   const P = [["trapped_forever", "a frozen agent that revisits a state loops forever"], ["relabel_keeps_states", "the legal-label control changes only actions"],
     ["species_gap_decomposition", "human − rat = coverage gap + choice gap"], ["trace_bounded", "the circuit's eligibility trace stays bounded"],
     ["softmax_logit_grad", "the local rule is the policy gradient (Mathlib)"],
-    ["transfer_identity", "learning in one room reaches another only through shared Kenyon cells (Mathlib)"]];
+    ["transfer_identity", "learning in one room reaches another only through shared Kenyon cells (Mathlib)"],
+    ["copies_orthogonal", "per-context copies of the place belief cannot interfere: learning one context leaves the other unchanged (Mathlib)"],
+    ["wave_ascent", "the hippocampal goal map has no trap: away from a remembered goal some open neighbour is always better, in any room (Mathlib)"],
+    ["greedy_reaches_source", "climbing the goal map reaches a remembered goal within 100 steps (Mathlib)"],
+    ["visited_not_source", "a dopamine dip at a visited place removes its expectation exactly (stage 8, Mathlib)"],
+    ["visited_has_better_neighbour", "so at any visited cell some open neighbour is strictly better: the goal map can never prefer to stay (Mathlib)"]];
   for (const [n, t] of P) { const e = h("div", { class: "proof", onclick: () => e.classList.toggle("on") }, h("code", {}, n), h("span", {}, t), h("pre", {}, D.R.proofs[n])); $("proof-list").append(e); }
 }
 
@@ -386,19 +431,28 @@ function animals() {
 }
 
 // ---------------- Results ----------------
-const NICE2 = s => s.replace("brain circuit", "mushroom-body circuit");
+const SHORT = { before: "before", ppo: "PPO", td_head: "TD-readout", s2_ed: "local+replay", cs_dfa: "+consolidation", G2: "+inferred gate", bl3_none: "MB circuit", bl2_inferred: "MB circuit+gate", bl7_none: "goal map", bl8_none: "goal map+IOR" };
+const DY = { cs_dfa: 14, bl3_none: -8, bl2_inferred: -7, bl8_none: 14 };          // keep-vs-learn label offsets: PPO, +consolidation and the MB circuits sit within a few pp of each other
+const FL = { before: "before", ppo: "PPO", td_head: "TD-\nreadout", s2_ed: "local+\nreplay", cs_dfa: "+consoli-\ndation", G2: "+inferred\ngate", bl3_none: "MB\ncircuit", bl2_inferred: "MB circuit\n+gate", bl7_none: "goal\nmap", bl8_none: "goal map\n+IOR" };
 function results() {
   const R = D.R, ARMS = ["human_bc", "human_legal_uniform", "rat_bc", "rat_legal_uniform", "rat_sham", "cold_ppo"], lab = a => PRIOR_INFO[a].short.replace(" ", "\n");
   segment($("r-ood-seg"), [["success|registered_sample_source", "success, familiar goal"], ["revisit|registered_sample_source", "revisits"], ["success|sample_moved", "success, moved goal"]], "success|registered_sample_source", v => {
     const [k, fam] = v.split("|"); bars($("r-ood"), ARMS.filter(a => R.ood[fam]?.[a]).map(a => ({ label: lab(a), col: PRIOR_INFO[a].col, values: R.ood[fam][a][k] })),
       { ylabel: k === "revisit" ? "moves revisiting a cell (%)" : "success, frozen (%)", ymin: k === "revisit" ? 40 : 0, ymax: k === "revisit" ? 80 : 60, ref: k === "success" ? 13.3 : null, refLabel: "uniform\npolicy", mr: k === "success" ? 52 : 10 }); });
+  const SH = R.shared, SA = SH.agents, SAN = SH.animals;             // the animals' own layouts 6-25 (registered, descriptive): recorded animals and the same networks
+  segment($("r-shared-seg"), [["familiar", "familiar goal"], ["moved", "moved goal"], ["revisit", "revisits"]], "familiar", k => {
+    const an = sp => k === "moved" ? null : SAN[sp][k === "familiar" ? "success" : "revisit"];
+    const G = [["humans\n(recorded)", COL.human, an("human"), .5], ["rats\n(recorded)", COL.rat, an("rat"), .5], ["human-\ntrained", COL.human, SA["frozen/human_bc"][k]], ["rat-\ntrained", COL.rat, SA["frozen/rat_bc"][k]],
+      ["PPO\nlearned", "#33383f", SA["ppo/human_bc"][k]], ["MB\ncircuit", COL.bio, SA["bl3/human_bc"][k]], ["goal\nmap", "#16a085", SA["bl7/human_bc"][k]]];
+    bars($("r-shared"), G.filter(g => g[2]).map(([label, col, v, alpha]) => ({ label, col, m: v[0], h: v[1], alpha })), { ylabel: k === "revisit" ? "moves revisiting a cell (%)" : "success (%)", ymax: 100, mb: 52 }); });
   const L = Object.keys(R.nice).filter(l => l !== "before"), PR = ["cold_ppo", "human_legal_uniform", "human_bc"], bio = l => l.startsWith("bl");
   const lm = (l, key) => { const v = PR.map(p => R.kpi[`${l}/${p}/${key}`]?.[0]).filter(x => x != null); return v.length ? mean(v) : null; };
-  scatter($("r-keep"), L.filter(l => lm(l, "new") != null).map(l => ({ x: lm(l, "new"), y: lm(l, "familiar_trained_room"), col: bio(l) ? COL.bio : l === "G2" ? COL.rat : "#7a7a7a", label: NICE2(R.nice[l]), text: NICE2(R.nice[l]), dy: l === "cs_dfa" ? 13 : l === "bl3_none" ? -6 : 3 })),
+  const colOf = l => l === "bl7_none" ? "#16a085" : l === "bl8_none" ? "#0e7a63" : bio(l) ? COL.bio : l === "G2" ? COL.rat : "#7a7a7a", short = l => SHORT[l] ?? R.nice[l];
+  scatter($("r-keep"), L.filter(l => lm(l, "new") != null).map(l => ({ x: lm(l, "new"), y: lm(l, "familiar_trained_room"), col: colOf(l), label: short(l), text: short(l), dy: DY[l] ?? 3 })),
     { xmin: 0, xmax: 100, ymin: 0, ymax: 100, xlabel: "new goal, trained room (%)", ylabel: "old goal kept (%)" });
   segment($("r-forget-seg"), [["familiar_trained_room", "old goal, trained room"], ["familiar_heldout_room", "old goal, unseen room"], ["moved_heldout_room", "new goal, unseen room"]], "familiar_trained_room", key => {
-    const G = []; for (const l of ["before", ...L]) for (const p of PR) { const v = R.kpi[`${l}/${p}/${key}`]; if (v) G.push({ label: p === "human_legal_uniform" ? NICE2(R.nice[l]).replace(/ /g, "\n").replace("+", "+\n").slice(0, 26) : "", col: PRIOR_INFO[p].col, m: v[0], h: v[1] }); }
-    bars($("r-forget"), G, { ylabel: "success (%)", ymax: 100, w: 520, mb: 64 }); });
+    const G = []; for (const l of ["before", ...L]) for (const p of PR) { const v = R.kpi[`${l}/${p}/${key}`]; if (v) G.push({ label: p === "human_legal_uniform" ? FL[l] ?? R.nice[l] : "", col: PRIOR_INFO[p].col, m: v[0], h: v[1] }); }
+    bars($("r-forget"), G, { ylabel: "success (%)", ymax: 100, w: 520, mb: 56 }); });
   segment($("r-curve-seg"), [["ppo", "PPO"], ["td_head", "TD-readout"], ["td_fa", "TD-DFA"]], "ppo", l => {
     lines($("r-curves"), PR.filter(p => R.curves[`${l}/${p}`]).map(p => ({ label: PRIOR_INFO[p].label, col: PRIOR_INFO[p].col, ...R.curves[`${l}/${p}`] }))
       .concat([{ label: "◯ mushroom-body circuit, end", col: COL.bio, open: true, x: [32768], y: [[mean(PR.map(p => R.kpi[`bl3_none/${p}/new`][0])), 0]] }]),
@@ -409,13 +463,37 @@ function results() {
     const SL = R.snn_learned, L2 = [["ppo", "PPO (backprop)", "#33383f"], ["td_head", "TD-readout (local)", "#9b6fbf"], ["s2_ed", "local + replay", COL.bio]];
     lines($("r-snn"), L2.filter(([k]) => SL[`${k}/T8`]).map(([k, l, col]) => ({ label: l, col, x: [8, 16, 32].map(t => SL[`${k}/T${t}`].synops / 1000), y: [8, 16, 32].map(t => [SL[`${k}/T${t}`].spiking, 0]) })),
       { xmin: 1, xmax: 10000, xlog: true, ymin: 0, ymax: 105, ylabel: "spiking success (%)", xlabel: "synaptic operations per decision (thousands)" }); });
-  const VA = ["human_bc", "human_legal_uniform", "rat_bc", "cold_ppo"];
-  bars($("r-vla"), VA.map(a => ({ label: "move\n" + PRIOR_INFO[a].short, col: PRIOR_INFO[a].col, m: 100 * R.text_to_move[a], h: 0 })).concat(
-    VA.map(a => ({ label: "route\n" + PRIOR_INFO[a].short, col: PRIOR_INFO[a].col, alpha: .45, m: R.closed_loop[a][0], h: R.closed_loop[a][1] }))), { ylabel: "%", ymax: 100, ref: 13.3, refLabel: "uniform\npolicy", w: 520, mr: 52 });
+  const VA = ["human_bc", "human_legal_uniform", "rat_bc", "cold_ppo"], VS = { human_bc: "human", human_legal_uniform: "legal", rat_bc: "rat", cold_ppo: "scratch" };
+  bars($("r-vla"), VA.map(a => ({ label: "move\n" + VS[a], col: PRIOR_INFO[a].col, m: 100 * R.text_to_move[a], h: 0 })).concat(
+    VA.map(a => ({ label: "route\n" + VS[a], col: PRIOR_INFO[a].col, alpha: .45, m: R.closed_loop[a][0], h: R.closed_loop[a][1] }))), { ylabel: "%", ymax: 100, ref: 13.3, refLabel: "uniform\npolicy", w: 520, mr: 52 });
   const kinds = ["image", "text", "cortex", "hid", "act"], names = { image: "image", text: "caption", cortex: "mouse cortex", hid: "agent hidden", act: "action" };
-  segment($("r-cka-seg"), VA.map(a => [a, PRIOR_INFO[a].short]), "human_bc", a => {
-    const v = (x, y) => { if (x === y) return 1; const k = [`${x}-${y}`, `${y}-${x}`]; for (const kk of k) { if (R.cka[`${kk}|${a}`]) return R.cka[`${kk}|${a}`][0]; if (R.cka[`${kk}|pooled`]) return R.cka[`${kk}|pooled`][0]; } return null; };
-    heat($("r-cka"), kinds.map(x => kinds.map(y => v(x, y))), kinds.map(k => names[k]), kinds.map(k => names[k])); });
+  const cka = { a: "human_bc", view: "map" };
+  const drawCka = () => { const a = cka.a, v = (x, y) => { if (x === y) return 1; const k = [`${x}-${y}`, `${y}-${x}`]; for (const kk of k) { if (R.cka[`${kk}|${a}`]) return R.cka[`${kk}|${a}`][0]; if (R.cka[`${kk}|pooled`]) return R.cka[`${kk}|pooled`][0]; } return null; };
+    const S = kinds.map(x => kinds.map(y => v(x, y)));
+    if (cka.view === "map") geomap($("r-cka"), S, [{ label: "image", col: "#8c8c8c" }, { label: "caption", col: "#8c8c8c", open: true }, { label: "mouse cortex", col: "#d98c2b" }, { label: "hidden", col: PRIOR_INFO[a].col }, { label: "action", col: PRIOR_INFO[a].col, open: true }], { anchor: ["image", "action", "caption"], h: 240 });   // same height as the bar charts beside it
+    else heat($("r-cka"), S, kinds.map(k => names[k]), kinds.map(k => names[k]));
+    $("r-cka-note").textContent = `CKA, 1,000 matched moments · hidden ↔ action ${v("hid", "act").toFixed(2)} vs hidden ↔ image ${v("image", "hid").toFixed(2)} and hidden ↔ caption ${v("text", "hid").toFixed(2)}`; };
+  segment($("r-cka-view"), [["map", "map"], ["matrix", "matrix"]], cka.view, v => { cka.view = v; drawCka(); });
+  segment($("r-cka-seg"), VA.map(a => [a, PRIOR_INFO[a].short]), cka.a, a => { cka.a = a; drawCka(); });
+  const BR = R.brain_rosetta, BM = ["image", "caption", "action", "hidden", "brain"];
+  const BSET = [["wtrack_rat_CA1", "rat W-track · CA1"], ["wtrack_rat_PFC", "rat W-track · PFC"], ["towns_human", "human towns · hippocampus"], ["arena_rat", "rat open field · MEC"], ["arena_human", "human arena · MTL"]];
+  const BNET = [["frozen/human_bc", "human-trained"], ["frozen/rat_bc", "rat-trained"], ["frozen/human_legal_uniform", "random legal"], ["frozen/cold_ppo", "PPO prior"], ["ppo", "PPO learned"], ["bl3", "mushroom body"], ["bl7", "goal map"]];
+  const bros = { set: "towns_human", net: "frozen/human_bc", m: "partial" };
+  const NETCOL = { "frozen/human_bc": COL.human, "frozen/rat_bc": COL.rat, "frozen/human_legal_uniform": COL.legal_h, "frozen/cold_ppo": COL.none, ppo: "#33383f", bl3: COL.bio, bl7: "#16a085" };
+  const brosOverview = () => { const b = BM.indexOf("brain"), rng = bros.m === "partial" ? [-.05, .15] : [-.1, .6];
+    dotpanels($("r-bros-over"), BSET.map(([s, title]) => { const S = BR[s], row = f => S.fam[f][bros.m][b];
+      return { title: title.replace(" · ", " "), sub: `${S.subjects} subjects · ceiling ${S.ceiling.toFixed(2)}`, rows: [
+        { label: "view", pts: [{ x: row("frozen/human_bc")[0], col: "#8c8c8c", shape: "square" }] }, { label: "caption", pts: [{ x: row("frozen/human_bc")[1], col: "#8c8c8c", shape: "triangle" }] },
+        ...BNET.map(([f, lab]) => ({ label: lab, pts: [{ x: row(f)[3], col: NETCOL[f], name: "hidden" }, { x: row(f)[2], col: NETCOL[f], open: true, name: "actions" }] }))] }; }),
+      { xmin: rng[0], xmax: rng[1], legend: ["● hidden layer", "○ its actions", "■ view", "▲ caption"] }); };
+  const drawBros = () => { brosOverview(); const S = BR[bros.set], M = S.fam[bros.net][bros.m];
+    heat($("r-bros"), M, BM, BM, { max: bros.m === "partial" ? .15 : .6, dp: 3, ml: 70, mt: 74 });
+    $("r-bros-note").textContent = `brain split-half ceiling ${S.ceiling.toFixed(2)} · ${S.subjects} subjects, ${S.sessions} sessions`;
+    const b = M[BM.indexOf("brain")], best = [0, 1, 2, 3].reduce((i, j) => b[j] > b[i] ? j : i, 0);        // read off the brain row: which modality is closest here
+    $("r-bros-take").textContent = `closest to this brain, ${bros.m === "partial" ? "beyond space" : "raw"}: ${BM[best]} ${b[best].toFixed(3)} · view ${b[0].toFixed(3)}, caption ${b[1].toFixed(3)}, action ${b[2].toFixed(3)}, hidden ${b[3].toFixed(3)}`; };
+  segment($("r-bros-set"), BSET, bros.set, v => { bros.set = v; drawBros(); });
+  segment($("r-bros-net"), BNET, bros.net, v => { bros.net = v; drawBros(); });
+  segment($("r-bros-m"), [["partial", "beyond space"], ["raw", "raw ρ"]], bros.m, v => { bros.m = v; drawBros(); });
   bars($("r-brain"), VA.map(a => ({ label: lab(a), col: PRIOR_INFO[a].col, m: R.cka[`cortexfull-hid|${a}`][0], h: R.cka[`cortexfull-hid|${a}`][1] })), { ylabel: "CKA to mouse visual cortex", ymin: 0, ymax: .7 });
 }
 
@@ -427,6 +505,10 @@ function results() {
   tiles(); proofList();
   const hero = new Arena($("hero"), { autoplay: true }); hero.s.speed = 5; hero.nextEpisode(); await hero.reset(); hero.loop(); glossary();
   const show = architecture(); const play = new Arena($("play-agents"), { controls: $("play-controls"), onSelect: show }); await play.reset(); play.playing = true; play.loop();
-  window.__arenas = { hero, play };                                   // test handle (site/test/browser.mjs)
+  // Your turn: the paper's numbers for the same test, and a hand-off of the same room, goal and start to the Play arena.
+  const you = playYourself($("you-box"), D, {
+    ref: (room, goal) => ["human_bc", "bl7@human_bc", "ppo@human_bc"].map(k => `${INFO(k).short} ${paperRef(k, room, goal).replace(/^paper: /, "").replace(/ \(.*$/, "") || "–"}`).join(" · "),
+    watch: ep => { play.trial++; play.applyEpisode({ seed: play.s.seed, cfg: ep.cfg, goal: ep.cond, start: ep.start, rot: ep.rot }); play.reset(); location.hash = "play"; } });
+  window.__arenas = { hero, play, you };                              // test handle (site/test/browser.mjs, mobile.mjs)
   const refitLab = learningLab(play); addEventListener("resize", () => requestAnimationFrame(refitLab)); reveal();
 })().catch(e => { console.error(e); document.body.insertAdjacentHTML("afterbegin", `<p style="padding:12px;background:#c0392b;color:#fff">Could not load the page data: ${e.message}</p>`); });

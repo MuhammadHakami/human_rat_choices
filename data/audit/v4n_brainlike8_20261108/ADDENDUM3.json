@@ -1,0 +1,5 @@
+{
+ "written_utc": "2026-11-08T11:03:24Z",
+ "event": "Correction to the registered design text (not to the method, predictions or analysis): it summarises the memoryless agents' trapped steps as '10-14 of the last 16 moves are wall bumps'. The diagnosis table (diagnosis/loops_5seeds.txt) gives 7.5-14.2 across conditions (stage-3 circuit, trained room, familiar goal: 7.5; PPO, trained room, familiar goal: 9.4; all never-seen-room conditions 10.3-14.2). The supplement and response document say 8-14. Stage-7 goal map trapped steps: 14.1-15.0 bumps, as stated.",
+ "outcomes_seen": "all stage-8 test outcomes (analysis.json written 2026-11-08T10:42Z); this addendum changes no number of the test"
+}

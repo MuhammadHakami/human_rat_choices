@@ -1,0 +1,6 @@
+{
+ "written_utc": "2026-11-08T10:25:40Z",
+ "event": "Dry run of the registered analyse() on a temporary copy of the partial test records (80 of 180 written at the time; 40 per arm had been read by the copy), to validate the analysis code path before the test finished. It wrote only to the temporary directory.",
+ "outcomes_seen": "The printed partial contrasts were seen (last 12 lines of the output): bl8_none familiar_heldout_room vs stage 7, 25 non-diagnosis seeds: +21.3 [11.3, 31.4]; bl8_inferred (40 records): means 99.9 / 94.2 / 64.1 / 75.3 vs stage 7 92.2 / 94.1 / 72.2 / 70.2; moved_heldout_room -8.2 [-17.5, 1.2] (all 40), -12.7 [-21.6, -3.8] (25 non-diagnosis); familiar_heldout_room +5.1 [-0.6, 10.8]; partial prediction flags none: P1-P3 True, inferred: P1-P3 False.",
+ "action": "Nothing changed: the registered script, configurations, predictions and the running workers are untouched; the registered analysis runs once on the complete records. These partial values are not results and are superseded by analysis.json."
+}

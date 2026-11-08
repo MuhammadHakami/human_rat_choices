@@ -1,0 +1,48 @@
+{
+ "registered_utc": "2026-11-08T06:52:19Z",
+ "design": "Rosetta modalities against recorded brains on the same states (camera-ready page, author 2026-11-08: \"update the page with\nbrain geometry to action-image-text also given rosetta setup\"). Descriptive; no new runs, no retraining.\nInput: the registered collections of the brain-maze (W-track rat CA1/PFC, town human hippocampus) and open-arena (rat MEC,\nhuman MTL; ADDENDUM1-filtered) studies. Each holds, per subject, condition RDMs on the replayed states for\n  image   DINOv2-base CLS of the rendered view (the Rosetta encoder)     text    MPNet of the Rosetta template caption\n  brain   recorded neural RDM                                              and, per network, hidden (last layer) and action (probabilities).\nOutcome: for every setting x network family, the 5 x 5 matrix of Spearman rho between the condition RDMs of\nimage, text, action, hidden and brain, seed-averaged, then sessions averaged within subject, mean +- t CI over subjects; the\nsame matrix partialling out space (track distance + heading change). Brain ceiling = split-half Spearman-Brown.\nRSA on condition RDMs replaces CKA / the unpaired solver: 19-56 conditions per subject are too few for Wasserstein-Procrustes.\nDisclosed: brain-image, brain-text, brain-hidden and brain-action rho (raw; partial with pixels) were already reported by those\nstudies; the network-modality pairs on these states (image/text-action, image/text-hidden, hidden-action) are new.\n  prereg | analyse\n",
+ "settings": [
+  [
+   "wtrack_rat_CA1",
+   "maze",
+   "rat",
+   "CA1"
+  ],
+  [
+   "wtrack_rat_PFC",
+   "maze",
+   "rat",
+   "PFC"
+  ],
+  [
+   "towns_human",
+   "maze",
+   "human",
+   "all"
+  ],
+  [
+   "arena_rat",
+   "arena",
+   "rat",
+   "all"
+  ],
+  [
+   "arena_human",
+   "arena",
+   "human",
+   "all"
+  ]
+ ],
+ "modalities": [
+  "image",
+  "text",
+  "action",
+  "hidden",
+  "brain"
+ ],
+ "inputs": {
+  "maze": "data/audit/v4n_brain_mazes_20261107/collected.pkl",
+  "arena": "data/audit/v4n_brain_arenas_20261108/filtered/collected.pkl"
+ },
+ "script_sha256": "6f77225187994810104774f3bb68313c175260921b0df1fc880836caeafbf163"
+}

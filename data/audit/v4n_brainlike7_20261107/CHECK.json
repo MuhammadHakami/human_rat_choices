@@ -1,0 +1,31 @@
+{
+ "written_utc": "2026-11-07T11:04:03Z",
+ "kappa0": {
+  "none": [
+   27,
+   3,
+   18,
+   3
+  ],
+  "inferred": [
+   27,
+   21,
+   1,
+   17
+  ]
+ },
+ "kappa10_smoke": [
+  27,
+  27,
+  18,
+  27
+ ],
+ "goal_writes": 1412,
+ "goal_memory_peaks": [
+  65,
+  33,
+  66
+ ],
+ "diverged": null,
+ "wall_s": 29.831782945024315
+}

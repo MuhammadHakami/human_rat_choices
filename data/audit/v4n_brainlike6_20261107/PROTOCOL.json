@@ -1,0 +1,52 @@
+{
+ "written_utc": "2026-11-06T21:53:14Z",
+ "script_sha256": "b2bd367a0fd6d3f17bf08789aa4d5c6c2489c7f258b33a34aef08616709cc06e",
+ "design": "Mushroom-body circuit, stage 6 (camera-ready, author 2026-11-07: \"use the sota ones and improve our bio plausible one to reach\nmaximum OOD generalization, minimal catastrophic forgetting, and continue learning\"). GPU 1 only. Registered before any outcome\nof this stage.\nSeen before writing: stages 1-5 dev and test (stage 3 test: unseen-room new goal 20.4%, -7.4 pp vs PPO; stage 4 dense pathway on\nthe backbone hidden layer rejected; stage 5 place drive INTO the Kenyon cells: ungated winner beta = 0, gated winner beta = 1 fell\nto 11.1% on the unseen-room new goal). Descriptive diagnostics: same-state overlap trained vs never-seen room: hidden .86, Kenyon\ncode .71, place belief 1.00. Literature (reports/Bio plausible OOD navigation transfer.md): insects carry goal knowledge across\nplaces in a central-complex vector memory on a path-integration / place estimate, not in the mushroom body, whose generalisation\nequals Kenyon-code overlap (Stone 2017; Le Moel 2019; Campbell 2013; Lu & Webb 2026).\nLean (proofs_ml/ProofsML/Transfer.lean): transfer_identity (transfer = eta delta g <z_A, z_B>); concat_inner (a readout on the\njoined code [z, g u] transfers by <z_A, z_B> + g^2 <u_A, u_B>); copies_orthogonal (context-gated copies of the place code are\northogonal across contexts, so learning in one context cannot move the readout in the other).\nMechanism (one): a goal-vector pathway. The same plastic output synapses (KC -> action, KC -> value; same three-factor TD rule,\ntraces, metaplasticity, adaptive dopamine, replay) also read the agent's own place belief (obs[150:250]) directly, with gain g:\ncode = [Kenyon code, g * u], u = b (no gate) or u = b on the copy of the current latent cause, 0 on the other (gate: inferred;\nthe same latent switch that already gates the Kenyon cells). g = 0 is stage 3 exactly (no extra synapses are created).\npostNAS: K = 2048, c = 7, O = 0 fixed; searched as stage 3 (f, eta, tau, lam, rho, m, R, E, T, A, gate) + g {0, .1, .25, .5, 1, 2}.\nObjectives (NSGA-II, 3), as stages 4-5: dev new goal, dev old goal kept, dev new goal in the unseen room (dev seeds 1000-1002 x 3\npriors). Stage-3 winners (g = 0) enqueued first. 2 workers, both GPU 1, 60 trials each.\nSelection (fixed here): largest dev (new + old + unseen-room new), per gate. Test once on GPU 1 (30 seeds x 3 priors, fresh rooms,\nfour probes). Contrasts (descriptive): stage 6 - PPO, - stage 3.\n  check | prereg | search W TRIALS | best | test W N | analyse\n",
+ "lean": {
+  "file": "proofs_ml/ProofsML/Transfer.lean",
+  "sha256": "c6f60a10e32ed8d132064c90062cdb5389bb278b290e1f310cc5d9f0da211aa2"
+ },
+ "outcomes_seen": "stages 1-5 dev and test (incl. unseen-room probes); descriptive code-overlap diagnostics; of stage 6 only the check smoke run (g = .5, stage-3 ungated config, cold_ppo seed 1000, dev rooms): new 30, old 6, unseen new 18, unseen familiar 5 of 30",
+ "dev_seeds": [
+  1000,
+  1001,
+  1002
+ ],
+ "test_seeds": [
+  1000,
+  1001,
+  1002,
+  1003,
+  1004,
+  1005,
+  1006,
+  1007,
+  1008,
+  1009,
+  1010,
+  1011,
+  1012,
+  1013,
+  1014,
+  1015,
+  1016,
+  1017,
+  1018,
+  1019,
+  1020,
+  1021,
+  1022,
+  1023,
+  1024,
+  1025,
+  1026,
+  1027,
+  1028,
+  1029
+ ],
+ "priors": [
+  "human_bc",
+  "human_legal_uniform",
+  "cold_ppo"
+ ]
+}
