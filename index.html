@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Same States, Different Choices</title>
+<meta name="description" content="Human choices make visual agents loop less and transfer to unseen rooms; a mushroom-body circuit learns new goals with local plasticity. Live, in the browser (WACV 2027 Vision4Neuro).">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<nav class="top"><a href="#top" class="brand"><span class="dot h"></span><span class="dot r"></span>Same States, Different Choices</a>
+  <span class="navlinks"><a href="#play">Play</a><a href="#you">Your turn</a><a href="#architecture">Model</a><a href="#learn">Learn &amp; forget</a><a href="#animals">Humans vs rats</a><a href="#results">Evidence</a><a href="#review">Review</a><a href="#cite">Cite</a></span></nav>
+
+<header id="top" class="hero">
+  <div class="hero-in">
+    <div class="hero-text">
+      <p class="venue">WACV 2027 · Vision4Neuro</p>
+      <h1>Same states,<br><span class="h">different</span> <span class="r">choices</span></h1>
+      <p class="subtitle">Humans and rats solved the same mazes. Agents trained on <b class="h">human choices</b> loop less and find goals in rooms they never saw. On top of them, a <b style="color:#c9a6e0">mushroom-body circuit</b>, modelled on the insect learning centre, learns new goals with local plasticity only, better than backpropagation-trained PPO.</p>
+      <p class="authors">Muhammad Y. Hakami</p>
+      <p class="links">
+        <a class="btn" data-link="paper">Paper</a><a class="btn ghost" data-link="supp">Supplement</a>
+        <a class="btn ghost" data-link="code">Code</a><a class="btn ghost" data-link="models">Models</a>
+      </p>
+    </div>
+    <div class="hero-live" id="hero"></div>
+  </div>
+  <p class="hero-cap">live</p>
+</header>
+
+<section class="tiles" id="tiles"></section>
+
+<section id="play">
+  <div class="sec-head"><h2>Play</h2><p>The paper's own weights: frozen networks that copy human or rat habits, and three learners of the moved goal (mushroom-body circuit, hippocampal goal map, PPO). Pick a scenario or a <b>random episode</b>; <b>click a cell</b> to move the goal or edit walls.
+    <br><span class="note">Why agents repeat: frozen networks, PPO and the mushroom-body circuit have no memory within an episode, so a habit pointing into a wall bumps until time runs out (Lean: <code>trapped_forever</code>). The goal maps keep a within-episode map; <span id="play-stage8-note">stage 8's dopamine dip at every visited place removed stage 7's loops (old goal, never-seen room: 73 → 100%).</span></span></p></div>
+  <div class="controls" id="play-controls"></div>
+  <div class="agents" id="play-agents"></div>
+  <div class="probe-row"><div id="play-probe" class="chartbox"></div><p class="note" id="play-probe-note">Run a 30-trial probe to score the agents in this room.</p></div>
+</section>
+
+<section id="you">
+  <div class="sec-head"><h2>Your turn</h2><p>The agents' task with the agents' information: the camera, a bump signal, your last move and the place belief, 45 moves. The goal is shown only where the agents learned it. <b>Arrow keys, WASD or the pad.</b></p></div>
+  <div class="you" id="you-box"></div>
+</section>
+
+<section id="architecture">
+  <div class="sec-head"><h2>Inside the model</h2><p>The selected agent, layer by layer, at its current step. <b>Click a block</b> for details.</p></div>
+  <div class="arch" id="arch"></div>
+  <div class="arch-detail" id="arch-detail"></div>
+  <h3 class="gl-head">Same state, different choices <span>the six frozen networks, given exactly the selected agent's current input</span></h3>
+  <p class="note" id="ss-cap"></p>
+  <div class="ssrow" id="ss-row"></div>
+  <p class="note">Same view, same place belief, same contact: the networks differ only in the choices they imitated. The caption is the paper's Rosetta template for this state (what is visible and where the curtain is); it is shown for you and never given to a network.</p>
+  <h3 class="gl-head">The circuit in brain terms <span>every mechanism, from the Kenyon cells to the goal map, is a documented brain mechanism you can look up</span></h3>
+  <div class="glossary" id="glossary"></div>
+</section>
+
+<section id="learn">
+  <div class="sec-head"><h2>Learn &amp; forget</h2><p>The goal moves. The mushroom-body circuit learns it with <b>local plasticity only</b>, with and without the
+    <b class="g">latent-cause gate</b>. Watch what happens to the old goal.</p></div>
+  <div class="controls" id="learn-controls"></div>
+  <div class="duel" id="duel"></div>
+  <div class="duel-chart"><div id="learn-chart" class="chartbox"></div><p class="note" id="learn-note"></p></div>
+</section>
+
+<section id="animals">
+  <div class="sec-head"><h2>Humans vs rats</h2><p>The recorded behaviour the agents learn from. Same maze, same start, hidden ★ goal.</p></div>
+  <div class="controls" id="animal-controls"></div>
+  <div class="animals"><figure class="room-fig"><canvas id="an-a"></canvas><figcaption id="an-a-cap"></figcaption></figure>
+                       <figure class="room-fig"><canvas id="an-b"></canvas><figcaption id="an-b-cap"></figcaption></figure>
+                       <figure><div id="an-revisit" class="chartbox"></div><figcaption>moves that revisit a cell, per subject</figcaption></figure></div>
+</section>
+
+<section id="results">
+  <div class="sec-head"><h2>Evidence</h2><p>From the registered records: 30 paired seeds and 16 fresh rooms. Dots are seeds, bars are 95% CIs. <b>Toggle and hover.</b></p></div>
+  <div class="grid2">
+    <figure><div id="r-ood" class="chartbox"></div><figcaption><b>Out-of-distribution transfer</b> <span class="seg" id="r-ood-seg"></span>
+      <span class="clue">Frozen agents, 16 rooms none of them saw: human choices 43% vs 33% for legal moves at the same states; rat choices 29%, no better than legal (28%). Switch to <i>success, moved goal</i>: every frozen agent falls below the uniform policy (4–9%) because it carries the old goal with it. The habit transfers; the goal does not.</span></figcaption></figure>
+    <figure><div id="r-shared" class="chartbox"></div><figcaption><b>On the animals' own mazes.</b> <span class="seg" id="r-shared-seg"></span>
+      <span class="clue">Layouts 6–25 of de Cothi et al., walked by both species and seen by no network (imitation used layouts 1–5). Humans 97%, rats 85%; frozen human-trained 57%, rat-trained 55%; after learning a moved goal, PPO 10%, the mushroom-body circuit 16%, the hippocampal goal map 66% (70% with the goal moved). Descriptive, 30 seeds; the agents are small and memoryless, as the paper's limitations say.</span></figcaption></figure>
+    <figure><div id="r-keep" class="chartbox"></div><figcaption><b>Keep vs learn.</b> Top right is best; mushroom-body circuits in purple, the goal map in teal.
+      <span class="clue">Locality alone does not protect the old goal: <i>local+replay</i> learns the new goal (100%) and keeps 3% of the old. Supplying the missing context does: an inferred gate keeps 43%, the gated circuit 37%, and a goal written on the place map keeps 100% while learning 92% (stage 8, with a dopamine dip at every visited place: 97%). Forgetting here is a missing context, not a missing capacity.</span></figcaption></figure>
+    <figure><div id="r-forget" class="chartbox"></div><figcaption><b>Forgetting</b> <span class="seg" id="r-forget-seg"></span>
+      <span class="clue">Three priors per learner (grey scratch, light blue legal, blue human). Human-choice priors keep more of the old goal under PPO (+13 pp vs legal, post hoc). Switch to <i>new goal, unseen room</i>: the goal map reaches the moved goal in a room it never trained in 83% of trials (stage 8: 89%; PPO 28%, mushroom-body circuit 20%), and switch to <i>old goal, unseen room</i>: stage 7 73%, stage 8 100%. What is new there is the walls, not the goal: the old goal is the same cell in every room and the moved goal lies 0–1 cell from the remembered one. A goal ≥4 cells from every remembered place is reached in 5% of trials (chance), 100% once the memory is re-centred on it; routes are 1.7× the shortest, not optimal. The goal lives on its place belief, not in its views.</span></figcaption></figure>
+    <figure><div id="r-curves" class="chartbox"></div><figcaption><b>Continual learning</b> <span class="seg" id="r-curve-seg"></span> ◯ = mushroom-body circuit at the end
+      <span class="clue">No curve starts faster from the human prior: the prior never speeds up learning a new goal (PPO −7 pp curve area vs legal, CI includes 0; readout-only local rules 7–10 pp slower). What humans teach is the habit of not going back, not where the goal is.</span></figcaption></figure>
+    <figure><div id="r-snn" class="chartbox"></div><figcaption><b>Spiking</b> <span class="seg" id="r-snn-seg"></span><details><summary>about</summary>Agents converted to integrate-and-fire networks. Frozen priors: human choices keep their advantage. After learning: the local-rule networks convert without loss. The mushroom-body circuit itself was not converted; its operations are counted in the paper instead.</details>
+      <span class="clue">Converted to spikes, human-choice agents keep the lead at every time budget (43% vs 35% legal at 2 steps, about 4k synaptic operations per decision). Stopping each decision at a confidence bound, they also decide half a step sooner at equal success.</span></figcaption></figure>
+    <figure><div id="r-vla" class="chartbox"></div><figcaption><b>Vision–language–action.</b> A view predicts the move, but not the route.
+      <span class="clue">A caption of one view (no action words) predicts the next move for every network: 68–71% vs 47% majority. Yet agents driven by the image → text → action map reach the goal at the uniform rate (10–16%; their own heads 32–45%). The view holds the move; the choice holds the route.</span></figcaption></figure>
+    <figure><div id="r-cka" class="chartbox"></div><figcaption><b>Rosetta geometry</b> <span class="seg" id="r-cka-view"></span> <span class="seg" id="r-cka-seg"></span> <span id="r-cka-note"></span>
+      <span class="clue">A network's hidden layer shares far more geometry with its own actions than with the view or caption, and the caption shares more with the predicted cortex (0.51) than pixels do (0.19). Without known pairs, the Rosetta aligner cannot match views to actions (chance), but matches networks trained on the same human choices across seeds (0.06; vs rat or scratch networks 0.50–0.59).</span></figcaption></figure>
+    <figure class="wide"><div id="r-brain" class="chartbox"></div><figcaption><b>Predicted mouse cortex.</b> Similarity of each network's hidden layer to mouse visual cortex responses predicted for the agents' own frames.
+      <details><summary>about the data</summary>Responses of all 9,941 units predicted by the MICrONS foundation model for the agents' frames: a model of a mouse cortex, not a recording. The recorded rat and human brains are in the figure below. No monkey data anywhere.</details>
+      <span class="clue">Human-choice networks are the most cortex-like (0.49 vs 0.40 for legal labels or rat choices, 0.44 scratch; identical on 144 PCs). With pixels replaced by these predicted responses, human choices keep their direction (−3.0 pp revisits, 10 seeds).</span></figcaption></figure>
+    <figure class="wide"><div id="r-bros-over" class="chartbox over"></div><div id="r-bros" class="chartbox"></div><figcaption><b>Recorded brains on the same states.</b> <span class="seg" id="r-bros-set"></span><br><span class="seg" id="r-bros-net"></span> <span class="seg" id="r-bros-m"></span> <span id="r-bros-note"></span><br><span id="r-bros-take"></span>
+      <span class="clue">Beyond space and heading: in the human towns every network's hidden layer is closer to hippocampal geometry (0.04–0.12; human-trained 0.121) than the view (0.011) or caption (−0.001). In rat CA1 and PFC and in both open arenas, the view and caption (0.03–0.10) are as close to the brain as any network's hidden layer (−0.02–0.15). A network's actions are never closer to a brain than its hidden layer by more than 0.03. Learning a new goal does not pull the networks away from the brain (towns: mushroom body 0.111, goal map 0.109, PPO 0.075; frozen priors 0.04–0.12). Small, descriptive, 13–36 conditions per subject.</span>
+      <details><summary>about the data</summary>The Rosetta modalities (image: DINOv2 view embedding; caption: MPNet of what is visible; the network's action probabilities and hidden layer) and recorded brain activity, compared as representational geometry (Spearman ρ between condition RDMs) at identical positions and headings. Each recorded trial was replayed through the frozen networks in a rebuilt copy of the maze: rat W-track (DANDI 000978, CA1 and prefrontal units), human virtual towns (Zenodo 8058006, hippocampal iEEG), rat open field (DANDI 000405, entorhinal units) and human open-arena navigation (OpenNeuro ds005522, medial temporal iEEG). "Beyond space" partials out track distance and heading change. Averages over 30 seeds per network, then over subjects. Descriptive; no network was trained on these mazes or recordings.</details></figcaption></figure>
+  </div>
+</section>
+
+<section id="review">
+  <div class="sec-head"><h2>Asked in review</h2><p>What the chairs and four reviewers asked, what changed, and where to see it live on this page. Every question, with pointers, is answered in supplement Sec. 1; the main claims are unchanged.</p></div>
+  <div class="qa">
+    <div><b>Is the gain only frozen and only for the trained goal?</b><i>Chairs, FtUu, 6g1M, GQMP</i>Yes, and the claim is scoped to that. A registered moved-goal test shows frozen agents falling below uniform, so learners were added: PPO, local three-factor rules, the mushroom-body circuit and the hippocampal goal map.<a href="#play">Play: "Goal moved" scenarios →</a></div>
+    <div><b>Does the pose belief leak the layout or the goal?</b><i>FtUu</i>No. A Bayes filter over an open-arena template atlas: no wall map, goal or position. The input block lists all 252 numbers the agent gets.<a href="#architecture">Inside the model: Input →</a></div>
+    <div><b>Sampled or greedy actions? How many failures are loops?</b><i>FtUu</i>Sampled, as registered; greedy lowers every arm, and a Lean proof shows why: a deterministic memoryless agent that repeats a state loops forever. About 95% of failures are loops.<a href="#play">Play: Actions = greedy · Proved in Lean →</a></div>
+    <div><b>Is the human gain just less looping?</b><i>FtUu</i>Mostly, and that is the finding: humans rarely step back onto a visited cell (3.8% of moves; rats 14.4%), the agents inherit it (−8.2 pp revisits), and at equal trapping the gain shrinks to 1.7 pp.<a href="#animals">Humans vs rats →</a></div>
+    <div><b>Is the rat null just unpredictable labels?</b><i>FtUu</i>Rat choices are learnable (56% held-out accuracy vs 32% for legal labels) but carry about half the predictable information of human choices; the null is stated for these reconstructed inputs only.<a href="#results">Evidence: transfer →</a></div>
+    <div><b>Specific to PPO? Does the prior help when learning continues?</b><i>UYhB, FtUu</i>Tested with PPO and local rules without backpropagation: the prior never speeds up new-goal learning. A brain-constrained circuit with three-factor plasticity and awake replay learns the new goal +12.4 pp better than PPO.<a href="#learn">Learn &amp; forget →</a></div>
+    <div><b>Neural results out of nowhere?</b><i>UYhB, GQMP</i>Now one question inside the story: is the content in the view or in the choice? Predicted mouse cortex and Rosetta geometry in the main text; recorded rat and human brains, replayed through the same networks on the same states, here and in the supplement.<a href="#results">Evidence: recorded brains →</a></div>
+    <div><b>Unequal text and image information? Do caption words leak the action?</b><i>6g1M, GQMP</i>Replaced by a matched-content study in which image, caption and action describe the same moment; captions without any action word predict the move equally well (≤1 pp change).<a href="#results">Evidence: vision–language–action →</a></div>
+    <div><b>Weak absolute performance, small memoryless policy?</b><i>GQMP</i>Stated in the limitations and now measured on the animals' own layouts: humans 97%, rats 85%, frozen agents 55–57%, the goal map 66–70%.<a href="#results">Evidence: the animals' own mazes →</a></div>
+    <div><b>Post-hoc follow-ups; can the pre-registration be verified?</b><i>GQMP</i>Each follow-up is marked. Every study ships a PROTOCOL.json written before its outcome, with the hash of the exact script; amendments and any outcome seen early are disclosed in ADDENDUM files.<a data-link="code">data/audit/v4n_* on GitHub →</a></div>
+    <div><b>Equivalence margins, p-values, seeds are not animals</b><i>GQMP</i>Equivalence language dropped; 95% CIs everywhere, Holm only within registered families; seeds measure training variability, not biological replication.<a href="#results">Evidence →</a></div>
+    <div><b>Dense text, mixed units, title; side studies</b><i>Chairs, UYhB</i>Main text halved, percentage points throughout, retitled to the supported claim; replay, cortex and alignment studies moved to the supplement.<a data-link="supp">Supplement →</a></div>
+  </div>
+</section>
+
+<section id="proofs">
+  <div class="sec-head"><h2>Proved in Lean</h2><p>Machine-checked, with no <code>sorry</code>.</p></div>
+  <div class="proofs" id="proof-list"></div>
+</section>
+
+<section id="cite">
+  <div class="sec-head"><h2>Cite</h2></div>
+  <pre id="bibtex">@inproceedings{hakami2027samestates,
+  title     = {Same States, Different Choices: Human Decisions Improve Same-Goal Maze Transfer and Shape Forgetting and Vision--Language--Action Geometry},
+  author    = {Hakami, Muhammad Y.},
+  booktitle = {WACV Workshops (Vision4Neuro)}, year = {2027}}</pre>
+  <button class="btn" id="copy-bib">Copy</button>
+</section>
+
+<footer>Behaviour: de Cothi et al., <i>Current Biology</i> 2022 (Zenodo 10.5281/zenodo.6734981), shown as per-maze aggregates · Mouse cortex: MICrONS foundation model · Code: Apache-2.0 ·
+  Everything on this page runs in your browser with the paper's weights and learning rule.</footer>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
