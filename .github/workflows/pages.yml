@@ -17,5 +17,5 @@ jobs:
       - run: bash tools/build_site.sh
       - run: |                                  # one-commit branch holding only the built site
           cd _site && git init -q -b gh-pages && git add -A
-          git -c user.name=github-actions -c user.email=github-actions@github.com commit -qm "pages: built site from $GITHUB_SHA"
+          git -c user.name="${{ github.actor }}" -c user.email="${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com" commit -qm "pages: built site from $GITHUB_SHA"
           git push -qf "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY.git" gh-pages
